@@ -46,7 +46,7 @@ export function Move(props) {
             " " +
             defStat;
         let damage = damageCalc(attack, defend, props.move);
-        let percent = Math.round((damage / defend.hp[1]) * 1000) / 10;
+        let percent = Math.ceil((damage / defend.hp[1]) * 100);
         move_text =
             moveNameToString(props.move) +
             " (" +

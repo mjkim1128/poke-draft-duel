@@ -8,6 +8,24 @@
     transform-origin: 50% 65%;
 }
 
+/* 기절하면 아래로 주저앉으며 흐려진다 (id가 붙는 순간 한 번 재생됨) */
 #fainted-current-pokemon {
-    opacity: 50%;
+    animation: faint 0.9s ease-in forwards;
+    transform-origin: 50% 100%;
+}
+
+@keyframes faint {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 100%;
+        filter: none;
+    }
+    25% {
+        transform: translateY(0) rotate(-8deg);
+    }
+    100% {
+        transform: translateY(35%) scaleY(0.35);
+        opacity: 50%;
+        filter: grayscale(1);
+    }
 }

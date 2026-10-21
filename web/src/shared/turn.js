@@ -1282,7 +1282,7 @@ function processFutureAttack(team, text, field) {
     const damage = Math.max(0, damageCalc(pending.attacker, target, pending.move, { field }));
     const dealt = Math.min(damage, target.hp[0]);
     target.hp[0] -= dealt;
-    text.push(pokemonNameToString(target) + " lost " + Math.round((dealt / target.hp[1]) * 1000) / 10 + "% HP!");
+    text.push(pokemonNameToString(target) + " lost " + Math.ceil((dealt / target.hp[1]) * 100) + "% HP!");
     if (target.hp[0] === 0) text.push(pokemonNameToString(target) + " fainted!");
 }
 
@@ -1878,7 +1878,7 @@ function tryStatusMoveEffect(attacker, defender, move, text, field, defenderTeam
         const healed = Math.min(amount, attacker.hp[1] - attacker.hp[0]);
         attacker.hp[0] += healed;
         text.push(
-            attackerName + " healed " + Math.round((healed / attacker.hp[1]) * 1000) / 10 + "% HP!"
+            attackerName + " healed " + Math.ceil((healed / attacker.hp[1]) * 100) + "% HP!"
         );
     }
 }
@@ -2912,7 +2912,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
             text.push(
                 pokemonNameToString(defender) +
                     " lost " +
-                    Math.round((damage_number / defender.hp[1]) * 1000) / 10 +
+                    Math.ceil((damage_number / defender.hp[1]) * 100) +
                     "% HP!"
             );
         }
@@ -3152,7 +3152,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         text.push(
             pokemonNameToString(attacker) +
                 " healed " +
-                Math.round((hpNumber / attacker.hp[1]) * 1000) / 10 +
+                Math.ceil((hpNumber / attacker.hp[1]) * 100) +
                 "% HP!"
         );
     } else if (move.meta && move.meta.drain < 0 && !hasNoRecoil(attacker) && !indirectDamageBlocked(attacker)) {
@@ -3179,7 +3179,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         text.push(
             pokemonNameToString(attacker) +
                 " lost " +
-                Math.round((hpNumber / attacker.hp[1]) * 1000) / 10 +
+                Math.ceil((hpNumber / attacker.hp[1]) * 100) +
                 "% HP to recoil!"
         );
     } else if (move.name === "explosion" || move.name === "self-destruct") {

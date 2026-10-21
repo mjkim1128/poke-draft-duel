@@ -1,0 +1,293 @@
+import { PogeyData } from "./pogey";
+import { effectiveSpeed } from "./speed";
+import { activeItem } from "./helditem";
+import {
+    TYPE_BOOST_ITEMS,
+    CHOICE_ITEMS,
+    EVIOLITE,
+    EXPERT_BELT,
+    MUSCLE_BAND,
+    LIFE_ORB,
+    AIR_BALLOON,
+    METRONOME_ITEM,
+    UNREMOVABLE_ITEMS,
+    getFlingPower,
+} from "./iteminfo";
+import { STATUS_TYPE_BLOCKED_MOVES } from "./movemechanics";
+import { weatherOf, weatherDamageMod, powerFieldMod } from "./field";
+import {
+    abilityAttackMod,
+    abilityBasePowerMod,
+    abilityDamageMod,
+    abilityDefenseMod,
+    abilityCritMultiplier,
+    isWonderGuard,
+    weightOf,
+    abilityStabMultiplier,
+    absorbsMove,
+    ignoresBoosts,
+    ignoresBurnDrop,
+    isGroundImmune,
+    ignoresGhostImmunity,
+} from "./abilities";
+
+// Moves that deal a fixed amount of damage: no crit, no screens, no stats, no type
+// effectiveness (an immunity still stops them). Level 100 pokemon only.
+const FIXED_DAMAGE_MOVES = new Set([
+    "final-gambit", "seismic-toss", "night-shade", "psywave", "super-fang", "natures-madness", "endeavor",
+    "counter", "mirror-coat", "metal-burst", "sonic-boom", "dragon-rage",
+]);
+export const isFixedDamageMove = (move) => FIXED_DAMAGE_MOVES.has(move.name);
+function fixedDamage(move, attacker, defender) {
+    switch (move.name) {
+        case "final-gambit": // everything the user has left
+            return attacker.hp[0];
+        case "seismic-toss":
+        case "night-shade":
+            return 100; // the user's level
+        case "psywave":
+            return Math.floor((100 * (50 + Math.floor(Math.random() * 101))) / 100);
+        case "super-fang":
+        case "natures-madness":
+            return Math.max(1, Math.floor(defender.hp[0] / 2));
+        case "endeavor": // brings the target down to the user's HP
+            return Math.max(0, defender.hp[0] - attacker.hp[0]);
+        case "counter":
+            return 2 * (attacker.lastPhysicalDamage || 0);
+        case "mirror-coat":
+            return 2 * (attacker.lastSpecialDamage || 0);
+        case "metal-burst":
+            return Math.max(1, Math.floor(1.5 * (attacker.lastDamageTaken || 0)));
+        case "sonic-boom":
+            return 20;
+        case "dragon-rage":
+            return 40;
+        default:
+            return null;
+    }
+}
+
+// Base power for the moves whose power isn't a fixed number. Friendship-based moves are worked
+// out at maximum friendship (Return 102, Frustration 1).
+export function dynamicPower(move, attacker, defender, field) {
+    switch (move.name) {
+        case "return":
+            return 102;
+        case "frustration":
+            return 1;
+        case "gyro-ball": {
+            const mine = effectiveSpeed(attacker, field);
+            const power = mine > 0 ? Math.floor((25 * effectiveSpeed(defender, field)) / mine) + 1 : 1;
+            return Math.min(150, power);
+        }
+        case "reversal":
+        case "flail": {
+            const ratio = Math.max(Math.floor((attacker.hp[0] * 48) / attacker.hp[1]), 1);
+            return ratio < 2 ? 200 : ratio < 5 ? 150 : ratio < 10 ? 100 : ratio < 17 ? 80 : ratio < 33 ? 40 : 20;
+        }
+        case "electro-ball": {
+            const theirs = effectiveSpeed(defender, field);
+            const ratio = theirs > 0 ? Math.floor(effectiveSpeed(attacker, field) / theirs) : 0;
+            return [40, 60, 80, 120, 150][Math.min(ratio, 4)];
+        }
+        case "wring-out":
+        case "crush-grip":
+            return Math.max(1, Math.floor((120 * defender.hp[0]) / defender.hp[1]));
+        case "punishment":
+            return Math.min(200, 60 + 20 * defender.stat_levels.filter((s) => s > 0).reduce((a, s) => a + s, 0));
+        case "trump-card": {
+            const left = ppLeftOf(move);
+            return left === 0 ? 200 : left === 1 ? 80 : left === 2 ? 60 : left === 3 ? 50 : 40;
+        }
+        case "present": {
+            const r = Math.random();
+            return r < 0.5 ? 40 : r < 0.875 ? 80 : 120;
+        }
+        default:
+            return null;
+    }
+}
+// Reads a move's own remaining PP (Trump Card): moves aren't always tracked with ppLeft set.
+function ppLeftOf(move) {
+    const cap = move.ppCap !== undefined ? move.ppCap : Math.floor((move.pp || 5) * 8 / 5);
+    return move.ppLeft === undefined ? cap : move.ppLeft;
+}
+
+// Grass Knot / Low Kick hit harder the heavier the target is; Heavy Slam / Heat Crash the
+// heavier the user is compared with it (weights in hectograms, as PokeAPI has them).
+// Returns null for every other move.
+export function weightPower(move, attacker, defender) {
+    if (!defender.weight) return null;
+    if (move.name === "grass-knot" || move.name === "low-kick") {
+        const w = weightOf(defender);
+        return w < 100 ? 20 : w < 250 ? 40 : w < 500 ? 60 : w < 1000 ? 80 : w < 2000 ? 100 : 120;
+    }
+    if (move.name === "heavy-slam" || move.name === "heat-crash") {
+        if (!attacker.weight) return null;
+        const ratio = weightOf(attacker) / Math.max(1, weightOf(defender));
+        return ratio >= 5 ? 120 : ratio >= 4 ? 100 : ratio >= 3 ? 80 : ratio >= 2 ? 60 : 40;
+    }
+    return null;
+}
+
+export function typeEffectiveness(move, defender, attacker = null) {
+    // Status moves aren't affected by the type chart (Trick vs Dark, Hypnosis vs Dark,
+    // Will-O-Wisp vs Water all work), except the handful Showdown marks
+    // ignoreImmunity: false (Thunder Wave vs Ground).
+    if (
+        move.damage_class &&
+        move.damage_class.name === "status" &&
+        !STATUS_TYPE_BLOCKED_MOVES.has(move.name)
+    )
+        return 1;
+    if (move.name === "struggle") return 1; // typeless: never resisted, never immune
+    // Levitate: Ground moves don't touch it (unless the attacker has Mold Breaker)
+    if (move.type.name === "ground" && isGroundImmune(defender, attacker)) return 0;
+    // Magnet Rise / Telekinesis: floating out of Ground's reach
+    if (move.type.name === "ground" && (defender.magnetRise || defender.telekinesis) && !(activeItem(defender) && defender.item.name === "iron-ball")) return 0;
+    if (
+        move.type.name === "ground" &&
+        activeItem(defender) &&
+        defender.item.name === AIR_BALLOON
+    )
+        return 0; // Air Balloon grounds immunity, popped separately once the holder is hit by anything else
+    let TE = PogeyData.getMoveResult(move, defender);
+    // Scrappy: Normal/Fighting moves can hit Ghost types after all
+    // Scrappy, and a target that has been identified with Foresight, can be hit by Normal and
+    // Fighting moves even if it is a Ghost
+    const foreseen = defender.foresight && (move.type.name === "normal" || move.type.name === "fighting");
+    if (TE === 0 && ((attacker && ignoresGhostImmunity(attacker, move)) || foreseen) && defender.types.some((t) => t.type.name === "ghost")) {
+        const rest = defender.types.filter((t) => t.type.name !== "ghost");
+        TE = rest.length > 0 ? PogeyData.getMoveResult(move, { ...defender, types: rest }) : 1;
+    }
+    if (
+        move.name === "freeze-dry" &&
+        defender.types.filter((t) => t.type.name === "water").length > 0
+    )
+        TE = TE * 4; // Freeze-dry vs water type
+    if (move.type.name === "fire" && defender.tarShot && TE > 0) TE = TE * 2; // Tar Shot
+    // Wonder Guard: anything that isn't super effective bounces off
+    if (TE !== 0 && TE <= 1 && isWonderGuard(defender, attacker)) return 0;
+    return TE;
+}
+
+// ctx.crit: this hit is a critical hit. ctx.field: the battle's weather/terrain, if any.
+export function damageCalc(attacker, defender, move, ctx = {}) {
+    if (move.damage_class.name === "status") return 0; // status moves never deal damage
+    const { crit = false, field = null } = ctx;
+    let type = typeEffectiveness(move, defender, attacker);
+    if (absorbsMove(defender, attacker, move)) return 0; // Water Absorb & co. take it instead
+    // Fixed-damage moves (Seismic Toss, Super Fang, Final Gambit, Counter...): a type immunity
+    // still stops them, nothing else matters
+    const fixed = fixedDamage(move, attacker, defender);
+    if (fixed !== null) return type === 0 ? 0 : fixed;
+    let category = move.damage_class.name;
+    // Wonder Room: Defense and Sp. Def swap roles for every damage calculation while it's up
+    const wonderRoom = !!(field && field.wonderRoom);
+    let [attack, defense] =
+        category === "physical"
+            ? [attacker.base_stats[1], defender.base_stats[wonderRoom ? 4 : 2]]
+            : [attacker.base_stats[3], defender.base_stats[wonderRoom ? 2 : 4]];
+    let [attack_level, defense_level] =
+        category === "physical"
+            ? [attacker.stat_levels[0], defender.stat_levels[wonderRoom ? 3 : 1]]
+            : [attacker.stat_levels[2], defender.stat_levels[wonderRoom ? 1 : 3]];
+    if (move.name === "psyshock") [defense, defense_level] = [defender.base_stats[2], defender.stat_levels[1]]; // Psyshock
+    if (move.name === "body-press") [attack, attack_level] = [attacker.base_stats[2], attacker.stat_levels[1]]; // Body-press
+    if (move.name === "foul-play") [attack, attack_level] = [defender.base_stats[1], defender.stat_levels[0]]; // Foul-play
+    // A critical hit ignores the attacker's Attack drops and the defender's Defense boosts
+    if (crit) {
+        attack_level = Math.max(attack_level, 0);
+        defense_level = Math.min(defense_level, 0);
+    }
+    // Unaware ignores the other side's stat stages
+    if (ignoresBoosts(attacker)) defense_level = 0;
+    if (ignoresBoosts(defender, attacker)) attack_level = 0;
+
+    // Choice Band/Specs: 1.5x the stat that matches this move's category
+    const choiceStatIndex = activeItem(attacker) && CHOICE_ITEMS[attacker.item.name];
+    if (
+        (choiceStatIndex === 1 && category === "physical") ||
+        (choiceStatIndex === 3 && category === "special")
+    )
+        attack = Math.floor(attack * 1.5);
+    // Eviolite: 1.5x both defenses
+    if (activeItem(defender) && defender.item.name === EVIOLITE)
+        defense = Math.floor(defense * 1.5);
+
+    attack = statCalc(attack, attack_level);
+    defense = statCalc(defense, defense_level);
+    attack = Math.floor(attack * abilityAttackMod(attacker, defender, move, category, field)); // e.g. Stakeout
+
+    // Sandstorm gives Rock types x1.5 Sp. Def, Snow gives Ice types x1.5 Def (the stat the
+    // move actually targets: Psyshock & co. hit the Defense stat even though they're special)
+    const targetsDefense = category === "physical" || move.name === "psyshock" || move.name === "psystrike" || move.name === "secret-sword";
+    defense = Math.floor(defense * abilityDefenseMod(attacker, defender, move, targetsDefense ? "physical" : "special", field)); // Fur Coat, Ruin abilities...
+    const defenderTypes = defender.types.map((t) => t.type.name);
+    if (weatherOf(field) === "sand" && !targetsDefense && defenderTypes.includes("rock")) defense = Math.floor(defense * 1.5);
+    if (weatherOf(field) === "snow" && targetsDefense && defenderTypes.includes("ice")) defense = Math.floor(defense * 1.5);
+
+    // Burn: halves the attack stat used by physical moves
+    if (attacker.status && attacker.status.name === "burn" && category === "physical" && !ignoresBurnDrop(attacker))
+        attack = Math.floor(attack / 2);
+
+    let power = move.priority < 0 ? move.power * 2 : move.power; // Double power of negative priority moves
+    const weighted = weightPower(move, attacker, defender);
+    if (weighted !== null) power = weighted;
+    const dynamic = dynamicPower(move, attacker, defender, field);
+    if (dynamic !== null) power = dynamic;
+
+    // Fling: power comes from whatever the attacker is holding, not the move's own base power
+    if (move.name === "fling" && attacker.item) power = getFlingPower(attacker.item.name);
+    // Knock Off: 1.5x if the defender holds an item that can actually be knocked off
+    if (move.name === "knock-off" && defender.item && !UNREMOVABLE_ITEMS.has(defender.item.name))
+        power *= 1.5;
+
+    if (activeItem(attacker)) {
+        const boostedType = TYPE_BOOST_ITEMS[attacker.item.name];
+        if (boostedType && move.type.name === boostedType) power *= 1.2;
+        if (attacker.item.name === EXPERT_BELT && type > 1) power *= 1.2;
+        if (attacker.item.name === MUSCLE_BAND && category === "physical") power *= 1.1;
+        if (attacker.item.name === LIFE_ORB) power *= 1.3;
+        if (attacker.item.name === METRONOME_ITEM)
+            power *= 1 + 0.2 * Math.min((attacker.moveRepeatCount || 1) - 1, 5);
+    }
+
+    if (field && field.mudSport && move.type.name === "electric") power *= 1352 / 4096;
+    if (field && field.waterSport && move.type.name === "fire") power *= 1352 / 4096;
+    power *= powerFieldMod(move, attacker, defender, field);
+    power *= abilityBasePowerMod(attacker, defender, move, field);
+    power *= move.abilityPowerMod || 1; // Pixilate & co. already changed the move's type
+
+    let STAB = calculateSTAB(attacker, move) ? abilityStabMultiplier(attacker) : 1;
+    let damage = (42 * power * (attack / defense)) / 50 + 2;
+    damage = Math.floor(damage * weatherDamageMod(move, field));
+    damage = Math.floor(damage * abilityDamageMod(attacker, defender, move, type, field));
+    if (crit) damage = Math.floor(damage * abilityCritMultiplier(attacker));
+    damage = Math.floor(damage * STAB * type);
+    return damage;
+}
+
+export function hpCalc(stat, iv = 31, ev = 0) {
+    let result = 2 * stat + iv + ev / 4 + 110;
+    return Math.floor(result);
+}
+
+export function statCalc(stat, stat_level=0, iv = 31, ev = 0, nature = 1) {
+    let result = (2 * stat + iv + ev / 4 + 5) * nature;
+    if (stat_level !== 0 ) {
+        let [n, d] = stat_level < 0 ? [2, 2 + Math.abs(stat_level)] : [stat_level + 2, 2];
+        result = result * (n / d);
+    }
+    return Math.floor(result);
+}
+
+export function calculateSTAB(pokemon, move) {
+    if (pokemon.types[0].type.name === move.type.name) return true;
+    if (
+        pokemon.types.length > 1 &&
+        pokemon.types[1].type.name === move.type.name
+    )
+        return true;
+    return false;
+}

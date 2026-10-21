@@ -1,0 +1,34 @@
+.hover-pokemon-div {
+    display: table;
+    position: absolute;
+    background-color: azure;
+    width: auto;
+    z-index: 100;
+    margin-top: -125px;
+    margin-left: 100px;
+}
+
+.hover-pokemon-div p {
+    margin-bottom: 0;
+    margin-left: 0.5em;
+    margin-top: -0.3em;
+}
+
+.hover-pokemon-div-top {
+    display: flex;
+}
+
+.hover-pokemon-div-top p {
+    margin-top: 0.3em;
+}
+
+.hover-pokemon-item {
+    display: flex;
+    align-items: center;
+}
+
+.hover-pokemon-item-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+}

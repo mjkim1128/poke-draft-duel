@@ -1,0 +1,978 @@
+{
+ "chlorophyll": {
+  "en": "Chlorophyll",
+  "ko": "엽록소"
+ },
+ "overgrow": {
+  "en": "Overgrow",
+  "ko": "심록"
+ },
+ "blaze": {
+  "en": "Blaze",
+  "ko": "맹화"
+ },
+ "rain-dish": {
+  "en": "Rain Dish",
+  "ko": "젖은접시"
+ },
+ "torrent": {
+  "en": "Torrent",
+  "ko": "급류"
+ },
+ "swarm": {
+  "en": "Swarm",
+  "ko": "벌레의알림"
+ },
+ "sniper": {
+  "en": "Sniper",
+  "ko": "스나이퍼"
+ },
+ "big-pecks": {
+  "en": "Big Pecks",
+  "ko": "부풀린가슴"
+ },
+ "intimidate": {
+  "en": "Intimidate",
+  "ko": "위협"
+ },
+ "shed-skin": {
+  "en": "Shed Skin",
+  "ko": "탈피"
+ },
+ "lightning-rod": {
+  "en": "Lightning Rod",
+  "ko": "피뢰침"
+ },
+ "static": {
+  "en": "Static",
+  "ko": "정전기"
+ },
+ "sand-rush": {
+  "en": "Sand Rush",
+  "ko": "모래헤치기"
+ },
+ "sheer-force": {
+  "en": "Sheer Force",
+  "ko": "우격다짐"
+ },
+ "magic-guard": {
+  "en": "Magic Guard",
+  "ko": "매직가드"
+ },
+ "unaware": {
+  "en": "Unaware",
+  "ko": "천진"
+ },
+ "flash-fire": {
+  "en": "Flash Fire",
+  "ko": "타오르는불꽃"
+ },
+ "drought": {
+  "en": "Drought",
+  "ko": "가뭄"
+ },
+ "effect-spore": {
+  "en": "Effect Spore",
+  "ko": "포자"
+ },
+ "arena-trap": {
+  "en": "Arena Trap",
+  "ko": "개미지옥"
+ },
+ "swift-swim": {
+  "en": "Swift Swim",
+  "ko": "쓱쓱"
+ },
+ "water-absorb": {
+  "en": "Water Absorb",
+  "ko": "저수"
+ },
+ "no-guard": {
+  "en": "No Guard",
+  "ko": "노가드"
+ },
+ "guts": {
+  "en": "Guts",
+  "ko": "근성"
+ },
+ "liquid-ooze": {
+  "en": "Liquid Ooze",
+  "ko": "해감액"
+ },
+ "sturdy": {
+  "en": "Sturdy",
+  "ko": "옹골참"
+ },
+ "regenerator": {
+  "en": "Regenerator",
+  "ko": "재생력"
+ },
+ "early-bird": {
+  "en": "Early Bird",
+  "ko": "일찍기상"
+ },
+ "poison-touch": {
+  "en": "Poison Touch",
+  "ko": "독수"
+ },
+ "skill-link": {
+  "en": "Skill Link",
+  "ko": "스킬링크"
+ },
+ "levitate": {
+  "en": "Levitate",
+  "ko": "부유"
+ },
+ "cursed-body": {
+  "en": "Cursed Body",
+  "ko": "저주받은바디"
+ },
+ "soundproof": {
+  "en": "Soundproof",
+  "ko": "방음"
+ },
+ "harvest": {
+  "en": "Harvest",
+  "ko": "수확"
+ },
+ "rock-head": {
+  "en": "Rock Head",
+  "ko": "돌머리"
+ },
+ "reckless": {
+  "en": "Reckless",
+  "ko": "이판사판"
+ },
+ "unburden": {
+  "en": "Unburden",
+  "ko": "곡예"
+ },
+ "iron-fist": {
+  "en": "Iron Fist",
+  "ko": "철주먹"
+ },
+ "scrappy": {
+  "en": "Scrappy",
+  "ko": "배짱"
+ },
+ "natural-cure": {
+  "en": "Natural Cure",
+  "ko": "자연회복"
+ },
+ "analytic": {
+  "en": "Analytic",
+  "ko": "애널라이즈"
+ },
+ "dry-skin": {
+  "en": "Dry Skin",
+  "ko": "건조피부"
+ },
+ "hyper-cutter": {
+  "en": "Hyper Cutter",
+  "ko": "괴력집게"
+ },
+ "mold-breaker": {
+  "en": "Mold Breaker",
+  "ko": "틀깨기"
+ },
+ "moxie": {
+  "en": "Moxie",
+  "ko": "자기과신"
+ },
+ "volt-absorb": {
+  "en": "Volt Absorb",
+  "ko": "축전"
+ },
+ "weak-armor": {
+  "en": "Weak Armor",
+  "ko": "깨어진갑옷"
+ },
+ "shell-armor": {
+  "en": "Shell Armor",
+  "ko": "조가비갑옷"
+ },
+ "pressure": {
+  "en": "Pressure",
+  "ko": "프레셔"
+ },
+ "unnerve": {
+  "en": "Unnerve",
+  "ko": "긴장감"
+ },
+ "thick-fat": {
+  "en": "Thick Fat",
+  "ko": "두꺼운지방"
+ },
+ "gluttony": {
+  "en": "Gluttony",
+  "ko": "먹보"
+ },
+ "flame-body": {
+  "en": "Flame Body",
+  "ko": "불꽃몸"
+ },
+ "multiscale": {
+  "en": "Multiscale",
+  "ko": "멀티스케일"
+ },
+ "synchronize": {
+  "en": "Synchronize",
+  "ko": "싱크로"
+ },
+ "infiltrator": {
+  "en": "Infiltrator",
+  "ko": "틈새포착"
+ },
+ "inner-focus": {
+  "en": "Inner Focus",
+  "ko": "정신력"
+ },
+ "magic-bounce": {
+  "en": "Magic Bounce",
+  "ko": "매직미러"
+ },
+ "huge-power": {
+  "en": "Huge Power",
+  "ko": "천하장사"
+ },
+ "sap-sipper": {
+  "en": "Sap Sipper",
+  "ko": "초식"
+ },
+ "drizzle": {
+  "en": "Drizzle",
+  "ko": "잔비"
+ },
+ "shadow-tag": {
+  "en": "Shadow Tag",
+  "ko": "그림자밟기"
+ },
+ "overcoat": {
+  "en": "Overcoat",
+  "ko": "방진"
+ },
+ "technician": {
+  "en": "Technician",
+  "ko": "테크니션"
+ },
+ "light-metal": {
+  "en": "Light Metal",
+  "ko": "라이트메탈"
+ },
+ "trace": {
+  "en": "Trace",
+  "ko": "트레이스"
+ },
+ "download": {
+  "en": "Download",
+  "ko": "다운로드"
+ },
+ "own-tempo": {
+  "en": "Own Tempo",
+  "ko": "마이페이스"
+ },
+ "sand-stream": {
+  "en": "Sand Stream",
+  "ko": "모래날림"
+ },
+ "speed-boost": {
+  "en": "Speed Boost",
+  "ko": "가속"
+ },
+ "pickpocket": {
+  "en": "Pickpocket",
+  "ko": "나쁜손버릇"
+ },
+ "keen-eye": {
+  "en": "Keen Eye",
+  "ko": "날카로운눈"
+ },
+ "poison-heal": {
+  "en": "Poison Heal",
+  "ko": "포이즌힐"
+ },
+ "wonder-guard": {
+  "en": "Wonder Guard",
+  "ko": "불가사의부적"
+ },
+ "prankster": {
+  "en": "Prankster",
+  "ko": "짓궂은마음"
+ },
+ "pure-power": {
+  "en": "Pure Power",
+  "ko": "순수한힘"
+ },
+ "telepathy": {
+  "en": "Telepathy",
+  "ko": "텔레파시"
+ },
+ "solid-rock": {
+  "en": "Solid Rock",
+  "ko": "하드록"
+ },
+ "magma-armor": {
+  "en": "Magma Armor",
+  "ko": "마그마의무장"
+ },
+ "cloud-nine": {
+  "en": "Cloud Nine",
+  "ko": "날씨부정"
+ },
+ "toxic-boost": {
+  "en": "Toxic Boost",
+  "ko": "독폭주"
+ },
+ "adaptability": {
+  "en": "Adaptability",
+  "ko": "적응력"
+ },
+ "storm-drain": {
+  "en": "Storm Drain",
+  "ko": "마중물"
+ },
+ "battle-armor": {
+  "en": "Battle Armor",
+  "ko": "전투무장"
+ },
+ "competitive": {
+  "en": "Competitive",
+  "ko": "승기"
+ },
+ "marvel-scale": {
+  "en": "Marvel Scale",
+  "ko": "이상한비늘"
+ },
+ "protean": {
+  "en": "Protean",
+  "ko": "변환자재"
+ },
+ "insomnia": {
+  "en": "Insomnia",
+  "ko": "불면"
+ },
+ "justified": {
+  "en": "Justified",
+  "ko": "정의의마음"
+ },
+ "super-luck": {
+  "en": "Super Luck",
+  "ko": "대운"
+ },
+ "water-veil": {
+  "en": "Water Veil",
+  "ko": "수의베일"
+ },
+ "clear-body": {
+  "en": "Clear Body",
+  "ko": "클리어바디"
+ },
+ "serene-grace": {
+  "en": "Serene Grace",
+  "ko": "하늘의은총"
+ },
+ "sticky-hold": {
+  "en": "Sticky Hold",
+  "ko": "점착"
+ },
+ "limber": {
+  "en": "Limber",
+  "ko": "유연"
+ },
+ "defiant": {
+  "en": "Defiant",
+  "ko": "오기"
+ },
+ "aftermath": {
+  "en": "Aftermath",
+  "ko": "유폭"
+ },
+ "tangled-feet": {
+  "en": "Tangled Feet",
+  "ko": "갈지자걸음"
+ },
+ "rough-skin": {
+  "en": "Rough Skin",
+  "ko": "까칠한피부"
+ },
+ "sand-veil": {
+  "en": "Sand Veil",
+  "ko": "모래숨기"
+ },
+ "steadfast": {
+  "en": "Steadfast",
+  "ko": "불굴의마음"
+ },
+ "snow-warning": {
+  "en": "Snow Warning",
+  "ko": "눈퍼뜨리기"
+ },
+ "magnet-pull": {
+  "en": "Magnet Pull",
+  "ko": "자력"
+ },
+ "oblivious": {
+  "en": "Oblivious",
+  "ko": "둔감"
+ },
+ "motor-drive": {
+  "en": "Motor Drive",
+  "ko": "전기엔진"
+ },
+ "vital-spirit": {
+  "en": "Vital Spirit",
+  "ko": "의기양양"
+ },
+ "tinted-lens": {
+  "en": "Tinted Lens",
+  "ko": "색안경"
+ },
+ "leaf-guard": {
+  "en": "Leaf Guard",
+  "ko": "리프가드"
+ },
+ "frisk": {
+  "en": "Frisk",
+  "ko": "통찰"
+ },
+ "snow-cloak": {
+  "en": "Snow Cloak",
+  "ko": "눈숨기"
+ },
+ "hydration": {
+  "en": "Hydration",
+  "ko": "촉촉바디"
+ },
+ "bad-dreams": {
+  "en": "Bad Dreams",
+  "ko": "나이트메어"
+ },
+ "victory-star": {
+  "en": "Victory Star",
+  "ko": "승리의별"
+ },
+ "contrary": {
+  "en": "Contrary",
+  "ko": "심술꾸러기"
+ },
+ "mummy": {
+  "en": "Mummy",
+  "ko": "미라"
+ },
+ "defeatist": {
+  "en": "Defeatist",
+  "ko": "무기력"
+ },
+ "illusion": {
+  "en": "Illusion",
+  "ko": "일루전"
+ },
+ "compound-eyes": {
+  "en": "Compound Eyes",
+  "ko": "복안"
+ },
+ "iron-barbs": {
+  "en": "Iron Barbs",
+  "ko": "철가시"
+ },
+ "slush-rush": {
+  "en": "Slush Rush",
+  "ko": "눈치우기"
+ },
+ "hustle": {
+  "en": "Hustle",
+  "ko": "의욕"
+ },
+ "bulletproof": {
+  "en": "Bulletproof",
+  "ko": "방탄"
+ },
+ "gale-wings": {
+  "en": "Gale Wings",
+  "ko": "질풍날개"
+ },
+ "flower-veil": {
+  "en": "Flower Veil",
+  "ko": "플라워베일"
+ },
+ "symbiosis": {
+  "en": "Symbiosis",
+  "ko": "공생"
+ },
+ "aroma-veil": {
+  "en": "Aroma Veil",
+  "ko": "아로마베일"
+ },
+ "tough-claws": {
+  "en": "Tough Claws",
+  "ko": "단단한발톱"
+ },
+ "mega-launcher": {
+  "en": "Mega Launcher",
+  "ko": "메가런처"
+ },
+ "refrigerate": {
+  "en": "Refrigerate",
+  "ko": "프리즈스킨"
+ },
+ "pixilate": {
+  "en": "Pixilate",
+  "ko": "페어리스킨"
+ },
+ "gooey": {
+  "en": "Gooey",
+  "ko": "미끈미끈"
+ },
+ "magician": {
+  "en": "Magician",
+  "ko": "매지션"
+ },
+ "long-reach": {
+  "en": "Long Reach",
+  "ko": "원격"
+ },
+ "liquid-voice": {
+  "en": "Liquid Voice",
+  "ko": "촉촉보이스"
+ },
+ "shield-dust": {
+  "en": "Shield Dust",
+  "ko": "인분"
+ },
+ "sweet-veil": {
+  "en": "Sweet Veil",
+  "ko": "스위트베일"
+ },
+ "stamina": {
+  "en": "Stamina",
+  "ko": "지구력"
+ },
+ "water-bubble": {
+  "en": "Water Bubble",
+  "ko": "수포"
+ },
+ "corrosion": {
+  "en": "Corrosion",
+  "ko": "부식"
+ },
+ "fluffy": {
+  "en": "Fluffy",
+  "ko": "복슬복슬"
+ },
+ "queenly-majesty": {
+  "en": "Queenly Majesty",
+  "ko": "여왕의위엄"
+ },
+ "triage": {
+  "en": "Triage",
+  "ko": "힐링시프트"
+ },
+ "emergency-exit": {
+  "en": "Emergency Exit",
+  "ko": "위기회피"
+ },
+ "water-compaction": {
+  "en": "Water Compaction",
+  "ko": "꾸덕꾸덕굳기"
+ },
+ "innards-out": {
+  "en": "Innards Out",
+  "ko": "내용물분출"
+ },
+ "strong-jaw": {
+  "en": "Strong Jaw",
+  "ko": "옹골찬턱"
+ },
+ "dazzling": {
+  "en": "Dazzling",
+  "ko": "비비드바디"
+ },
+ "berserk": {
+  "en": "Berserk",
+  "ko": "발끈"
+ },
+ "steelworker": {
+  "en": "Steelworker",
+  "ko": "강철술사"
+ },
+ "electric-surge": {
+  "en": "Electric Surge",
+  "ko": "일렉트릭메이커"
+ },
+ "psychic-surge": {
+  "en": "Psychic Surge",
+  "ko": "사이코메이커"
+ },
+ "grassy-surge": {
+  "en": "Grassy Surge",
+  "ko": "그래스메이커"
+ },
+ "misty-surge": {
+  "en": "Misty Surge",
+  "ko": "미스트메이커"
+ },
+ "beast-boost": {
+  "en": "Beast Boost",
+  "ko": "비스트부스트"
+ },
+ "prism-armor": {
+  "en": "Prism Armor",
+  "ko": "프리즘아머"
+ },
+ "soul-heart": {
+  "en": "Soul-Heart",
+  "ko": "소울하트"
+ },
+ "libero": {
+  "en": "Libero",
+  "ko": "리베로"
+ },
+ "gulp-missile": {
+  "en": "Gulp Missile",
+  "ko": "그대로꿀꺽미사일"
+ },
+ "steely-spirit": {
+  "en": "Steely Spirit",
+  "ko": "강철정신"
+ },
+ "ice-scales": {
+  "en": "Ice Scales",
+  "ko": "얼음인분"
+ },
+ "heavy-metal": {
+  "en": "Heavy Metal",
+  "ko": "헤비메탈"
+ },
+ "dragons-maw": {
+  "en": "Dragon's Maw",
+  "ko": "용의턱"
+ },
+ "chilling-neigh": {
+  "en": "Chilling Neigh",
+  "ko": "백의울음"
+ },
+ "sharpness": {
+  "en": "Sharpness",
+  "ko": "예리함"
+ },
+ "purifying-salt": {
+  "en": "Purifying Salt",
+  "ko": "정화의소금"
+ },
+ "wind-rider": {
+  "en": "Wind Rider",
+  "ko": "바람타기"
+ },
+ "filter": {
+  "en": "Filter",
+  "ko": "필터"
+ },
+ "earth-eater": {
+  "en": "Earth Eater",
+  "ko": "흙먹기"
+ },
+ "toxic-debris": {
+  "en": "Toxic Debris",
+  "ko": "독치장"
+ },
+ "supreme-overlord": {
+  "en": "Supreme Overlord",
+  "ko": "총대장"
+ },
+ "protosynthesis": {
+  "en": "Protosynthesis",
+  "ko": "고대활성"
+ },
+ "quark-drive": {
+  "en": "Quark Drive",
+  "ko": "쿼크차지"
+ },
+ "good-as-gold": {
+  "en": "Good as Gold",
+  "ko": "황금몸"
+ },
+ "tablets-of-ruin": {
+  "en": "Tablets of Ruin",
+  "ko": "재앙의목간"
+ },
+ "sword-of-ruin": {
+  "en": "Sword of Ruin",
+  "ko": "재앙의검"
+ },
+ "vessel-of-ruin": {
+  "en": "Vessel of Ruin",
+  "ko": "재앙의그릇"
+ },
+ "heatproof": {
+  "en": "Heatproof",
+  "ko": "내열"
+ },
+ "guard-dog": {
+  "en": "Guard Dog",
+  "ko": "파수견"
+ },
+ "toxic-chain": {
+  "en": "Toxic Chain",
+  "ko": "독사슬"
+ },
+ "poison-puppeteer": {
+  "en": "Poison Puppeteer",
+  "ko": "독조종"
+ },
+ "run-away": {
+  "en": "Run Away",
+  "ko": "도주"
+ },
+ "cute-charm": {
+  "en": "Cute Charm",
+  "ko": "헤롱헤롱바디"
+ },
+ "damp": {
+  "en": "Damp",
+  "ko": "습기"
+ },
+ "wonder-skin": {
+  "en": "Wonder Skin",
+  "ko": "미라클스킨"
+ },
+ "ice-body": {
+  "en": "Ice Body",
+  "ko": "아이스바디"
+ },
+ "forewarn": {
+  "en": "Forewarn",
+  "ko": "예지몽"
+ },
+ "imposter": {
+  "en": "Imposter",
+  "ko": "괴짜"
+ },
+ "rattled": {
+  "en": "Rattled",
+  "ko": "주눅"
+ },
+ "solar-power": {
+  "en": "Solar Power",
+  "ko": "선파워"
+ },
+ "suction-cups": {
+  "en": "Suction Cups",
+  "ko": "흡반"
+ },
+ "moody": {
+  "en": "Moody",
+  "ko": "변덕쟁이"
+ },
+ "rivalry": {
+  "en": "Rivalry",
+  "ko": "투쟁심"
+ },
+ "normalize": {
+  "en": "Normalize",
+  "ko": "노말스킨"
+ },
+ "plus": {
+  "en": "Plus",
+  "ko": "플러스"
+ },
+ "minus": {
+  "en": "Minus",
+  "ko": "마이너스"
+ },
+ "illuminate": {
+  "en": "Illuminate",
+  "ko": "발광"
+ },
+ "anticipation": {
+  "en": "Anticipation",
+  "ko": "위험예지"
+ },
+ "forecast": {
+  "en": "Forecast",
+  "ko": "기분파"
+ },
+ "simple": {
+  "en": "Simple",
+  "ko": "단순"
+ },
+ "pickup": {
+  "en": "Pickup",
+  "ko": "픽업"
+ },
+ "flower-gift": {
+  "en": "Flower Gift",
+  "ko": "플라워기프트"
+ },
+ "klutz": {
+  "en": "Klutz",
+  "ko": "서투름"
+ },
+ "zen-mode": {
+  "en": "Zen Mode",
+  "ko": "달마모드"
+ },
+ "white-smoke": {
+  "en": "White Smoke",
+  "ko": "하얀연기"
+ },
+ "sand-force": {
+  "en": "Sand Force",
+  "ko": "모래의힘"
+ },
+ "grass-pelt": {
+  "en": "Grass Pelt",
+  "ko": "풀모피"
+ },
+ "fur-coat": {
+  "en": "Fur Coat",
+  "ko": "퍼코트"
+ },
+ "stance-change": {
+  "en": "Stance Change",
+  "ko": "배틀스위치"
+ },
+ "cheek-pouch": {
+  "en": "Cheek Pouch",
+  "ko": "볼주머니"
+ },
+ "aura-break": {
+  "en": "Aura Break",
+  "ko": "오라브레이크"
+ },
+ "stakeout": {
+  "en": "Stakeout",
+  "ko": "잠복"
+ },
+ "dancer": {
+  "en": "Dancer",
+  "ko": "무희"
+ },
+ "schooling": {
+  "en": "Schooling",
+  "ko": "어군"
+ },
+ "shields-down": {
+  "en": "Shields Down",
+  "ko": "리밋실드"
+ },
+ "comatose": {
+  "en": "Comatose",
+  "ko": "절대안깸"
+ },
+ "disguise": {
+  "en": "Disguise",
+  "ko": "탈"
+ },
+ "ripen": {
+  "en": "Ripen",
+  "ko": "숙성"
+ },
+ "propeller-tail": {
+  "en": "Propeller Tail",
+  "ko": "스크루지느러미"
+ },
+ "punk-rock": {
+  "en": "Punk Rock",
+  "ko": "펑크록"
+ },
+ "perish-body": {
+  "en": "Perish Body",
+  "ko": "멸망의바디"
+ },
+ "screen-cleaner": {
+  "en": "Screen Cleaner",
+  "ko": "배리어프리"
+ },
+ "wandering-spirit": {
+  "en": "Wandering Spirit",
+  "ko": "떠도는영혼"
+ },
+ "power-spot": {
+  "en": "Power Spot",
+  "ko": "파워스폿"
+ },
+ "ice-face": {
+  "en": "Ice Face",
+  "ko": "아이스페이스"
+ },
+ "hunger-switch": {
+  "en": "Hunger Switch",
+  "ko": "꼬르륵스위치"
+ },
+ "unseen-fist": {
+  "en": "Unseen Fist",
+  "ko": "보이지않는주먹"
+ },
+ "transistor": {
+  "en": "Transistor",
+  "ko": "트랜지스터"
+ },
+ "grim-neigh": {
+  "en": "Grim Neigh",
+  "ko": "흑의울음"
+ },
+ "lingering-aroma": {
+  "en": "Lingering Aroma",
+  "ko": "가시지않는향기"
+ },
+ "friend-guard": {
+  "en": "Friend Guard",
+  "ko": "프렌드가드"
+ },
+ "well-baked-body": {
+  "en": "Well-Baked Body",
+  "ko": "노릇노릇바디"
+ },
+ "seed-sower": {
+  "en": "Seed Sower",
+  "ko": "넘치는씨"
+ },
+ "mycelium-might": {
+  "en": "Mycelium Might",
+  "ko": "균사의힘"
+ },
+ "anger-shell": {
+  "en": "Anger Shell",
+  "ko": "분노의껍질"
+ },
+ "opportunist": {
+  "en": "Opportunist",
+  "ko": "편승"
+ },
+ "zero-to-hero": {
+  "en": "Zero to Hero",
+  "ko": "마이티체인지"
+ },
+ "costar": {
+  "en": "Costar",
+  "ko": "협연"
+ },
+ "commander": {
+  "en": "Commander",
+  "ko": "사령탑"
+ },
+ "cud-chew": {
+  "en": "Cud Chew",
+  "ko": "되새김질"
+ },
+ "armor-tail": {
+  "en": "Armor Tail",
+  "ko": "테일아머"
+ },
+ "thermal-exchange": {
+  "en": "Thermal Exchange",
+  "ko": "열교환"
+ },
+ "beads-of-ruin": {
+  "en": "Beads of Ruin",
+  "ko": "재앙의구슬"
+ },
+ "stalwart": {
+  "en": "Stalwart",
+  "ko": "굳건한신념"
+ },
+ "tera-shift": {
+  "en": "Tera Shift",
+  "ko": "테라체인지"
+ }
+}

@@ -1,0 +1,15 @@
+package com.minsu.battlefactory.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.minsu.battlefactory.domain.Item;
+
+public interface ItemRepository extends JpaRepository<Item, Long> {
+
+    Optional<Item> findByName(String name);
+
+    List<Item> findAllByOrderByIdAsc();
+}

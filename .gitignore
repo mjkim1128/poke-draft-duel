@@ -1,0 +1,18 @@
+# dependencies and build outputs
+node_modules/
+build/
+.gradle/
+out/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+
+# local-only files
+*.local

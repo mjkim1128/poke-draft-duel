@@ -1,0 +1,116 @@
+.move-div {
+    display: flex;
+}
+
+.move-info-div {
+    position: absolute;
+    background-color: antiquewhite;
+    z-index: 100;
+}
+
+.move-info-div p {
+    margin: 0;
+    padding: 0.25vh;
+}
+
+.damage-info-div {
+    padding-bottom: 0;
+}
+
+.damage-info-div p {
+    margin: 0;
+    padding: 0;
+}
+
+.move-button {
+    min-width: 6rem;
+    width: 5.5vw;
+    height: 6em;
+    font-weight: bold;
+    font-size: 12px;
+    outline: black solid 1px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.party-move {
+    width: 25px;
+    height: 25px;
+    outline: black solid 1px;
+    border-radius: 4px;
+}
+
+.party-move p {
+    display: none;
+}
+
+#party {
+    margin-top: -9.75em;
+    /* margin-bottom: 25em; */
+}
+
+#party-extra-space {
+    margin-top: -11.5em;
+}
+
+#fire {
+    background-color: darkorange;
+}
+#water {
+    background-color: steelblue;
+}
+#grass {
+    background-color: green;
+}
+#electric {
+    background-color: gold;
+}
+#bug {
+    background-color: olivedrab;
+}
+#fighting {
+    background-color: brown;
+}
+#psychic {
+    background-color: deeppink;
+}
+#dark {
+    background-color: #433;
+}
+#fairy {
+    background-color: salmon;
+}
+#poison {
+    background-color: purple;
+}
+#ground {
+    background-color: #752;
+}
+#rock {
+    background-color: darkgoldenrod;
+}
+#flying {
+    background-color: mediumpurple;
+}
+#ice {
+    background-color: paleturquoise;
+}
+#dragon {
+    background-color: slateblue;
+}
+#steel {
+    background-color: slategray;
+}
+#normal {
+    background-color: oldlace;
+}
+#ghost {
+    background-color: #436;
+}
+#hidden {
+    background-color: teal;
+}

@@ -20,6 +20,10 @@
 
 .pokemon-moves {
     display: flex;
+    /* 구애 아이템 등으로 기술이 하나만 남아도 칸의 크기가 줄지 않게 버튼 4개 자리를 항상 잡아 둔다
+       (.move-button의 너비 max(6rem, 5.5vw) x 4) */
+    min-width: calc(4 * max(6rem, 5.5vw));
+    min-height: 6em;
 }
 
 .turn-feed {

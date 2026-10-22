@@ -102,7 +102,8 @@ class PoolAndFactorySetTests {
 
         JsonNode set = objectMapper.readTree(factorySetService.findRandomPayload("klefki").orElseThrow());
         assertTrue(set.has("item"));
-        assertEquals("prankster", set.get("ability").asString());
+        // 클레피에게는 짓궂은마음 세트와 매지션 세트가 있어서, 어느 쪽이 뽑혀도 된다
+        assertTrue(java.util.Set.of("prankster", "magician").contains(set.get("ability").asString()));
         assertTrue(set.get("moves").size() >= 2);
         // 기술 칸마다 고를 수 있는 선택지가 slug를 가진다
         assertTrue(set.get("moves").get(0).get(0).has("slug"));
@@ -132,18 +133,29 @@ class PoolAndFactorySetTests {
 
     @Test
     void poolPokemonWithoutASetGetAnEmptyResult() {
+        // 세트 파일에 나오는 종을 시드에서 읽어, 풀에서 그 종을 뺀 수를 기대값으로 쓴다
+        Set<String> speciesWithSets = new HashSet<>();
+        try (var in = new org.springframework.core.io.ClassPathResource("data/factory_sets.json").getInputStream()) {
+            objectMapper.readTree(in).forEach(row -> speciesWithSets.add(row.get("species").asString()));
+        } catch (java.io.IOException e) {
+            throw new IllegalStateException(e);
+        }
+        int expectedWithoutSet = 0;
         int withoutSet = 0;
         for (Pokemon p : pokemonRepository.findAll()) {
             if (!p.isInPool()) {
                 continue;
+            }
+            if (!speciesWithSets.contains(p.getName())) {
+                expectedWithoutSet++;
             }
             Optional<String> set = factorySetService.findRandomPayload(p.getName());
             if (set.isEmpty()) {
                 withoutSet++;
             }
         }
-        // 풀 549마리 중 세트가 있는 385종을 뺀 나머지는 무작위 로직으로 간다
-        assertEquals(164, withoutSet);
+        // 세트가 없는 풀 포켓몬은 무작위 로직으로 간다
+        assertEquals(expectedWithoutSet, withoutSet);
         assertTrue(factorySetService.findRandomPayload("no-such-pokemon").isEmpty());
     }
 }

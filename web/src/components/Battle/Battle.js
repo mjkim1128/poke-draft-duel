@@ -452,19 +452,6 @@ export function Battle(props) {
                             img={(theirs[0].illusion || theirs[0]).sprites.front_default}
                         />
                     </div>
-                    <div
-                        className="bp-announcer"
-                        onClick={skipAnimation}
-                        style={animFrames ? { cursor: "pointer" } : undefined}
-                    >
-                        {needsPlayerSwitch ? (
-                            <div>다음 포켓몬을 선택하세요!</div>
-                        ) : awaitingInput ? (
-                            <div>Turn {turns.length + 1} - 행동을 결정하세요!</div>
-                        ) : (
-                            turns.length > 0 && <BattleAnnouncer text={announcerMessage} />
-                        )}
-                    </div>
                     <div className="bp-player">
                         <CurrentPokemon
                             pokemon={mine[0]}
@@ -472,6 +459,20 @@ export function Battle(props) {
                             img={mine[0].sprites.back_default}
                         />
                     </div>
+                </div>
+                {/* 안내창은 필드 안이 아니라 조작판 바로 위에 둔다 */}
+                <div
+                    className="bp-announcer"
+                    onClick={skipAnimation}
+                    style={animFrames ? { cursor: "pointer" } : undefined}
+                >
+                    {needsPlayerSwitch ? (
+                        <div>다음 포켓몬을 선택하세요!</div>
+                    ) : awaitingInput ? (
+                        <div>Turn {turns.length + 1} - 행동을 결정하세요!</div>
+                    ) : (
+                        turns.length > 0 && <BattleAnnouncer text={announcerMessage} />
+                    )}
                 </div>
                 <div className="bp-panel">
                     <div className="bp-tabs" role="tablist">

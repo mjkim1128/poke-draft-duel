@@ -64,8 +64,13 @@
         width: 100%;
         min-width: 0;
         height: auto;
-        min-height: 4.6em;
-        padding: 4px;
+        min-height: 3.4em;
+        padding: 2px 4px;
         box-sizing: border-box;
+    }
+
+    .move-row .move-button p {
+        margin: 0;
+        line-height: 1.3;
     }
 }

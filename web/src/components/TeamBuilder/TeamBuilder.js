@@ -65,6 +65,7 @@ export function TeamBuilder(props) {
                 />
                 {playerPokemon.length === 3 && (
                     <button
+                        className="teambuilder-action"
                         onClick={() => {
                             setBattleFactoryState("battle");
                         }}
@@ -76,6 +77,7 @@ export function TeamBuilder(props) {
             <div className="teambuilder-row">
                 {playerPokemon.length < 3 && (
                     <button
+                        className="teambuilder-action"
                         onClick={() => {
                             loadNewPokemon();
                         }}

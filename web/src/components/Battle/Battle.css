@@ -144,8 +144,8 @@
 
 .bp-panel {
     flex: 0 0 auto;
-    height: 42vh;
-    height: 42dvh;
+    height: 34vh;
+    height: 34dvh;
     min-height: 190px;
     display: flex;
     flex-direction: column;

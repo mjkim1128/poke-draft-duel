@@ -55,30 +55,39 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     box-sizing: border-box;
     padding: 6px;
     gap: 6px;
-    overflow: hidden;
 }
 
 .bp-field {
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 4px;
-    padding: 6px;
+    position: relative;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    height: min(110vw, 520px);
+    /* 창 높이 - (바깥 여백/간격 24 + 안내창 85 + 조작판 최소 약 200) */
+    max-height: calc(100vh - 312px);
+    max-height: calc(100dvh - 312px);
+    min-height: 220px;
+    --sprite-w: min(38vw, 150px); /* 체력 바와 포켓몬 그림 칸의 너비 */
     border: 1px solid #b8bfcc;
     border-radius: 8px;
-    /* 경기장 그림. 아래쪽 땅이 보이도록 아래에 맞춘다 */
-    background: #bfe3d4 url(../../assets/battle-field.webp) 40% bottom / cover no-repeat;
+    /* 경기장 그림의 두 원 중심은 그림의 (가로, 세로) 비율로 내 쪽 (33.0%, 81.8%), 상대 쪽 (75.2%, 54.9%).
+       그림을 가로 112%, 세로 100%로 늘이고 가로로 83% 위치에 맞추면, 내 쪽 원이 필드의 (27%, 81.8%),
+       상대 쪽 원이 (74.3%, 54.9%)에 온다. 필드 크기가 달라져도 이 비율은 그대로라서 늘 같은 자리다.
+       포켓몬은 아래에서 이 두 점에 발을 맞춘다. */
+    background: #bfe3d4 url(../../assets/battle-field.webp) 83% 0 / 112% 100% no-repeat;
     overflow: hidden;
 }
 
 .bp-head {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    z-index: 3;
     display: flex;
     justify-content: space-between;
     gap: 6px;
@@ -95,35 +104,30 @@
     padding: 1px 6px;
 }
 
-.bp-opponent .current-pokemon-div > div:first-child,
-.bp-player .current-pokemon-div > div:first-child {
-    align-self: flex-start;
-}
-
 .bp-head .field-info {
     font-weight: normal;
 }
 
-.bp-opponent {
-    align-self: flex-end;
-}
-
+/* 상대, 내 포켓몬은 필드 전체를 덮는 층 위에 좌표로 놓는다 */
+.bp-opponent,
 .bp-player {
-    align-self: flex-start;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
 }
 
-/* 포켓몬 그림은 화면 크기에 맞춰 줄인다 */
-.bp-opponent .current-pokemon-div img,
-.bp-player .current-pokemon-div img {
-    width: min(34vw, 14dvh);
-    height: auto;
-    max-height: 14dvh;
-    object-fit: contain;
+.bp-opponent .pokemon-party,
+.bp-opponent .current-pokemon-div > div,
+.bp-player .current-pokemon-div > div {
+    pointer-events: auto;
 }
 
 .bp-opponent .current-pokemon-div,
 .bp-player .current-pokemon-div {
-    gap: 6px;
+    display: contents;
     font-size: 13px;
 }
 
@@ -132,9 +136,57 @@
     margin: 2px 0;
 }
 
+/* 이름 / 타입 칸 */
+.bp-opponent .current-pokemon-div > div:first-child,
+.bp-player .current-pokemon-div > div:first-child {
+    position: absolute;
+    max-width: 46%;
+}
+
+.bp-opponent .current-pokemon-div > div:first-child {
+    left: 6px;
+    top: calc(54.9% - 100px);
+}
+
+.bp-player .current-pokemon-div > div:first-child {
+    right: 6px;
+    top: calc(81.8% - 100px);
+}
+
+/* 체력 바 + 포켓몬 그림: 포켓몬 그림(칸 너비의 75% 크기)의 정중앙이 원 중심에 오도록 한다.
+   칸의 아래끝을 원 중심에서 그림 높이의 절반만큼 내려 놓는 계산이다. */
+.bp-opponent .current-pokemon-div > div:last-child,
+.bp-player .current-pokemon-div > div:last-child {
+    position: absolute;
+    width: var(--sprite-w);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(-50%, calc(-100% + var(--sprite-w) * 0.375));
+}
+
+.bp-opponent .current-pokemon-div > div:last-child {
+    left: 74.3%;
+    top: 54.9%;
+}
+
+.bp-player .current-pokemon-div > div:last-child {
+    left: 27%;
+    top: 81.8%;
+}
+
+.bp-opponent .current-pokemon-div img,
+.bp-player .current-pokemon-div img {
+    width: 75%;
+    height: auto;
+    object-fit: contain;
+}
+
 /* 상대의 교체 후보는 작은 아이콘으로 */
 .bp-opponent .pokemon-party {
-    justify-content: flex-end;
+    position: absolute;
+    left: 6px;
+    top: 30px;
 }
 
 .bp-opponent .pokemon-party img {
@@ -158,16 +210,24 @@
     background: aliceblue;
 }
 
+.bp-gameover {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 6px;
+    z-index: 6;
+}
+
 .bp-gameover .game-over-div {
     padding: 0.75em;
     border-width: 5px;
 }
 
 .bp-panel {
-    flex: 0 0 auto;
-    height: 34vh;
-    height: 34dvh;
-    min-height: 190px;
+    flex: 1 1 auto;
+    min-height: 200px;
+    max-height: 42vh;
+    max-height: 42dvh;
     display: flex;
     flex-direction: column;
     border: 1px solid #b8bfcc;

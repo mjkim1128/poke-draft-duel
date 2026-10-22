@@ -94,7 +94,10 @@ class PoolAndFactorySetTests {
 
     @Test
     void factorySetsAreLoaded() throws Exception {
-        assertEquals(2681, factorySetRepository.count());
+        // 세트를 고칠 때마다 개수가 바뀌므로, 시드 파일의 개수와 비교한다
+        try (var in = new org.springframework.core.io.ClassPathResource("data/factory_sets.json").getInputStream()) {
+            assertEquals(objectMapper.readTree(in).size(), factorySetRepository.count());
+        }
         assertFalse(factorySetRepository.findBySpecies("klefki").isEmpty());
 
         JsonNode set = objectMapper.readTree(factorySetService.findRandomPayload("klefki").orElseThrow());

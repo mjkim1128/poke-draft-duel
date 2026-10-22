@@ -197,10 +197,10 @@ export function Home() {
         if (pokemon.factorySet) {
             let newMoves = await getMovesOfPokemon(pokemonArr[index]);
             pokemonArr[index].moves_data = newMoves;
-            const learnableSlugs = new Set(newMoves.map((m) => m.name));
-            const chosen = resolveFactoryMoveSlugs(pokemon.factorySet).filter(
-                (c) => c.slug === "hidden-power" || learnableSlugs.has(c.slug)
-            );
+            /// A set is a real, legal competitive set, so its moves are used as they are. They are
+            /// not checked against newMoves: that learnset comes from PokeAPI, which leaves out
+            /// egg moves and moves only a pre-evolution learns (Ferrothorn's Leech Seed...).
+            const chosen = resolveFactoryMoveSlugs(pokemon.factorySet);
             if (chosen.length >= 2) {
                 let moveset = await Promise.all(
                     chosen.map((c) => getMoveByName(c.slug))

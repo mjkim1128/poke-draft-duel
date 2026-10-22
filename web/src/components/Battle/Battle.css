@@ -73,8 +73,9 @@
     min-height: 220px;
     --sprite-w: min(38vw, 150px); /* 체력 바와 포켓몬 그림 칸의 너비 */
     --hp-h: 16px; /* 체력 바 높이 */
-    --me-hp-shift: 14px; /* 내 포켓몬의 체력 바와 이름·타입 줄을 아래로 내리는 양 (그림은 그대로) */
-    --bench-h: 37px; /* 상대 교체 후보 아이콘 줄 높이 */
+    --me-shift: 28px; /* 내 포켓몬 전체(체력 바 + 이름·타입 + 그림)를 아래로 내리는 양. 배경은 그대로 */
+    --me-hp-gap: 8px; /* 내 체력 바와 그림 사이를 더 벌리는 간격 */
+    --bench-h: 43px; /* 상대 교체 후보 아이콘 줄 높이 */
     /* 그림을 아래로 내리는 양: 포켓몬 그림의 가운데가 아니라 '발'이 원 중심에 오게 한다 */
     --feet-shift: calc(var(--sprite-w) * 0.32);
     border: 1px solid #b8bfcc;
@@ -177,12 +178,12 @@
 
 .bp-player .current-pokemon-div > div:first-child {
     left: calc(27% + var(--sprite-w) / 2 + 4px);
-    top: calc(81.8% - var(--sprite-w) * 0.375 - var(--hp-h) + var(--me-hp-shift));
+    top: calc(81.8% - var(--sprite-w) * 0.375 - var(--hp-h) - var(--me-hp-gap) + var(--me-shift));
 }
 
-/* 내 체력 바 (그림 칸의 맨 위 줄)도 같은 양만큼 내린다 */
+/* 내 체력 바와 그림 사이를 조금 더 띄운다 (칸의 아래끝이 기준이라 그림은 그대로, 체력 바가 위로 간다) */
 .bp-player .current-pokemon-div > div:last-child > div:first-child {
-    transform: translateY(var(--me-hp-shift));
+    margin-bottom: var(--me-hp-gap);
 }
 
 /* 체력 바 + 포켓몬 그림: 포켓몬 그림(칸 너비의 75% 크기)의 정중앙이 원 중심에 오도록 한다.
@@ -205,6 +206,8 @@
 .bp-player .current-pokemon-div > div:last-child {
     left: 27%;
     top: 81.8%;
+    /* 내 포켓몬 전체를 --me-shift만큼 아래로 */
+    transform: translate(-50%, calc(-100% + var(--sprite-w) * 0.375 + var(--me-shift)));
 }
 
 .bp-opponent .current-pokemon-div img,
@@ -217,15 +220,14 @@
 /* 상대의 교체 후보는 작은 아이콘으로 */
 .bp-opponent .pokemon-party {
     position: absolute;
-    left: 74.3%;
-    transform: translateX(-50%);
-    /* 체력 바 바로 위 */
+    /* 상대 체력 바의 오른쪽 끝에 맞춰 바로 위에 붙인다 (체력 바 오른쪽 끝 = 74.3% + 그림 칸 너비의 절반) */
+    right: calc(25.7% - var(--sprite-w) / 2);
     top: calc(54.9% - var(--sprite-w) * 0.375 - var(--hp-h) - var(--bench-h) - 2px);
 }
 
 .bp-opponent .pokemon-party img {
-    width: 24px;
-    height: 24px;
+    width: 31px; /* 이전 24px의 1.3배 */
+    height: 31px;
 }
 
 .bp-opponent .pokemon-party button {

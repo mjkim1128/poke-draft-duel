@@ -111,14 +111,11 @@ class PoolAndFactorySetTests {
 
     @Test
     void setsKeepTheOptionalFields() throws Exception {
-        // 도구가 없는 세트는 item이 null, 잠재력(hidden-power)은 hpType을 가진다
-        boolean sawNullItem = false;
+        // 잠재력(hidden-power)은 hpType을 가진다. 도구가 없는 세트는 item이 null이지만, 지금은 그런 세트가 없을 수 있다
         boolean sawHpType = false;
         for (var s : factorySetRepository.findAll()) {
             JsonNode set = objectMapper.readTree(s.getPayload());
-            if (set.get("item").isNull()) {
-                sawNullItem = true;
-            }
+            assertTrue(set.has("item")); // 도구가 없으면 값이 null이어도 항목은 있다
             for (JsonNode slot : set.get("moves")) {
                 for (JsonNode option : slot) {
                     if (option.has("hpType")) {
@@ -127,7 +124,6 @@ class PoolAndFactorySetTests {
                 }
             }
         }
-        assertTrue(sawNullItem);
         assertTrue(sawHpType);
     }
 

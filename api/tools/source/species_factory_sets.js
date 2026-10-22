@@ -1254,7 +1254,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
       [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ]
     ]
-  },
+  }, // 여기부터
   {
     "item": "focus-sash" /* 기합의띠 */,
     "ability": "cursed-body" /* 저주받은바디 */,
@@ -4677,7 +4677,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "lopunny": /* 이어롭 */ [
   {
-    "item": null,
+    "item": "life-orb",
     "ability": "limber" /* 유연 */,
     "moves": [
       [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
@@ -4687,7 +4687,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "life-orb",
     "ability": "limber" /* 유연 */,
     "moves": [
       [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
@@ -4697,7 +4697,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "leftovers",
     "ability": "limber" /* 유연 */,
     "moves": [
       [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
@@ -4707,7 +4707,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "limber" /* 유연 */,
     "moves": [
       [ { "slug": "return" /* 은혜갚기 */ } ],
@@ -4717,7 +4717,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "limber" /* 유연 */,
     "moves": [
       [ { "slug": "return" /* 은혜갚기 */ } ],
@@ -4727,7 +4727,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "limber" /* 유연 */,
     "moves": [
       [ { "slug": "encore" /* 앵콜 */ } ],
@@ -4737,7 +4737,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "limber" /* 유연 */,
     "moves": [
       [ { "slug": "fake-out" /* 속이다 */ } ],
@@ -7329,7 +7329,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "beedrill": /* 독침붕 */ [
   {
-    "item": null,
+    "item": "choice-scarf",
     "ability": "swarm" /* 벌레의알림 */,
     "moves": [
       [ { "slug": "protect" /* 방어 */ } ],
@@ -7339,7 +7339,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "choice-scarf",
     "ability": "swarm" /* 벌레의알림 */,
     "moves": [
       [ { "slug": "u-turn" /* 유턴 */ } ],
@@ -7349,7 +7349,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "choice-scarf",
     "ability": "sniper" /* 스나이퍼 */,
     "moves": [
       [ { "slug": "poison-jab" /* 독찌르기 */ } ],
@@ -7359,7 +7359,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "sniper" /* 스나이퍼 */,
     "moves": [
       [ { "slug": "poison-jab" /* 독찌르기 */ } ],
@@ -11503,7 +11503,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "banette": /* 다크펫 */ [
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "insomnia" /* 불면 */,
     "moves": [
       [ { "slug": "destiny-bond" /* 길동무 */ }, { "slug": "gunk-shot" /* 더스트슈트 */ } ],
@@ -15682,7 +15682,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "jumpluff": /* 솜솜코 */ [
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "infiltrator" /* 틈새포착 */,
     "moves": [
       [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
@@ -15692,7 +15692,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "infiltrator" /* 틈새포착 */,
     "moves": [
       [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
@@ -15702,7 +15702,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "infiltrator" /* 틈새포착 */,
     "moves": [
       [ { "slug": "u-turn" /* 유턴 */ }, { "slug": "swords-dance" /* 칼춤 */ } ],
@@ -17105,7 +17105,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "naganadel": /* 아고용 */ [
   {
-    "item": null,
+    "item": "life-orb",
     "ability": "beast-boost" /* 비스트부스트 */,
     "moves": [
       [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
@@ -18292,7 +18292,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "pidgeot": /* 피죤투 */ [
   {
-    "item": null,
+    "item": "life-orb",
     "ability": "big-pecks" /* 부풀린가슴 */,
     "moves": [
       [ { "slug": "hurricane" /* 폭풍 */ } ],
@@ -18302,7 +18302,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "sitrus-berry",
     "ability": "big-pecks" /* 부풀린가슴 */,
     "moves": [
       [ { "slug": "hurricane" /* 폭풍 */ } ],
@@ -18312,7 +18312,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "heavy-duty-boots",
     "ability": "big-pecks" /* 부풀린가슴 */,
     "moves": [
       [ { "slug": "hurricane" /* 폭풍 */ } ],
@@ -18322,7 +18322,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "choice-scarf",
     "ability": "big-pecks" /* 부풀린가슴 */,
     "moves": [
       [ { "slug": "hurricane" /* 폭풍 */ } ],
@@ -19442,7 +19442,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "bellossom": /* 아르코 */ [
   {
-    "item": null,
+    "item": "focus-sash",
     "ability": "chlorophyll" /* 엽록소 */,
     "moves": [
       [ { "slug": "quiver-dance" /* 나비춤 */ } ],
@@ -20715,7 +20715,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "iron-moth": /* 무쇠독나방 */ [
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "fiery-dance" /* 불꽃춤 */ } ],
@@ -20725,7 +20725,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "fiery-dance" /* 불꽃춤 */ } ],
@@ -20735,7 +20735,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "fiery-dance" /* 불꽃춤 */ } ],
@@ -20745,7 +20745,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "fiery-dance" /* 불꽃춤 */ } ],
@@ -20758,7 +20758,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "iron-valiant": /* 무쇠무인 */ [
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -20768,7 +20768,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -20778,7 +20778,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -20788,7 +20788,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
@@ -20798,7 +20798,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -20808,7 +20808,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "quark-drive" /* 쿼크차지 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -20909,7 +20909,7 @@ const SPECIES_FACTORY_SETS = {
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "roaring-moon": /* 고동치는달 */ [
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "protosynthesis" /* 고대활성 */,
     "moves": [
       [ { "slug": "dragon-dance" /* 용의춤 */ } ],
@@ -20919,7 +20919,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "booster-energy",
     "ability": "protosynthesis" /* 고대활성 */,
     "moves": [
       [ { "slug": "dragon-dance" /* 용의춤 */ } ],

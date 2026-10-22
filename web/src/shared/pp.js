@@ -1,4 +1,6 @@
 import { HEAL_MOVES } from "./movemechanics";
+import { CHOICE_ITEMS } from "./iteminfo";
+import { activeItem } from "./helditem";
 // Move PP. Every move gets its base PP x 8/5 (the max with three PP Ups, what competitive
 // sets use), tracked per pokemon on the move object as ppLeft. A move object that has
 // never been used has no ppLeft yet, which just means "full".
@@ -61,12 +63,20 @@ export function restorePP(pokemon) {
     for (const move of pokemon.moveset || []) move.ppLeft = maxPP(move);
 }
 
+// The move a Choice item has locked its holder onto, or null. The lock only holds while the
+// item is still there and working (Knock Off, Trick, Klutz and Embargo all release it).
+export function choiceLockedMove(pokemon) {
+    const item = activeItem(pokemon);
+    return item && CHOICE_ITEMS[item.name] !== undefined ? pokemon.lockedMove || null : null;
+}
+
 // The moves a pokemon can pick from right now: a Choice item locks it to one move, moves
 // out of PP are unusable, and with nothing left it has to Struggle.
 export function getUsableMoves(pokemon) {
     let moves = pokemon.moveset;
-    if (pokemon.lockedMove) {
-        const locked = moves.filter((m) => m.name === pokemon.lockedMove);
+    const lockedName = choiceLockedMove(pokemon);
+    if (lockedName) {
+        const locked = moves.filter((m) => m.name === lockedName);
         if (locked.length > 0) moves = locked;
     }
     // Encore locks it into the move it used last

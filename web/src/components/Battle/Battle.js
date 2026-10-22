@@ -14,6 +14,7 @@ import {
     resumeTurn,
     isTrapped,
     getUsableMoves,
+    choiceLockedMove,
     STRUGGLE,
     WEATHER_LABEL,
     TERRAIN_LABEL,
@@ -317,7 +318,7 @@ export function Battle(props) {
     const usableMoves = getUsableMoves(currentpoke);
     const encoredMove = currentpoke.encore && usableMoves.find((move) => move.name === currentpoke.encore.move);
     const forcedMoveName =
-        currentpoke.charging || currentpoke.lockedMove || (encoredMove && usableMoves.length === 1 ? encoredMove.name : null);
+        currentpoke.charging || choiceLockedMove(currentpoke) || (encoredMove && usableMoves.length === 1 ? encoredMove.name : null);
     let playableMoves = forcedMoveName
         ? currentpoke.moveset.filter((move) => move.name === forcedMoveName)
         : currentpoke.moveset;

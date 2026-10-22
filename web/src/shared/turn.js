@@ -649,6 +649,12 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
         const pressured = opponentPokemon[0].hp[0] > 0 && abilityName(opponentPokemon[0]) === "pressure" && aimsAtFoe(chosenMove);
         spendPP(chosenMove, pressured ? 2 : 1);
     }
+    // A Choice item locks its holder onto the move the moment it is used, whatever then happens
+    // to it (misses, has no effect, fails). Doing it here instead of in each branch of
+    // executeMove, many of which return early, is what keeps the lock from being skipped.
+    if (activeItem(attacker) && CHOICE_ITEMS[attacker.item.name] !== undefined && chosenMove.name !== "struggle") {
+        attacker.lockedMove = chosenMove.name;
+    }
     attacker.ignoresAbilityNow = chosenMove.damage_class.name === "status" && hasSlowStatusMoves(attacker);
     executeMove(playerPokemon, opponentPokemon, chosenMove, text, {});
     if (playerPokemon.field) playerPokemon.field.lastMove = chosenMove; // (Copycat copies what was used before it)
@@ -881,8 +887,6 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
     if (foe.hp[0] > 0 && typeEffectiveness(move, foe, attacker) !== 0 && !rollAccuracy(attacker, foe, move, field)) {
         text.push(pokemonNameToString(attacker) + " used " + moveNameToString(move) + "!");
         text.push(pokemonNameToString(attacker) + "'s attack missed!");
-        if (activeItem(attacker) && CHOICE_ITEMS[attacker.item.name] !== undefined)
-            attacker.lockedMove = move.name; // a missed move still locks a Choice item
         tryCrashDamage(attacker, move, text);
         return;
     }
@@ -896,8 +900,6 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
         const hitSubstitute = !!foe.subHitFlag;
         foe.subHitFlag = false;
         trackMetronome(attacker, move);
-        if (activeItem(attacker) && CHOICE_ITEMS[attacker.item.name] !== undefined)
-            attacker.lockedMove = move.name;
         /// temporary fix for moves giving me errors
         if (move.meta !== undefined)
             addArrayToArray(text, doMoveEffects(attacker, foe, move, {
@@ -1411,8 +1413,6 @@ function tryStartCharge(attacker, move, text, field) {
         return false;
     }
     attacker.charging = move.name;
-    if (activeItem(attacker) && CHOICE_ITEMS[attacker.item.name] !== undefined)
-        attacker.lockedMove = move.name;
     return true;
 }
 

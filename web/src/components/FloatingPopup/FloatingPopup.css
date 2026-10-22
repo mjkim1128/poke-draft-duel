@@ -1,0 +1,21 @@
+.floating-popup {
+    position: fixed;
+    z-index: 1000;
+    box-sizing: border-box;
+    /* 왼쪽 위치와 상관없이 내용 크기 그대로. (이게 없으면 오른쪽에 놓일수록 폭이 줄어 내용이 잘린다) */
+    width: max-content;
+    max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    overflow: auto;
+    border: 1px solid #889;
+    border-radius: 6px;
+    /* 정보창 위로 마우스가 들어가 깜빡이지 않게 */
+    pointer-events: none;
+    font-size: 13px;
+    text-align: left;
+}
+
+/* 정보창 안의 능력치 그래프는 글자 폭에 묶이지 않게 (화면 한계는 정보창의 max-width가 맡는다) */
+.floating-popup .canvasjs-div {
+    max-width: none;
+}

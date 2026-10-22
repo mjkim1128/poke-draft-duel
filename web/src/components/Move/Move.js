@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { FloatingPopup } from "components/FloatingPopup";
+import React, { useRef, useState } from "react";
 import {
     damageClassToString,
     damageCalc,
@@ -11,7 +12,8 @@ import {
 import "./Move.css";
 
 export function Move(props) {
-    const [style, setStyle] = useState({ display: "none" });
+    const [hover, setHover] = useState(false);
+    const buttonRef = useRef(null);
 
     let [attack, defend] = [null, null];
     let [atkStat, defStat] = [null, null];
@@ -89,6 +91,7 @@ export function Move(props) {
         <div>
             <div className="move-div">
                 <button
+                    ref={buttonRef}
                     className={moveClassName}
                     id={props.move.type.name}
                     disabled={
@@ -110,12 +113,8 @@ export function Move(props) {
                             ))
                     }
                     onClick={() => props.onClick(props.move)}
-                    onMouseOver={(e) => {
-                        setStyle({ display: "table" });
-                    }}
-                    onMouseOut={(e) => {
-                        setStyle({ display: "none" });
-                    }}
+                    onMouseOver={() => setHover(true)}
+                    onMouseOut={() => setHover(false)}
                 >
                     <p>{moveNameToString(props.move)}</p>
                     <p>{typeNameToString(props.move.type.name)}</p>
@@ -126,19 +125,8 @@ export function Move(props) {
                     )}
                 </button>
             </div>
-            <div style={style}>
-                <div
-                    className="move-info-div"
-                    id={
-                        props.moveOwner === "party"
-                            ? (props.move.meta &&
-                                  (props.move.meta.stat_chance === 100 ||
-                                      props.move.meta.drain !== 0))
-                                ? "party-extra-space"
-                                : "party"
-                            : ""
-                    }
-                >
+            <FloatingPopup anchorRef={buttonRef} visible={hover}>
+                <div className="move-info-div">
                     <p>
                         Power: {props.move.power}
                         {typeof props.move.accuracy === "number" &&
@@ -178,7 +166,7 @@ export function Move(props) {
                         </div>
                     )}
                 </div>
-            </div>
+            </FloatingPopup>
         </div>
     );
 }

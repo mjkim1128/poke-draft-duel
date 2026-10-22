@@ -1,19 +1,14 @@
 import { HoverPokemonData } from "components/HoverPokemonData";
-import React, { useState } from "react";
+import { FloatingPopup } from "components/FloatingPopup";
+import React, { useRef, useState } from "react";
 import "./PokemonPartyMember.css";
 
 export function PokemonPartyMember(props) {
-    const [style, setStyle] = useState({ display: "none" });
+    const [hover, setHover] = useState(false);
+    const anchorRef = useRef(null);
 
     return (
-        <div
-            onMouseOver={(e) => {
-                setStyle({ display: "table" });
-            }}
-            onMouseOut={(e) => {
-                setStyle({ display: "none" });
-            }}
-        >
+        <div ref={anchorRef} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
             <button
                 className={props.pokemon.hp[0] <= 0 ? "disabledButton" : ""}
                 disabled={props.pokemon.hp[0] === 0}
@@ -26,9 +21,9 @@ export function PokemonPartyMember(props) {
                     alt={props.pokemon.name}
                 ></img>
             </button>
-            <div style={style}>
+            <FloatingPopup anchorRef={anchorRef} visible={hover}>
                 <HoverPokemonData pokemon={props.pokemon} />
-            </div>
+            </FloatingPopup>
         </div>
     );
 }

@@ -6,10 +6,12 @@ import React from 'react';
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export function StatsDisplay(props) {
+    // a narrow screen gets a narrower chart
+    const chartWidth = Math.max(240, Math.min(400, window.innerWidth - 32));
 
     const options = {
         backgroundColor: "transparent",
-        width: Math.max(240, Math.min(400, window.innerWidth - 32)), // a narrow screen gets a narrower chart
+        width: chartWidth,
         axisX: {
             reversed: true,
         },
@@ -33,7 +35,9 @@ export function StatsDisplay(props) {
     }
 
     return(
-        <div className="canvasjs-div">
+        /// The chart library draws its canvas on top of the box (absolutely positioned), so the box
+        /// has no width of its own unless it is given one; a popup would then be only as wide as its text.
+        <div className="canvasjs-div" style={{ width: chartWidth }}>
             <CanvasJSChart options={options} />
         </div>
     );

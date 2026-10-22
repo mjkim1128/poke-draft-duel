@@ -1,11 +1,9 @@
 .hover-pokemon-div {
+    /* 위치는 FloatingPopup이 정한다 */
     display: table;
-    position: absolute;
     background-color: azure;
     width: auto;
-    z-index: 100;
-    margin-top: -125px;
-    margin-left: 100px;
+    padding: 4px 0;
 }
 
 .hover-pokemon-div p {

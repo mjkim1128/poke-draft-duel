@@ -339,11 +339,6 @@
     margin: 1px 0;
 }
 
-.bp-moves .move-info-div {
-    max-width: 70vw;
-    font-size: 12px;
-}
-
 .bp-party {
     display: flex;
     flex-direction: column;

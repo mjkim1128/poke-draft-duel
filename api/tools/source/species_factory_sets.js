@@ -1272,16 +1272,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
       [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "destiny-bond" /* 길동무 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "cursed-body" /* 저주받은바디 */,
-    "moves": [
-      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ice" } ]
     ]
   },
@@ -1367,16 +1357,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "leech-seed" /* 씨뿌리기 */ } ],
       [ { "slug": "gyro-ball" /* 자이로볼 */ } ],
       [ { "slug": "power-whip" /* 파워휩 */ } ]
-    ]
-  },
-  {
-    "item": "shed-shell" /* 아름다운허물 */,
-    "ability": "iron-barbs" /* 철가시 */,
-    "moves": [
-      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
-      [ { "slug": "leech-seed" /* 씨뿌리기 */ } ],
-      [ { "slug": "gyro-ball" /* 자이로볼 */ } ],
-      [ { "slug": "protect" /* 방어 */ } ]
     ]
   },
   {

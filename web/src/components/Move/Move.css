@@ -118,3 +118,13 @@
 #hidden {
     background-color: teal;
 }
+
+/* 글자색: 배경이 진하면 흰색, 옅으면 검정 (밝기 0.299R+0.587G+0.114B 가 128 이상이면 옅은 색) */
+#fire, #electric, #fairy, #rock, #flying, #ice, #normal {
+    color: #000;
+}
+
+#water, #grass, #bug, #fighting, #psychic, #dark, #poison, #ground, #dragon, #steel, #ghost, #hidden {
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45); /* 중간 밝기 배경에서도 또렷하게 */
+}

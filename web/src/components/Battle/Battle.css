@@ -73,13 +73,31 @@
     padding: 6px;
     border: 1px solid #b8bfcc;
     border-radius: 8px;
-    background: #f4f8ff;
+    /* 경기장 그림. 아래쪽 땅이 보이도록 아래에 맞춘다 */
+    background: #bfe3d4 url(../../assets/battle-field.webp) 40% bottom / cover no-repeat;
     overflow: hidden;
 }
 
 .bp-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
     font-size: 12px;
     font-weight: bold;
+}
+
+/* 그림 위에서도 읽히도록 반투명 흰 바탕 */
+.bp-head > span,
+.bp-opponent .current-pokemon-div > div:first-child,
+.bp-player .current-pokemon-div > div:first-child {
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 6px;
+    padding: 1px 6px;
+}
+
+.bp-opponent .current-pokemon-div > div:first-child,
+.bp-player .current-pokemon-div > div:first-child {
+    align-self: flex-start;
 }
 
 .bp-head .field-info {
@@ -129,8 +147,9 @@
 }
 
 .bp-announcer {
-    min-height: 3em;
-    max-height: 6.5em;
+    /* 문장 길이와 상관없이 크기가 변하지 않게 고정. 넘치면 안에서 스크롤 */
+    flex: 0 0 auto;
+    height: 6.5em;
     overflow: auto;
     box-sizing: border-box;
     padding: 4px 6px;

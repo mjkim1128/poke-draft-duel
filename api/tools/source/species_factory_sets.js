@@ -1278,6 +1278,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "ferrothorn": /* 너트령 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -4903,6 +4904,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "lopunny": /* 이어롭 */ [
   {
     "item": null,
@@ -7734,6 +7736,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "beedrill": /* 독침붕 */ [
   {
     "item": null,
@@ -7776,6 +7779,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "blastoise": /* 거북왕 */ [
   {
     "item": null,
@@ -12037,6 +12041,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "banette": /* 다크펫 */ [
   {
     "item": null,
@@ -12419,6 +12424,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "hitmontop": /* 카포에라 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -13387,6 +13393,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "smeargle": /* 루브도 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
@@ -16163,6 +16170,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "stoutland": /* 바랜드 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
@@ -16217,6 +16225,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "jumpluff": /* 솜솜코 */ [
   {
     "item": null,
@@ -16291,6 +16300,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "rapidash": /* 날쌩마 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -16675,6 +16685,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "lickilicky": /* 내룸벨트 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -16709,6 +16720,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "seaking": /* 왕콘치 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -16837,6 +16849,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "leavanny": /* 모아머 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
@@ -16871,6 +16884,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "purugly": /* 몬냥이 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
@@ -16905,6 +16919,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "armaldo": /* 아말도 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -17739,6 +17754,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "naganadel": /* 아고용 */ [
   {
     "item": null,
@@ -18601,6 +18617,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "quagsire": /* 누오 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -19025,6 +19042,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "pidgeot": /* 피죤투 */ [
   {
     "item": null,
@@ -19823,6 +19841,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "golisopod": /* 갑주무사 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
@@ -20234,6 +20253,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "bellossom": /* 아르코 */ [
   {
     "item": null,
@@ -20246,6 +20266,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "type-null": /* 타입:널 */ [
   {
     "item": null,
@@ -20258,6 +20279,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "cradily": /* 릴리요 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
@@ -20520,6 +20542,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "shedinja": /* 껍질몬 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
@@ -21032,6 +21055,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "eldegoss": /* 백솜모카 */ [
   {
     "item": "heavy-duty-boots" /* 통굽부츠 */,
@@ -21118,6 +21142,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "centiskorch": /* 다태우지네 */ [
   {
     "item": "heavy-duty-boots" /* 통굽부츠 */,
@@ -21538,6 +21563,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "iron-moth": /* 무쇠독나방 */ [
   {
     "item": null,
@@ -21580,6 +21606,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "iron-valiant": /* 무쇠무인 */ [
   {
     "item": null,
@@ -21730,6 +21757,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "roaring-moon": /* 고동치는달 */ [
   {
     "item": null,
@@ -21798,6 +21826,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  // $$ 도구가 비었거나 못 배우는 기술이 있는 세트가 있음 - 고치거나 지울 것
   "clodsire": /* 토오 */ [
   {
     "item": "heavy-duty-boots" /* 통굽부츠 */,

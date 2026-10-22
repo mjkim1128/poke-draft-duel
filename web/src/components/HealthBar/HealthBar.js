@@ -8,7 +8,7 @@ export const HealthBar = ({ value, maxValue }) => (
                 className={styles.value}
                 style={{ width: `${(value / maxValue) * 100}%` }}
             >
-                {(Math.round(value / maxValue * 1000)) / 10}%
+                {Math.ceil((value / maxValue) * 100)}%
             </div>
         </div>
     </div>

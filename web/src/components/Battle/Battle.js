@@ -8,7 +8,11 @@ import {
 } from "components";
 import React, { useEffect, useRef, useState } from "react";
 import { SUBSTITUTE_FRONT, SUBSTITUTE_BACK } from "components/StatusBadges";
+import { usePortrait } from "hooks";
 import {
+    pokemonNameToString,
+    moveNameToString,
+    abilityLabel,
     doSwitch,
     doTurn,
     resumeTurn,
@@ -36,6 +40,10 @@ export function Battle(props) {
         },
     ]);
     const [stepNumber, setStepNumber] = useState(0);
+    /// Portrait screens (a phone, a tall narrow window) swap the side-by-side board for a field
+    /// on top and a tabbed control panel (moves / switch / log) underneath.
+    const portrait = usePortrait();
+    const [panelTab, setPanelTab] = useState("moves");
     const [announcerMessage, setAnnouncerMessage] = useState([]);
     const [isAnimating, setAnimating] = useState(false);
     /// A turn plays out one beat at a time instead of jumping straight to the end result:
@@ -244,6 +252,7 @@ export function Battle(props) {
                 return;
             }
             let move = { priority: 6, index: index };
+            setPanelTab("moves");
             nextTurn(move);
         }
     }
@@ -306,6 +315,16 @@ export function Battle(props) {
         !isGameOver &&
         props.playerPokemon[0].hp[0] <= 0 &&
         props.playerPokemon.slice(1).some((poke) => poke.hp[0] > 0);
+    /// A forced switch (the player's pokemon fainted, or it pivoted out) can only be answered from
+    /// the switch tab; once answered, the panel goes back to the moves.
+    const mustPickSwitch =
+        needsPlayerSwitch || (isForceSwitch && !isGameOver && !!props.playerPokemon.pendingSwitch);
+    const wasPickingSwitch = useRef(false);
+    useEffect(() => {
+        if (mustPickSwitch) setPanelTab("switch");
+        else if (wasPickingSwitch.current) setPanelTab("moves");
+        wasPickingSwitch.current = mustPickSwitch;
+    }, [mustPickSwitch]);
     let displaypokes = isCurrent
         ? liveState.playerPokemon
         : history[stepNumber].playerPokemon;
@@ -369,6 +388,121 @@ export function Battle(props) {
             );
         });
     }
+
+    if (portrait) {
+        const board = isCurrent ? liveState : history[stepNumber];
+        const mine = board.playerPokemon;
+        const theirs = board.opponentPokemon;
+        const percent = (poke) => Math.ceil((poke.hp[0] / poke.hp[1]) * 100);
+        const partyRows = mine.slice(1).map((poke, i) => (
+            <button
+                key={i}
+                className="bp-party-row"
+                disabled={poke.hp[0] <= 0}
+                onClick={() => onSwitch(i + 1)}
+            >
+                <img src={poke.sprites.front_default} alt={poke.name} />
+                <span className="bp-party-info">
+                    <span>
+                        {pokemonNameToString(poke)} · HP {percent(poke)}%
+                    </span>
+                    <span className="bp-party-sub">
+                        {abilityLabel(poke)}
+                        {poke.item ? " · " + (poke.item.korean_name || poke.item.name) : ""}
+                    </span>
+                    <span className="bp-party-sub">{poke.moveset.map((m) => moveNameToString(m)).join(" / ")}</span>
+                </span>
+            </button>
+        ));
+        const turnControls = (
+            <div className="turn-control-buttons">
+                <button onClick={() => setStepNumber(0)}>|&lt;&lt;</button>
+                <button onClick={() => stepNumber > 0 && setStepNumber(stepNumber - 1)}>&lt;</button>
+                <button onClick={() => stepNumber < history.length && setStepNumber(stepNumber + 1)}>&gt;</button>
+                <button onClick={() => stepNumber < history.length && setStepNumber(history.length)}>&gt;&gt;|</button>
+            </div>
+        );
+        const tabs = [
+            ["moves", "기술"],
+            ["switch", "교체"],
+            ["log", "기록"],
+        ];
+        return (
+            <div className="battle-portrait">
+                <div className="bp-field">
+                    {isGameOver ? (
+                        <div className="bp-gameover">
+                            <GameOverDisplay
+                                win={isVictory}
+                                onClick={props.setBattleFactoryState}
+                                winStreak={props.winStreak}
+                            />
+                        </div>
+                    ) : (
+                        <div className="bp-head">
+                            Turn {isCurrent ? turns.length : stepNumber}
+                            {fieldText && <span className="field-info"> · {fieldText}</span>}
+                        </div>
+                    )}
+                    <div className="bp-opponent">
+                        <PokemonParty pokemon={theirs} />
+                        <CurrentPokemon
+                            pokemon={theirs[0]}
+                            substituteImg={SUBSTITUTE_FRONT}
+                            img={(theirs[0].illusion || theirs[0]).sprites.front_default}
+                        />
+                    </div>
+                    <div
+                        className="bp-announcer"
+                        onClick={skipAnimation}
+                        style={animFrames ? { cursor: "pointer" } : undefined}
+                    >
+                        {needsPlayerSwitch ? (
+                            <div>다음 포켓몬을 선택하세요!</div>
+                        ) : awaitingInput ? (
+                            <div>Turn {turns.length + 1} - 행동을 결정하세요!</div>
+                        ) : (
+                            turns.length > 0 && <BattleAnnouncer text={announcerMessage} />
+                        )}
+                    </div>
+                    <div className="bp-player">
+                        <CurrentPokemon
+                            pokemon={mine[0]}
+                            substituteImg={SUBSTITUTE_BACK}
+                            img={mine[0].sprites.back_default}
+                        />
+                    </div>
+                </div>
+                <div className="bp-panel">
+                    <div className="bp-tabs" role="tablist">
+                        {tabs.map(([key, label]) => (
+                            <button
+                                key={key}
+                                role="tab"
+                                aria-selected={panelTab === key}
+                                className={"bp-tab" + (panelTab === key ? " on" : "")}
+                                onClick={() => setPanelTab(key)}
+                            >
+                                {label}
+                                {key === "switch" && mustPickSwitch ? " !" : ""}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="bp-body">
+                        {panelTab === "moves" && <div className="pokemon-moves bp-moves">{moves}</div>}
+                        {panelTab === "switch" && <div className="bp-party">{partyRows}</div>}
+                        {panelTab === "log" && (
+                            <div className="bp-log">
+                                <TurnFeed turns={turns} setStepNumber={setStepNumber} />
+                                {turnControls}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="battle">
             <div className="pokemon-grid">

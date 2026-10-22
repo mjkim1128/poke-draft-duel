@@ -9,7 +9,7 @@ export function StatsDisplay(props) {
 
     const options = {
         backgroundColor: "transparent",
-        width: 400,
+        width: Math.max(240, Math.min(400, window.innerWidth - 32)), // a narrow screen gets a narrower chart
         axisX: {
             reversed: true,
         },

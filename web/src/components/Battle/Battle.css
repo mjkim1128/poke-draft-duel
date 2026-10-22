@@ -48,3 +48,237 @@
     background-color: aliceblue;
     padding: 0.25em;
 }
+
+/* ---- 세로 화면: 위에 필드, 아래에 탭이 있는 조작판 (기술 / 교체 / 기록) ---- */
+.battle-portrait {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    box-sizing: border-box;
+    padding: 6px;
+    gap: 6px;
+    overflow: hidden;
+}
+
+.bp-field {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 6px;
+    border: 1px solid #b8bfcc;
+    border-radius: 8px;
+    background: #f4f8ff;
+    overflow: hidden;
+}
+
+.bp-head {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.bp-head .field-info {
+    font-weight: normal;
+}
+
+.bp-opponent {
+    align-self: flex-end;
+}
+
+.bp-player {
+    align-self: flex-start;
+}
+
+/* 포켓몬 그림은 화면 크기에 맞춰 줄인다 */
+.bp-opponent .current-pokemon-div img,
+.bp-player .current-pokemon-div img {
+    width: min(34vw, 14dvh);
+    height: auto;
+    max-height: 14dvh;
+    object-fit: contain;
+}
+
+.bp-opponent .current-pokemon-div,
+.bp-player .current-pokemon-div {
+    gap: 6px;
+    font-size: 13px;
+}
+
+.bp-opponent .current-pokemon-div p,
+.bp-player .current-pokemon-div p {
+    margin: 2px 0;
+}
+
+/* 상대의 교체 후보는 작은 아이콘으로 */
+.bp-opponent .pokemon-party {
+    justify-content: flex-end;
+}
+
+.bp-opponent .pokemon-party img {
+    width: 36px;
+    height: 36px;
+}
+
+.bp-opponent .pokemon-party button {
+    padding: 2px;
+}
+
+.bp-announcer {
+    min-height: 3em;
+    max-height: 6.5em;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 4px 6px;
+    font-size: 13px;
+    border: 1px dashed #889;
+    background: aliceblue;
+}
+
+.bp-gameover .game-over-div {
+    padding: 0.75em;
+    border-width: 5px;
+}
+
+.bp-panel {
+    flex: 0 0 auto;
+    height: 42vh;
+    height: 42dvh;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #b8bfcc;
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.bp-tabs {
+    display: flex;
+    border-bottom: 1px solid #d5d9e2;
+}
+
+.bp-tab {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 14px;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: #555;
+}
+
+.bp-tab.on {
+    border-bottom-color: #2b6fd6;
+    color: #2b6fd6;
+    font-weight: bold;
+}
+
+.bp-body {
+    flex: 1;
+    position: relative;
+    overflow: auto;
+    padding: 6px;
+}
+
+.pokemon-moves.bp-moves {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    min-width: 0;
+    min-height: 0;
+}
+
+.bp-moves > div {
+    min-width: 0;
+}
+
+.bp-moves .move-div {
+    display: block;
+}
+
+.bp-moves .move-button {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 4.6em;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.bp-moves .move-button p {
+    margin: 1px 0;
+}
+
+.bp-moves .move-info-div {
+    max-width: 70vw;
+    font-size: 12px;
+}
+
+.bp-party {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bp-party-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.bp-party-row:disabled {
+    opacity: 0.5;
+}
+
+.bp-party-row img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    flex: none;
+}
+
+.bp-party-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    min-width: 0;
+}
+
+.bp-party-sub {
+    font-size: 11px;
+    color: #555;
+}
+
+.bp-log {
+    position: absolute;
+    inset: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bp-log .turn-feed-div {
+    display: block;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: auto;
+    box-sizing: border-box;
+    border-width: 1px;
+    overflow: hidden;
+}
+
+.bp-log .turn-control-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}

@@ -35,3 +35,13 @@
     height: 20px;
     margin-right: 4px;
 }
+@media (max-aspect-ratio: 1/1), (max-width: 640px) {
+    .selected-pokemon-div {
+        flex-direction: column;
+    }
+
+    .selected-pokemon-row {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+}

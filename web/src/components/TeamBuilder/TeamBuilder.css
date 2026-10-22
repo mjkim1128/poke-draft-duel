@@ -18,3 +18,17 @@
 .select-pokemon {
     width: 100px;
 }
+/* 세로 화면에서는 한 열로 쌓는다 */
+@media (max-aspect-ratio: 1/1), (max-width: 640px) {
+    .teambuilder-div {
+        display: block;
+        margin: 0;
+        padding: 8px;
+    }
+
+    .teambuilder-row {
+        height: auto;
+        width: auto;
+        margin-bottom: 10px;
+    }
+}

@@ -2,3 +2,8 @@
     display: flex;
     justify-content: center;
 }
+@media (max-aspect-ratio: 1/1), (max-width: 640px) {
+    .pokemon-options {
+        flex-wrap: wrap;
+    }
+}

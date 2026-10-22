@@ -13,7 +13,8 @@ import {
     WIND_MOVES,
     CRASH_MOVES,
 } from "./movemechanics";
-import { UNREMOVABLE_ITEMS } from "./iteminfo";
+import { UNREMOVABLE_ITEMS, BOOSTER_ENERGY } from "./iteminfo";
+import { activeItem } from "./helditem";
 import { PogeyData } from "./pogey";
 
 // Abilities. Showdown's abilities are engine code (data/abilities.ts event handlers), so
@@ -143,15 +144,27 @@ const speedInWeather = (test) => ({
 });
 // Protosynthesis / Quark Drive: while the sun (or Electric Terrain) is up, its highest stat is
 // boosted (x1.3, x1.5 for Speed). Which stat is chosen when it kicks in.
+// Booster Energy does the same without the field: the holder eats it as soon as the field isn't
+// doing the job. A boost it gave lasts until the holder leaves (boosterFromItem); a boost from
+// the field wears off with the field.
 const boosterAbility = (label, isActive) => ({
-    onUpdate({ self, field, text }) {
+    onUpdate({ self, field, text, consumeItem }) {
         const on = isActive(field);
         if (on && !self.boosterStat) {
             self.boosterStat = bestStatName(self);
+            self.boosterFromItem = false;
             text.push(pokemonNameToString(self) + "'s " + label + " boosted its " + statNameToString(self.boosterStat) + "!");
-        } else if (!on && self.boosterStat) {
+        } else if (!on && self.boosterStat && !self.boosterFromItem) {
             self.boosterStat = null;
             text.push(pokemonNameToString(self) + "'s " + label + " wore off.");
+        }
+        const held = activeItem(self);
+        if (!on && !self.boosterStat && self.hp[0] > 0 && held && held.name === BOOSTER_ENERGY && consumeItem) {
+            consumeItem(self);
+            self.boosterStat = bestStatName(self);
+            self.boosterFromItem = true;
+            text.push(pokemonNameToString(self) + " used its Booster Energy!");
+            text.push(pokemonNameToString(self) + "'s " + label + " boosted its " + statNameToString(self.boosterStat) + "!");
         }
     },
     onModifyAtk({ self, category }) {
@@ -1627,6 +1640,7 @@ export function resetAbilityState(pokemon) {
     pokemon.flashFire = false;
     pokemon.proteanUsed = false;
     pokemon.boosterStat = null; // Protosynthesis / Quark Drive
+    pokemon.boosterFromItem = false;
     pokemon.perish = null;
     pokemon.yawn = null;
     pokemon.cursed = false;

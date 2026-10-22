@@ -71,6 +71,7 @@
 {"id":723,"name":"roseli-berry","korean_name":"로셀열매","category":{"name":"type-protection"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/roseli-berry.png"}},
 {"id":724,"name":"kee-berry","korean_name":"악키열매","category":{"name":"other"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/kee-berry.png"}},
 {"id":1178,"name":"heavy-duty-boots","korean_name":"통굽부츠","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/heavy-duty-boots.png"}},
+{"id":1696,"name":"booster-energy","korean_name":"부스트에너지","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/booster-energy.png"}},
 {"id":1701,"name":"covert-cloak","korean_name":"은밀망토","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/covert-cloak.png"}},
 {"id":1702,"name":"loaded-dice","korean_name":"속임수주사위","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/loaded-dice.png"}}
 ]

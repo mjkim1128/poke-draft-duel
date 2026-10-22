@@ -177,6 +177,7 @@ const GRAVITY_BLOCKED_MOVES = new Set(["fly", "bounce", "splash", "magnet-rise",
 // file): change stats, hurt/heal, give a status, disable a move.
 function abilityApi(field) {
     return {
+        consumeItem,
         boost: (pokemon, changes, t, source = null) => {
             addArrayToArray(t, doStatChanges(pokemon, { stat_changes: changes }, source));
             tryConsumeWhiteHerb(pokemon, t);
@@ -418,7 +419,7 @@ function runEntryAbilities(team, foeTeam, field) {
     const self = team[0];
     refreshBattlefield(team, foeTeam);
     runHook(self, "onSwitchIn", { foe: foeTeam[0], selfTeam: team, foeTeam, field, text, selfIsPlayer: !!team.isPlayerSide, ...abilityApi(field) }, foeTeam[0]);
-    runHook(self, "onUpdate", { field, text });
+    runHook(self, "onUpdate", { field, text, ...abilityApi(field) });
     return text;
 }
 
@@ -473,7 +474,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
                 })
             );
         }
-        for (const t of [playerPokemon, opponentPokemon]) runHook(t[0], "onUpdate", { field, text });
+        for (const t of [playerPokemon, opponentPokemon]) runHook(t[0], "onUpdate", { field, text, ...abilityApi(field) });
 
         // Either side can end up wanting to switch: the mover (U-turn...) or the one it hit
         // (Emergency Exit). The CPU switches straight away; the player is asked.
@@ -536,7 +537,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     // The field may have changed at the end of the turn (weather ran out, a Cloud Nine holder
     // fainted): abilities that follow it (Forecast, Protosynthesis...) catch up
     refreshBattlefield(playerPokemon, opponentPokemon);
-    for (const t of [playerPokemon, opponentPokemon]) runHook(t[0], "onUpdate", { field, text });
+    for (const t of [playerPokemon, opponentPokemon]) runHook(t[0], "onUpdate", { field, text, ...abilityApi(field) });
     for (const team of [playerPokemon, opponentPokemon]) {
         team[0].movedThisTurn = false;
         team[0].itemUsedThisTurn = false;

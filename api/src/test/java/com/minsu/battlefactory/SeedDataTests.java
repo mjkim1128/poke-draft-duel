@@ -40,9 +40,23 @@ class SeedDataTests {
 
     @Test
     void rowCounts() {
-        assertEquals(552, pokemonRepository.count());
-        assertEquals(937, moveRepository.count());
-        assertEquals(74, itemRepository.count());
+        // 데이터를 고칠 때마다 개수가 바뀌므로, 시드 파일의 개수와 비교한다
+        assertEquals(seedSize("pokemon.json"), pokemonRepository.count());
+        assertEquals(seedSize("moves.json"), moveRepository.count());
+        assertEquals(seedSize("items.json"), itemRepository.count());
+    }
+
+    @Test
+    void boosterEnergyIsAnItem() {
+        assertEquals("부스트에너지", itemRepository.findByName("booster-energy").orElseThrow().getKoreanName());
+    }
+
+    private static int seedSize(String file) {
+        try (java.io.InputStream in = new org.springframework.core.io.ClassPathResource("data/" + file).getInputStream()) {
+            return new tools.jackson.databind.ObjectMapper().readTree(in).size();
+        } catch (java.io.IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Test

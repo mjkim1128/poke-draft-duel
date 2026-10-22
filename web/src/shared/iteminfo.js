@@ -159,6 +159,9 @@ export const IRON_BALL = "iron-ball";
 export const COVERT_CLOAK = "covert-cloak";
 export const METRONOME_ITEM = "metronome";
 export const SOUL_DEW = "soul-dew";
+// Switches on Protosynthesis / Quark Drive without the sun or Electric Terrain (see boosterAbility).
+// Not in ITEM_POOL: only the real sets hand it out.
+export const BOOSTER_ENERGY = "booster-energy";
 export const ROCKY_HELMET = "rocky-helmet";
 export const STICKY_BARB = "sticky-barb";
 export const TOXIC_ORB = "toxic-orb";
@@ -193,8 +196,9 @@ export const CHOICE_ITEMS = {
 // Items that can't be removed/stolen/traded/thrown at all (Knock Off, Thief, Trick,
 // Switcheroo, Bestow, Corrosive Gas, Fling all fail against/with these). Real games
 // also protect Mega Stones/Z-Crystals/Plates/Drives/orbs this way, but none of those
-// are in ITEM_POOL, so Soul Dew is the only one that matters here.
-export const UNREMOVABLE_ITEMS = new Set([SOUL_DEW]);
+// are in ITEM_POOL, so Soul Dew is the only one that matters here. Booster Energy joins it: the
+// real games only protect it on Paradox pokemon, and those are the only ones the sets give it to.
+export const UNREMOVABLE_ITEMS = new Set([SOUL_DEW, BOOSTER_ENERGY]);
 
 // Real Fling base power per item (Bulbapedia's Fling power list); best-effort for the
 // items in ITEM_POOL specifically. Falls back to 30 for an unlisted general item, since

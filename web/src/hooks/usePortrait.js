@@ -13,11 +13,15 @@ export function usePortrait() {
         const media = window.matchMedia(PORTRAIT_QUERY);
         const update = () => setPortrait(matches());
         update();
-        // 브라우저에 따라 미디어 쿼리 변경 알림이 오지 않는 경우가 있어서, 창 크기 변경도 같이 듣는다
-        media.addEventListener("change", update);
+        // 브라우저에 따라 미디어 쿼리 변경 알림이 오지 않는 경우가 있어서, 창 크기 변경도 같이 듣는다.
+        // 오래된 사파리(iOS 13 이하)에는 addEventListener가 없고 addListener만 있다. 없을 때 그냥
+        // 부르면 화면이 하얗게 멈추므로, 있는 쪽을 쓴다.
+        if (media.addEventListener) media.addEventListener("change", update);
+        else if (media.addListener) media.addListener(update);
         window.addEventListener("resize", update);
         return () => {
-            media.removeEventListener("change", update);
+            if (media.removeEventListener) media.removeEventListener("change", update);
+            else if (media.removeListener) media.removeListener(update);
             window.removeEventListener("resize", update);
         };
     }, []);

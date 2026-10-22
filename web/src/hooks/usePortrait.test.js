@@ -37,3 +37,16 @@ test("follows the window between portrait and landscape", () => {
     act(() => root.unmount());
     host.remove();
 });
+
+// 오래된 사파리의 matchMedia는 addEventListener 없이 addListener만 가진다
+test("works with an old matchMedia that only has addListener", () => {
+    global.IS_REACT_ACT_ENVIRONMENT = true;
+    window.matchMedia = (query) => ({ matches: true, media: query, addListener: () => {}, removeListener: () => {} });
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    const root = createRoot(host);
+    expect(() => act(() => root.render(<Probe />))).not.toThrow();
+    expect(host.textContent).toBe("portrait");
+    act(() => root.unmount());
+    host.remove();
+});

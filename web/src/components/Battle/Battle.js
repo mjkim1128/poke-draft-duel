@@ -441,10 +441,9 @@ export function Battle(props) {
                     ) : (
                         <div className="bp-head">
                             <span>
-                                Turn {isCurrent ? turns.length : stepNumber}
+                                Turn {isCurrent ? turns.length : stepNumber} · 현재 {props.winStreak}연승
                                 {fieldText && <span className="field-info"> · {fieldText}</span>}
                             </span>
-                            <span className="bp-streak">현재 {props.winStreak}연승</span>
                         </div>
                     )}
                     <div className="bp-opponent">

@@ -72,13 +72,21 @@
     max-height: calc(100dvh - 312px);
     min-height: 220px;
     --sprite-w: min(38vw, 150px); /* 체력 바와 포켓몬 그림 칸의 너비 */
+    --hp-h: 16px; /* 체력 바 높이 */
+    --bench-h: 37px; /* 상대 교체 후보 아이콘 줄 높이 */
+    /* 그림을 아래로 내리는 양: 포켓몬 그림의 가운데가 아니라 '발'이 원 중심에 오게 한다 */
+    --feet-shift: calc(var(--sprite-w) * 0.32);
     border: 1px solid #b8bfcc;
     border-radius: 8px;
     /* 경기장 그림의 두 원 중심은 그림의 (가로, 세로) 비율로 내 쪽 (33.0%, 81.8%), 상대 쪽 (75.2%, 54.9%).
        그림을 가로 112%, 세로 100%로 늘이고 가로로 83% 위치에 맞추면, 내 쪽 원이 필드의 (27%, 81.8%),
        상대 쪽 원이 (74.3%, 54.9%)에 온다. 필드 크기가 달라져도 이 비율은 그대로라서 늘 같은 자리다.
-       포켓몬은 아래에서 이 두 점에 발을 맞춘다. */
-    background: #bfe3d4 url(../../assets/battle-field.webp) 83% 0 / 112% 100% no-repeat;
+       포켓몬 그림은 이 두 점보다 --feet-shift만큼 위에 가운데를 두고, 그림 전체를 --feet-shift만큼 아래로 내려서
+       포켓몬의 발이 원 중심에 오게 한다. 그림 위쪽에 생기는 빈 띠는 하늘색(그림 맨 윗줄과 같은 색)으로 채운다. */
+    background:
+        linear-gradient(to bottom, #afe2d3 0, #afe2d3 var(--feet-shift), rgba(175, 226, 211, 0) calc(var(--feet-shift) + 24px)) no-repeat,
+        url(../../assets/battle-field.webp) 83% var(--feet-shift) / 112% 100% no-repeat,
+        #afe2d3;
     overflow: hidden;
 }
 
@@ -136,21 +144,39 @@
     margin: 2px 0;
 }
 
-/* 이름 / 타입 칸 */
+/* 이름 / 타입 칸: 체력 바와 같은 줄에 한 줄로, 화면 안쪽에 둔다.
+   상대는 체력 바의 왼쪽, 내 쪽은 체력 바의 오른쪽. 체력 바 줄의 높이는 그림 칸의 윗부분이다. */
 .bp-opponent .current-pokemon-div > div:first-child,
 .bp-player .current-pokemon-div > div:first-child {
     position: absolute;
-    max-width: 46%;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    height: var(--hp-h);
+    line-height: var(--hp-h);
+    font-size: 12px;
+    padding: 0 6px;
+}
+
+.bp-opponent .current-pokemon-div > div:first-child p,
+.bp-player .current-pokemon-div > div:first-child p {
+    margin: 0;
+}
+
+.bp-opponent .current-pokemon-div > div:first-child p:first-child::after,
+.bp-player .current-pokemon-div > div:first-child p:first-child::after {
+    content: " -";
 }
 
 .bp-opponent .current-pokemon-div > div:first-child {
-    left: 6px;
-    top: calc(54.9% - 100px);
+    right: calc(25.7% + var(--sprite-w) / 2 + 4px);
+    top: calc(54.9% - var(--sprite-w) * 0.375 - var(--hp-h));
 }
 
 .bp-player .current-pokemon-div > div:first-child {
-    right: 6px;
-    top: calc(81.8% - 100px);
+    left: calc(27% + var(--sprite-w) / 2 + 4px);
+    top: calc(81.8% - var(--sprite-w) * 0.375 - var(--hp-h));
 }
 
 /* 체력 바 + 포켓몬 그림: 포켓몬 그림(칸 너비의 75% 크기)의 정중앙이 원 중심에 오도록 한다.
@@ -185,13 +211,15 @@
 /* 상대의 교체 후보는 작은 아이콘으로 */
 .bp-opponent .pokemon-party {
     position: absolute;
-    left: 6px;
-    top: 30px;
+    left: 74.3%;
+    transform: translateX(-50%);
+    /* 체력 바 바로 위 */
+    top: calc(54.9% - var(--sprite-w) * 0.375 - var(--hp-h) - var(--bench-h) - 2px);
 }
 
 .bp-opponent .pokemon-party img {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
 }
 
 .bp-opponent .pokemon-party button {
@@ -262,6 +290,8 @@
     position: relative;
     overflow: auto;
     padding: 6px;
+    display: flex;
+    flex-direction: column;
 }
 
 .pokemon-moves.bp-moves {
@@ -270,6 +300,8 @@
     gap: 6px;
     min-width: 0;
     min-height: 0;
+    /* 아래 상자의 세로 가운데에 오게 한다 */
+    margin: auto 0;
 }
 
 .bp-moves > div {

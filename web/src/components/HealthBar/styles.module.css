@@ -2,9 +2,10 @@
     display: flex;
     border-radius: 5px;
     gap: 5px;
-    padding: 5px;
+    padding: 0;
     background-color: transparent;
-    width: min(150px, 38vw);
+    /* 전투 화면에서는 포켓몬 그림 칸의 너비를 따른다 */
+    width: var(--sprite-w, min(150px, 38vw));
 }
 
 .label {
@@ -17,8 +18,8 @@
 }
 
 .max {
-    height: 25px;
-    border-radius: 5px;
+    height: 16px; /* 안의 퍼센트 글자(11px)에 맞춘 높이 */
+    border-radius: 4px;
     overflow: hidden;
     box-sizing: border-box;
     flex: 1;
@@ -26,6 +27,11 @@
 }
 .value {
     height: 100%;
+    font-size: 11px;
+    line-height: 16px;
+    padding-left: 3px;
+    box-sizing: border-box;
+    white-space: nowrap;
     background-color: rgb(25, 225, 25);
     transition: width 0.4s ease-out;
 }

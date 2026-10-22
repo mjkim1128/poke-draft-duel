@@ -11,7 +11,8 @@ export function TeamBuilder(props) {
         playerPokemon,
         setPlayerPokemon,
         setBattleFactoryState,
-        loadNewPokemon,
+        rerollOptions,
+        isRerolling,
     ] = props.properties;
     const portrait = useCompactLayout();
 
@@ -29,18 +30,19 @@ export function TeamBuilder(props) {
     const selectButton = selectedPokemon &&
         playerPokemon.length < 3 &&
         playerPokemon.indexOf(selectedPokemon) === -1 && (
-            <button className="select-pokemon" onClick={selectPokemon}>
+            <button className="select-pokemon" onClick={selectPokemon} disabled={isRerolling}>
                 Select
             </button>
         );
     const deselectButton = selectedPokemon && playerPokemon.indexOf(selectedPokemon) >= 0 && (
-        <button className="select-pokemon" onClick={deselectPokemon}>
+        <button className="select-pokemon" onClick={deselectPokemon} disabled={isRerolling}>
             Deselect
         </button>
     );
     const likeButton = playerPokemon.length === 3 && (
         <button
             className="teambuilder-action"
+            disabled={isRerolling}
             onClick={() => {
                 setBattleFactoryState("battle");
             }}
@@ -51,11 +53,12 @@ export function TeamBuilder(props) {
     const rerollButton = playerPokemon.length < 3 && (
         <button
             className="teambuilder-action"
+            disabled={isRerolling}
             onClick={() => {
-                loadNewPokemon();
+                rerollOptions();
             }}
         >
-            REROLL!!!
+            {isRerolling ? "바꾸는 중..." : "REROLL!!!"}
         </button>
     );
 
@@ -67,8 +70,9 @@ export function TeamBuilder(props) {
                 <div className="teambuilder-row">
                     <SelectedPokemon pokemon={selectedPokemon} />
                 </div>
-                <div className="teambuilder-row">
+                <div className={"teambuilder-row" + (isRerolling ? " teambuilder-loading" : "")}>
                     Pick 3:
+                    {isRerolling && <span className="teambuilder-loading-text"> 포켓몬을 바꾸는 중...</span>}
                     <PokemonOptions
                         pokemon={pokemonOptions}
                         onClick={setSelectedPokemon}
@@ -104,8 +108,9 @@ export function TeamBuilder(props) {
                     </div>
                 )}
             </div>
-            <div className="teambuilder-row">
+            <div className={"teambuilder-row" + (isRerolling ? " teambuilder-loading" : "")}>
                 Pick 3:
+                {isRerolling && <span className="teambuilder-loading-text"> 포켓몬을 바꾸는 중...</span>}
                 <PokemonOptions
                     pokemon={pokemonOptions}
                     onClick={setSelectedPokemon}

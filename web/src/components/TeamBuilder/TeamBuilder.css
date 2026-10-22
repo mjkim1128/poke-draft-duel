@@ -63,3 +63,19 @@
         max-width: 240px;
     }
 }
+
+/* 리롤하는 동안: 후보를 흐리게 하고 눌러도 반응하지 않게 한다 */
+.teambuilder-loading .pokemon-options {
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.teambuilder-loading-text {
+    color: #2b6fd6;
+    font-weight: bold;
+}
+
+.teambuilder-div button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -36,6 +36,10 @@ export function Home() {
     const [playerPokemon, setPlayerPokemon] = useState([]);
     const [battleFactoryState, setBattleFactoryState] = useState("home");
     const [winStreak, setWinStreak] = useState(0);
+    const [isRerolling, setRerolling] = useState(false);
+    /// True while the options on screen were just loaded and nobody has started a game with them
+    /// yet, so "Start!" doesn't have to load them a second time.
+    const optionsFresh = React.useRef(false);
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
@@ -113,12 +117,42 @@ export function Home() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [battleFactoryState]);
 
+    /// The 6 pokemon to pick a team from. The six are picked first, one after the other so none
+    /// repeats; each one's item, ability and moves are then fetched all at the same time, which
+    /// is what makes a reroll quick. A brand new array is handed to React at the end: filling
+    /// the old array in place never told React anything had changed.
+    async function loadOptions() {
+        const fresh = [];
+        for (let i = 0; i < 6; i++) {
+            fresh[i] = await generateRandomPokemon(fresh);
+        }
+        await Promise.all(
+            fresh.map(async (_, i) => {
+                await getPokemonData(fresh, i, () => {});
+                await createRandomMoveset(fresh, i, () => {});
+            })
+        );
+        setPokemonOptions(fresh);
+        optionsFresh.current = true;
+    }
+
+    /// REROLL: only the 6 options change (the opponents stay as they are). The pick screen shows
+    /// "changing..." and ignores clicks until the new ones are in.
+    async function rerollOptions() {
+        if (isRerolling) return;
+        setRerolling(true);
+        setSelectedPokemon(null);
+        try {
+            await loadOptions();
+        } finally {
+            setRerolling(false);
+        }
+    }
+
     async function loadNewPokemon(init = true) {
         setSelectedPokemon(null);
         if (init) {
-            for (let i = 0; i < 6; i++) {
-                await randomNewPokemon(pokemonOptions, i, setPokemonOptions);
-            }
+            await loadOptions();
         }
         for (let i = 0; i < 3; i++) {
             if (
@@ -195,8 +229,6 @@ export function Home() {
         /// If a real Showdown "Battle Factory" set was picked for this mon (see getPokemonData),
         /// try to use ITS actual moves first instead of the fully-random diversity pick below.
         if (pokemon.factorySet) {
-            let newMoves = await getMovesOfPokemon(pokemonArr[index]);
-            pokemonArr[index].moves_data = newMoves;
             /// A set is a real, legal competitive set, so its moves are used as they are. They are
             /// not checked against newMoves: that learnset comes from PokeAPI, which leaves out
             /// egg moves and moves only a pre-evolution learns (Ferrothorn's Leech Seed...).
@@ -209,6 +241,10 @@ export function Home() {
                     if (chosen[idx].hpType) m.hpTypeHint = chosen[idx].hpType;
                 });
                 if (moveset.length < 4) {
+                    /// The whole learnset is a big request, so it's only fetched when the set
+                    /// leaves a slot empty.
+                    const newMoves = await getMovesOfPokemon(pokemonArr[index]);
+                    pokemonArr[index].moves_data = newMoves;
                     let padChoices = shuffle(
                         newMoves.filter(
                             (m) =>
@@ -369,8 +405,11 @@ export function Home() {
                     <h1>Battle Factory</h1>
                     <button
                         onClick={async () => {
-                            setApiLoading(true);
-                            await loadNewPokemon();
+                            if (!optionsFresh.current) {
+                                setApiLoading(true);
+                                await loadNewPokemon();
+                            }
+                            optionsFresh.current = false;
                             setBattleFactoryState("teambuild");
                             setApiLoading(false);
                         }}
@@ -389,7 +428,8 @@ export function Home() {
                             playerPokemon,
                             setPlayerPokemon,
                             setBattleFactoryState,
-                            loadNewPokemon,
+                            rerollOptions,
+                            isRerolling,
                         ]}
                     />
                 </div>

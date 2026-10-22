@@ -38,6 +38,17 @@
 @media all {
     .selected-pokemon-div {
         flex-direction: column;
+        /* 어떤 포켓몬을 골라도, 아무것도 안 골랐을 때도 같은 높이 (화면이 출렁이지 않게) */
+        min-height: 440px;
+        box-sizing: border-box;
+    }
+
+    .selected-pokemon-empty {
+        align-items: center;
+        justify-content: center;
+        color: #777;
+        border: 1px dashed #bbb;
+        border-radius: 8px;
     }
 
     .selected-pokemon-row {

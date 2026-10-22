@@ -64,14 +64,24 @@ export function TeamBuilder(props) {
     if (portrait) {
         return (
             <div className="teambuilder-div">
-                <div className="teambuilder-row">{selectedPokemon && <SelectedPokemon pokemon={selectedPokemon} />}</div>
+                <div className="teambuilder-row">
+                    <SelectedPokemon pokemon={selectedPokemon} />
+                </div>
                 <div className="teambuilder-row">
                     Pick 3:
-                    <PokemonOptions pokemon={pokemonOptions} onClick={setSelectedPokemon} />
+                    <PokemonOptions
+                        pokemon={pokemonOptions}
+                        onClick={setSelectedPokemon}
+                        selectedPokemon={selectedPokemon}
+                    />
                 </div>
                 <div className="teambuilder-row">
                     Your Team:
-                    <PokemonOptions pokemon={playerPokemon} onClick={setSelectedPokemon} />
+                    <PokemonOptions
+                        pokemon={playerPokemon}
+                        onClick={setSelectedPokemon}
+                        selectedPokemon={selectedPokemon}
+                    />
                 </div>
                 <div className="teambuilder-bar">
                     {selectButton}
@@ -96,11 +106,19 @@ export function TeamBuilder(props) {
             </div>
             <div className="teambuilder-row">
                 Pick 3:
-                <PokemonOptions pokemon={pokemonOptions} onClick={setSelectedPokemon} />
+                <PokemonOptions
+                    pokemon={pokemonOptions}
+                    onClick={setSelectedPokemon}
+                    selectedPokemon={selectedPokemon}
+                />
             </div>
             <div className="teambuilder-row">
                 Your Team:
-                <PokemonOptions pokemon={playerPokemon} onClick={setSelectedPokemon} />
+                <PokemonOptions
+                    pokemon={playerPokemon}
+                    onClick={setSelectedPokemon}
+                    selectedPokemon={selectedPokemon}
+                />
                 {likeButton}
             </div>
             <div className="teambuilder-row">{rerollButton}</div>

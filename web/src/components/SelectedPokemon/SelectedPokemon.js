@@ -5,6 +5,15 @@ import React from "react";
 import "./SelectedPokemon.css";
 
 export function SelectedPokemon(props) {
+    /// Nothing picked yet: an empty card of the same size, so the screen doesn't jump when the
+    /// first pokemon is picked.
+    if (!props.pokemon) {
+        return (
+            <div className="selected-pokemon-div selected-pokemon-empty">
+                <p>포켓몬을 누르면 정보가 여기에 표시됩니다</p>
+            </div>
+        );
+    }
 
     const moves = props.pokemon.moveset.map((move, index) => {
         return (

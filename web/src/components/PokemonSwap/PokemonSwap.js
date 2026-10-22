@@ -52,7 +52,7 @@ export function PokemonSwap(props) {
             <div className="pokemon-swap">
                 <div className="pokemon-swap-row">
                     <h2>Pokemon Swap - Win Streak: {winStreak}</h2>
-                    {selectedPokemon && <SelectedPokemon pokemon={selectedPokemon} />}
+                    <SelectedPokemon pokemon={selectedPokemon} />
                 </div>
                 <div className="pokemon-swap-row">
                     <PokemonOptions

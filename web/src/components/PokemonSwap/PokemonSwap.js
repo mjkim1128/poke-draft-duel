@@ -1,5 +1,6 @@
 import "./PokemonSwap.css";
 import { SelectedPokemon, PokemonOptions } from "components";
+import { usePortrait } from "hooks";
 import React, { useEffect, useState } from "react";
 
 export function PokemonSwap(props) {
@@ -16,6 +17,7 @@ export function PokemonSwap(props) {
     const [playerSwap, setPlayerSwap] = useState(playerPokemon[0]);
     const [optionSwap, setOptionSwap] = useState(pokemonOptions[0]);
     const [isComplete, setComplete] = useState(false);
+    const portrait = usePortrait();
 
     useEffect(() => {
         setSwapSelection();
@@ -41,6 +43,59 @@ export function PokemonSwap(props) {
         setPlayerPokemon(player);
         setComplete(false);
         nextBattle();
+    }
+
+    /// On a portrait screen the buttons live in a bar that stays at the bottom of the screen,
+    /// so they never end up below the fold.
+    if (portrait) {
+        return (
+            <div className="pokemon-swap">
+                <div className="pokemon-swap-row">
+                    <h2>Pokemon Swap - Win Streak: {winStreak}</h2>
+                    {selectedPokemon && <SelectedPokemon pokemon={selectedPokemon} />}
+                </div>
+                <div className="pokemon-swap-row">
+                    <PokemonOptions
+                        pokemon={pokemonOptions}
+                        onClick={setSelectedPokemon}
+                        selectedPokemon={optionSwap}
+                    />
+                </div>
+                <div className="pokemon-swap-row">
+                    <PokemonOptions
+                        className="pokemonOptions"
+                        pokemon={playerPokemon}
+                        onClick={setSelectedPokemon}
+                        selectedPokemon={playerSwap}
+                    />
+                </div>
+                <div className="swap-bar">
+                    {isComplete ? (
+                        <>
+                            <button className="swap-action" onClick={() => completeSwap()}>
+                                Yes, complete swap and start battle!
+                            </button>
+                            <button className="swap-action" onClick={() => setComplete(false)}>
+                                Nooo I changed my mind!
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            {selectedPokemon && (
+                                <button className="swap-action" onClick={() => setComplete(true)}>
+                                    Complete Swap?
+                                </button>
+                            )}
+                            {playerPokemon.length === 3 && (
+                                <button className="swap-action" onClick={() => nextBattle()}>
+                                    I like this team!
+                                </button>
+                            )}
+                        </>
+                    )}
+                </div>
+            </div>
+        );
     }
 
     return (

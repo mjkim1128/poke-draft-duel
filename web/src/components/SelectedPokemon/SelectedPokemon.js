@@ -25,8 +25,9 @@ export function SelectedPokemon(props) {
                     alt={props.pokemon.name}
                 ></img>
                 <div>
-                    <p>{pokemonNameToString(props.pokemon)}</p>
-                    <p>{pokemonTypeToString(props.pokemon)}</p>
+                    <p>
+                        {pokemonNameToString(props.pokemon)} - {pokemonTypeToString(props.pokemon)}
+                    </p>
                     {props.pokemon.ability && (
                         <p className="selected-pokemon-ability" title={props.pokemon.ability.english_name}>
                             특성: {abilityLabel(props.pokemon)}

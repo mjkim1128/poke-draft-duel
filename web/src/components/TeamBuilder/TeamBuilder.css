@@ -39,7 +39,26 @@
         min-width: 140px;
         min-height: 48px;
         padding: 8px 22px;
-        margin: 6px 6px 0 0;
         font-size: 18px;
+    }
+
+    /* 버튼은 화면 아래에 늘 보이는 바에 둔다 (페이지가 화면보다 길어서 아래로 밀려나지 않게) */
+    .teambuilder-bar {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin: 0 -8px -8px;
+        padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+        background: #fff;
+        border-top: 1px solid #d5d9e2;
+    }
+
+    .teambuilder-bar button {
+        flex: 1 1 140px;
+        max-width: 240px;
     }
 }

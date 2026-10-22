@@ -43,5 +43,29 @@
     .selected-pokemon-row {
         min-width: 0;
         flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    /* 기술은 2열로 */
+    .moves-p {
+        width: 100%;
+        margin: 0;
+    }
+
+    .move-row {
+        width: calc(50% - 3px);
+    }
+
+    .move-row .move-div {
+        display: block;
+    }
+
+    .move-row .move-button {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        min-height: 4.6em;
+        padding: 4px;
+        box-sizing: border-box;
     }
 }

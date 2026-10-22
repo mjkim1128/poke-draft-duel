@@ -22,6 +22,10 @@
     padding: 0;
 }
 
+.move-button p {
+    margin: 2px 0; /* 글자가 버튼 밖으로 삐져나오지 않게 */
+}
+
 .move-button {
     min-width: 6rem;
     width: 5.5vw;

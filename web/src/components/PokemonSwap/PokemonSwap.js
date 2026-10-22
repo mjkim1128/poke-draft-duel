@@ -1,6 +1,6 @@
 import "./PokemonSwap.css";
 import { SelectedPokemon, PokemonOptions } from "components";
-import { usePortrait } from "hooks";
+import { useCompactLayout } from "hooks";
 import React, { useEffect, useState } from "react";
 
 export function PokemonSwap(props) {
@@ -17,7 +17,7 @@ export function PokemonSwap(props) {
     const [playerSwap, setPlayerSwap] = useState(playerPokemon[0]);
     const [optionSwap, setOptionSwap] = useState(pokemonOptions[0]);
     const [isComplete, setComplete] = useState(false);
-    const portrait = usePortrait();
+    const portrait = useCompactLayout();
 
     useEffect(() => {
         setSwapSelection();

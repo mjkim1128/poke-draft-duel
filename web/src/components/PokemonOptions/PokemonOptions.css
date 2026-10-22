@@ -2,8 +2,11 @@
     display: flex;
     justify-content: center;
 }
-@media (max-aspect-ratio: 1/1), (max-width: 640px) {
+@media all {
+    /* 후보는 어떤 폭에서나 3개씩 줄을 맞춘다 */
     .pokemon-options {
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: center;
     }
 }

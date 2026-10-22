@@ -51,6 +51,8 @@
 
 /* ---- 세로 화면: 위에 필드, 아래에 탭이 있는 조작판 (기술 / 교체 / 기록) ---- */
 .battle-portrait {
+    max-width: 520px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     height: 100vh;

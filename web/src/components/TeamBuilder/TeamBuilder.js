@@ -1,5 +1,5 @@
 import { PokemonOptions, SelectedPokemon } from "components";
-import { usePortrait } from "hooks";
+import { useCompactLayout } from "hooks";
 import React from "react";
 import "./TeamBuilder.css";
 
@@ -13,7 +13,7 @@ export function TeamBuilder(props) {
         setBattleFactoryState,
         loadNewPokemon,
     ] = props.properties;
-    const portrait = usePortrait();
+    const portrait = useCompactLayout();
 
     function selectPokemon() {
         let temp = [...playerPokemon];

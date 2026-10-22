@@ -19,10 +19,11 @@
     width: 100px;
 }
 /* 세로 화면에서는 한 열로 쌓는다 */
-@media (max-aspect-ratio: 1/1), (max-width: 640px) {
+@media all {
     .teambuilder-div {
         display: block;
-        margin: 0;
+        max-width: 520px;
+        margin: 0 auto;
         padding: 8px;
     }
 

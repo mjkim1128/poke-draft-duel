@@ -8,7 +8,7 @@ import {
 } from "components";
 import React, { useEffect, useRef, useState } from "react";
 import { SUBSTITUTE_FRONT, SUBSTITUTE_BACK } from "components/StatusBadges";
-import { usePortrait } from "hooks";
+import { useCompactLayout } from "hooks";
 import {
     pokemonNameToString,
     moveNameToString,
@@ -42,7 +42,7 @@ export function Battle(props) {
     const [stepNumber, setStepNumber] = useState(0);
     /// Portrait screens (a phone, a tall narrow window) swap the side-by-side board for a field
     /// on top and a tabbed control panel (moves / switch / log) underneath.
-    const portrait = usePortrait();
+    const portrait = useCompactLayout();
     const [panelTab, setPanelTab] = useState("moves");
     const [announcerMessage, setAnnouncerMessage] = useState([]);
     const [isAnimating, setAnimating] = useState(false);

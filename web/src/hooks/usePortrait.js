@@ -24,3 +24,12 @@ export function usePortrait() {
 
     return portrait;
 }
+
+// 컴퓨터(가로로 넓은) 화면에서도 세로 배치를 쓸지. 끄고 싶으면 false로 바꾸고,
+// 각 컴포넌트 CSS의 "@media all"을 예전 조건(PORTRAIT_QUERY와 같은 조건)으로 되돌린다.
+export const COMPACT_LAYOUT_EVERYWHERE = true;
+
+export function useCompactLayout() {
+    const portrait = usePortrait();
+    return COMPACT_LAYOUT_EVERYWHERE || portrait;
+}

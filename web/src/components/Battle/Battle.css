@@ -243,8 +243,11 @@
 .bp-announcer {
     /* 문장 길이와 상관없이 크기가 변하지 않게 고정. 넘치면 안에서 스크롤 */
     flex: 0 0 auto;
-    height: 6.5em;
-    overflow: auto;
+    height: 8.5em; /* 한 턴의 글이 7줄쯤 되어도 스크롤 없이 들어가는 높이 */
+    overflow-y: auto;
+    /* 넘쳐서 스크롤바가 생겨도 글 영역 폭이 바뀌지 않게 자리를 미리 잡아 둔다 (줄바꿈이 흔들리는 것을 막는다) */
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
     box-sizing: border-box;
     padding: 4px 6px;
     font-size: 13px;
@@ -387,7 +390,8 @@
 }
 
 .bp-log .turn-feed-div {
-    display: block;
+    display: flex;
+    flex-direction: column;
     flex: 1;
     min-height: 0;
     width: 100%;
@@ -397,6 +401,15 @@
     box-sizing: border-box;
     border-width: 1px;
     overflow: hidden;
+}
+
+/* 기록 목록(스크롤 영역)이 칸 높이를 그대로 받아 안에서 스크롤되게 한다.
+   목록 라이브러리가 height: 100%를 직접 써 넣는데, 칸 높이가 정해진 값이 아니라서 무시되고
+   내용만큼 늘어나 첫 턴만 보이던 문제가 있었다. */
+.bp-log .turn-feed-div > div {
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto !important;
 }
 
 .bp-log .turn-control-buttons {

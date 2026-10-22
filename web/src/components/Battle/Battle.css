@@ -73,6 +73,7 @@
     min-height: 220px;
     --sprite-w: min(38vw, 150px); /* 체력 바와 포켓몬 그림 칸의 너비 */
     --hp-h: 16px; /* 체력 바 높이 */
+    --me-hp-shift: 14px; /* 내 포켓몬의 체력 바와 이름·타입 줄을 아래로 내리는 양 (그림은 그대로) */
     --bench-h: 37px; /* 상대 교체 후보 아이콘 줄 높이 */
     /* 그림을 아래로 내리는 양: 포켓몬 그림의 가운데가 아니라 '발'이 원 중심에 오게 한다 */
     --feet-shift: calc(var(--sprite-w) * 0.32);
@@ -176,7 +177,12 @@
 
 .bp-player .current-pokemon-div > div:first-child {
     left: calc(27% + var(--sprite-w) / 2 + 4px);
-    top: calc(81.8% - var(--sprite-w) * 0.375 - var(--hp-h));
+    top: calc(81.8% - var(--sprite-w) * 0.375 - var(--hp-h) + var(--me-hp-shift));
+}
+
+/* 내 체력 바 (그림 칸의 맨 위 줄)도 같은 양만큼 내린다 */
+.bp-player .current-pokemon-div > div:last-child > div:first-child {
+    transform: translateY(var(--me-hp-shift));
 }
 
 /* 체력 바 + 포켓몬 그림: 포켓몬 그림(칸 너비의 75% 크기)의 정중앙이 원 중심에 오도록 한다.

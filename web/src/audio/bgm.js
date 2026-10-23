@@ -6,12 +6,26 @@
 import { Chiptune } from "./engine";
 import { SONGS } from "./songs";
 
-// 직접 만든 음악 파일을 쓰는 곡. public/bgm/<이름>.mp3 (또는 .ogg .m4a .wav)를 넣어 두면 그 파일을 반복 재생하고,
-// 파일이 없으면 songs.js의 8비트 곡이 나온다. 타이틀, 승리, 패배는 지금은 8비트 곡을 그대로 쓴다.
-const FILE_SONGS = ["select", "battle", "boss"];
-const EXTENSIONS = ["mp3", "ogg", "m4a", "wav"];
+// 음악 파일을 쓰는 곡. 화면에 들어올 때마다 아래 파일 중 하나를 골라(방금 나온 것은 피해서) 반복 재생한다.
+// 파일은 public/bgm/ 에 있다. 파일을 못 불러오면 songs.js의 8비트 곡이 대신 나온다.
+// 타이틀, 승리, 패배는 파일 없이 8비트 곡을 그대로 쓴다.
 const BGM_BASE = (typeof process !== "undefined" && process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "") + "/bgm/";
-const fileBuffers = {}; // 곡 이름 -> 불러온 소리 (파일이 없으면 null)
+export const FILE_SONGS = {
+    select: ["select1.mp3", "select2.mp3"], // 포켓몬 선출, 교체 화면
+    battle: ["battle1.mp3", "battle2.mp3"], // 일반 배틀
+    boss: ["boss1.mp3", "boss2.mp3"], // 네임드 보스 배틀
+};
+const lastPicked = {}; // 곡 이름 -> 방금 고른 파일
+
+// 두 개 이상이면 방금 나온 것을 빼고 무작위로 하나 고른다
+export function pickFile(id, random = Math.random) {
+    const files = FILE_SONGS[id];
+    if (!files) return null;
+    const choices = files.length > 1 ? files.filter((f) => f !== lastPicked[id]) : files;
+    const file = choices[Math.floor(random() * choices.length)];
+    lastPicked[id] = file;
+    return file;
+}
 
 const KEY = "battlefactory-bgm";
 const DEFAULT_STATE = { on: true, volume: 0.5 };
@@ -50,7 +64,6 @@ function ensureContext() {
     const AudioContextClass = typeof window !== "undefined" && (window.AudioContext || window.webkitAudioContext);
     if (!AudioContextClass) return null;
     ctx = new AudioContextClass();
-    FILE_SONGS.forEach((id) => loadSongFile(id));
     master = ctx.createGain();
     master.gain.value = getBgmState().volume;
     // 여러 소리가 겹쳐도 찢어지지 않게 한다
@@ -58,28 +71,6 @@ function ensureContext() {
     master.connect(limiter);
     limiter.connect(ctx.destination);
     return ctx;
-}
-
-// 곡 파일을 찾아서 소리 데이터로 바꾼다. 없으면 null. 한 번 찾은 결과는 기억해 둔다.
-function loadSongFile(id) {
-    if (!FILE_SONGS.includes(id)) return Promise.resolve(null);
-    if (!fileBuffers[id]) {
-        fileBuffers[id] = (async () => {
-            for (const ext of EXTENSIONS) {
-                try {
-                    const res = await fetch(BGM_BASE + id + "." + ext);
-                    const type = res.headers.get("content-type") || "";
-                    // 없는 파일 주소가 화면용 html로 대답되는 경우도 없는 것으로 본다
-                    if (!res.ok || type.indexOf("text/html") >= 0) continue;
-                    return await ctx.decodeAudioData(await res.arrayBuffer());
-                } catch (e) {
-                    // 이 확장자는 없거나 읽지 못했다. 다음 확장자를 본다
-                }
-            }
-            return null;
-        })();
-    }
-    return fileBuffers[id];
 }
 
 function fadeOutCurrent() {
@@ -111,23 +102,34 @@ function start() {
             }
         });
     };
-    loadSongFile(mine.id).then((buffer) => {
-        if (current !== mine) return; // 기다리는 사이에 다른 곡으로 바뀌었다
-        if (!buffer) return playSynth();
-        const source = ctx.createBufferSource();
-        source.buffer = buffer;
-        source.loop = loop;
-        source.connect(gain);
-        source.start();
-        mine.tune = {
-            stop() {
-                try {
-                    source.stop();
-                } catch (e) {
-                    // 이미 끝난 소리
-                }
-            },
-        };
+    const file = pickFile(mine.id);
+    if (!file) return playSynth();
+    // 파일은 통째로 풀어서 올려 두지 않고, 재생하면서 불러온다 (3분짜리 곡이 메모리를 많이 쓰지 않게)
+    const audio = new Audio(BGM_BASE + file);
+    audio.loop = loop;
+    audio.preload = "auto";
+    const source = ctx.createMediaElementSource(audio);
+    source.connect(gain);
+    mine.tune = {
+        stop() {
+            // 소리가 서서히 작아지는 동안 둔 뒤에 멈춘다
+            setTimeout(() => {
+                audio.pause();
+                audio.removeAttribute("src");
+                audio.load();
+                source.disconnect();
+            }, 700);
+        },
+    };
+    // 파일을 못 불러오면 8비트 곡으로 대신한다
+    audio.addEventListener("error", () => {
+        if (current === mine) {
+            mine.tune.stop();
+            playSynth();
+        }
+    });
+    audio.play().catch(() => {
+        if (current === mine) playSynth();
     });
 }
 

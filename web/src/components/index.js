@@ -1,5 +1,5 @@
 export * from './App';
-export * from './TeamBuilder';
+export * from './TeamSelect';
 export * from './PokemonOptions';
 export * from './PokemonOption';
 export * from './SelectedPokemon';

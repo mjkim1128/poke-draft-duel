@@ -3,3 +3,12 @@
     opacity: 50%;
 }
 
+
+.party-unknown {
+    display: inline-block;
+    width: 48px;
+    line-height: 48px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+}

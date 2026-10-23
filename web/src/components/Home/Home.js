@@ -1,4 +1,4 @@
-import { Battle, TeamBuilder, PokemonSwap, BossDisplay } from "components";
+import { Battle, TeamSelect, PokemonSwap, BossDisplay } from "components";
 import React, { useEffect, useState } from "react";
 import {
     baseStatTotalTo600,
@@ -32,13 +32,14 @@ const BATTLE_ROUNDS = 4;
 
 export function Home() {
     const [isApiLoading, setApiLoading] = useState(true);
-    const [pokemonOptions, setPokemonOptions] = useState([]);
+    /// The two 6-pokemon parties live in playerPokemon / opponentPokemon. Only 3 of each go into a
+    /// battle (battleTeams).
+    const [battleTeams, setBattleTeams] = useState({ player: [], opponent: [] });
     const [opponentPokemon, setOpponentPokemon] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [playerPokemon, setPlayerPokemon] = useState([]);
     const [battleFactoryState, setBattleFactoryState] = useState("home");
     const [winStreak, setWinStreak] = useState(0);
-    const [isRerolling, setRerolling] = useState(false);
     /// True while the options on screen were just loaded and nobody has started a game with them
     /// yet, so "Start!" doesn't have to load them a second time.
     const optionsFresh = React.useRef(false);
@@ -119,10 +120,9 @@ export function Home() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [battleFactoryState]);
 
-    /// The 6 pokemon to pick a team from. The six are picked first, one after the other so none
-    /// repeats; each one's item, ability and moves are then fetched all at the same time, which
-    /// is what makes a reroll quick. A brand new array is handed to React at the end: filling
-    /// the old array in place never told React anything had changed.
+    /// My 6 pokemon: picked first, one after the other so none repeats; each one's item, ability
+    /// and moves are then fetched all at the same time. A brand new array is handed to React at the
+    /// end: filling the old array in place never told React anything had changed.
     async function loadOptions() {
         const fresh = [];
         for (let i = 0; i < 6; i++) {
@@ -134,21 +134,32 @@ export function Home() {
                 await createRandomMoveset(fresh, i, () => {});
             })
         );
-        setPokemonOptions(fresh);
+        setPlayerPokemon(fresh);
         optionsFresh.current = true;
     }
 
-    /// REROLL: only the 6 options change (the opponents stay as they are). The pick screen shows
-    /// "changing..." and ignores clicks until the new ones are in.
-    async function rerollOptions() {
-        if (isRerolling) return;
-        setRerolling(true);
-        setSelectedPokemon(null);
-        try {
-            await loadOptions();
-        } finally {
-            setRerolling(false);
+    /// The opponent's 6 pokemon. A boss brings its own 3, the other 3 are random.
+    async function loadOpponentParty() {
+        const boss =
+            winStreak === BATTLE_ROUNDS
+                ? TRAINER_ALAZAR
+                : winStreak === BATTLE_ROUNDS * 2 + 1
+                ? TRAINER_BLAKE
+                : null;
+        const fresh = [];
+        for (let i = 0; i < 6; i++) {
+            fresh[i] =
+                boss && i < 3
+                    ? await getPokemonByName(boss.pokemon[i])
+                    : await generateRandomPokemon(fresh);
         }
+        await Promise.all(
+            fresh.map(async (_, i) => {
+                await getPokemonData(fresh, i, () => {});
+                await createRandomMoveset(fresh, i, () => {});
+            })
+        );
+        setOpponentPokemon(fresh);
     }
 
     async function loadNewPokemon(init = true) {
@@ -156,34 +167,18 @@ export function Home() {
         if (init) {
             await loadOptions();
         }
-        for (let i = 0; i < 3; i++) {
-            if (
-                (winStreak + 1) % (BATTLE_ROUNDS + 1) !== 0 ||
-                winStreak >= (BATTLE_ROUNDS + 1) * 2
-            )
-                await randomNewPokemon(opponentPokemon, i, setOpponentPokemon);
-            else {
-                if (winStreak === BATTLE_ROUNDS)
-                    opponentPokemon[i] = await getPokemonByName(
-                        TRAINER_ALAZAR.pokemon[i]
-                    );
-                if (winStreak === BATTLE_ROUNDS * 2 + 1)
-                    opponentPokemon[i] = await getPokemonByName(
-                        TRAINER_BLAKE.pokemon[i]
-                    );
-                await getPokemonData(opponentPokemon, i, setOpponentPokemon);
-                await createRandomMoveset(opponentPokemon, i, setOpponentPokemon);
-                setOpponentPokemon(opponentPokemon);
-            }
-        }
+        await loadOpponentParty();
         forceUpdate();
     }
 
-    async function randomNewPokemon(pokemonData, i, setFunc) {
-        pokemonData[i] = await generateRandomPokemon(pokemonData);
-        await getPokemonData(pokemonData, i, setFunc);
-        await createRandomMoveset(pokemonData, i, setFunc);
-        setFunc(pokemonData);
+    /// 3 of my 6 (in the order picked, the first leads) against 3 of the opponent's 6, chosen at
+    /// random. Which 3 the opponent brought isn't shown until they come out in the battle.
+    function startBattle(picked) {
+        const opponentTeam = shuffle([...opponentPokemon]).slice(0, 3);
+        for (const poke of opponentPokemon) poke.revealed = false;
+        opponentTeam[0].revealed = true;
+        setBattleTeams({ player: [...picked], opponent: opponentTeam });
+        setBattleFactoryState("battle");
     }
 
     async function getPokemonData(pokemonData, i, setFunc) {
@@ -372,7 +367,7 @@ export function Home() {
         }
         setApiLoading(true);
         await loadNewPokemon(false);
-        setBattleFactoryState("battle");
+        setBattleFactoryState("select");
         setApiLoading(false);
     }
 
@@ -407,7 +402,7 @@ export function Home() {
                                     await loadNewPokemon();
                                 }
                                 optionsFresh.current = false;
-                                setBattleFactoryState("teambuild");
+                                setBattleFactoryState("select");
                                 setApiLoading(false);
                             }}
                         >
@@ -416,27 +411,19 @@ export function Home() {
                     </div>
                 </div>
             )}
-            {battleFactoryState === "teambuild" && (
-                <div>
-                    <TeamBuilder
-                        properties={[
-                            pokemonOptions,
-                            selectedPokemon,
-                            setSelectedPokemon,
-                            playerPokemon,
-                            setPlayerPokemon,
-                            setBattleFactoryState,
-                            rerollOptions,
-                            isRerolling,
-                        ]}
-                    />
-                </div>
+            {battleFactoryState === "select" && (
+                <TeamSelect
+                    playerRoster={playerPokemon}
+                    opponentRoster={opponentPokemon}
+                    winStreak={winStreak}
+                    onConfirm={startBattle}
+                />
             )}
             {battleFactoryState === "battle" && (
                 <div>
                     <Battle
-                        playerPokemon={playerPokemon}
-                        opponentPokemon={opponentPokemon}
+                        playerPokemon={battleTeams.player}
+                        opponentPokemon={battleTeams.opponent}
                         setBattleFactoryState={setBattleFactoryState}
                         winStreak={winStreak}
                         setWinStreak={setWinStreak}
@@ -447,7 +434,7 @@ export function Home() {
                 <div>
                     <PokemonSwap
                         properties={[
-                            opponentPokemon,
+                            battleTeams.opponent.filter((poke) => poke.revealed),
                             selectedPokemon,
                             setSelectedPokemon,
                             playerPokemon,

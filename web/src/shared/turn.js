@@ -3272,6 +3272,7 @@ function doSwitchRaw(pokemon, index, options = {}) {
         text = "Switch out " + pokemonNameToString(oldCurrent) + "! " + (leaveText.length > 0 ? leaveText.join(" ") + " " : "");
     pokemon[0] = pokemon[index];
     pokemon[index] = oldCurrent;
+    pokemon[0].revealed = true; // the opponent's party shows a pokemon only once it has come out
     pokemon[0].lockedMove = null;
     pokemon[0].charging = null;
     pokemon[0].mustRecharge = false;

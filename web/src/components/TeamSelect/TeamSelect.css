@@ -1,0 +1,92 @@
+.team-select {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 8px;
+}
+
+.team-select-title {
+    margin: 4px 0 8px;
+    font-size: 20px;
+}
+
+.team-select-info {
+    margin-bottom: 10px;
+}
+
+.team-select-row {
+    margin-bottom: 10px;
+}
+
+.team-select-label {
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #444;
+}
+
+.team-select-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+}
+
+.team-select-cell {
+    position: relative;
+    padding: 2px;
+    border: 2px solid #c9ced6;
+    border-radius: 8px;
+    background: #f4f5f7;
+    cursor: pointer;
+}
+
+.team-select-cell img {
+    width: 100%;
+    display: block;
+}
+
+.team-select-cell.focused {
+    border-color: #2b6fd6;
+}
+
+.team-select-cell.picked {
+    background: #c9f0d8;
+    border-color: #2e8b57;
+}
+
+.team-select-badge {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: #2e8b57;
+}
+
+.team-select-bar {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 -8px -8px;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid #d5d9e2;
+}
+
+.team-select-bar button {
+    flex: 1 1 140px;
+    max-width: 240px;
+    min-height: 48px;
+    padding: 8px 12px;
+    font-size: 17px;
+}
+
+.team-select-go {
+    font-weight: bold;
+}

@@ -86,7 +86,7 @@ export function PokemonSwap(props) {
                                     Complete Swap?
                                 </button>
                             )}
-                            {playerPokemon.length === 3 && (
+                            {playerPokemon.length === 6 && (
                                 <button className="swap-action" onClick={() => nextBattle()}>
                                     I like this team!
                                 </button>
@@ -130,7 +130,7 @@ export function PokemonSwap(props) {
                     onClick={setSelectedPokemon}
                     selectedPokemon={playerSwap}
                 />
-                {playerPokemon.length === 3 && (
+                {playerPokemon.length === 6 && (
                     <button
                         onClick={() => {
                             nextBattle();

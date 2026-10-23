@@ -7,6 +7,17 @@ export function PokemonPartyMember(props) {
     const [hover, setHover] = useState(false);
     const anchorRef = useRef(null);
 
+    /// An opponent that has not come out yet: only a "?" is shown, no sprite and no popup
+    if (props.hidden) {
+        return (
+            <div>
+                <button className="disabledButton" disabled>
+                    <span className="party-unknown">?</span>
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div ref={anchorRef} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
             <button

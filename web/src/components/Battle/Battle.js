@@ -439,7 +439,7 @@ export function Battle(props) {
                         </span>
                     </div>
                     <div className="bp-opponent">
-                        <PokemonParty pokemon={theirs} />
+                        <PokemonParty pokemon={theirs} hideUnrevealed />
                         <CurrentPokemon
                             pokemon={theirs[0]}
                             substituteImg={SUBSTITUTE_FRONT}
@@ -535,6 +535,7 @@ export function Battle(props) {
                                 ? liveState.opponentPokemon
                                 : history[stepNumber].opponentPokemon
                         }
+                        hideUnrevealed
                     />
                     <CurrentPokemon
                         pokemon={

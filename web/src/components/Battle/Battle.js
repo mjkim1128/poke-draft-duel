@@ -430,22 +430,12 @@ export function Battle(props) {
         return (
             <div className="battle-portrait">
                 <div className="bp-field">
-                    {isGameOver ? (
-                        <div className="bp-gameover">
-                            <GameOverDisplay
-                                win={isVictory}
-                                onClick={props.setBattleFactoryState}
-                                winStreak={props.winStreak}
-                            />
-                        </div>
-                    ) : (
-                        <div className="bp-head">
-                            <span>
-                                Turn {isCurrent ? turns.length : stepNumber} · 현재 {props.winStreak}연승
-                                {fieldText && <span className="field-info"> · {fieldText}</span>}
-                            </span>
-                        </div>
-                    )}
+                    <div className="bp-head">
+                        <span>
+                            Turn {isCurrent ? turns.length : stepNumber} · 현재 {props.winStreak}연승
+                            {fieldText && <span className="field-info"> · {fieldText}</span>}
+                        </span>
+                    </div>
                     <div className="bp-opponent">
                         <PokemonParty pokemon={theirs} />
                         <CurrentPokemon
@@ -502,6 +492,17 @@ export function Battle(props) {
                         )}
                     </div>
                 </div>
+                {/* 전투가 끝나면 화면 전체를 덮는 결과 창 */}
+                {isGameOver && (
+                    <GameOverDisplay
+                        win={isVictory}
+                        onClick={props.setBattleFactoryState}
+                        winStreak={props.winStreak}
+                        turns={turns.length}
+                        alive={props.playerPokemon.filter((poke) => poke.hp[0] > 0).length}
+                        total={props.playerPokemon.length}
+                    />
+                )}
             </div>
         );
     }
@@ -516,6 +517,9 @@ export function Battle(props) {
                                 win={isVictory}
                                 onClick={props.setBattleFactoryState}
                                 winStreak={props.winStreak}
+                                turns={turns.length}
+                                alive={props.playerPokemon.filter((poke) => poke.hp[0] > 0).length}
+                                total={props.playerPokemon.length}
                             />
                         </div>
                     )}

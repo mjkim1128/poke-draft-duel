@@ -46,6 +46,7 @@ export function stageBox(loc, obj) {
 function easingMap(transition, endLoc, startBox, endBox) {
     const map = { left: "linear", top: "linear", width: "linear", height: "linear", opacity: "linear" };
     const t = transition;
+    if (!startBox || !endBox) return map; // 곡선 없는 직선 움직임(터지는 효과 등)
     const up = endBox.top < startBox.top;
     if (t === "ballistic") map.top = up ? "ballisticUp" : "ballisticDown";
     else if (t === "ballisticUnder") map.top = up ? "ballisticDown" : "ballisticUp";

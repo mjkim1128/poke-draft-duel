@@ -388,7 +388,7 @@ export function Home() {
                     height: "100vh",
                 }}
             >
-                Loading the data...
+                {isKorean() ? "데이터를 불러오는 중..." : "Loading the data..."}
             </div>
         );
     }

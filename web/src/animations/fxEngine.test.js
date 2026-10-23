@@ -59,6 +59,30 @@ test("무대 좌표: 내 포켓몬은 (210, 245), 상대는 (430, 135) 근처 �
     expect(Math.abs(center(200)[1] - 135)).toBeLessThanOrEqual(1);
 });
 
+describe("모든 연출이 엔진 위에서 끝까지 재생된다", () => {
+    test("경고 없이 재생된다 (터지는 효과를 쓰는 기술까지 포함)", () => {
+        document.body.innerHTML =
+            '<div id="f"><div class="bp-player"><div class="current-pokemon-div"><div></div><div><img></div></div></div>' +
+            '<div class="bp-opponent"><div class="current-pokemon-div"><div></div><div><img></div></div></div></div>';
+        Element.prototype.animate = jest.fn(() => ({ cancel() {} }));
+        jest.useFakeTimers();
+        const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
+        const { playMoveAnim } = require("./fxEngine");
+        const failed = [];
+        for (const name of Object.keys(MOVES)) {
+            const play = playMoveAnim(document.getElementById("f"), "player", name);
+            if (play) play.cancel();
+            else failed.push(name);
+        }
+        const warned = warn.mock.calls.map((c) => c[1]);
+        warn.mockRestore();
+        delete Element.prototype.animate;
+        jest.useRealTimers();
+        expect(failed).toEqual([]);
+        expect(warned).toEqual([]);
+    });
+});
+
 describe("재생 시간 배율", () => {
     function fakeField() {
         document.body.innerHTML =

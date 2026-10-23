@@ -1,4 +1,4 @@
-import { localName } from "shared/lang";
+import { localName, isKorean } from "shared/lang";
 import { localizeLine } from "shared/logTranslate";
 import { playMoveAnim } from "animations/fxEngine";
 import { isFxEnabled } from "animations/fxSetting";
@@ -445,7 +445,7 @@ export function Battle(props) {
                 <div className="bp-field" ref={fieldRef}>
                     <div className="bp-head">
                         <span>
-                            Turn {isCurrent ? turns.length : stepNumber} · 현재 {props.winStreak}연승
+                            {isKorean() ? "턴 " : "Turn "}{isCurrent ? turns.length : stepNumber} · {isKorean() ? "현재 " + props.winStreak + "연승" : props.winStreak + " win streak"}
                             {fieldText && <span className="field-info"> · {fieldText}</span>}
                         </span>
                     </div>
@@ -474,7 +474,7 @@ export function Battle(props) {
                     {needsPlayerSwitch ? (
                         <div>다음 포켓몬을 선택하세요!</div>
                     ) : awaitingInput ? (
-                        <div>Turn {turns.length + 1} - 행동을 결정하세요!</div>
+                        <div>{isKorean() ? "턴 " + (turns.length + 1) + " - 행동을 결정하세요!" : "Turn " + (turns.length + 1) + " - Choose your action!"}</div>
                     ) : (
                         turns.length > 0 && <BattleAnnouncer text={announcerMessage} />
                     )}
@@ -602,7 +602,7 @@ export function Battle(props) {
                         {needsPlayerSwitch ? (
                             <div>다음 포켓몬을 선택하세요!</div>
                         ) : awaitingInput ? (
-                            <div>Turn {turns.length + 1} - 행동을 결정하세요!</div>
+                            <div>{isKorean() ? "턴 " + (turns.length + 1) + " - 행동을 결정하세요!" : "Turn " + (turns.length + 1) + " - Choose your action!"}</div>
                         ) : (
                             turns.length > 0 && (
                                 <div>

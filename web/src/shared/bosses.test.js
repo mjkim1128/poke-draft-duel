@@ -1,7 +1,7 @@
 // 네임드 트레이너 목록이 올바른지 확인한다.
 import fs from "fs";
 import path from "path";
-import { BOSSES, FINAL_FLOOR, bossForFloor } from "shared/bosspokemon";
+import { BOSSES, FINAL_FLOOR, bossForFloor, pickBossTeam } from "shared/bosspokemon";
 
 const dataDir = path.join(__dirname, "../../../api/src/main/resources/data");
 const pokemon = JSON.parse(fs.readFileSync(path.join(dataDir, "pokemon.json"), "utf8"));
@@ -71,5 +71,45 @@ describe("새 보스는 팀 콘셉트에 맞는 세트가 실제로 있다", () 
             (set) => (!slot.ability || abilitiesOf(set).includes(slot.ability)) && (!slot.move || hasMove(set, slot.move))
         );
         expect(ok.length).toBeGreaterThan(0);
+    });
+});
+
+describe("선출 규칙(lineup): 날씨를 거는 포켓몬과 반응하는 포켓몬이 반드시 나온다", () => {
+    const lineupBosses = BOSSES.filter((b) => b.lineup);
+    const pickOne = (list) => list[Math.floor(Math.random() * list.length)];
+
+    // 게임에서 하듯이, 칸마다 조건에 맞는 세트 하나를 뽑아 상대 파티를 만든다
+    function makeRoster(boss) {
+        return boss.pokemon.map(slotOf).map((slot) => {
+            const sets = setRows
+                .filter((r) => r.species === slot.name)
+                .map((r) => r.set)
+                .filter((set) => (!slot.ability || abilitiesOf(set).includes(slot.ability)) && (!slot.move || hasMove(set, slot.move)));
+            return { name: slot.name, ability: { name: pickOne(abilitiesOf(pickOne(sets))) } };
+        });
+    }
+
+    test("네 명(마리나, 듄, 프로스트, 솔)에게 있다", () => {
+        expect(lineupBosses.map((b) => b.name)).toEqual(["Marina", "Dune", "Frost", "Sol"]);
+    });
+
+    test.each(lineupBosses.map((b) => [b.name, b]))("%s", (name, boss) => {
+        for (let i = 0; i < 300; i++) {
+            const roster = makeRoster(boss);
+            const team = pickBossTeam(roster, boss.lineup);
+            expect(team).toHaveLength(3);
+            expect(new Set(team).size).toBe(3);
+            for (const p of team) expect(roster).toContain(p);
+            for (const rule of boss.lineup) {
+                expect(team.some((p) => rule.abilities.includes(p.ability.name))).toBe(true);
+            }
+        }
+    });
+
+    test("lineup이 없으면 6마리 중 아무 3마리나 나온다", () => {
+        const roster = ["a", "b", "c", "d", "e", "f"].map((name) => ({ name, ability: { name: "x" } }));
+        const team = pickBossTeam(roster, undefined);
+        expect(team).toHaveLength(3);
+        expect(new Set(team).size).toBe(3);
     });
 });

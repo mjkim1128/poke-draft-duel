@@ -1,6 +1,8 @@
 // 네임드 트레이너(보스). floor는 그 보스를 만나는 때의 연승 수다 (7연승째마다 한 명, 마지막은 50연승째).
 // pokemon은 보스가 반드시 데려오는 포켓몬이다 (6마리를 다 적으면 파티가 통째로 정해지고, 모자라면 나머지는 일반 배틀처럼 무작위).
-// 한 칸은 이름 글자 하나이거나 { name, ability, move }다. ability나 move를 적으면 세트 목록에서 그 특성/기술이 있는 세트로 뽑는다.
+// lineup이 있는 보스는 상대가 6마리 중 3마리를 낼 때 칸마다 "이 특성을 가진 포켓몬 하나"를 먼저 뽑고(날씨를 거는 특성, 날씨에 반응하는 특성),
+// 남은 자리는 나머지에서 무작위로 채운다. 해당하는 포켓몬이 없으면 그 칸은 무작위로 채운다.
+// 한 칸은 이름 글자이거나 { name, ability, move }다. ability나 move를 적으면 세트 목록에서 그 특성/기술이 있는 세트로 뽑는다.
 // 포켓몬 세트(도구, 특성, 기술)는 일반 포켓몬처럼 세트 목록에서 무작위로 뽑힌다.
 // img는 public 폴더 안의 그림 경로다. 아직 전용 그림이 없는 보스는 임시로 몬스터볼 그림을 쓴다.
 export const TRAINER_ALAZAR = {
@@ -44,7 +46,8 @@ export const TRAINER_MARINA = {
     nameKo: "마리나",
     text: ["Do you hear the rain? It's the sound of my victory!", "Let's see if your team can swim."],
     textKo: ["빗소리가 들리니? 내 승리의 소리야!", "너의 팀이 헤엄칠 수 있는지 볼까?"],
-    img: "assets/trainer_witch.png",
+    lineup: [{ abilities: ["drizzle"] }, { abilities: ["swift-swim"] }],
+    img: "assets/trainer_cybercat.png",
 };
 
 export const TRAINER_DUNE = {
@@ -54,16 +57,18 @@ export const TRAINER_DUNE = {
     nameKo: "듄",
     text: ["A storm is rolling in, and you're standing right in it.", "Grain by grain, I'll wear you down."],
     textKo: ["모래폭풍이 몰려오고 있어. 네가 서 있는 바로 그곳으로.", "한 알 한 알, 너를 닳게 해 주지."],
+    lineup: [{ abilities: ["sand-stream"] }, { abilities: ["sand-rush"] }],
     img: "assets/trainer_skater.png",
 };
 
 export const TRAINER_FROST = {
     floor: 35,
-    pokemon: ["abomasnow", "weavile", "mamoswine", "froslass", { name: "glalie", ability: "moody" }, "cloyster"],
+    pokemon: ["abomasnow", "weavile", "mamoswine", "froslass", "beartic", "cloyster"],
     name: "Frost",
     nameKo: "프로스트",
     text: ["Cold enough for you? It's only getting colder.", "Nothing survives the long winter."],
     textKo: ["춥지? 앞으로 더 추워질 거야.", "긴 겨울을 이겨내는 건 없어."],
+    lineup: [{ abilities: ["snow-warning"] }, { abilities: ["slush-rush", "snow-cloak"] }],
     img: "assets/trainer_icelady.png",
 };
 
@@ -81,7 +86,8 @@ export const TRAINER_SOL = {
     nameKo: "솔",
     text: ["Feel that heat? The sun is on my side today.", "Let's see how long you can stand the light."],
     textKo: ["이 열기 느껴져? 오늘은 태양이 내 편이야.", "네가 이 빛을 얼마나 버티는지 보자."],
-    img: "assets/trainer_cybercat.png",
+    lineup: [{ abilities: ["drought"] }, { abilities: ["chlorophyll"] }],
+    img: "assets/trainer_witch.png",
 };
 
 export const TRAINER_BASTION = {
@@ -120,4 +126,28 @@ export const BOSSES = [
 // 그 연승 수에서 만나는 보스 (없으면 null)
 export function bossForFloor(floor) {
     return BOSSES.find((b) => b.floor === floor) || null;
+}
+
+// 보스의 6마리 중에서 3마리를 뽑는다. lineup이 없으면 완전 무작위다.
+//   roster: 상대 포켓몬 6마리 (각자 .ability.name이 정해져 있다)
+export function pickBossTeam(roster, lineup, random = Math.random) {
+    const pickOne = (list) => list[Math.floor(random() * list.length)];
+    const chosen = [];
+    for (const rule of lineup || []) {
+        const candidates = roster.filter(
+            (p) => !chosen.includes(p) && p.ability && rule.abilities.includes(p.ability.name)
+        );
+        if (candidates.length > 0 && chosen.length < 3) chosen.push(pickOne(candidates));
+    }
+    while (chosen.length < 3) {
+        const rest = roster.filter((p) => !chosen.includes(p));
+        if (rest.length === 0) break;
+        chosen.push(pickOne(rest));
+    }
+    // 앞에 나올 포켓몬은 무작위다
+    for (let i = chosen.length - 1; i > 0; i--) {
+        const j = Math.floor(random() * (i + 1));
+        [chosen[i], chosen[j]] = [chosen[j], chosen[i]];
+    }
+    return chosen;
 }

@@ -13,6 +13,7 @@ import {
     getRandomType,
     shuffle,
     bossForFloor,
+    pickBossTeam,
     FINAL_FLOOR,
     hpCalc,
     BANNED_MOVES,
@@ -199,7 +200,9 @@ export function Home() {
     /// 3 of my 6 (in the order picked, the first leads) against 3 of the opponent's 6, chosen at
     /// random. Which 3 the opponent brought isn't shown until they come out in the battle.
     function startBattle(picked) {
-        const opponentTeam = shuffle([...opponentPokemon]).slice(0, 3);
+        /// a named trainer with a lineup always brings a weather setter and a weather-reactive pokemon
+        const boss = endless ? null : bossForFloor(winStreak);
+        const opponentTeam = boss && boss.lineup ? pickBossTeam(opponentPokemon, boss.lineup) : shuffle([...opponentPokemon]).slice(0, 3);
         for (const poke of opponentPokemon) poke.revealed = false;
         opponentTeam[0].revealed = true;
         setBattleTeams({ player: [...picked], opponent: opponentTeam });

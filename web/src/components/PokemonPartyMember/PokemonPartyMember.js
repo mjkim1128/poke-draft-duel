@@ -7,12 +7,12 @@ export function PokemonPartyMember(props) {
     const [hover, setHover] = useState(false);
     const anchorRef = useRef(null);
 
-    /// An opponent that has not come out yet: only a "?" is shown, no sprite and no popup
+    /// An opponent that has not come out yet: only a white slot with a Poke Ball is shown, no sprite and no popup
     if (props.hidden) {
         return (
             <div>
-                <button className="disabledButton" disabled>
-                    <span className="party-unknown">?</span>
+                <button className="party-unknown-slot" disabled>
+                    <img src={process.env.PUBLIC_URL + "/logo192.png"} alt="" />
                 </button>
             </div>
         );

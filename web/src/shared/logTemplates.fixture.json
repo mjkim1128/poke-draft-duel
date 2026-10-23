@@ -1,0 +1,1202 @@
+[
+ {
+  "t": "{} absorbed the poison spikes!",
+  "n": 1,
+  "f": "hazards.js"
+ },
+ {
+  "t": "{} acquired Insomnia!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} acquired Simple!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} added Ghost to its type!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} and restored HP!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} ate its {}!",
+  "n": 3,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} ate the {} and restored HP!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} avoided the attack!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} became confused!",
+  "n": 2,
+  "f": "turn.js,abilities.js"
+ },
+ {
+  "t": "{} became fully charged due to its {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} began having a nightmare!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} blew up!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} bounced the move back!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} braced itself!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} can't escape!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} can't use {} after the taunt!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} can't use {} because of gravity!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} can't use {} because of Heal Block!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} can't use {}! It's imprisoned!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} can't use items anymore!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} can't use the same move twice in a row because of the torment!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} changed to Blade Forme!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} changed type to resist {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} chewed its {} again!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} copied {}'s ability!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} copied {}'s stat changes!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} creates a shield using its mat!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} cured its own status problem!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} cured its status!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} cut its own HP and maximized its Attack!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} cut its own HP and put a curse on {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} cut its own HP to power up!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} endured the hit!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} fainted!",
+  "n": 26,
+  "f": "turn.js,abilities.js,hazards.js"
+ },
+ {
+  "t": "{} fell back down!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} fell for the feint!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} fell for the taunt!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} fell in love!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} flinched and couldn't move!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} focused!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} foresaw an attack!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} found one {}!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} frisked {} and found its {}!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} gave its {} to {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} got covered in sticky candy syrup!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} grew drowsy!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} harvested one {}!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} healed {}% HP!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} hung on using its {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is afflicted by the curse!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is confused! It hurt itself in its confusion!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is covered in powder!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is exerting its pressure!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} is fast asleep.",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is frozen solid!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is getting pumped!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is hurt by being trapped!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is hurt by its burn!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is hurt by poison!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is immobilized by love!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is locked in a nightmare!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is no longer disabled!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is no longer taunted!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is now afflicted with {}!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is paralyzed! It can't move!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is protected by Mist!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is protected by Safeguard!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is protected by the Psychic Terrain!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is storing energy!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} is too nervous to eat Berries!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} is trying to take its foe down with it!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} kept going and crashed!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} learned {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} levitated with electromagnetism!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} lost {}% HP to recoil!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} lost {}% HP!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} lost its {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} made a wish!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} mimicked the ability of {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} must recharge!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} passed its status on to {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} planted its roots!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} protected {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} protected itself!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} protects its team from priority moves!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} protects its team from status moves!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} protects its team from wide-spreading moves!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} put in a substitute!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} received an encore!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} recycled its {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} restored a little HP using its {}",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} restored its stats using its White Herb!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} sealed the opponent's move(s)!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} seized the opportunity!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} set up {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} shared its Attack and Sp. Atk with {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} shared its Defense and Sp. Def with {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} shrouded itself with Magic Coat!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} shuddered!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} sketched {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} slept and became healthy!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} snapped out of confusion!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} snatched {}'s move!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} stockpiled {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} stole {}'s {}!",
+  "n": 2,
+  "f": "turn.js,abilities.js"
+ },
+ {
+  "t": "{} stole and ate {}'s {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} surrounded itself with a veil of water!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} swapped abilities with {}!",
+  "n": 2,
+  "f": "turn.js,abilities.js"
+ },
+ {
+  "t": "{} swapped Attack and Sp. Atk changes with {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} swapped Defense and Sp. Def changes with {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} swapped Speed with {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} swapped the battlefield conditions!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} switched items with {} using {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} switched its Attack and Defense!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} switched stat changes with {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} thawed out using {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} thawed out!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} took aim at {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} took its attacker down with it!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} took the {} attack!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} traced {}'s {}!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} transformed into {}!",
+  "n": 2,
+  "f": "turn.js,abilities.js"
+ },
+ {
+  "t": "{} transformed into the {} type!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} transformed into the Psychic type!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} transformed into the Water type!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} twisted the dimensions!",
+  "n": 3,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} underwent a heroic transformation!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} unleashed energy!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} unleashed its stockpiled power!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} used {}!",
+  "n": 33,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} used its Booster Energy!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} used the move instructed by {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} waits for a target to make a move!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} wants its target to bear a grudge!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was {} by the poison spikes!",
+  "n": 1,
+  "f": "hazards.js"
+ },
+ {
+  "t": "{} was caught in a sticky web!",
+  "n": 1,
+  "f": "hazards.js"
+ },
+ {
+  "t": "{} was cured of {} by the {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was cursed by the forest!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was freed!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was healed by its Poison Heal!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was hurled into the air!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was hurt by its Black Sludge!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was hurt by its Life Orb!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was hurt by its Sticky Barb!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was hurt by recoil!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was hurt by Rocky Helmet!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was hurt by the Gulp Missile!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{} was hurt!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was identified!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was prevented from healing!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was seeded!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} was subjected to torment!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} went back to its trainer!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{} woke up!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} blocked it!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} boosted its {}!",
+  "n": 2,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s {} is disabled!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} keeps it in place!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} lost all its PP!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} lost some PP!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} powered up its Fire-type moves!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s {} prevents its Attack from being lowered!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s {} prevents its stats from being lowered!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} protected it from the move!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} was burnt up!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} was destroyed!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} was disabled!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} weakened the hit!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s {} wore off.",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s ability became {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s ability became Lingering Aroma!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s ability became Mummy!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s ability was suppressed!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Aroma Veil protected it from Disable!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s attack missed!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Balloon popped!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Beads of Ruin weakened the Sp. Def of all surrounding Pokemon!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Covert Cloak protected it from the effect!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Damp prevents it from exploding!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Dancer copied the dance!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s disguise busted!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s disguise served it as a decoy!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s electromagnetism wore off!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Embargo wore off!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Emergency Exit activated!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s encore ended!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Forewarn alerted it to {}!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Heal Block wore off!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s health is sapped by Leech Seed!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s HP was restored by the Grassy Terrain!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Ice Face took the hit and busted!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Ice Face was restored!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Illusion wore off!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Intimidate!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s move was charged with electricity!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Perish Body: both will faint in three turns!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s perish count fell to {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s perish count fell to 0!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Screen Cleaner cleared the screens!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Shed Skin cured its status!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s stat changes were all reversed!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s status was cured by Hydration!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s status was cured by Natural Cure!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Sticky Barb attached to {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s substitute faded!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Sword of Ruin weakened the Defense of all surrounding Pokemon!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s Tablets of Ruin weakened the Attack of all surrounding Pokemon!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s team became shrouded in mist!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s team is shielded from critical hits!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s type changed to {}!",
+  "n": 2,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s type changed to match {}'s!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "{}'s Vessel of Ruin weakened the Sp. Atk of all surrounding Pokemon!",
+  "n": 1,
+  "f": "abilities.js"
+ },
+ {
+  "t": "{}'s wish came true!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "A critical hit!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "A deluge of ions showers the battlefield!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "All stat changes were eliminated!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "An Aurora Veil made {}'s team stronger!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "But it failed!",
+  "n": 40,
+  "f": "turn.js"
+ },
+ {
+  "t": "confusion",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "Electricity's power was weakened!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "Fire's power was weakened!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "Gravity intensified!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "Gravity turned back to normal!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "Hit {} times!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "It doesn't affect {}!",
+  "n": 11,
+  "f": "turn.js,abilities.js"
+ },
+ {
+  "t": "It doesnt't affect {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "It's a one-hit KO!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "Magic Room wore off, and held items' effects returned to normal!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "No one will be able to escape next turn!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The battlers shared their pain!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The hazards around the team were blown away!",
+  "n": 1,
+  "f": "hazards.js"
+ },
+ {
+  "t": "The substitute took damage for {}!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The tailwind blew from behind the team!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The tailwind petered out!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The team cloaked itself in a mystical veil!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The team is no longer protected by Safeguard!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The team is no longer shielded from critical hits!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The team's Mist wore off!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
+  "t": "The twisted dimensions returned to normal!",
+  "n": 2,
+  "f": "turn.js"
+ },
+ {
+  "t": "Wonder Room wore off, and Defenses and Sp. Defenses returned to normal!",
+  "n": 2,
+  "f": "turn.js"
+ }
+]

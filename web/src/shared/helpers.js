@@ -1,3 +1,5 @@
+import { isKorean, localName } from "./lang";
+
 export const wait = (ms) =>
     new Promise((resolve) => {
         setTimeout(() => {
@@ -46,16 +48,21 @@ const STAT_KO = {
     evasion: "회피율",
 };
 
+const STAT_EN = {
+    "special-attack": "Sp. Atk",
+    "special-defense": "Sp. Def",
+};
+
 export function typeNameToString(typeName) {
-    return TYPE_KO[typeName] || capitalizeFirstLetter(typeName);
+    return (isKorean() && TYPE_KO[typeName]) || capitalizeFirstLetter(typeName);
 }
 
 export function damageClassToString(damageClassName) {
-    return DAMAGE_CLASS_KO[damageClassName] || capitalizeFirstLetter(damageClassName);
+    return (isKorean() && DAMAGE_CLASS_KO[damageClassName]) || capitalizeFirstLetter(damageClassName);
 }
 
 export function statNameToString(statName) {
-    return STAT_KO[statName] || capitalizeFirstLetter(statName);
+    return (isKorean() && STAT_KO[statName]) || STAT_EN[statName] || capitalizeFirstLetter(statName);
 }
 
 export function pokemonTypeToString(pokemon) {
@@ -71,11 +78,11 @@ export function pokemonTypeToString(pokemon) {
 
 export function pokemonNameToString(pokemon) {
     const shown = pokemon.illusion || pokemon; // a pokemon under Illusion goes by its disguise's name
-    return shown.korean_name || capitalizeFirstLetter(shown.name);
+    return localName(shown);
 }
 
 export function moveNameToString(move) {
-    return move.korean_name || capitalizeFirstLetter(move.name);
+    return localName(move);
 }
 
 export function capitalizeFirstLetter(string) {

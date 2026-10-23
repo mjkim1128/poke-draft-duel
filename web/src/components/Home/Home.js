@@ -24,6 +24,8 @@ import {
     resetAbilityState,
     resetBattleForms,
 } from "shared";
+import "./StartScreen.css";
+import { isKorean } from "shared/lang";
 import { keepsRawPower } from "shared/movemechanics";
 
 const BATTLE_ROUNDS = 4;
@@ -393,29 +395,25 @@ export function Home() {
     return (
         <div>
             {battleFactoryState === "home" && (
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: "100vh",
-                    }}
-                >
-                    <h1>Battle Factory</h1>
-                    <button
-                        onClick={async () => {
-                            if (!optionsFresh.current) {
-                                setApiLoading(true);
-                                await loadNewPokemon();
-                            }
-                            optionsFresh.current = false;
-                            setBattleFactoryState("teambuild");
-                            setApiLoading(false);
-                        }}
-                    >
-                        Start!
-                    </button>
+                <div className="start-screen">
+                    <div className="start-card">
+                        <img className="start-ball" src={process.env.PUBLIC_URL + "/logo192.png"} alt="" />
+                        <h1 className="start-title">Battle Factory</h1>
+                        <button
+                            className="start-button"
+                            onClick={async () => {
+                                if (!optionsFresh.current) {
+                                    setApiLoading(true);
+                                    await loadNewPokemon();
+                                }
+                                optionsFresh.current = false;
+                                setBattleFactoryState("teambuild");
+                                setApiLoading(false);
+                            }}
+                        >
+                            {isKorean() ? "시작하기" : "Start!"}
+                        </button>
+                    </div>
                 </div>
             )}
             {battleFactoryState === "teambuild" && (

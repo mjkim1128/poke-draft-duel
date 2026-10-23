@@ -1,0 +1,48 @@
+.start-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.start-card {
+    width: min(100%, 340px);
+    box-sizing: border-box;
+    padding: 28px 20px 20px;
+    border-radius: 14px;
+    background: #fff;
+    text-align: center;
+    border-top: 8px solid #d9392b;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+}
+
+.start-ball {
+    width: 96px;
+    height: 96px;
+    image-rendering: pixelated;
+}
+
+.start-title {
+    margin: 8px 0 22px;
+    font-size: 30px;
+    color: #222;
+}
+
+.start-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 19px;
+    font-weight: bold;
+    color: #fff;
+    background: #d9392b;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    filter: brightness(1.08);
+}

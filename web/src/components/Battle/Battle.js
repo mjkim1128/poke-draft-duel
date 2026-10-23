@@ -1,3 +1,5 @@
+import { localName } from "shared/lang";
+import { localizeLine } from "shared/logTranslate";
 import {
     CurrentPokemon,
     GameOverDisplay,
@@ -146,15 +148,15 @@ export function Battle(props) {
     function nextTurn(move) {
         if (isAnimating) return;
         if (stepNumber < history.length - 1) {
-            alert("You are living in the past... Let's try that again...");
+            alert(localizeLine("You are living in the past... Let's try that again..."));
             setStepNumber(history.length - 1);
             return;
         }
         if (isGameOver) {
-            alert("Game is over.");
+            alert(localizeLine("Game is over."));
             return;
         } else if (isForceSwitch) {
-            alert("Pick a pokemon to switch into!");
+            alert(localizeLine("Pick a pokemon to switch into!"));
             return;
         }
         let text = doTurn(props.playerPokemon, props.opponentPokemon, move);
@@ -241,14 +243,14 @@ export function Battle(props) {
 
     function onSwitch(index) {
         if (isGameOver) {
-            alert("Game is over.");
+            alert(localizeLine("Game is over."));
             return;
         }
         if (isForceSwitch) {
             forcedSwitch(props.playerPokemon, index, "player");
         } else if (!isForceSwitch) {
             if (isTrapped(props.playerPokemon, props.opponentPokemon)) {
-                alert("Trapped! You can't switch out right now.");
+                alert(localizeLine("Trapped! You can't switch out right now."));
                 return;
             }
             let move = { priority: 6, index: index };
@@ -259,7 +261,7 @@ export function Battle(props) {
 
     function updateTurnText(text) {
         let t = [...turns];
-        t[t.length - 1].push(text);
+        t[t.length - 1].push(localizeLine(text));
         setTurns(t);
     }
 
@@ -408,7 +410,7 @@ export function Battle(props) {
                     </span>
                     <span className="bp-party-sub">
                         {abilityLabel(poke)}
-                        {poke.item ? " · " + (poke.item.korean_name || poke.item.name) : ""}
+                        {poke.item ? " · " + (localName(poke.item)) : ""}
                     </span>
                     <span className="bp-party-sub">{poke.moveset.map((m) => moveNameToString(m)).join(" / ")}</span>
                 </span>

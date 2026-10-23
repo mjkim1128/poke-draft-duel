@@ -1,3 +1,5 @@
+import { localName } from "./lang";
+import { localizeTurnText, localizeLine } from "./logTranslate";
 import { makeMove, switchPokemon } from "./computermove";
 import { damageCalc, statCalc, typeEffectiveness, isFixedDamageMove } from "./damagecalc";
 import {
@@ -239,7 +241,7 @@ function isRemovable(item) {
 // rather than reading pokemon.item, since the eater usually never held this berry.
 function applyBerryEffect(pokemon, berry, text) {
     const name = berry.name;
-    const label = berry.korean_name || berry.name;
+    const label = localName(berry);
     const mult = hasRipen(pokemon) ? 2 : 1; // Ripen doubles a berry's effect
     let healAmount = 0;
     if (name === BERRY_JUICE) healAmount = 20;
@@ -365,7 +367,7 @@ export function movePriority(mv, mon, field) {
     );
 }
 
-export function doTurn(playerPokemon, opponentPokemon, chosenMove) {
+function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
     ensureField(playerPokemon, opponentPokemon);
     const field = playerPokemon.field;
     playerPokemon.isPlayerSide = true;
@@ -469,7 +471,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             const victimIsPlayer = victim === playerPokemon;
             if (victim === foeTeam && step === 0) plan.skipSide = victimIsPlayer ? "player" : "cpu";
             text.push(
-                doSwitch(victim, options[Math.floor(Math.random() * options.length)], {
+                doSwitchRaw(victim, options[Math.floor(Math.random() * options.length)], {
                     foeTeam: victimIsPlayer ? opponentPokemon : playerPokemon,
                 })
             );
@@ -493,7 +495,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             const index = switchPokemon(playerPokemon, opponentPokemon);
             if (index !== -1) {
                 if (swapperActsLater) plan.skipSide = "cpu";
-                text.push(doSwitch(opponentPokemon, index, { baton: pivot.baton, foeTeam: playerPokemon }));
+                text.push(doSwitchRaw(opponentPokemon, index, { baton: pivot.baton, foeTeam: playerPokemon }));
             }
         }
         pushFrame(); // this mover's whole beat: its move, any drag, any pivot switch-in
@@ -571,11 +573,11 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
 }
 
 // Finishes a turn that paused for the player to choose a replacement after a pivot move.
-export function resumeTurn(playerPokemon, opponentPokemon, index) {
+function resumeTurnRaw(playerPokemon, opponentPokemon, index) {
     const pending = playerPokemon.pendingSwitch;
     playerPokemon.pendingSwitch = null;
     if (!pending) return Object.assign([], { frames: [] });
-    const switchText = [doSwitch(playerPokemon, index, { baton: pending.baton, foeTeam: opponentPokemon })];
+    const switchText = [doSwitchRaw(playerPokemon, index, { baton: pending.baton, foeTeam: opponentPokemon })];
     const frames = [{ text: [...switchText], ...snapshotTeams(playerPokemon, opponentPokemon) }];
     const rest = runTurn(playerPokemon, opponentPokemon, pending.plan, pending.nextStep);
     frames.push(...rest.frames);
@@ -591,7 +593,7 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
             text.push(pokemonNameToString(playerPokemon[0]) + " can't escape!");
             return text;
         }
-        text.push(doSwitch(playerPokemon, chosenMove.index, { foeTeam: opponentPokemon }));
+        text.push(doSwitchRaw(playerPokemon, chosenMove.index, { foeTeam: opponentPokemon }));
         playerPokemon[0].movedThisTurn = true;
         return text;
     }
@@ -1575,7 +1577,7 @@ export function addArrayToArray(arr1, arr2) {
 }
 
 function itemLabel(pokemon) {
-    return pokemon.item ? pokemon.item.korean_name || pokemon.item.name : "";
+    return pokemon.item ? localName(pokemon.item) : "";
 }
 
 function healPercent(pokemon, amount, verb) {
@@ -1672,7 +1674,7 @@ function tryItemMove(attacker, defender, move, text) {
     }
     if (move.name === "recycle") {
         if (!attacker.item && attacker.consumedItem) {
-            text.push(pokemonNameToString(attacker) + " recycled its " + (attacker.consumedItem.korean_name || attacker.consumedItem.name) + "!");
+            text.push(pokemonNameToString(attacker) + " recycled its " + (localName(attacker.consumedItem)) + "!");
             attacker.item = attacker.consumedItem;
             attacker.consumedItem = null;
         } else {
@@ -3238,7 +3240,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
     return text;
 }
 
-export function doSwitch(pokemon, index, options = {}) {
+function doSwitchRaw(pokemon, index, options = {}) {
     let oldCurrent = pokemon[0];
     // Baton Pass hands stat stages and confusion to the replacement
     const passed = options.baton
@@ -3705,4 +3707,17 @@ function doEndOfTurn(pokemon, field, foe) {
 
     if (pokemon.hp[0] > 0) tryConsumeHpTriggeredItem(pokemon, text);
     return text;
+}
+
+// 화면에 나가는 글은 언어 설정에 맞춰 번역해서 돌려준다.
+export function doTurn(playerPokemon, opponentPokemon, chosenMove) {
+    return localizeTurnText(doTurnRaw(playerPokemon, opponentPokemon, chosenMove));
+}
+
+export function resumeTurn(playerPokemon, opponentPokemon, index) {
+    return localizeTurnText(resumeTurnRaw(playerPokemon, opponentPokemon, index));
+}
+
+export function doSwitch(pokemon, index, options = {}) {
+    return localizeLine(doSwitchRaw(pokemon, index, options));
 }

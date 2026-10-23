@@ -1,3 +1,4 @@
+import { localName } from "shared/lang";
 import { HealthBar } from "components/HealthBar";
 import { StatsDisplay } from "components/StatsDisplay";
 import {
@@ -57,7 +58,7 @@ export function HoverPokemonData(props) {
                             alt={props.pokemon.item.name}
                         />
                     )}
-                    {props.pokemon.item.korean_name || props.pokemon.item.name}
+                    {localName(props.pokemon.item)}
                 </p>
             )}
             {props.pokemon.ability && !props.pokemon.illusion && (

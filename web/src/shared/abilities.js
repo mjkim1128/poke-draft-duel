@@ -1,3 +1,4 @@
+import { localName } from "./lang";
 import ABILITY_NAMES from "./ability_names.json";
 import { CONTACT_MOVES } from "./legalmoves";
 import { pokemonNameToString, statNameToString } from "./helpers";
@@ -45,7 +46,7 @@ export function abilityName(pokemon) {
 
 export function abilityLabel(pokemon) {
     const a = pokemon && pokemon.ability;
-    return a ? a.korean_name || a.english_name || a.name : "";
+    return a ? localName(a) : "";
 }
 
 const MOLD_BREAKER_LIKE = new Set(["mold-breaker", "teravolt", "turboblaze"]);
@@ -87,7 +88,7 @@ const contactDamage = {
 export function makesContact(attacker, move) {
     return CONTACT_MOVES.has(move.name) && abilityName(attacker) !== "long-reach";
 }
-const itemLabelOf = (p) => (p.item ? p.item.korean_name || p.item.name : "");
+const itemLabelOf = (p) => (p.item ? localName(p.item) : "");
 // A stat as the battle would compute it (for "highest stat" and Download style comparisons)
 const stageStat = (base, stage) => {
     const raw = 2 * base + 31 + 5;
@@ -320,7 +321,7 @@ export const ABILITIES = {
             chew.turns -= 1;
             if (chew.turns > 0) return;
             self.cudChew = null;
-            text.push(pokemonNameToString(self) + " chewed its " + (chew.berry.korean_name || chew.berry.name) + " again!");
+            text.push(pokemonNameToString(self) + " chewed its " + (localName(chew.berry)) + " again!");
             applyBerry(self, chew.berry, text);
         },
     },
@@ -755,7 +756,7 @@ export const ABILITIES = {
             if (!isSun(field) && Math.random() >= 0.5) return;
             self.item = berry;
             self.consumedItem = null;
-            text.push(pokemonNameToString(self) + " harvested one " + (berry.korean_name || berry.name) + "!");
+            text.push(pokemonNameToString(self) + " harvested one " + (localName(berry)) + "!");
         },
     },
 
@@ -1054,7 +1055,7 @@ export const ABILITIES = {
             const moves = (foe.moveset || []).filter((m) => m.damage_class.name !== "status");
             if (moves.length === 0) return;
             const strongest = moves.reduce((a, b) => ((b.power || 0) > (a.power || 0) ? b : a));
-            text.push(pokemonNameToString(self) + "'s Forewarn alerted it to " + (strongest.korean_name || strongest.name) + "!");
+            text.push(pokemonNameToString(self) + "'s Forewarn alerted it to " + (localName(strongest)) + "!");
         },
     },
     anticipation: {

@@ -1,3 +1,4 @@
+import { localName } from "shared/lang";
 import { Move } from "components";
 import { StatsDisplay } from "components/StatsDisplay";
 import { pokemonNameToString, pokemonTypeToString, abilityLabel } from "shared";
@@ -51,7 +52,7 @@ export function SelectedPokemon(props) {
                                     alt={props.pokemon.item.name}
                                 />
                             )}
-                            {props.pokemon.item.korean_name || props.pokemon.item.name}
+                            {localName(props.pokemon.item)}
                         </p>
                     )}
                 </div>

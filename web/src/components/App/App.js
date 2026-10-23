@@ -1,4 +1,6 @@
 import { Home } from 'components';
+import { Settings } from 'components/Settings/Settings';
+import { onLangChange } from 'shared/lang';
 import styles from './styles.module.css';
 import React, { useEffect, useState } from 'react';
 import { subscribeServerStatus, startKeepAlive } from 'shared/serverStatus';
@@ -17,6 +19,10 @@ const BANNERS = {
 
 export function App() {
   const [serverState, setServerState] = useState('ok');
+  const [, setLangVersion] = useState(0);
+
+  // 언어를 바꾸면 화면 전체를 다시 그려 이름이 바로 바뀌게 한다 (게임 상태는 그대로)
+  useEffect(() => onLangChange(() => setLangVersion((v) => v + 1)), []);
 
   useEffect(() => subscribeServerStatus(setServerState), []);
   useEffect(() => startKeepAlive(), []);
@@ -44,6 +50,7 @@ export function App() {
           {banner.text}
         </div>
       )}
+      <Settings />
       <Home />
     </div>
   );

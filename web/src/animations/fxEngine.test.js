@@ -58,3 +58,45 @@ test("무대 좌표: 내 포켓몬은 (210, 245), 상대는 (430, 135) 근처 �
     expect(Math.abs(center(200)[0] - 430)).toBeLessThanOrEqual(1);
     expect(Math.abs(center(200)[1] - 135)).toBeLessThanOrEqual(1);
 });
+
+describe("재생 시간 배율", () => {
+    function fakeField() {
+        document.body.innerHTML =
+            '<div id="f"><div class="bp-player"><div class="current-pokemon-div"><div></div><div><img></div></div></div>' +
+            '<div class="bp-opponent"><div class="current-pokemon-div"><div></div><div><img></div></div></div></div>';
+        return document.getElementById("f");
+    }
+
+    beforeEach(() => {
+        Element.prototype.animate = jest.fn(() => ({ cancel() {} }));
+    });
+    afterEach(() => {
+        delete Element.prototype.animate;
+        jest.useRealTimers();
+    });
+
+    test("포톤가이저는 배율 0.5로 원래의 절반 남짓한 시간에 끝난다", () => {
+        const { playMoveAnim } = require("./fxEngine");
+        const { TIME_SCALE } = require("./moveTuning");
+        jest.useFakeTimers();
+        const original = TIME_SCALE.photongeyser;
+        expect(original).toBe(0.5);
+        TIME_SCALE.photongeyser = 1;
+        const full = playMoveAnim(fakeField(), "player", "photon-geyser");
+        full.cancel();
+        TIME_SCALE.photongeyser = original;
+        const shortened = playMoveAnim(fakeField(), "player", "photon-geyser");
+        shortened.cancel();
+        expect(full.duration).toBeGreaterThan(2000);
+        expect(shortened.duration).toBeLessThan(full.duration * 0.6);
+        expect(shortened.duration).toBeGreaterThan(full.duration * 0.4);
+    });
+
+    test("배율이 없는 기술은 그대로 재생된다", () => {
+        const { playMoveAnim } = require("./fxEngine");
+        jest.useFakeTimers();
+        const a = playMoveAnim(fakeField(), "player", "thunderbolt");
+        a.cancel();
+        expect(a.duration).toBeGreaterThan(500);
+    });
+});

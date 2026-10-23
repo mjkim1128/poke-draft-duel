@@ -7,6 +7,7 @@
 // 쇼다운 좌표: x는 오른쪽이 +, y는 위쪽이 +, z는 내 쪽이 0이고 상대 쪽이 200이다.
 // 무대는 640x360이고, 내 포켓몬의 중심이 (210, 245), 상대 포켓몬의 중심이 (430, 135)에 놓인다.
 import { EFFECTS, FX_BASE, MOVES, OTHER } from "./psAnims.generated";
+import { TIME_SCALE } from "./moveTuning";
 
 const STAGE_ME = { x: 210, y: 245 };
 const STAGE_OPP = { x: 430, y: 135 };
@@ -117,7 +118,9 @@ export function hasMoveAnim(slug) {
 // 기술 연출을 재생한다. 반환: { duration(ms), cancel() }. 재생할 수 없으면 null.
 //   field: 배틀 필드 요소(.bp-field), side: 기술을 쓴 쪽("player" | "opponent"), slug: 기술 이름
 export function playMoveAnim(field, side, slug) {
-    const anim = MOVES[String(slug).replace(/-/g, "")];
+    const id = String(slug).replace(/-/g, "");
+    const anim = MOVES[id];
+    const speed = TIME_SCALE[id] || 1; // 1보다 작으면 그만큼 짧게 재생한다
     if (!field || !anim || typeof field.animate !== "function") return null;
     const map = makeMapper(field);
     if (!map) return null;
@@ -158,7 +161,7 @@ export function playMoveAnim(field, side, slug) {
             },
             isMissedPokemon: false,
             delay(time) {
-                this.cursor += time;
+                this.cursor += time * speed;
                 return this;
             },
             anim(endLoc, transition) {
@@ -178,8 +181,8 @@ export function playMoveAnim(field, side, slug) {
                         `scale(${at("width") / restField.width}, ${at("height") / restField.height})`,
                     opacity: at("opacity"),
                 }));
-                run(img, frames, this.cursor, to.time);
-                this.cursor += to.time;
+                run(img, frames, this.cursor, to.time * speed);
+                this.cursor += to.time * speed;
                 this.cur = { ...to };
                 return this;
             },
@@ -197,7 +200,7 @@ export function playMoveAnim(field, side, slug) {
         // 쇼다운의 배경 요소(jQuery)를 직접 건드리는 연출이 조금 있는데, 우리는 따로 그리지 않는다
         $bg: { animate() { return this; }, delay() { return this; } },
         wait(time) {
-            this.timeOffset += time;
+            this.timeOffset += time * speed;
         },
         showEffect(effect, start, endLoc, transition, after, css) {
             const obj = typeof effect === "string" ? EFFECTS[effect] : effect;
@@ -209,9 +212,9 @@ export function playMoveAnim(field, side, slug) {
             if (css && typeof css === "object") Object.assign(el.style, css);
             layer.appendChild(el);
 
-            const s = { ...start, time: (start.time || 0) + this.timeOffset };
+            const s = { ...start, time: (start.time || 0) * speed + this.timeOffset };
             const e = { ...endLoc };
-            e.time = (e.time || (start.time || 0) + 500) + this.timeOffset;
+            e.time = (e.time || (start.time || 0) + 500) * speed + this.timeOffset;
             if (!e.scale && e.scale !== 0 && s.scale) e.scale = s.scale;
             if (!e.xscale && e.xscale !== 0 && s.xscale) e.xscale = s.xscale;
             if (!e.yscale && e.yscale !== 0 && s.yscale) e.yscale = s.yscale;
@@ -251,16 +254,20 @@ export function playMoveAnim(field, side, slug) {
             }
             return el;
         },
-        backgroundEffect(bg, duration, opacity = 1, delay = 0) {
+        backgroundEffect(bgColor, durationMs, opacity = 1, delayMs = 0) {
+            const bg = bgColor;
+            const duration = durationMs * speed;
+            const delay = delayMs * speed;
+            const ramp = Math.min(250, duration);
             const el = document.createElement("div");
             el.style.cssText = `position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;opacity:0;background:${bg};background-size:cover;`;
             layer.appendChild(el);
-            const total = duration + 250;
+            const total = duration + ramp;
             run(
                 el,
                 [
                     { opacity: 0, offset: 0 },
-                    { opacity, offset: 250 / total },
+                    { opacity, offset: ramp / total },
                     { opacity, offset: duration / total },
                     { opacity: 0, offset: 1 },
                 ],

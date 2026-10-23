@@ -2,12 +2,14 @@ import "./Settings.css";
 import React, { useState } from "react";
 import { getLang, setLang } from "shared/lang";
 import { isFxEnabled, setFxEnabled } from "animations/fxSetting";
+import { getBgmState, setBgmEnabled, setBgmVolume } from "audio/bgm";
 
 // 오른쪽 위 톱니바퀴 버튼과, 누르면 열리는 설정창 (지금은 언어 선택만 있다)
 export function Settings() {
     const [open, setOpen] = useState(false);
     const lang = getLang();
     const [fxOn, setFxOn] = useState(isFxEnabled());
+    const [bgm, setBgm] = useState(getBgmState());
 
     return (
         <>
@@ -40,6 +42,38 @@ export function Settings() {
                                 </button>
                             ))}
                         </div>
+                        <p className="settings-label settings-label-gap">배경음악 / Music</p>
+                        <div className="settings-options">
+                            {[
+                                [true, "켜기 / On"],
+                                [false, "끄기 / Off"],
+                            ].map(([value, label]) => (
+                                <button
+                                    key={String(value)}
+                                    className={"settings-option" + (bgm.on === value ? " active" : "")}
+                                    aria-pressed={bgm.on === value}
+                                    onClick={() => {
+                                        setBgmEnabled(value);
+                                        setBgm(getBgmState());
+                                    }}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+                        <input
+                            className="settings-volume"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={Math.round(bgm.volume * 100)}
+                            aria-label="음량 / Volume"
+                            disabled={!bgm.on}
+                            onChange={(e) => {
+                                setBgmVolume(Number(e.target.value) / 100);
+                                setBgm(getBgmState());
+                            }}
+                        />
                         <p className="settings-label settings-label-gap">기술 효과 / Move effects</p>
                         <div className="settings-options">
                             {[

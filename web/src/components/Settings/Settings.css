@@ -94,3 +94,8 @@
 .settings-label-gap {
     margin-top: 14px;
 }
+
+.settings-volume {
+    width: 100%;
+    margin: 10px 0 0;
+}

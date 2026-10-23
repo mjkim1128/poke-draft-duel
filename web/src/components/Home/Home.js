@@ -26,6 +26,7 @@ import {
 } from "shared";
 import "./StartScreen.css";
 import { isKorean } from "shared/lang";
+import { playSong } from "audio/bgm";
 import { keepsRawPower } from "shared/movemechanics";
 
 const BATTLE_ROUNDS = 4;
@@ -115,6 +116,14 @@ export function Home() {
             setPlayerPokemon([]);
             setWinStreak(0);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [battleFactoryState]);
+
+    /// Music follows the screen: title, picking, battle (a boss battle has its own), swapping
+    useEffect(() => {
+        const bossRound = winStreak === BATTLE_ROUNDS || winStreak === BATTLE_ROUNDS * 2 + 1;
+        const songs = { home: "title", select: "select", swap: "select", battle: bossRound ? "boss" : "battle", boss: "boss" };
+        if (songs[battleFactoryState]) playSong(songs[battleFactoryState]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [battleFactoryState]);
 

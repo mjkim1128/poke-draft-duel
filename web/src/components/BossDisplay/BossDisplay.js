@@ -1,11 +1,10 @@
-import { TRAINER_ALAZAR, TRAINER_BLAKE } from "shared";
 import React from "react";
 import { isKorean, withParticle } from "shared/lang";
 import "./BossDisplay.css";
 
 export function BossDisplay(props) {
 
-    let trainer = props.winStreak === 9 ? TRAINER_BLAKE : TRAINER_ALAZAR;
+    const trainer = props.boss;
 
     const ko = isKorean();
     const name = ko ? trainer.nameKo : trainer.name;

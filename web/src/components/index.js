@@ -17,5 +17,6 @@ export * from './Home';
 export * from './GameOverDisplay';
 export * from './PokemonSwap';
 export * from './BossDisplay';
+export * from './ClearDisplay';
 export * from './BattleAnnouncer';
 export * from './FloatingPopup';

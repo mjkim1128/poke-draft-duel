@@ -46,3 +46,8 @@
 .start-button:hover {
     filter: brightness(1.08);
 }
+
+.start-button-endless {
+    margin-top: 10px;
+    background: #2b6fd6;
+}

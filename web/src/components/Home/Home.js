@@ -1,4 +1,4 @@
-import { Battle, TeamSelect, PokemonSwap, BossDisplay } from "components";
+import { Battle, TeamSelect, PokemonSwap, BossDisplay, ClearDisplay } from "components";
 import React, { useEffect, useState } from "react";
 import {
     baseStatTotalTo600,
@@ -12,8 +12,8 @@ import {
     getRandomInt,
     getRandomType,
     shuffle,
-    TRAINER_ALAZAR,
-    TRAINER_BLAKE,
+    bossForFloor,
+    FINAL_FLOOR,
     hpCalc,
     BANNED_MOVES,
     DEFAULT_MOVES,
@@ -29,7 +29,22 @@ import { isKorean } from "shared/lang";
 import { playSong } from "audio/bgm";
 import { keepsRawPower } from "shared/movemechanics";
 
-const BATTLE_ROUNDS = 4;
+/// Beating the final boss unlocks Endless Mode (no named trainers) on this browser
+const ENDLESS_KEY = "battlefactory-endless";
+const isEndlessUnlocked = () => {
+    try {
+        return window.localStorage.getItem(ENDLESS_KEY) === "1";
+    } catch (e) {
+        return false;
+    }
+};
+const unlockEndless = () => {
+    try {
+        window.localStorage.setItem(ENDLESS_KEY, "1");
+    } catch (e) {
+        // not saved, but it stays unlocked for this visit
+    }
+};
 
 export function Home() {
     const [isApiLoading, setApiLoading] = useState(true);
@@ -40,6 +55,9 @@ export function Home() {
     const [playerPokemon, setPlayerPokemon] = useState([]);
     const [battleFactoryState, setBattleFactoryState] = useState("home");
     const [winStreak, setWinStreak] = useState(0);
+    /// Endless Mode: no named trainers, the run just keeps going
+    const [endless, setEndless] = useState(false);
+    const [endlessUnlocked, setEndlessUnlocked] = useState(isEndlessUnlocked());
     /// True while the options on screen were just loaded and nobody has started a game with them
     /// yet, so "Start!" doesn't have to load them a second time.
     const optionsFresh = React.useRef(false);
@@ -115,14 +133,15 @@ export function Home() {
         if (battleFactoryState === "home" && playerPokemon.length > 0) {
             setPlayerPokemon([]);
             setWinStreak(0);
+            setEndless(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [battleFactoryState]);
 
     /// Music follows the screen: title, picking, battle (a boss battle has its own), swapping
     useEffect(() => {
-        const bossRound = winStreak === BATTLE_ROUNDS || winStreak === BATTLE_ROUNDS * 2 + 1;
-        const songs = { home: "title", select: "select", swap: "select", battle: bossRound ? "boss" : "battle", boss: "boss" };
+        const bossRound = !endless && !!bossForFloor(winStreak);
+        const songs = { home: "title", select: "select", swap: "select", battle: bossRound ? "boss" : "battle", boss: "boss", clear: "title" };
         if (songs[battleFactoryState]) playSong(songs[battleFactoryState]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [battleFactoryState]);
@@ -147,12 +166,7 @@ export function Home() {
 
     /// The opponent's 6 pokemon. A boss brings its own 3, the other 3 are random.
     async function loadOpponentParty() {
-        const boss =
-            winStreak === BATTLE_ROUNDS
-                ? TRAINER_ALAZAR
-                : winStreak === BATTLE_ROUNDS * 2 + 1
-                ? TRAINER_BLAKE
-                : null;
+        const boss = endless ? null : bossForFloor(winStreak);
         const fresh = [];
         for (let i = 0; i < 6; i++) {
             fresh[i] =
@@ -362,12 +376,32 @@ export function Home() {
         setFunc(pokemonArr);
     }
 
+    /// Starts a run from the title screen (the pokemon may already be loaded in the background)
+    async function startGame(isEndless) {
+        setEndless(isEndless);
+        if (!optionsFresh.current) {
+            setApiLoading(true);
+            await loadNewPokemon();
+        }
+        optionsFresh.current = false;
+        setBattleFactoryState("select");
+        setApiLoading(false);
+    }
+
+    /// A battle just ended and its result card was clicked. Beating the final boss ends the run
+    /// with the clear screen; everything else goes where the card said.
+    function afterBattle(next) {
+        if (next === "swap" && !endless && winStreak > FINAL_FLOOR) {
+            unlockEndless();
+            setEndlessUnlocked(true);
+            setBattleFactoryState("clear");
+            return;
+        }
+        setBattleFactoryState(next);
+    }
+
     async function nextBattle() {
-        if (
-            (winStreak + 1) % (BATTLE_ROUNDS + 1) === 0 &&
-            winStreak < 10 && // no third boss yet
-            battleFactoryState === "swap"
-        ) {
+        if (!endless && bossForFloor(winStreak) && battleFactoryState === "swap") {
             setBattleFactoryState("boss");
             return;
         }
@@ -400,20 +434,14 @@ export function Home() {
                     <div className="start-card">
                         <img className="start-ball" src={process.env.PUBLIC_URL + "/logo192.png"} alt="" />
                         <h1 className="start-title">Battle Factory</h1>
-                        <button
-                            className="start-button"
-                            onClick={async () => {
-                                if (!optionsFresh.current) {
-                                    setApiLoading(true);
-                                    await loadNewPokemon();
-                                }
-                                optionsFresh.current = false;
-                                setBattleFactoryState("select");
-                                setApiLoading(false);
-                            }}
-                        >
+                        <button className="start-button" onClick={() => startGame(false)}>
                             {isKorean() ? "시작하기" : "Start!"}
                         </button>
+                        {endlessUnlocked && (
+                            <button className="start-button start-button-endless" onClick={() => startGame(true)}>
+                                {isKorean() ? "엔드리스 모드" : "Endless Mode"}
+                            </button>
+                        )}
                     </div>
                 </div>
             )}
@@ -430,7 +458,7 @@ export function Home() {
                     <Battle
                         playerPokemon={battleTeams.player}
                         opponentPokemon={battleTeams.opponent}
-                        setBattleFactoryState={setBattleFactoryState}
+                        setBattleFactoryState={afterBattle}
                         winStreak={winStreak}
                         setWinStreak={setWinStreak}
                     />
@@ -451,9 +479,20 @@ export function Home() {
                 <div>
                     <BossDisplay
                         winStreak={winStreak}
+                        boss={bossForFloor(winStreak)}
                         nextBattle={nextBattle}
                     />
                 </div>
+            )}
+            {battleFactoryState === "clear" && (
+                <ClearDisplay
+                    winStreak={winStreak}
+                    onContinue={() => {
+                        setEndless(true);
+                        setBattleFactoryState("swap");
+                    }}
+                    onHome={() => setBattleFactoryState("home")}
+                />
             )}
         </div>
     );

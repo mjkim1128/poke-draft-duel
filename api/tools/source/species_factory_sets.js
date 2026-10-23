@@ -1944,12 +1944,12 @@ const SPECIES_FACTORY_SETS = {
   ],
   "hippowdon": /* 하마돈 */ [
   {
-    "item": "leftovers" /* 먹다남은음식 */,
+    "item": "sitrus-berry" /* 자뭉열매 */,
     "ability": "sand-stream" /* 모래날림 */,
     "moves": [
       [ { "slug": "slack-off" /* 태만함 */ } ],
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "yawn" /* 하품 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   },
@@ -1964,27 +1964,17 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "sand-stream" /* 모래날림 */,
-    "moves": [
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "slack-off" /* 태만함 */ } ],
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ]
-    ]
-  },
-  {
     "item": "rocky-helmet" /* 울퉁불퉁멧 */,
     "ability": "sand-stream" /* 모래날림 */,
     "moves": [
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ],
+      [ { "slug": "yawn" /* 하품 */ } ],
       [ { "slug": "slack-off" /* 태만함 */ } ]
     ]
   },
   {
-    "item": "leftovers" /* 먹다남은음식 */,
+    "item": "sitrus-berry" /* 자뭉열매 */,
     "ability": "sand-stream" /* 모래날림 */,
     "moves": [
       [ { "slug": "stone-edge" /* 스톤에지 */ } ],
@@ -14975,8 +14965,8 @@ const SPECIES_FACTORY_SETS = {
   ],
   "ninetales": /* 나인테일 */ [
   {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "flash-fire" /* 타오르는불꽃 */,
+    "item": "heat-rock" /* 뜨거운바위 */,
+    "ability": "drought" /* 가뭄 */,
     "moves": [
       [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
       [ { "slug": "fire-blast" /* 불대문자 */ } ],
@@ -14985,8 +14975,8 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "flash-fire" /* 타오르는불꽃 */,
+    "item": "heat-rock" /* 뜨거운바위 */,
+    "ability": "drought" /* 가뭄 */,
     "moves": [
       [ { "slug": "substitute" /* 대타출동 */ } ],
       [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
@@ -14995,8 +14985,8 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "passho-berry" /* 꼬시개열매 */,
-    "ability": "flash-fire" /* 타오르는불꽃 */,
+    "item": "heat-rock" /* 뜨거운바위 */,
+    "ability": "drought" /* 가뭄 */,
     "moves": [
       [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
       [ { "slug": "fire-blast" /* 불대문자 */ } ],

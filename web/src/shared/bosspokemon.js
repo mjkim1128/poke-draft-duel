@@ -67,20 +67,20 @@ export const TRAINER_FROST = {
     img: "assets/trainer_icelady.png",
 };
 
-export const TRAINER_SAGE = {
+export const TRAINER_SOL = {
     floor: 42,
     pokemon: [
-        { name: "reuniclus", move: "trick-room" },
-        { name: "bronzong", move: "trick-room" },
-        { name: "cofagrigus", move: "trick-room" },
-        { name: "stakataka", move: "trick-room" },
-        { name: "diancie", move: "trick-room" },
-        { name: "hoopa", move: "trick-room" },
+        { name: "torkoal", ability: "drought" },
+        { name: "ninetales", ability: "drought" },
+        { name: "venusaur", ability: "chlorophyll" },
+        { name: "leafeon", ability: "chlorophyll" },
+        "heatran",
+        "charizard",
     ],
-    name: "Sage",
-    nameKo: "세이지",
-    text: ["Slow is smooth, and smooth is fast. Let me show you.", "In this room, time runs backwards."],
-    textKo: ["느린 것이 곧 부드럽고, 부드러운 것이 곧 빠른 거야. 보여 줄게.", "이 방에서는 시간이 거꾸로 흘러."],
+    name: "Sol",
+    nameKo: "솔",
+    text: ["Feel that heat? The sun is on my side today.", "Let's see how long you can stand the light."],
+    textKo: ["이 열기 느껴져? 오늘은 태양이 내 편이야.", "네가 이 빛을 얼마나 버티는지 보자."],
     img: "assets/trainer_cybercat.png",
 };
 
@@ -112,7 +112,7 @@ export const BOSSES = [
     TRAINER_MARINA,
     TRAINER_DUNE,
     TRAINER_FROST,
-    TRAINER_SAGE,
+    TRAINER_SOL,
     TRAINER_BASTION,
     TRAINER_ORION,
 ];

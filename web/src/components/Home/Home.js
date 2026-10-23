@@ -36,7 +36,6 @@ export function Home() {
     /// battle (battleTeams).
     const [battleTeams, setBattleTeams] = useState({ player: [], opponent: [] });
     const [opponentPokemon, setOpponentPokemon] = useState([]);
-    const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [playerPokemon, setPlayerPokemon] = useState([]);
     const [battleFactoryState, setBattleFactoryState] = useState("home");
     const [winStreak, setWinStreak] = useState(0);
@@ -55,7 +54,6 @@ export function Home() {
         forceUpdate();
         if (isApiLoading) return;
         /// glitchy
-        setSelectedPokemon(null);
         /// Pokemon Center :)
         let [temp, dumb] = [[...playerPokemon], [...opponentPokemon]];
         for (const arr of [temp, dumb]) {
@@ -163,7 +161,6 @@ export function Home() {
     }
 
     async function loadNewPokemon(init = true) {
-        setSelectedPokemon(null);
         if (init) {
             await loadOptions();
         }
@@ -433,15 +430,11 @@ export function Home() {
             {battleFactoryState === "swap" && (
                 <div>
                     <PokemonSwap
-                        properties={[
-                            battleTeams.opponent.filter((poke) => poke.revealed),
-                            selectedPokemon,
-                            setSelectedPokemon,
-                            playerPokemon,
-                            setPlayerPokemon,
-                            nextBattle,
-                            winStreak,
-                        ]}
+                        opponentOptions={battleTeams.opponent.filter((poke) => poke.revealed)}
+                        playerRoster={playerPokemon}
+                        setPlayerRoster={setPlayerPokemon}
+                        nextBattle={nextBattle}
+                        winStreak={winStreak}
                     />
                 </div>
             )}

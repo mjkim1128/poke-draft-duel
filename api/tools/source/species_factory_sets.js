@@ -1950,7 +1950,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "explosion" /* 대폭발 */ } ]
     ]
-  },
+  },//여기부터
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "clear-body" /* 클리어바디 */,

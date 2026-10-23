@@ -23,6 +23,11 @@ export const WORDS = {
 
 export const TRANSLATIONS = [
     // ---- 기본 전투 진행
+    ["{} is already drowsy!", "{1:은} 이미 졸린 상태다!"],
+    ["{} already has a status condition!", "{1:은} 이미 상태 이상에 걸려 있다!"],
+    ["{}'s {} prevents sleep!", "{1}의 {2} 때문에 잠들지 않는다!"],
+    ["{} is protected by the Electric Terrain!", "{1:은} 일렉트릭필드로 보호받고 있다!"],
+    ["{} is protected by the Misty Terrain!", "{1:은} 미스트필드로 보호받고 있다!"],
     ["{} is confused!", "{1:은} 혼란에 빠져 있다!"],
     ["It hurt itself in its confusion!", "영문도 모른 채 자신을 공격했다!"],
     ["{} is paralyzed!", "{1:은} 몸이 저려서 움직일 수 없다!"],

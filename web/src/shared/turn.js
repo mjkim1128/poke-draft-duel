@@ -1970,14 +1970,17 @@ function trySpecialStatusMove(attacker, defender, move, text, field, defenderTea
             text.push(me + " waits for a target to make a move!");
             return true;
         case "yawn":
-            if (
-                defender.status ||
-                defender.yawn ||
-                abilityBlocksStatus(defender, "sleep", attacker, field) ||
-                terrainBlocksStatus(defender, "sleep", field) ||
-                (defenderTeam && defenderTeam.safeguardTurns > 0 && !bypassesScreens(attacker))
-            ) {
-                return fail();
+            // Each way Yawn can fail says why
+            if (defender.yawn) return fail(foe + " is already drowsy!");
+            if (defender.status) return fail(foe + " already has a status condition!");
+            if (abilityBlocksStatus(defender, "sleep", attacker, field)) {
+                return fail(foe + "'s " + abilityLabel(defender) + " prevents sleep!");
+            }
+            if (terrainBlocksStatus(defender, "sleep", field)) {
+                return fail(foe + " is protected by the " + (terrainOf(field) === "misty" ? "Misty" : "Electric") + " Terrain!");
+            }
+            if (defenderTeam && defenderTeam.safeguardTurns > 0 && !bypassesScreens(attacker)) {
+                return fail(foe + " is protected by Safeguard!");
             }
             defender.yawn = 2;
             text.push(foe + " grew drowsy!");

@@ -51,34 +51,17 @@
     color: #555b66;
 }
 
-.game-over-sub {
-    margin: 0 0 14px;
-    font-size: 16px;
+/* 결과 창에는 연승 수만 크게 보여 준다 */
+.game-over-streak {
+    margin: 4px 0 20px;
+    font-size: 20px;
     color: #444;
 }
 
-.game-over-stats {
-    display: flex;
-    gap: 8px;
-    margin: 0 0 18px;
-}
-
-.game-over-stats > div {
-    flex: 1;
-    padding: 8px 4px;
-    border-radius: 8px;
-    background: #f1f4f7;
-}
-
-.game-over-stats dt {
-    font-size: 12px;
-    color: #667;
-}
-
-.game-over-stats dd {
-    margin: 2px 0 0;
-    font-size: 20px;
-    font-weight: bold;
+.game-over-streak strong {
+    margin-right: 4px;
+    font-size: 56px;
+    line-height: 1;
     color: #222;
 }
 

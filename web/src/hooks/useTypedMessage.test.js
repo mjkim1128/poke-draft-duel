@@ -1,39 +1,83 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { act } from "react-dom/test-utils";
 import { useTypedMessage } from "hooks";
+import { wait } from "shared";
+
+// 타이핑 사이의 대기(wait)를 직접 하나씩 풀어 주는 방식으로 시간을 조종한다. 실제 시간에 기대면
+// 컴퓨터가 바쁠 때 결과가 달라져서 시험이 흔들린다.
+jest.mock("shared", () => ({ wait: jest.fn() }));
+
+const pending = [];
+beforeEach(() => {
+    pending.length = 0;
+    wait.mockImplementation(() => new Promise((resolve) => pending.push(resolve)));
+});
+
+// 가장 먼저 시작된 대기를 끝내고, 그 뒤에 이어지는 화면 갱신까지 처리한다
+const tick = async () => {
+    const resolve = pending.shift();
+    await act(async () => resolve());
+};
 
 function Probe({ message }) {
     return <span id="typed">{useTypedMessage(message)}</span>;
 }
 
-const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// 안내창의 글자는 한 글자씩 나타난다. 메시지가 도중에 바뀌면(안내창을 눌러 건너뛸 때 등) 옛 메시지의
-// 타이핑은 멈추고 새 메시지만 처음부터 나타나야 한다. 둘이 번갈아 덮어쓰면 글자가 깜빡이고 버벅인다.
-// 두 타이머의 시점이 어긋나야 겹침이 드러나고, act 안에서는 화면 갱신이 모아져서 도중 글자를 볼 수 없다.
-// 그래서 가짜 시계도 act도 쓰지 않고 실제 시간으로 지켜본다.
-test("a new message replaces the one being typed, without the old one leaking back in", async () => {
-    global.IS_REACT_ACT_ENVIRONMENT = false;
+function mount(message) {
+    global.IS_REACT_ACT_ENVIRONMENT = true;
     const host = document.createElement("div");
     document.body.appendChild(host);
     const root = createRoot(host);
-    const OLD = "A".repeat(40);
-    const NEW = "B".repeat(40);
+    return { host, root, render: (m) => act(async () => root.render(<Probe message={m} />)) };
+}
 
-    root.render(<Probe message={OLD} />);
-    await pause(57); // the old message is a few letters in
-    expect(host.textContent).toMatch(/^A+$/);
+test("types the message one letter at a time", async () => {
+    const { host, root, render } = mount();
+    await render("ABC");
+    expect(host.textContent).toBe("");
+    await tick();
+    expect(host.textContent).toBe("A");
+    await tick();
+    expect(host.textContent).toBe("AB");
+    await tick();
+    expect(host.textContent).toBe("ABC");
+    await act(async () => root.unmount());
+    host.remove();
+});
 
-    root.render(<Probe message={NEW} />);
-    const seen = [];
-    const sampler = setInterval(() => seen.push(host.textContent), 3);
-    await pause(700);
-    clearInterval(sampler);
+// 메시지가 도중에 바뀌면(안내창을 눌러 건너뛸 때 등) 옛 메시지의 타이핑은 멈추고 새 메시지만
+// 처음부터 나타나야 한다. 멈추지 않으면 둘이 번갈아 글자를 덮어써서 깜빡이고 버벅인다.
+test("a new message replaces the one being typed, and the old typing stops", async () => {
+    const { host, root, render } = mount();
+    await render("AAAA");
+    await tick();
+    expect(host.textContent).toBe("A");
 
-    const leaked = seen.filter((text) => text.includes("A"));
-    expect(leaked).toEqual([]);
-    expect(host.textContent).toBe(NEW);
+    await render("BBBB");
+    expect(host.textContent).toBe(""); // 옛 글자가 남아 있지 않다
 
-    root.unmount();
+    // 옛 메시지의 대기가 끝나도 아무것도 바뀌지 않아야 한다 (옛 코드는 여기서 "AA"를 써 넣었다)
+    await tick();
+    expect(host.textContent).toBe("");
+
+    await tick();
+    expect(host.textContent).toBe("B");
+    await tick();
+    await tick();
+    await tick();
+    expect(host.textContent).toBe("BBBB");
+    await act(async () => root.unmount());
+    host.remove();
+});
+
+test("an unmounted message stops typing", async () => {
+    const { host, root, render } = mount();
+    await render("AAAA");
+    await tick();
+    await act(async () => root.unmount());
+    // 화면에서 사라진 뒤 대기가 끝나도 오류 없이 조용히 끝난다
+    const resolve = pending.shift();
+    await expect(Promise.resolve().then(() => resolve())).resolves.toBeUndefined();
     host.remove();
 });

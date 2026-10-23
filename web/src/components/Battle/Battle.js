@@ -498,9 +498,6 @@ export function Battle(props) {
                         win={isVictory}
                         onClick={props.setBattleFactoryState}
                         winStreak={props.winStreak}
-                        turns={turns.length}
-                        alive={props.playerPokemon.filter((poke) => poke.hp[0] > 0).length}
-                        total={props.playerPokemon.length}
                     />
                 )}
             </div>
@@ -517,9 +514,6 @@ export function Battle(props) {
                                 win={isVictory}
                                 onClick={props.setBattleFactoryState}
                                 winStreak={props.winStreak}
-                                turns={turns.length}
-                                alive={props.playerPokemon.filter((poke) => poke.hp[0] > 0).length}
-                                total={props.playerPokemon.length}
                             />
                         </div>
                     )}

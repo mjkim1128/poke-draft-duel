@@ -23,6 +23,7 @@ export const WORDS = {
 
 export const TRANSLATIONS = [
     // ---- 기본 전투 진행
+    ["{} is switched out with the Eject Button!", "{1:은} 탈출버튼 때문에 교체되었다!"],
     ["{} is already drowsy!", "{1:은} 이미 졸린 상태다!"],
     ["{} already has a status condition!", "{1:은} 이미 상태 이상에 걸려 있다!"],
     ["{}'s {} prevents sleep!", "{1}의 {2} 때문에 잠들지 않는다!"],

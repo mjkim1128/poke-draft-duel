@@ -135,6 +135,7 @@ import {
     WHITE_HERB,
     WEAKNESS_POLICY,
     AIR_BALLOON,
+    EJECT_BUTTON,
     FOCUS_SASH,
     LIFE_ORB,
     BLACK_SLUDGE,
@@ -3024,6 +3025,21 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
             // ...and a hit that takes it to half HP or less can trigger Emergency Exit, Berserk...
             if (defender.hp[0] > 0 && hpBefore > defender.hp[1] / 2 && defender.hp[0] <= defender.hp[1] / 2 && defenderTeam) {
                 runHook(defender, "onHpBelowHalf", { selfTeam: defenderTeam, text, ...abilityApi(field) }, attacker);
+            }
+            // Eject Button: a damaging hit that leaves the holder standing knocks it out of battle
+            // (not when Sheer Force stripped the move's extras). Its trainer picks the replacement.
+            if (
+                !sheerForced &&
+                defender.hp[0] > 0 &&
+                activeItem(defender) &&
+                defender.item.name === EJECT_BUTTON &&
+                defenderTeam &&
+                !defenderTeam.pivotRequest &&
+                defenderTeam.slice(1).some((p) => p.hp[0] > 0)
+            ) {
+                text.push(pokemonNameToString(defender) + " is switched out with the Eject Button!");
+                consumeItem(defender);
+                defenderTeam.pivotRequest = { baton: false };
             }
             // The attacker's own ability reacting to a hit it landed (Poison Touch, Magician...)
             runHook(attacker, "onAttackHit", { defender, move, damage: damage_number, sheerForced, text, ...abilityApi(field) });

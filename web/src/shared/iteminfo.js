@@ -15,6 +15,7 @@ export const ITEM_POOL = [
     "assault-vest",
     "black-sludge",
     "air-balloon",
+    "eject-button",
     "berry-juice",
     "expert-belt",
     "black-glasses",
@@ -147,6 +148,7 @@ export const KEE_BERRY = "kee-berry";
 export const WHITE_HERB = "white-herb";
 export const WEAKNESS_POLICY = "weakness-policy";
 export const AIR_BALLOON = "air-balloon";
+export const EJECT_BUTTON = "eject-button";
 export const FOCUS_SASH = "focus-sash";
 export const LIFE_ORB = "life-orb";
 export const BLACK_SLUDGE = "black-sludge";

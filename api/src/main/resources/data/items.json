@@ -66,6 +66,7 @@
 {"id":581,"name":"eviolite","korean_name":"진화의휘석","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/eviolite.png"}},
 {"id":583,"name":"rocky-helmet","korean_name":"울퉁불퉁멧","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rocky-helmet.png"}},
 {"id":584,"name":"air-balloon","korean_name":"풍선","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/air-balloon.png"}},
+{"id":590,"name":"eject-button","korean_name":"탈출버튼","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/eject-button.png"}},
 {"id":682,"name":"weakness-policy","korean_name":"약점보험","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/weakness-policy.png"}},
 {"id":683,"name":"assault-vest","korean_name":"돌격조끼","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/assault-vest.png"}},
 {"id":723,"name":"roseli-berry","korean_name":"로셀열매","category":{"name":"type-protection"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/roseli-berry.png"}},

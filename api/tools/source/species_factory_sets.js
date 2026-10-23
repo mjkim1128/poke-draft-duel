@@ -2298,7 +2298,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "weavile": /* 포푸니라 */ [
+  "weavile": /* 포푸니라 */ [ //테스트용
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "pressure" /* 프레셔 */,
@@ -2350,7 +2350,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "life-orb" /* 생명의구슬 */,
+    "item": "focus-sash" ,
     "ability": "pressure" /* 프레셔 */,
     "moves": [
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
@@ -2370,7 +2370,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "focus-sash" ,
     "ability": "pressure" /* 프레셔 */,
     "moves": [
       [ { "slug": "triple-axel" /* 트리플악셀 */ } ],
@@ -2400,7 +2400,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "focus-sash",
     "ability": "pickpocket" /* 나쁜손버릇 */,
     "moves": [
       [ { "slug": "triple-axel" /* 트리플악셀 */ } ],
@@ -3731,15 +3731,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "regenerator" /* 재생력 */,
-    "moves": [
-      [ { "slug": "scald" /* 열탕 */ } ],
-      [ { "slug": "teleport" /* 순간이동 */ } ],
-      [ { "slug": "slack-off" /* 태만함 */ } ]
-    ]
-  },
-  {
     "item": "colbur-berry" /* 마코열매 */,
     "ability": "regenerator" /* 재생력 */,
     "moves": [
@@ -3758,15 +3749,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "calm-mind" /* 명상 */ } ]
     ]
   },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "regenerator" /* 재생력 */,
-    "moves": [
-      [ { "slug": "scald" /* 열탕 */ } ],
-      [ { "slug": "slack-off" /* 태만함 */ } ],
-      [ { "slug": "thunder-wave" /* 전기자석파 */ } ]
-    ]
-  }
   ],
   "skarmory": /* 무장조 */ [
   {
@@ -3797,26 +3779,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "spikes" /* 압정뿌리기 */ } ],
       [ { "slug": "taunt" /* 도발 */ } ],
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ]
-    ]
-  },
-  {
-    "item": "shed-shell" /* 아름다운허물 */,
-    "ability": "sturdy" /* 옹골참 */,
-    "moves": [
-      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ],
-      [ { "slug": "whirlwind" /* 날려버리기 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
-    ]
-  },
-  {
-    "item": "shed-shell" /* 아름다운허물 */,
-    "ability": "sturdy" /* 옹골참 */,
-    "moves": [
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "whirlwind" /* 날려버리기 */ }, { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ }, { "slug": "spikes" /* 압정뿌리기 */ } ],
-      [ { "slug": "counter" /* 카운터 */ } ]
     ]
   },
   {
@@ -5109,50 +5071,10 @@ const SPECIES_FACTORY_SETS = {
     "item": "toxic-orb" /* 맹독구슬 */,
     "ability": "poison-heal" /* 포이즌힐 */,
     "moves": [
-      [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ]
-    ]
-  },
-  {
-    "item": "toxic-orb" /* 맹독구슬 */,
-    "ability": "poison-heal" /* 포이즌힐 */,
-    "moves": [
-      [ { "slug": "taunt" /* 도발 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ]
-    ]
-  },
-  {
-    "item": "toxic-orb" /* 맹독구슬 */,
-    "ability": "poison-heal" /* 포이즌힐 */,
-    "moves": [
-      [ { "slug": "taunt" /* 도발 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ]
-    ]
-  },
-  {
-    "item": "toxic-orb" /* 맹독구슬 */,
-    "ability": "poison-heal" /* 포이즌힐 */,
-    "moves": [
       [ { "slug": "substitute" /* 대타출동 */ } ],
       [ { "slug": "toxic" /* 맹독 */ } ],
       [ { "slug": "protect" /* 방어 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
-    ]
-  },
-  {
-    "item": "toxic-orb" /* 맹독구슬 */,
-    "ability": "poison-heal" /* 포이즌힐 */,
-    "moves": [
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
   },
   {
@@ -5321,16 +5243,6 @@ const SPECIES_FACTORY_SETS = {
     "item": "choice-scarf" /* 구애스카프 */,
     "ability": "trace" /* 트레이스 */,
     "moves": [
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "trick" /* 트릭 */ } ],
-      [ { "slug": "healing-wish" /* 치유소원 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "trace" /* 트레이스 */,
-    "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "psychic" /* 사이코키네시스 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
@@ -5410,37 +5322,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "rocky-helmet" /* 울퉁불퉁멧 */,
-    "ability": "rough-skin" /* 까칠한피부 */,
-    "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "roar" /* 울부짖기 */ }, { "slug": "fire-blast" /* 불대문자 */ }, { "slug": "dragon-tail" /* 드래곤테일 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ]
-    ]
-  },
-  {
-    "item": "focus-sash" /* 기합의띠 */,
-    "ability": "rough-skin" /* 까칠한피부 */,
-    "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "fire-blast" /* 불대문자 */ } ],
-      [ { "slug": "outrage" /* 역린 */ }, { "slug": "stone-edge" /* 스톤에지 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "rough-skin" /* 까칠한피부 */,
-    "moves": [
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "outrage" /* 역린 */ } ],
-      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
-      [ { "slug": "fire-blast" /* 불대문자 */ } ]
-    ]
-  },
-  {
-    "item": "leftovers" /* 먹다남은음식 */,
+    "item": "loaded-dice" /* 속임수주사위 */,
     "ability": "rough-skin" /* 까칠한피부 */,
     "moves": [
       [ { "slug": "earthquake" /* 지진 */ } ],
@@ -5449,16 +5331,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "scale-shot" /* 스케일샷 */ } ]
     ]
   },
-  {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "rough-skin" /* 까칠한피부 */,
-    "moves": [
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ],
-      [ { "slug": "protect" /* 방어 */ }, { "slug": "flamethrower" /* 화염방사 */ } ]
-    ]
-  }
   ],
   "dragonite": /* 망나뇽 */ [
   {
@@ -5613,7 +5485,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
   }
-  ],
+  ], // 여기부터
   "clefable": /* 픽시 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,

@@ -164,15 +164,20 @@ export function Home() {
         optionsFresh.current = true;
     }
 
-    /// The opponent's 6 pokemon. A boss brings its own 3, the other 3 are random.
+    /// The opponent's 6 pokemon. A boss brings its own (3 or all 6), any slots it leaves open are random.
     async function loadOpponentParty() {
         const boss = endless ? null : bossForFloor(winStreak);
         const fresh = [];
         for (let i = 0; i < 6; i++) {
-            fresh[i] =
-                boss && i < 3
-                    ? await getPokemonByName(boss.pokemon[i])
-                    : await generateRandomPokemon(fresh);
+            if (boss && i < boss.pokemon.length) {
+                /// a boss slot is either a plain name or { name, ability, move } (the set must have them)
+                const slot = boss.pokemon[i];
+                const { name, ...want } = typeof slot === "string" ? { name: slot } : slot;
+                fresh[i] = await getPokemonByName(name);
+                fresh[i].want = want;
+            } else {
+                fresh[i] = await generateRandomPokemon(fresh);
+            }
         }
         await Promise.all(
             fresh.map(async (_, i) => {
@@ -211,7 +216,7 @@ export function Home() {
         pokemonData[i].stat_levels = Array(7).fill(0); // atk, def, spa, spd, spe, accuracy, evasion
         /// Try a real Showdown "Battle Factory" set first, so item + moveset come
         /// from the same coherent competitive set instead of two unrelated random picks.
-        const factorySet = await pickFactorySet(pokemonData[i].name);
+        const factorySet = await pickFactorySet(pokemonData[i].name, pokemonData[i].want || {});
         pokemonData[i].factorySet = factorySet;
         pokemonData[i].item =
             factorySet && factorySet.item

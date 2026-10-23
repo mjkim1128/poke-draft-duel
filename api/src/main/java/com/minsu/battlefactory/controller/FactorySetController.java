@@ -21,12 +21,15 @@ public class FactorySetController {
         this.factorySetService = factorySetService;
     }
 
-    // 예: /api/factory-sets/random?species=klefki
+    // 예: /api/factory-sets/random?species=klefki  (ability=, move= 를 더하면 그 특성/기술이 있는 세트 중에서 고른다)
     // 세트가 있으면 200 + 세트 JSON, 그 포켓몬의 세트가 없으면 204(내용 없음).
     // 세트가 없는 것은 정상적인 경우라서 404로 응답하지 않는다.
     @GetMapping("/random")
-    public ResponseEntity<String> random(@RequestParam String species) {
-        Optional<String> payload = factorySetService.findRandomPayload(species);
+    public ResponseEntity<String> random(
+            @RequestParam String species,
+            @RequestParam(required = false) String ability,
+            @RequestParam(required = false) String move) {
+        Optional<String> payload = factorySetService.findRandomPayload(species, ability, move);
         if (payload.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

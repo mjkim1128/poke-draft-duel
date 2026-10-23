@@ -93,6 +93,30 @@ class PoolAndFactorySetTests {
     }
 
     @Test
+    void factorySetCanBeFilteredByAbilityAndMove() throws Exception {
+        // 특성을 지정하면 그 특성의 세트만 나온다 (패리퍼에는 예리한눈 세트도 있다)
+        for (int i = 0; i < 30; i++) {
+            JsonNode set = objectMapper.readTree(factorySetService.findRandomPayload("pelipper", "drizzle", null).orElseThrow());
+            assertEquals("drizzle", set.get("ability").asString());
+        }
+        // 기술을 지정하면 그 기술이 있는 세트만 나온다
+        for (int i = 0; i < 30; i++) {
+            JsonNode set = objectMapper.readTree(factorySetService.findRandomPayload("bronzong", null, "trick-room").orElseThrow());
+            boolean found = false;
+            for (JsonNode slot : set.get("moves")) {
+                for (JsonNode option : slot) {
+                    found |= "trick-room".equals(option.get("slug").asString());
+                }
+            }
+            assertTrue(found);
+        }
+        // 조건에 맞는 세트가 없으면 아무 세트나 돌려준다
+        assertTrue(factorySetService.findRandomPayload("pelipper", "no-such-ability", null).isPresent());
+        // 세트가 없는 포켓몬은 그대로 빈 값이다
+        assertTrue(factorySetService.findRandomPayload("no-such-pokemon", "drizzle", null).isEmpty());
+    }
+
+    @Test
     void factorySetsAreLoaded() throws Exception {
         // 세트를 고칠 때마다 개수가 바뀌므로, 시드 파일의 개수와 비교한다
         try (var in = new org.springframework.core.io.ClassPathResource("data/factory_sets.json").getInputStream()) {

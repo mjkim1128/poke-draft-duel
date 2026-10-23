@@ -22,8 +22,8 @@ export async function generateRandomItem(pokemonName) {
 // moves instead of a random unrelated kit.
 // The sets now live on the server (battlefactory-api); it picks one at random for the species,
 // or answers "no content" for species without a set, in which case this returns null.
-export async function pickFactorySet(pokemonName) {
-    return await getRandomFactorySet(pokemonName);
+export async function pickFactorySet(pokemonName, want = {}) {
+    return await getRandomFactorySet(pokemonName, want);
 }
 
 // Resolves a factory set's move slots (each an array of real alternatives,

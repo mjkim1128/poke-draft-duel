@@ -404,3 +404,16 @@
     justify-content: center;
     gap: 6px;
 }
+
+/* 기술 효과가 그려지는 층: 필드 안에서 포켓몬 그림 위를 덮는다 */
+.fx-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    overflow: hidden;
+    pointer-events: none;
+}
+

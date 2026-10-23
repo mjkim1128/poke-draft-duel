@@ -425,6 +425,15 @@ function runEntryAbilities(team, foeTeam, field) {
     return text;
 }
 
+// What the UI needs to play a move's animation, or null when the move wasn't actually carried
+// out (a switch, a missed or failed move, a pokemon that couldn't act).
+function moveAnimOf(lines, move, isPlayer) {
+    if (move.priority === 6 || !move.name) return null;
+    if (!lines.some((l) => l.indexOf(" used ") >= 0)) return null;
+    if (lines.some((l) => l.indexOf(" missed!") >= 0 || l.indexOf("But it failed!") >= 0)) return null;
+    return { side: isPlayer ? "player" : "opponent", move: move.name };
+}
+
 // Plays out a turn from `step` onward: step 0 is whoever moves first, step 1 the other,
 // step 2 the end-of-turn effects. A turn can pause after a step when the player's pokemon
 // pivots out (U-turn, Baton Pass, ...) and the player has to pick its replacement; the
@@ -437,9 +446,13 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     let text = [];
     let frames = [];
     let frameStart = 0;
+    let stepAnim = null; // the move this mover just used, so the UI can play its animation
     const pushFrame = () => {
         if (text.length === frameStart) return;
-        frames.push({ text: text.slice(frameStart), ...snapshotTeams(playerPokemon, opponentPokemon) });
+        const frame = { text: text.slice(frameStart), ...snapshotTeams(playerPokemon, opponentPokemon) };
+        if (stepAnim) frame.anim = stepAnim;
+        stepAnim = null;
+        frames.push(frame);
         frameStart = text.length;
     };
     const field = ensureField(playerPokemon, opponentPokemon);
@@ -455,7 +468,9 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
         const stages = snapshotStages(playerPokemon, opponentPokemon);
         team.actingLast = step === 1; // Protect fails for whoever moves last
         foeTeam.queuedMove = step === 0 ? (isPlayer ? plan.cpuMove : plan.move) : null; // Me First copies it
+        const textBefore = text.length;
         text = addArrayToArray(text, playerTurn(team, foeTeam, move));
+        stepAnim = moveAnimOf(text.slice(textBefore), move, isPlayer);
         foeTeam.queuedMove = null;
         refreshBattlefield(playerPokemon, opponentPokemon);
         copyBoostsForOpportunist(stages, playerPokemon, opponentPokemon, text);

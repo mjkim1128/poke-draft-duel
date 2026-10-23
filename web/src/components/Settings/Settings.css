@@ -90,3 +90,7 @@
     background: #5b6472;
     cursor: pointer;
 }
+
+.settings-label-gap {
+    margin-top: 14px;
+}

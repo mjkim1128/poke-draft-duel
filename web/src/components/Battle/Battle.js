@@ -1,5 +1,7 @@
 import { localName } from "shared/lang";
 import { localizeLine } from "shared/logTranslate";
+import { playMoveAnim } from "animations/fxEngine";
+import { isFxEnabled } from "animations/fxSetting";
 import {
     CurrentPokemon,
     GameOverDisplay,
@@ -54,6 +56,7 @@ export function Battle(props) {
     const [animFrames, setAnimFrames] = useState(null);
     const [animIndex, setAnimIndex] = useState(0);
     const animDoneRef = useRef(null);
+    const fieldRef = useRef(null);
     /// A beat needs to stay up long enough for the typewriter (10ms/char, see useTypedMessage)
     /// to finish typing it out, plus a short pause so it can actually be read.
     const beatDelay = (frame) => Math.max(900, frame.text.join(" ").length * 10 + 500);
@@ -81,9 +84,15 @@ export function Battle(props) {
             if (done) done();
             return;
         }
-        setAnnouncerMessage(animFrames[animIndex].text);
-        const timer = setTimeout(() => setAnimIndex((i) => i + 1), beatDelay(animFrames[animIndex]));
-        return () => clearTimeout(timer);
+        const frame = animFrames[animIndex];
+        setAnnouncerMessage(frame.text);
+        /// The move's animation plays over the field while its lines are typed out
+        const fx = frame.anim && isFxEnabled() ? playMoveAnim(fieldRef.current, frame.anim.side, frame.anim.move) : null;
+        const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0));
+        return () => {
+            clearTimeout(timer);
+            if (fx) fx.cancel();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [animFrames, animIndex]);
 
@@ -431,7 +440,7 @@ export function Battle(props) {
         ];
         return (
             <div className="battle-portrait">
-                <div className="bp-field">
+                <div className="bp-field" ref={fieldRef}>
                     <div className="bp-head">
                         <span>
                             Turn {isCurrent ? turns.length : stepNumber} · 현재 {props.winStreak}연승

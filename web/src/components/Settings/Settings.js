@@ -1,11 +1,13 @@
 import "./Settings.css";
 import React, { useState } from "react";
 import { getLang, setLang } from "shared/lang";
+import { isFxEnabled, setFxEnabled } from "animations/fxSetting";
 
 // 오른쪽 위 톱니바퀴 버튼과, 누르면 열리는 설정창 (지금은 언어 선택만 있다)
 export function Settings() {
     const [open, setOpen] = useState(false);
     const lang = getLang();
+    const [fxOn, setFxOn] = useState(isFxEnabled());
 
     return (
         <>
@@ -33,6 +35,25 @@ export function Settings() {
                                     className={"settings-option" + (lang === code ? " active" : "")}
                                     aria-pressed={lang === code}
                                     onClick={() => setLang(code)}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+                        <p className="settings-label settings-label-gap">기술 효과 / Move effects</p>
+                        <div className="settings-options">
+                            {[
+                                [true, "켜기 / On"],
+                                [false, "끄기 / Off"],
+                            ].map(([value, label]) => (
+                                <button
+                                    key={String(value)}
+                                    className={"settings-option" + (fxOn === value ? " active" : "")}
+                                    aria-pressed={fxOn === value}
+                                    onClick={() => {
+                                        setFxEnabled(value);
+                                        setFxOn(value);
+                                    }}
                                 >
                                     {label}
                                 </button>

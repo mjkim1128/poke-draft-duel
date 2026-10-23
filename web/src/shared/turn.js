@@ -941,7 +941,7 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
                 addArrayToArray(text, doStatChanges(foe, { stat_changes: [{ stat: { name: "evasion" }, change: -1 }] }, attacker));
             }
         }
-        if (!(move.name === "chilly-reception" && snowAlready)) tryRequestPivot(playerPokemon, foe, move, text);
+        if (!(move.name === "chilly-reception" && snowAlready)) tryRequestPivot(playerPokemon, foe, move, text, opponentPokemon);
         runHook(attacker, "onAfterMove", { foe, move, text, ...abilityApi(field) });
     }
 
@@ -1436,7 +1436,7 @@ function tryStartCharge(attacker, move, text, field) {
 // U-turn / Volt Switch / Flip Turn / Parting Shot / Baton Pass / Teleport: after the move
 // the user swaps out. Only flags the request (team.pivotRequest); runTurn does the swap,
 // since the player has to choose the replacement.
-function tryRequestPivot(team, foe, move, text) {
+function tryRequestPivot(team, foe, move, text, foeTeam) {
     if (!SUPPORTED_PIVOT_MOVES.has(move.name) || team[0].hp[0] <= 0) return;
     const hasBench = team.slice(1).some((p) => p.hp[0] > 0);
     const isStatus = move.damage_class.name === "status";
@@ -1444,8 +1444,9 @@ function tryRequestPivot(team, foe, move, text) {
         if (isStatus) text.push("But it failed!");
         return;
     }
-    // A damaging pivot that KOs its target leaves the user in (no time for both swaps)
-    if (!isStatus && foe.hp[0] <= 0) return;
+    // A damaging pivot that KOs its target still swaps the user out, unless that was the foe's
+    // last pokemon (the battle is over)
+    if (!isStatus && foe.hp[0] <= 0 && !foeTeam.slice(1).some((p) => p.hp[0] > 0)) return;
     team.pivotRequest = { baton: move.name === "baton-pass" };
     text.push(pokemonNameToString(team[0]) + " went back to its trainer!");
 }

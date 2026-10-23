@@ -110,9 +110,11 @@ export function Battle(props) {
 
     useEffect(() => {
         if (isForceSwitch === false) return;
+        /// (a pivot the player still has to finish comes first; finishPivot sends in the CPU's replacement)
         if (
             props.opponentPokemon[0].hp[0] <= 0 &&
-            props.playerPokemon[0].hp[0] > 0
+            props.playerPokemon[0].hp[0] > 0 &&
+            !props.playerPokemon.pendingSwitch
         )
             forcedSwitch(props.opponentPokemon, -1);
         if (props.playerPokemon.filter((poke) => poke.hp[0] > 0).length === 0)

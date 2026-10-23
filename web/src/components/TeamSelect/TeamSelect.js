@@ -11,12 +11,12 @@ export function TeamSelect(props) {
     const [picked, setPicked] = useState([]);
     const [focus, setFocus] = useState(null);
 
-    const isPicked = focus && picked.includes(focus);
-    const canPick = focus && playerRoster.includes(focus) && !isPicked && picked.length < PICK_COUNT;
-
-    function togglePick() {
-        if (isPicked) setPicked(picked.filter((p) => p !== focus));
-        else if (canPick) setPicked([...picked, focus]);
+    // 내 포켓몬을 누르면 선출, 이미 선출된 포켓몬을 다시 누르면 해제된다.
+    // 해제되면 뒤의 순서가 하나씩 앞으로 당겨진다 (1 2 3 에서 2를 해제하면 1 3 이 1 2 가 된다).
+    function clickMine(poke) {
+        setFocus(poke);
+        if (picked.includes(poke)) setPicked(picked.filter((p) => p !== poke));
+        else if (picked.length < PICK_COUNT) setPicked([...picked, poke]);
     }
 
     function cell(poke, i, mine) {
@@ -29,7 +29,7 @@ export function TeamSelect(props) {
                     (focus === poke ? " focused" : "") +
                     (order >= 0 ? " picked" : "")
                 }
-                onClick={() => setFocus(poke)}
+                onClick={() => (mine ? clickMine(poke) : setFocus(poke))}
             >
                 <img src={poke.sprites.front_default} alt={poke.name} />
                 {order >= 0 && <span className="team-select-badge">{order + 1}</span>}
@@ -49,19 +49,18 @@ export function TeamSelect(props) {
             </div>
             <div className="team-select-row">
                 <div className="team-select-label">
-                    내 파티 - {PICK_COUNT}마리를 순서대로 고르세요 ({picked.length}/{PICK_COUNT}, 첫 번째가 선두)
+                    내 파티 - {PICK_COUNT}마리를 순서대로 누르세요, 다시 누르면 해제 ({picked.length}/{PICK_COUNT}, 첫 번째가 선두)
                 </div>
                 <div className="team-select-grid">{playerRoster.map((p, i) => cell(p, i, true))}</div>
             </div>
             <div className="team-select-bar">
-                {focus && playerRoster.includes(focus) && (isPicked || canPick) && (
-                    <button onClick={togglePick}>{isPicked ? "선출 해제" : "선출"}</button>
-                )}
-                {picked.length === PICK_COUNT && (
-                    <button className="team-select-go" onClick={() => onConfirm(picked)}>
-                        이 3마리로 배틀 시작!
-                    </button>
-                )}
+                <button
+                    className="team-select-go"
+                    disabled={picked.length !== PICK_COUNT}
+                    onClick={() => onConfirm(picked)}
+                >
+                    이 3마리로 배틀 시작!
+                </button>
             </div>
         </div>
     );

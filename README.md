@@ -48,6 +48,7 @@ docker run -p 8080:10000 -e PORT=10000 battlefactory
 |---|---|
 | 등장 포켓몬(풀), 종족별 세트 | `api/tools/source/`의 `eligible_pokemon_ids.json`, `species_factory_sets.js`를 고친 뒤 `cd api && node tools/build-sets-seed.mjs` (결과를 검증한 뒤 `src/main/resources/data/`에 씀) |
 | 포켓몬, 기술, 도구 원본 데이터 | `node tools/build-seed-from-pokeapi.mjs <게임의 src/shared 폴더>` 로 PokeAPI에서 다시 받아 `seed/`에 만들고, 결과를 `src/main/resources/data/`로 복사 |
+| 배경음악 | 선출·배틀·보스 화면의 곡은 `web/public/bgm/select.mp3`, `battle.mp3`, `boss.mp3`(확장자 ogg, m4a, wav도 가능)를 넣으면 그 파일이 반복 재생되고, 없으면 `web/src/audio/songs.js`의 8비트 곡이 나옵니다. 타이틀, 승리, 패배는 `songs.js`의 곡입니다 |
 
 ## Render에 올리기
 

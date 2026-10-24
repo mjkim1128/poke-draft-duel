@@ -28,6 +28,7 @@ import {
     TERRAIN_LABEL,
     HAZARD_LABEL,
     switchPokemon,
+    enterBattle,
     lodash,
 } from "shared";
 import "./Battle.css";
@@ -44,6 +45,21 @@ export function Battle(props) {
         },
     ]);
     const [stepNumber, setStepNumber] = useState(0);
+
+    /// The on-entry abilities of the two lead pokemon (Imposter, Intimidate...) go off as the fight begins
+    useEffect(() => {
+        const text = enterBattle(props.playerPokemon, props.opponentPokemon);
+        if (text.length === 0) return;
+        setTurns([text.map((t) => localizeLine(t))]);
+        history.push({
+            playerPokemon: lodash.cloneDeep(props.playerPokemon),
+            opponentPokemon: lodash.cloneDeep(props.opponentPokemon),
+        });
+        setHistory(history);
+        setStepNumber(history.length - 1);
+        setAnnouncerMessage(text);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     /// Portrait screens (a phone, a tall narrow window) swap the side-by-side board for a field
     /// on top and a tabbed control panel (moves / switch / log) underneath.
     const portrait = useCompactLayout();
@@ -87,7 +103,7 @@ export function Battle(props) {
         const frame = animFrames[animIndex];
         setAnnouncerMessage(frame.text);
         /// The move's animation plays over the field while its lines are typed out
-        const fx = frame.anim && isFxEnabled() ? playMoveAnim(fieldRef.current, frame.anim.side, frame.anim.move) : null;
+        const fx = frame.anim && isFxEnabled() ? playMoveAnim(fieldRef.current, frame.anim.side, frame.anim.move, frame.anim.self) : null;
         const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0));
         return () => {
             clearTimeout(timer);
@@ -125,12 +141,12 @@ export function Battle(props) {
     useEffect(() => {
         /// Game is over
         if (!isGameOver || isVictory !== null) return;
-        let isOppAlive =
-            props.opponentPokemon.filter((poke) => poke.hp[0] > 0).length > 0; /// currently player wins on recoil doublekill both last pokemon
-        let [message, win] =
-            props.playerPokemon[0].hp[0] === 0 && isOppAlive
-                ? ["You Lose!", false]
-                : ["You Win!", true];
+        const playerAlive = props.playerPokemon.some((poke) => poke.hp[0] > 0);
+        const isOppAlive = props.opponentPokemon.some((poke) => poke.hp[0] > 0);
+        /// Both sides ran out together (recoil, Explosion, Destiny Bond...): whoever fainted last loses
+        const bothOut = !playerAlive && !isOppAlive;
+        const lost = bothOut ? props.playerPokemon.lastFainted === "player" : !playerAlive;
+        let [message, win] = lost ? ["You Lose!", false] : ["You Win!", true];
         updateTurnText(message);
         updateTurnText("Player2(CPU): GGWP!");
         setVictory(win);

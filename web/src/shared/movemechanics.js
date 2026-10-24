@@ -108,6 +108,8 @@ export const BINDING_MOVES = new Set(["bind", "clamp", "fire-spin", "infestation
 export const TRAPPING_MOVES = new Set(["mean-look", "block", "spider-web", "anchor-shot", "spirit-shackle", "thousand-waves", "jaw-lock"]);
 // Only usable on the first turn after switching in (Showdown: activeMoveActions > 1 fails).
 export const FIRST_TURN_ONLY_MOVES = new Set(["fake-out", "first-impression"]);
+// 상대가 이번 턴에 공격 기술을 쓰려고 할 때만 성공하는 기술 (방어 같은 변화 기술을 고르거나 이미 움직였으면 실패)
+export const NEEDS_FOE_ATTACK_MOVES = new Set(["sucker-punch", "thunderclap"]);
 
 // One-hit KO moves and the type that is immune to them (from Showdown's `ohko` flag).
 export const OHKO_MOVES = { fissure: null, guillotine: null, "horn-drill": null, "sheer-cold": "ice" };

@@ -55,15 +55,6 @@ export function getPokemonName(data) {
     return data["forms"][0]["name"];
 }
 
-export function getPokemonStats(data) {
-    let temp = Array(6).fill(null);
-    for (let i = 0; i < 6; i++) {
-        temp[i] = parseInt(data["stats"][i]["base_stat"]);
-    }
-    temp = baseStatTotalTo600(temp);
-    return temp;
-}
-
 export function getPokemonMoves(data) {
     let temp = Array(4).fill(null);
     for (let i = 0; i < 4; i++) {
@@ -81,18 +72,9 @@ export function getPokemonImg(pokemonId) {
     );
 }
 
-export function baseStatTotalTo600(pokemon) {
-    let temp = Array(6).fill(null);
-    let bst = 0;
-    for (let i = 0; i < 6; i++) {
-        bst += parseInt(pokemon.stats[i].base_stat);
-    }
-    for (let i = 0; i < 6; i++) {
-        temp[i] = Math.floor(
-            (parseInt(pokemon.stats[i].base_stat) * 600) / bst
-        );
-    }
-    return temp;
+// The six base stats exactly as the species has them (HP, Atk, Def, SpA, SpD, Spe)
+export function getBaseStats(pokemon) {
+    return pokemon.stats.map((s) => parseInt(s.base_stat));
 }
 
 // returns random key from Set or Map
@@ -132,7 +114,7 @@ export async function getGoodRandomMoveset(moves) {
     }
     for (let move of moveset) {
         if (move.meta === undefined) move = await getMoveByName(move.name);
-        if (move.name === "hidden-power" || move.name === "secret-power") {
+        if (move.name === "hidden-power") {
             move.type.name = (" " + getRandomType()).slice(1);
             move.power = 80;
         }

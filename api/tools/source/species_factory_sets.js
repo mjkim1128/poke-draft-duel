@@ -20868,6 +20868,1351 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "triple-axel" /* 트리플악셀 */ } ]
     ]
   }
+  ],
+  // ===== 쇼다운 배틀 팩토리에서 가져와 나중에 추가한 세트 (여기부터 파일 끝까지) =====
+  // 처음 모은 세트에서 빠져 있던 포켓몬 중 쇼다운 6~9세대 세트가 있는 종을 변환해 넣은 부분입니다.
+  // 종마다 가장 최근 세대의 세트만 넣었고, 이 게임에 없는 기술/도구는 뺐습니다.
+  "deoxys-normal": /* 테오키스 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "pressure" /* 프레셔 */,
+    "moves": [
+      [ { "slug": "psycho-boost" /* 사이코부스트 */ } ],
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
+    ]
+  }
+  ],
+  "shaymin-land": /* 쉐이미 */ [
+  {
+    "item": null,
+    "ability": "natural-cure" /* 자연회복 */,
+    "moves": [
+      [ { "slug": "celebrate" /* 축하 */ } ],
+      [ { "slug": "seed-flare" /* 시드플레어 */ } ],
+      [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "fire" } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "natural-cure" /* 자연회복 */,
+    "moves": [
+      [ { "slug": "seed-flare" /* 시드플레어 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ice" } ],
+      [ { "slug": "synthesis" /* 광합성 */ } ]
+    ]
+  }
+  ],
+  "darmanitan-standard": /* 불비달마 */ [
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "sheer-force" /* 우격다짐 */,
+    "moves": [
+      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
+      [ { "slug": "rock-slide" /* 스톤샤워 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ }, { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  },
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "sheer-force" /* 우격다짐 */,
+    "moves": [
+      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
+      [ { "slug": "rock-slide" /* 스톤샤워 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ }, { "slug": "superpower" /* 엄청난힘 */ } ]
+    ]
+  }
+  ],
+  "jellicent-male": /* 탱탱겔 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "water-absorb" /* 저수 */,
+    "moves": [
+      [ { "slug": "recover" /* HP회복 */ } ],
+      [ { "slug": "hex" /* 병상첨병 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "water-absorb" /* 저수 */,
+    "moves": [
+      [ { "slug": "recover" /* HP회복 */ } ],
+      [ { "slug": "hex" /* 병상첨병 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ }, { "slug": "scald" /* 열탕 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "colbur-berry" /* 마코열매 */,
+    "ability": ["water-absorb" /* 저수 */, "cursed-body" /* 저주받은바디 */],
+    "moves": [
+      [ { "slug": "recover" /* HP회복 */ } ],
+      [ { "slug": "hex" /* 병상첨병 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ }, { "slug": "toxic" /* 맹독 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "water-absorb" /* 저수 */,
+    "moves": [
+      [ { "slug": "water-spout" /* 해수스파우팅 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "trick" /* 트릭 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ }, { "slug": "hydro-pump" /* 하이드로펌프 */ } ]
+    ]
+  }
+  ],
+  "tornadus-incarnate": /* 토네로스 */ [
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "defiant" /* 오기 */,
+    "moves": [
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ],
+      [ { "slug": "hurricane" /* 폭풍 */ }, { "slug": "bleakwind-storm" /* 찬바람폭풍 */ } ],
+      [ { "slug": "heat-wave" /* 열풍 */ }, { "slug": "grass-knot" /* 풀묶기 */ }, { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "prankster" /* 짓궂은마음 */,
+    "moves": [
+      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
+      [ { "slug": "heat-wave" /* 열풍 */ }, { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "hurricane" /* 폭풍 */ }, { "slug": "bleakwind-storm" /* 찬바람폭풍 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ]
+    ]
+  },
+  {
+    "item": "sitrus-berry" /* 자뭉열매 */,
+    "ability": "defiant" /* 오기 */,
+    "moves": [
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "bulk-up" /* 벌크업 */ } ],
+      [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  },
+  {
+    "item": "sitrus-berry" /* 자뭉열매 */,
+    "ability": "defiant" /* 오기 */,
+    "moves": [
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "bulk-up" /* 벌크업 */ } ],
+      [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
+      [ { "slug": "brick-break" /* 깨뜨리다 */ }, { "slug": "hammer-arm" /* 암해머 */ } ]
+    ]
+  }
+  ],
+  "thundurus-incarnate": /* 볼트로스 */ [
+  {
+    "item": "sitrus-berry" /* 자뭉열매 */,
+    "ability": "prankster" /* 짓궂은마음 */,
+    "moves": [
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ],
+      [ { "slug": "thunder-wave" /* 전기자석파 */ } ],
+      [ { "slug": "eerie-impulse" /* 괴전파 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "defiant" /* 오기 */,
+    "moves": [
+      [ { "slug": "wild-charge" /* 와일드볼트 */ } ],
+      [ { "slug": "fly" /* 공중날기 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ } ],
+      [ { "slug": "bulk-up" /* 벌크업 */ } ]
+    ]
+  }
+  ],
+  "landorus-incarnate": /* 랜드로스 */ [
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "sheer-force" /* 우격다짐 */,
+    "moves": [
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ }, { "slug": "psychic" /* 사이코키네시스 */ } ],
+      [ { "slug": "nasty-plot" /* 나쁜음모 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "sheer-force" /* 우격다짐 */,
+    "moves": [
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ }, { "slug": "nasty-plot" /* 나쁜음모 */ }, { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  }
+  ],
+  "keldeo-ordinary": /* 케르디오 */ [
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "aura-sphere" /* 파동탄 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ],
+      [ { "slug": "vacuum-wave" /* 진공파 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "secret-sword" /* 신비의칼 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ }, { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "secret-sword" /* 신비의칼 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ }, { "slug": "hydro-pump" /* 하이드로펌프 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ],
+      [ { "slug": "vacuum-wave" /* 진공파 */ } ]
+    ]
+  }
+  ],
+  "meloetta-aria": /* 메로엣타 */ [
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "serene-grace" /* 하늘의은총 */,
+    "moves": [
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "psychic" /* 사이코키네시스 */ }, { "slug": "psyshock" /* 사이코쇼크 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "trick" /* 트릭 */ }, { "slug": "focus-blast" /* 기합구슬 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "serene-grace" /* 하늘의은총 */,
+    "moves": [
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "psychic" /* 사이코키네시스 */ }, { "slug": "psyshock" /* 사이코쇼크 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "serene-grace" /* 하늘의은총 */,
+    "moves": [
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "serene-grace" /* 하늘의은총 */,
+    "moves": [
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ } ]
+    ]
+  }
+  ],
+  "pyroar-male": /* 화염레오 */ [
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "unnerve" /* 긴장감 */,
+    "moves": [
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "grass" } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "unnerve" /* 긴장감 */,
+    "moves": [
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "grass" } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ }, { "slug": "overheat" /* 오버히트 */ } ]
+    ]
+  }
+  ],
+  "aegislash-shield": /* 킬가르도 */ [
+  {
+    "item": "weakness-policy" /* 약점보험 */,
+    "ability": "stance-change",
+    "moves": [
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ }, { "slug": "sacred-sword" /* 성스러운칼 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "kings-shield" /* 킹실드 */ }, { "slug": "shadow-claw" /* 섀도클로 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "stance-change",
+    "moves": [
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "flash-cannon" /* 러스터캐논 */ }, { "slug": "steel-beam" /* 철제광선 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ]
+    ]
+  },
+  {
+    "item": "weakness-policy" /* 약점보험 */,
+    "ability": "stance-change",
+    "moves": [
+      [ { "slug": "flash-cannon" /* 러스터캐논 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "air-slash" /* 에어슬래시 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "stance-change",
+    "moves": [
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "flash-cannon" /* 러스터캐논 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ]
+    ]
+  }
+  ],
+  "gourgeist-average": /* 펌킨인 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "frisk" /* 통찰 */,
+    "moves": [
+      [ { "slug": "seed-bomb" /* 씨폭탄 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
+      [ { "slug": "leech-seed" /* 씨뿌리기 */ } ],
+      [ { "slug": "synthesis" /* 광합성 */ } ]
+    ]
+  }
+  ],
+  "oricorio-baile": /* 춤추새 */ [
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "dancer",
+    "moves": [
+      [ { "slug": "quiver-dance" /* 나비춤 */ } ],
+      [ { "slug": "revelation-dance" /* 잠재댄스 */ } ],
+      [ { "slug": "hurricane" /* 폭풍 */ }, { "slug": "taunt" /* 도발 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
+  }
+  ],
+  "lycanroc-midday": /* 루가루암 */ [
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "sand-rush" /* 모래헤치기 */,
+    "moves": [
+      [ { "slug": "accelerock" /* 액셀록 */ } ],
+      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  }
+  ],
+  "wishiwashi-solo": /* 약어리 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "schooling",
+    "moves": [
+      [ { "slug": "scald" /* 열탕 */ } ],
+      [ { "slug": "rest" /* 잠자기 */ } ],
+      [ { "slug": "sleep-talk" /* 잠꼬대 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  }
+  ],
+  "type-null": /* 타입:널 */ [
+  {
+    "item": "eviolite" /* 진화의휘석 */,
+    "ability": "battle-armor" /* 전투무장 */,
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ }, { "slug": "toxic" /* 맹독 */ }, { "slug": "u-turn" /* 유턴 */ } ],
+      [ { "slug": "rest" /* 잠자기 */ } ],
+      [ { "slug": "sleep-talk" /* 잠꼬대 */ } ],
+      [ { "slug": "return" /* 은혜갚기 */ } ]
+    ]
+  }
+  ],
+  "minior-red-meteor": /* 메테노 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "shields-down",
+    "moves": [
+      [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
+      [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "power-gem" /* 파워젬 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "shields-down",
+    "moves": [
+      [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
+      [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "fire" } ]
+    ]
+  },
+  {
+    "item": "white-herb" /* 하양허브 */,
+    "ability": "shields-down",
+    "moves": [
+      [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
+      [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "power-gem" /* 파워젬 */ } ]
+    ]
+  },
+  {
+    "item": "white-herb" /* 하양허브 */,
+    "ability": "shields-down",
+    "moves": [
+      [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
+      [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "fire" } ]
+    ]
+  }
+  ],
+  "mimikyu-disguised": /* 따라큐 */ [
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "curse" /* 저주 */ } ],
+      [ { "slug": "pain-split" /* 아픔나누기 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ }, { "slug": "shadow-claw" /* 섀도클로 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "shadow-claw" /* 섀도클로 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
+      [ { "slug": "trick" /* 트릭 */ } ]
+    ]
+  },
+  {
+    "item": "covert-cloak" /* 은밀망토 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "pain-split" /* 아픔나누기 */ }, { "slug": "shadow-claw" /* 섀도클로 */ } ],
+      [ { "slug": "curse" /* 저주 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "wood-hammer" /* 우드해머 */ } ],
+      [ { "slug": "curse" /* 저주 */ } ]
+    ]
+  },
+  {
+    "item": "covert-cloak" /* 은밀망토 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "curse" /* 저주 */ } ],
+      [ { "slug": "trick-room" /* 트릭룸 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ]
+    ]
+  },
+  {
+    "item": "figy-berry" /* 무화열매 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "shadow-claw" /* 섀도클로 */ }, { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "curse" /* 저주 */ } ],
+      [ { "slug": "pain-split" /* 아픔나누기 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "disguise",
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "shadow-claw" /* 섀도클로 */ } ]
+    ]
+  }
+  ],
+  "pheromosa": /* 페로코체 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "beast-boost" /* 비스트부스트 */,
+    "moves": [
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ],
+      [ { "slug": "triple-axel" /* 트리플악셀 */ } ],
+      [ { "slug": "poison-jab" /* 독찌르기 */ }, { "slug": "drill-run" /* 드릴라이너 */ } ]
+    ]
+  }
+  ],
+  "toxtricity-amped": /* 스트린더 */ [
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "punk-rock",
+    "moves": [
+      [ { "slug": "overdrive" /* 오버드라이브 */ } ],
+      [ { "slug": "boomburst" /* 폭음파 */ } ],
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "sludge-bomb" /* 오물폭탄 */ }, { "slug": "snarl" /* 바크아웃 */ } ]
+    ]
+  }
+  ],
+  "indeedee-male": /* 에써르 */ [
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "psychic-surge" /* 사이코메이커 */,
+    "moves": [
+      [ { "slug": "expanding-force" /* 와이드포스 */ } ],
+      [ { "slug": "mystical-fire" /* 매지컬플레임 */ }, { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "trick" /* 트릭 */ }, { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "psychic-surge" /* 사이코메이커 */,
+    "moves": [
+      [ { "slug": "expanding-force" /* 와이드포스 */ } ],
+      [ { "slug": "mystical-fire" /* 매지컬플레임 */ } ],
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "trick" /* 트릭 */ } ]
+    ]
+  }
+  ],
+  "dracozolt": /* 파치래곤 */ [
+  {
+    "item": "power-herb" /* 파워풀허브 */,
+    "ability": "sand-rush" /* 모래헤치기 */,
+    "moves": [
+      [ { "slug": "bolt-beak" /* 전격부리 */ } ],
+      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "meteor-beam" /* 메테오빔 */ } ],
+      [ { "slug": "fire-blast" /* 불대문자 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "hustle" /* 의욕 */,
+    "moves": [
+      [ { "slug": "bolt-beak" /* 전격부리 */ } ],
+      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "aerial-ace" /* 제비반환 */ } ],
+      [ { "slug": "fire-fang" /* 불꽃엄니 */ }, { "slug": "low-kick" /* 안다리걸기 */ } ]
+    ]
+  }
+  ],
+  "arctozolt": /* 파치르돈 */ [
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "slush-rush" /* 눈치우기 */,
+    "moves": [
+      [ { "slug": "bolt-beak" /* 전격부리 */ } ],
+      [ { "slug": "icicle-spear" /* 고드름침 */ }, { "slug": "icicle-crash" /* 고드름떨구기 */ } ],
+      [ { "slug": "low-kick" /* 안다리걸기 */ }, { "slug": "stomping-tantrum" /* 분함의발구르기 */ } ],
+      [ { "slug": "freeze-dry" /* 프리즈드라이 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
+    ]
+  }
+  ],
+  "dracovish": /* 어래곤 */ [
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "strong-jaw" /* 옹골찬턱 */,
+    "moves": [
+      [ { "slug": "fishious-rend" /* 아가미물기 */ } ],
+      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "sleep-talk" /* 잠꼬대 */ } ],
+      [ { "slug": "dive" /* 다이빙 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "sand-rush" /* 모래헤치기 */,
+    "moves": [
+      [ { "slug": "fishious-rend" /* 아가미물기 */ } ],
+      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "rock-blast" /* 록블라스트 */ } ],
+      [ { "slug": "psychic-fangs" /* 사이코팽 */ }, { "slug": "protect" /* 방어 */ } ]
+    ]
+  }
+  ],
+  "urshifu-single-strike": /* 우라오스 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "wicked-blow" /* 암흑강타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ]
+    ]
+  },
+  {
+    "item": "black-glasses" /* 검은안경 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "wicked-blow" /* 암흑강타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "counter" /* 카운터 */ } ],
+      [ { "slug": "wicked-blow" /* 암흑강타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ]
+    ]
+  },
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "wicked-blow" /* 암흑강타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  },
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "wicked-blow" /* 암흑강타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "wicked-blow" /* 암흑강타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  }
+  ],
+  "regieleki": /* 레지에레키 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "transistor",
+    "moves": [
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "extreme-speed" /* 신속 */ } ],
+      [ { "slug": "thunder-wave" /* 전기자석파 */ }, { "slug": "volt-switch" /* 볼트체인지 */ }, { "slug": "wild-charge" /* 와일드볼트 */ } ]
+    ]
+  },
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "transistor",
+    "moves": [
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "extreme-speed" /* 신속 */ } ],
+      [ { "slug": "wild-charge" /* 와일드볼트 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "transistor",
+    "moves": [
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "extreme-speed" /* 신속 */ }, { "slug": "thunder-cage" /* 썬더프리즌 */ } ]
+    ]
+  },
+  {
+    "item": "light-clay" /* 빛의점토 */,
+    "ability": "transistor",
+    "moves": [
+      [ { "slug": "thunderbolt" /* 10만볼트 */ }, { "slug": "thunder-cage" /* 썬더프리즌 */ } ],
+      [ { "slug": "reflect" /* 리플렉터 */ } ],
+      [ { "slug": "light-screen" /* 빛의장막 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  },
+  {
+    "item": "light-clay" /* 빛의점토 */,
+    "ability": "transistor",
+    "moves": [
+      [ { "slug": "thunderbolt" /* 10만볼트 */ }, { "slug": "thunder-cage" /* 썬더프리즌 */ } ],
+      [ { "slug": "reflect" /* 리플렉터 */ } ],
+      [ { "slug": "light-screen" /* 빛의장막 */ } ],
+      [ { "slug": "explosion" /* 대폭발 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
+    ]
+  }
+  ],
+  "spectrier": /* 레이스포스 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "grim-neigh",
+    "moves": [
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "draining-kiss" /* 드레인키스 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ } ]
+    ]
+  }
+  ],
+  "basculegion-male": /* 대쓰여너 */ [
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "adaptability" /* 적응력 */,
+    "moves": [
+      [ { "slug": "last-respects" /* 성묘 */ } ],
+      [ { "slug": "wave-crash" /* 웨이브태클 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "adaptability" /* 적응력 */,
+    "moves": [
+      [ { "slug": "wave-crash" /* 웨이브태클 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "agility" /* 고속이동 */ }, { "slug": "endeavor" /* 죽기살기 */ } ],
+      [ { "slug": "last-respects" /* 성묘 */ } ]
+    ]
+  },
+  {
+    "item": null,
+    "ability": "adaptability" /* 적응력 */,
+    "moves": [
+      [ { "slug": "wave-crash" /* 웨이브태클 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "last-respects" /* 성묘 */ } ]
+    ]
+  },
+  {
+    "item": "assault-vest" /* 돌격조끼 */,
+    "ability": "adaptability" /* 적응력 */,
+    "moves": [
+      [ { "slug": "wave-crash" /* 웨이브태클 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ],
+      [ { "slug": "psychic-fangs" /* 사이코팽 */ }, { "slug": "phantom-force" /* 고스트다이브 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "adaptability" /* 적응력 */,
+    "moves": [
+      [ { "slug": "wave-crash" /* 웨이브태클 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ],
+      [ { "slug": "psychic-fangs" /* 사이코팽 */ }, { "slug": "phantom-force" /* 고스트다이브 */ } ],
+      [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ]
+    ]
+  }
+  ],
+  "sneasler": /* 포푸니크 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "unburden" /* 곡예 */,
+    "moves": [
+      [ { "slug": "dire-claw" /* 페이탈클로 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "fake-out" /* 속이기 */ } ],
+      [ { "slug": "toxic-spikes" /* 독압정 */ } ]
+    ]
+  },
+  {
+    "item": "air-balloon" /* 풍선 */,
+    "ability": "poison-touch" /* 독수 */,
+    "moves": [
+      [ { "slug": "dire-claw" /* 페이탈클로 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "fake-out" /* 속이기 */ } ],
+      [ { "slug": "toxic-spikes" /* 독압정 */ } ]
+    ]
+  },
+  {
+    "item": "air-balloon" /* 풍선 */,
+    "ability": "unburden" /* 곡예 */,
+    "moves": [
+      [ { "slug": "dire-claw" /* 페이탈클로 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "shadow-claw" /* 섀도클로 */ } ],
+      [ { "slug": "toxic-spikes" /* 독압정 */ } ]
+    ]
+  }
+  ],
+  "enamorus-incarnate": /* 러브로스 */ [
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "contrary" /* 심술꾸러기 */,
+    "moves": [
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "healing-wish" /* 치유소원 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "contrary" /* 심술꾸러기 */,
+    "moves": [
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "mystical-fire" /* 매지컬플레임 */ } ],
+      [ { "slug": "healing-wish" /* 치유소원 */ } ]
+    ]
+  },
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "cute-charm",
+    "moves": [
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "cute-charm",
+    "moves": [
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ]
+    ]
+  }
+  ],
+  "maushold-family-of-four": /* 파밀리쥐 */ [
+  {
+    "item": "wide-lens" /* 광각렌즈 */,
+    "ability": "technician" /* 테크니션 */,
+    "moves": [
+      [ { "slug": "population-bomb" /* 찍찍베기 */ } ],
+      [ { "slug": "bite" /* 물기 */ }, { "slug": "mud-shot" /* 머드샷 */ } ],
+      [ { "slug": "encore" /* 앙코르 */ } ],
+      [ { "slug": "thunder-wave" /* 전기자석파 */ }, { "slug": "tidy-up" /* 정리정돈 */ } ]
+    ]
+  },
+  {
+    "item": "wide-lens" /* 광각렌즈 */,
+    "ability": "technician" /* 테크니션 */,
+    "moves": [
+      [ { "slug": "tidy-up" /* 정리정돈 */ } ],
+      [ { "slug": "population-bomb" /* 찍찍베기 */ } ],
+      [ { "slug": "bite" /* 물기 */ }, { "slug": "bullet-seed" /* 씨기관총 */ } ],
+      [ { "slug": "encore" /* 앙코르 */ } ]
+    ]
+  }
+  ],
+  "ceruledge": /* 파라블레이즈 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "flash-fire" /* 타오르는불꽃 */,
+    "moves": [
+      [ { "slug": "bitter-blade" /* 원념의칼 */ } ],
+      [ { "slug": "bulk-up" /* 벌크업 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ],
+      [ { "slug": "flame-charge" /* 니트로차지 */ }, { "slug": "shadow-sneak" /* 야습 */ }, { "slug": "tera-blast" /* 테라버스트 */ }, { "slug": "will-o-wisp" /* 도깨비불 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "weak-armor" /* 깨어진갑옷 */,
+    "moves": [
+      [ { "slug": "bitter-blade" /* 원념의칼 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "poltergeist" /* 폴터가이스트 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "destiny-bond" /* 길동무 */ }, { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  },
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "weak-armor" /* 깨어진갑옷 */,
+    "moves": [
+      [ { "slug": "bitter-blade" /* 원념의칼 */ } ],
+      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  }
+  ],
+  "espathra": /* 클레스퍼트라 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "stored-power" /* 어시스트파워 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "protect" /* 방어 */ }, { "slug": "roost" /* 날개쉬기 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "stored-power" /* 어시스트파워 */ } ],
+      [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ],
+      [ { "slug": "protect" /* 방어 */ }, { "slug": "roost" /* 날개쉬기 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "lumina-crash" /* 루미나콜리전 */ } ],
+      [ { "slug": "baton-pass" /* 배턴터치 */ } ],
+      [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ }, { "slug": "protect" /* 방어 */ }, { "slug": "reflect" /* 리플렉터 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "lumina-crash" /* 루미나콜리전 */ } ],
+      [ { "slug": "energy-ball" /* 에너지볼 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "baton-pass" /* 배턴터치 */ }, { "slug": "hypnosis" /* 최면술 */ } ]
+    ]
+  },
+  {
+    "item": "light-clay" /* 빛의점토 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "light-screen" /* 빛의장막 */ } ],
+      [ { "slug": "reflect" /* 리플렉터 */ } ],
+      [ { "slug": "lumina-crash" /* 루미나콜리전 */ }, { "slug": "protect" /* 방어 */ } ],
+      [ { "slug": "baton-pass" /* 배턴터치 */ } ]
+    ]
+  }
+  ],
+  "tatsugiri-curly": /* 싸리용 */ [
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "storm-drain" /* 마중물 */,
+    "moves": [
+      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "rapid-spin" /* 고속스핀 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ } ]
+    ]
+  }
+  ],
+  "annihilape": /* 저승갓숭 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "vital-spirit" /* 의기양양 */,
+    "moves": [
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "rage-fist" /* 분노의주먹 */ } ],
+      [ { "slug": "bulk-up" /* 벌크업 */ } ],
+      [ { "slug": "encore" /* 앙코르 */ }, { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "sitrus-berry" /* 자뭉열매 */,
+    "ability": "vital-spirit" /* 의기양양 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "rage-fist" /* 분노의주먹 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "final-gambit" /* 목숨걸기 */ }, { "slug": "rock-tomb" /* 암석봉인 */ }, { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "vital-spirit" /* 의기양양 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "rage-fist" /* 분노의주먹 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "final-gambit" /* 목숨걸기 */ }, { "slug": "rock-tomb" /* 암석봉인 */ }, { "slug": "taunt" /* 도발 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "defiant" /* 오기 */,
+    "moves": [
+      [ { "slug": "u-turn" /* 유턴 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "rage-fist" /* 분노의주먹 */ }, { "slug": "shadow-claw" /* 섀도클로 */ } ],
+      [ { "slug": "final-gambit" /* 목숨걸기 */ } ]
+    ]
+  }
+  ],
+  "dudunsparce-two-segment": /* 노고고치 */ [
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "rattled",
+    "moves": [
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "boomburst" /* 폭음파 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
+  },
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "serene-grace" /* 하늘의은총 */,
+    "moves": [
+      [ { "slug": "dragon-tail" /* 드래곤테일 */ } ],
+      [ { "slug": "body-slam" /* 누르기 */ } ],
+      [ { "slug": "coil" /* 똬리틀기 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
+  },
+  {
+    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "ability": "serene-grace" /* 하늘의은총 */,
+    "moves": [
+      [ { "slug": "dragon-tail" /* 드래곤테일 */ }, { "slug": "toxic" /* 맹독 */ } ],
+      [ { "slug": "body-slam" /* 누르기 */ } ],
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
+  }
+  ],
+  "brute-bonnet": /* 사나운버섯 */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "protosynthesis" /* 고대활성 */,
+    "moves": [
+      [ { "slug": "spore" /* 버섯포자 */ } ],
+      [ { "slug": "trailblaze" /* 개척하기 */ } ],
+      [ { "slug": "crunch" /* 깨물어부수기 */ }, { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ]
+    ]
+  },
+  {
+    "item": "loaded-dice" /* 속임수주사위 */,
+    "ability": "protosynthesis" /* 고대활성 */,
+    "moves": [
+      [ { "slug": "spore" /* 버섯포자 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "bullet-seed" /* 씨기관총 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ }, { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  }
+  ],
+  "iron-treads": /* 무쇠바퀴 */ [
+  {
+    "item": "assault-vest" /* 돌격조끼 */,
+    "ability": "quark-drive" /* 쿼크차지 */,
+    "moves": [
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "heavy-slam" /* 헤비봄버 */ }, { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "ice-spinner" /* 아이스스피너 */ }, { "slug": "rapid-spin" /* 고속스핀 */ }, { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+    ]
+  },
+  {
+    "item": "booster-energy" /* 부스트에너지 */,
+    "ability": "quark-drive" /* 쿼크차지 */,
+    "moves": [
+      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "endeavor" /* 죽기살기 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "rapid-spin" /* 고속스핀 */ }, { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "ice-spinner" /* 아이스스피너 */ }, { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+    ]
+  },
+  {
+    "item": "booster-energy" /* 부스트에너지 */,
+    "ability": "quark-drive" /* 쿼크차지 */,
+    "moves": [
+      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "endeavor" /* 죽기살기 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "rapid-spin" /* 고속스핀 */ }, { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  }
+  ],
+  "iron-hands": /* 무쇠손 */ [
+  {
+    "item": "assault-vest" /* 돌격조끼 */,
+    "ability": "quark-drive" /* 쿼크차지 */,
+    "moves": [
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "thunder-punch" /* 번개펀치 */ }, { "slug": "wild-charge" /* 와일드볼트 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "heavy-slam" /* 헤비봄버 */ }, { "slug": "ice-punch" /* 냉동펀치 */ } ],
+      [ { "slug": "fake-out" /* 속이기 */ }, { "slug": "volt-switch" /* 볼트체인지 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "quark-drive" /* 쿼크차지 */,
+    "moves": [
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "thunder-punch" /* 번개펀치 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  }
+  ],
+  "baxcalibur": /* 드닐레이브 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "thermal-exchange",
+    "moves": [
+      [ { "slug": "glaive-rush" /* 대검돌격 */ }, { "slug": "scale-shot" /* 스케일샷 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
+      [ { "slug": "icicle-spear" /* 고드름침 */ }, { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  },
+  {
+    "item": "loaded-dice" /* 속임수주사위 */,
+    "ability": "thermal-exchange",
+    "moves": [
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ }, { "slug": "scale-shot" /* 스케일샷 */ } ],
+      [ { "slug": "icicle-spear" /* 고드름침 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "dragon-dance" /* 용의춤 */ }, { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  },
+  {
+    "item": "assault-vest" /* 돌격조끼 */,
+    "ability": "thermal-exchange",
+    "moves": [
+      [ { "slug": "icicle-crash" /* 고드름떨구기 */ }, { "slug": "icicle-spear" /* 고드름침 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
+      [ { "slug": "glaive-rush" /* 대검돌격 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "assault-vest" /* 돌격조끼 */,
+    "ability": "thermal-exchange",
+    "moves": [
+      [ { "slug": "icicle-spear" /* 고드름침 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "thermal-exchange",
+    "moves": [
+      [ { "slug": "glaive-rush" /* 대검돌격 */ }, { "slug": "scale-shot" /* 스케일샷 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
+      [ { "slug": "icicle-spear" /* 고드름침 */ } ]
+    ]
+  }
+  ],
+  "chi-yu": /* 위유이 */ [
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "beads-of-ruin",
+    "moves": [
+      [ { "slug": "overheat" /* 오버히트 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "beads-of-ruin",
+    "moves": [
+      [ { "slug": "overheat" /* 오버히트 */ } ],
+      [ { "slug": "lava-plume" /* 분연 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "psychic" /* 사이코키네시스 */ } ]
+    ]
+  },
+  {
+    "item": "assault-vest" /* 돌격조끼 */,
+    "ability": "beads-of-ruin",
+    "moves": [
+      [ { "slug": "flame-charge" /* 니트로차지 */ }, { "slug": "ruination" /* 카타스트로피 */ } ],
+      [ { "slug": "overheat" /* 오버히트 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "beads-of-ruin",
+    "moves": [
+      [ { "slug": "lava-plume" /* 분연 */ } ],
+      [ { "slug": "ruination" /* 카타스트로피 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "beads-of-ruin",
+    "moves": [
+      [ { "slug": "overheat" /* 오버히트 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "psychic" /* 사이코키네시스 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "beads-of-ruin",
+    "moves": [
+      [ { "slug": "overheat" /* 오버히트 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "tera-blast" /* 테라버스트 */ } ]
+    ]
+  }
+  ],
+  "archaludon": /* 브리두라스 */ [
+  {
+    "item": "custap-berry" /* 애슈열매 */,
+    "ability": "sturdy" /* 옹골참 */,
+    "moves": [
+      [ { "slug": "steel-beam" /* 철제광선 */ } ],
+      [ { "slug": "draco-meteor" /* 용성군 */ }, { "slug": "dragon-tail" /* 드래곤테일 */ } ],
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "thunder-wave" /* 전기자석파 */ }, { "slug": "mirror-coat" /* 미러코트 */ }, { "slug": "metal-burst" /* 메탈버스트 */ } ]
+    ]
+  },
+  {
+    "item": "power-herb" /* 파워풀허브 */,
+    "ability": ["sturdy" /* 옹골참 */, "stamina" /* 지구력 */],
+    "moves": [
+      [ { "slug": "electro-shot" /* 일렉트로빔 */ } ],
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "flash-cannon" /* 러스터캐논 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ }, { "slug": "dark-pulse" /* 악의파동 */ } ]
+    ]
+  },
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "stamina" /* 지구력 */,
+    "moves": [
+      [ { "slug": "body-press" /* 바디프레스 */ } ],
+      [ { "slug": "flash-cannon" /* 러스터캐논 */ } ],
+      [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ }, { "slug": "roar" /* 울부짖기 */ }, { "slug": "dragon-tail" /* 드래곤테일 */ } ]
+    ]
+  }
+  ],
+  // ===== 보스 전용 세트 (알라자르, 블레이크의 포켓몬. 풀에는 없고 보스만 데려온다) =====
+  // 게임은 이 파일의 세트에서만 도구와 기술을 고르므로, 보스 포켓몬도 세트가 있어야 한다.
+  "kadabra": [
+  {
+    "item": "eviolite",
+    "ability": ["magic-guard", "synchronize"],
+    "moves": [
+      [ { "slug": "psychic" } ],
+      [ { "slug": "shadow-ball" } ],
+      [ { "slug": "focus-blast" } ],
+      [ { "slug": "calm-mind" } ]
+    ]
+  },
+  {
+    "item": "eviolite",
+    "ability": "magic-guard",
+    "moves": [
+      [ { "slug": "psychic" } ],
+      [ { "slug": "shadow-ball" } ],
+      [ { "slug": "recover" } ],
+      [ { "slug": "focus-blast" } ]
+    ]
+  }
+  ],
+  "doduo": [
+  {
+    "item": "eviolite",
+    "ability": "early-bird",
+    "moves": [
+      [ { "slug": "brave-bird" } ],
+      [ { "slug": "double-edge" } ],
+      [ { "slug": "knock-off" } ],
+      [ { "slug": "swords-dance" } ]
+    ]
+  },
+  {
+    "item": "eviolite",
+    "ability": "tangled-feet",
+    "moves": [
+      [ { "slug": "brave-bird" } ],
+      [ { "slug": "return" } ],
+      [ { "slug": "quick-attack" } ],
+      [ { "slug": "roost" } ]
+    ]
+  }
+  ],
+  "grimer": [
+  {
+    "item": "eviolite",
+    "ability": "poison-touch",
+    "moves": [
+      [ { "slug": "poison-jab" } ],
+      [ { "slug": "gunk-shot" } ],
+      [ { "slug": "knock-off" } ],
+      [ { "slug": "shadow-sneak" } ]
+    ]
+  },
+  {
+    "item": "eviolite",
+    "ability": "sticky-hold",
+    "moves": [
+      [ { "slug": "poison-jab" } ],
+      [ { "slug": "drain-punch" } ],
+      [ { "slug": "toxic" } ],
+      [ { "slug": "knock-off" } ]
+    ]
+  }
   ]
 };
 

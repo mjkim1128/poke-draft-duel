@@ -117,8 +117,9 @@ export function hasMoveAnim(slug) {
 }
 
 // 기술 연출을 재생한다. 반환: { duration(ms), cancel() }. 재생할 수 없으면 null.
-//   field: 배틀 필드 요소(.bp-field), side: 기술을 쓴 쪽("player" | "opponent"), slug: 기술 이름
-export function playMoveAnim(field, side, slug) {
+//   field: 배틀 필드 요소(.bp-field), side: 기술을 쓴 쪽("player" | "opponent"), slug: 기술 이름,
+//   self: 자기 자신에게 쓰는 기술이면 true (칼춤 등. 연출의 대상이 쓴 포켓몬이 된다)
+export function playMoveAnim(field, side, slug, self = false) {
     const id = String(slug).replace(/-/g, "");
     const anim = MOVES[id];
     const speed = TIME_SCALE[id] || 1; // 1보다 작으면 그만큼 짧게 재생한다
@@ -192,7 +193,8 @@ export function playMoveAnim(field, side, slug) {
     };
     const sprites = { player: makeSprite(true), opponent: makeSprite(false) };
     const attacker = side === "player" ? sprites.player : sprites.opponent;
-    const defender = side === "player" ? sprites.opponent : sprites.player;
+    // 자기 자신에게 쓰는 기술은 대상도 쓴 쪽이다
+    const defender = self ? attacker : side === "player" ? sprites.opponent : sprites.player;
 
     // ---- 쇼다운의 BattleScene 역할
     const scene = {

@@ -21,7 +21,35 @@ function usableMoveset(pokemon) {
     return getUsableMoves(pokemon);
 }
 
-export function makeMove(playerTeam, opponentTeam) {
+// 상대(컴퓨터)가 지금 나와 있는 포켓몬으로는 아무 피해도 줄 수 없을 때(공격 기술이 전부 무효이거나
+// 특성으로 흡수될 때) 바꿔 낼 포켓몬의 번호를 돌려준다. 바꿀 필요가 없거나 바꿀 수 없으면 -1.
+// 변화 기술만 가진 포켓몬은 원래 피해를 주지 않으므로 바꾸지 않는다.
+export function switchWhenUseless(playerTeam, opponentTeam) {
+    const active = opponentTeam[0];
+    if (active.charging || active.mustRecharge || playerTeam[0].hp[0] <= 0) return -1;
+    const field = playerTeam.field || opponentTeam.field || null;
+    const attacks = usableMoveset(active).filter((m) => m.damage_class.name !== "status" && m.name !== "struggle");
+    if (attacks.length === 0) return -1;
+    if (attacks.some((m) => damageCalc(active, playerTeam[0], m, { field }) > 0)) return -1;
+    // 피해를 줄 수 있는 포켓몬 중 가장 센 기술을 가진 쪽으로 바꾼다
+    let best = -1;
+    let bestDamage = 0;
+    opponentTeam.forEach((poke, i) => {
+        if (i === 0 || poke.hp[0] <= 0) return;
+        for (const m of getUsableMoves(poke)) {
+            const d = damageCalc(poke, playerTeam[0], m, { field });
+            if (d > bestDamage) [best, bestDamage] = [i, d];
+        }
+    });
+    return best;
+}
+
+// canSwitch가 true이면 피해를 줄 수 없을 때 교체를 고를 수 있다 (교체는 priority 6인 가짜 기술이다)
+export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
+    if (canSwitch) {
+        const index = switchWhenUseless(playerTeam, opponentTeam);
+        if (index !== -1) return { priority: 6, index };
+    }
     for (const move of usableMoveset(opponentTeam[0])) {
         // attempt for priority
         if (

@@ -16,6 +16,8 @@ export const HAZARD_MOVES = {
     "toxic-spikes": "toxicSpikes",
     "sticky-web": "stickyWeb",
 };
+// Damaging moves that lay a hazard on the target's side when they hit
+export const HAZARD_ON_HIT = { "stone-axe": "stealthRock", "ceaseless-edge": "spikes" };
 // Moves that sweep hazards away: Rapid Spin & Mortal Spin clear the user's own side, Defog
 // and Tidy Up clear both sides.
 export const CLEAR_OWN_SIDE_MOVES = new Set(["rapid-spin", "mortal-spin"]);

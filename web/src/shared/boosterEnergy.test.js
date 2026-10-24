@@ -1,7 +1,7 @@
 // 부스트에너지: 고대활성/쿼크차지를 날씨나 필드 없이 켜 주는 도구
 import fs from "fs";
 import path from "path";
-import { doTurn, doSwitch, ensureField, setTerrain, baseStatTotalTo600, hpCalc } from "shared";
+import { doTurn, doSwitch, ensureField, setTerrain, getBaseStats, hpCalc } from "shared";
 
 const DATA = "../../../api/src/main/resources/data/";
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, DATA + file), "utf8"));
@@ -12,7 +12,7 @@ const clone = (x) => JSON.parse(JSON.stringify(x));
 
 function mon(species, ability, item) {
     const p = clone(POKEMON.get(species));
-    p.base_stats = baseStatTotalTo600(p);
+    p.base_stats = getBaseStats(p);
     p.hp = [hpCalc(p.base_stats[0]), hpCalc(p.base_stats[0])];
     p.stat_levels = Array(7).fill(0);
     p.item = item ? clone(ITEMS.get(item)) : null;

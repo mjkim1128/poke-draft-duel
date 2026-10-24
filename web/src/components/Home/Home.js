@@ -1,7 +1,7 @@
 import { Battle, TeamSelect, PokemonSwap, BossDisplay, ClearDisplay } from "components";
 import React, { useEffect, useState } from "react";
 import {
-    baseStatTotalTo600,
+    getBaseStats,
     generateRandomPokemon,
     generateRandomItem,
     getGoodRandomMoveset,
@@ -9,7 +9,6 @@ import {
     getMovesOfPokemon,
     getItemByName,
     getPokemonByName,
-    getRandomInt,
     getRandomType,
     shuffle,
     bossForFloor,
@@ -163,10 +162,12 @@ export function Home() {
         );
         setPlayerPokemon(fresh);
         optionsFresh.current = true;
+        return fresh;
     }
 
     /// The opponent's 6 pokemon. A boss brings its own (3 or all 6), any slots it leaves open are random.
-    async function loadOpponentParty() {
+    /// `mine` is my own 6: the opponent never brings a pokemon I have
+    async function loadOpponentParty(mine = []) {
         const boss = endless ? null : bossForFloor(winStreak);
         const fresh = [];
         for (let i = 0; i < 6; i++) {
@@ -177,7 +178,7 @@ export function Home() {
                 fresh[i] = await getPokemonByName(name);
                 fresh[i].want = want;
             } else {
-                fresh[i] = await generateRandomPokemon(fresh);
+                fresh[i] = await generateRandomPokemon([...mine, ...fresh]);
             }
         }
         await Promise.all(
@@ -190,10 +191,8 @@ export function Home() {
     }
 
     async function loadNewPokemon(init = true) {
-        if (init) {
-            await loadOptions();
-        }
-        await loadOpponentParty();
+        const mine = init ? await loadOptions() : playerPokemon;
+        await loadOpponentParty(mine);
         forceUpdate();
     }
 
@@ -210,7 +209,7 @@ export function Home() {
     }
 
     async function getPokemonData(pokemonData, i, setFunc) {
-        pokemonData[i].base_stats = baseStatTotalTo600(pokemonData[i]);
+        pokemonData[i].base_stats = getBaseStats(pokemonData[i]);
         pokemonData[i].moveset = [{ name: "Tackle" }];
         pokemonData[i].hp = [
             hpCalc(pokemonData[i].base_stats[0]),
@@ -221,10 +220,13 @@ export function Home() {
         /// from the same coherent competitive set instead of two unrelated random picks.
         const factorySet = await pickFactorySet(pokemonData[i].name, pokemonData[i].want || {});
         pokemonData[i].factorySet = factorySet;
-        pokemonData[i].item =
-            factorySet && factorySet.item
+        /// The item comes from the set only: a set without an item means no item. (A random item is just
+        /// a safety net for a species with no set at all, which the pool and the bosses no longer have.)
+        pokemonData[i].item = factorySet
+            ? factorySet.item
                 ? await getItemByName(factorySet.item)
-                : await generateRandomItem(pokemonData[i].name);
+                : null
+            : await generateRandomItem(pokemonData[i].name);
         /// Remembered so the item can be restored after every battle, whatever happened to
         /// it in the fight (eaten, popped, knocked off, stolen, traded away).
         pokemonData[i].originalItem = pokemonData[i].item;
@@ -258,37 +260,16 @@ export function Home() {
             /// not checked against newMoves: that learnset comes from PokeAPI, which leaves out
             /// egg moves and moves only a pre-evolution learns (Ferrothorn's Leech Seed...).
             const chosen = resolveFactoryMoveSlugs(pokemon.factorySet);
-            if (chosen.length >= 2) {
+            if (chosen.length >= 1) {
                 let moveset = await Promise.all(
                     chosen.map((c) => getMoveByName(c.slug))
                 );
                 moveset.forEach((m, idx) => {
                     if (chosen[idx].hpType) m.hpTypeHint = chosen[idx].hpType;
                 });
-                if (moveset.length < 4) {
-                    /// The whole learnset is a big request, so it's only fetched when the set
-                    /// leaves a slot empty.
-                    const newMoves = await getMovesOfPokemon(pokemonArr[index]);
-                    pokemonArr[index].moves_data = newMoves;
-                    let padChoices = shuffle(
-                        newMoves.filter(
-                            (m) =>
-                                BANNED_MOVES.includes(m.name) === false &&
-                                !moveset.some((mm) => mm.name === m.name)
-                        )
-                    );
-                    moveset = [...moveset, ...padChoices].slice(0, 4);
-                }
-                if (moveset.length < 4) {
-                    let padDefaults = shuffle(
-                        await Promise.all(
-                            DEFAULT_MOVES.map((m) => getMoveByName(m.name))
-                        )
-                    ).filter((m) => !moveset.some((mm) => mm.name === m.name));
-                    moveset = [...moveset, ...padDefaults].slice(0, 4);
-                }
+                /// A set with fewer than 4 moves just keeps them: no random moves are added to fill it up
                 for (let move of moveset) {
-                    if (move.name === "hidden-power" || move.name === "secret-power") {
+                    if (move.name === "hidden-power") {
                         move.type.name = move.hpTypeHint || getRandomType();
                         move.power = 80;
                     } else if (
@@ -308,10 +289,6 @@ export function Home() {
                     ) {
                         if (move.power < 75) move.power = 75;
                         if (move.power > 95) move.power = 95;
-                        else if (move.name === "tri-attack")
-                            move.type.name = ["fire", "electric", "ice"][
-                                getRandomInt(3)
-                            ];
                     }
                 }
                 pokemonArr[index].moveset = moveset;
@@ -359,7 +336,7 @@ export function Home() {
             moves = [...moves, ...choices];
         }
         for (let move of moves) {
-            if (move.name === "hidden-power" || move.name === "secret-power") {
+            if (move.name === "hidden-power") {
                 move.type.name = (" " + getRandomType()).slice(1);
                 move.power = 80;
             } else if (
@@ -373,10 +350,6 @@ export function Home() {
             else if (move.meta && move.damage_class.name !== "status" && !keepsRawPower(move.name, move.accuracy) && move.priority === 0 && move.meta.stat_chance !== 100) {
                 if (move.power < 75) move.power = 75;
                 if (move.power > 95) move.power = 95;
-                else if (move.name === "tri-attack")
-                    move.type.name = ["fire", "electric", "ice"][
-                        getRandomInt(3)
-                    ];
             }
         }
         shuffle(moves);

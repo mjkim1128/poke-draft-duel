@@ -2,7 +2,7 @@
 // (먹다남은음식 같은 턴 종료 회복도 마찬가지). 실제 팩토리 세트로 무작위 전투를 돌려서 확인한다.
 import fs from "fs";
 import path from "path";
-import { doTurn, doSwitch, baseStatTotalTo600, hpCalc } from "shared";
+import { doTurn, doSwitch, getBaseStats, hpCalc } from "shared";
 
 const DATA = "../../../api/src/main/resources/data/";
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, DATA + file), "utf8"));
@@ -15,7 +15,7 @@ const random = (n) => Math.floor(Math.random() * n);
 
 function build({ species, set }) {
     const mon = clone(POKEMON.find((p) => p.name === species));
-    mon.base_stats = baseStatTotalTo600(mon);
+    mon.base_stats = getBaseStats(mon);
     mon.hp = [hpCalc(mon.base_stats[0]), hpCalc(mon.base_stats[0])];
     mon.stat_levels = Array(7).fill(0);
     mon.item = clone(ITEMS.get(set.item || "leftovers"));

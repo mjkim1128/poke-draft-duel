@@ -21,7 +21,7 @@ const hasMove = (set, move) => set.moves.some((m) => m.some((o) => o.slug === mo
 test("보스는 7연승째마다 한 명씩 7명이고, 50연승째에 최종 보스가 있다 (총 8명)", () => {
     expect(BOSSES.map((b) => b.floor)).toEqual([7, 14, 21, 28, 35, 42, 49, 50]);
     expect(FINAL_FLOOR).toBe(50);
-    expect(bossForFloor(50).name).toBe("Orion");
+    expect(bossForFloor(50).name).toBe("Captain.P");
     expect(bossForFloor(8)).toBeNull();
 });
 
@@ -40,10 +40,9 @@ describe.each(BOSSES.map((b) => [b.name, b]))("보스 %s", (name, boss) => {
             const p = pokemon.find((x) => x.name === slug);
             expect(p).toBeDefined();
             // 알라자르와 블레이크의 포켓몬은 처음부터 보스 전용이라 일반 풀에는 없다
-            if (boss.floor > 14) {
-                expect(pool.has(p.id)).toBe(true);
-                expect(setSpecies.has(slug)).toBe(true);
-            }
+            if (boss.floor > 14) expect(pool.has(p.id)).toBe(true);
+            // 게임은 세트에서만 도구와 기술을 고르므로, 보스의 포켓몬도 모두 세트가 있어야 한다
+            expect(setSpecies.has(slug)).toBe(true);
         }
     });
 
@@ -103,6 +102,8 @@ describe("선출 규칙(lineup): 날씨를 거는 포켓몬과 반응하는 포�
             for (const rule of boss.lineup) {
                 expect(team.some((p) => rule.abilities.includes(p.ability.name))).toBe(true);
             }
+            // 날씨를 거는 포켓몬이 맨 앞에 나온다
+            expect(boss.lineup[0].abilities).toContain(team[0].ability.name);
         }
     });
 

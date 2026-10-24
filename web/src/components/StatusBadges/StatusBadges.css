@@ -17,6 +17,36 @@
     background: #b5651d;
 }
 
+/* 상태이상마다 색을 달리한다 (포켓몬 게임의 상태 표시와 비슷하게) */
+.status-badge-burn {
+    background: #e8590c;
+}
+
+.status-badge-paralysis {
+    background: #f2c200;
+    color: #3b2f00;
+}
+
+.status-badge-poison {
+    background: #9b4dca;
+}
+
+.status-badge-toxic {
+    background: #5c1f8a;
+}
+
+.status-badge-sleep {
+    background: #7a828c;
+}
+
+.status-badge-freeze {
+    background: #3aa7d8;
+}
+
+.status-badge-confusion {
+    background: #d6629f;
+}
+
 .status-badge-bad {
     background: #a33a3a;
 }

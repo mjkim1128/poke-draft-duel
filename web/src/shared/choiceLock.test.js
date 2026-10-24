@@ -2,7 +2,7 @@
 // 데미지 기술이 맞았을 때만이 아니라, 변화 기술이나 무효·실패한 기술도 마찬가지다.
 import fs from "fs";
 import path from "path";
-import { doTurn, getUsableMoves, baseStatTotalTo600, hpCalc } from "shared";
+import { doTurn, getUsableMoves, getBaseStats, hpCalc } from "shared";
 
 const DATA = "../../../api/src/main/resources/data/";
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, DATA + file), "utf8"));
@@ -14,7 +14,7 @@ const move = (name) => clone(MOVES.get(name));
 
 function mon(species, item, moves, ability = null) {
     const p = clone(POKEMON.get(species));
-    p.base_stats = baseStatTotalTo600(p);
+    p.base_stats = getBaseStats(p);
     p.hp = [hpCalc(p.base_stats[0]) * 3, hpCalc(p.base_stats[0]) * 3];
     p.stat_levels = Array(7).fill(0);
     p.item = item ? clone(ITEMS.get(item)) : null;

@@ -16,13 +16,20 @@ const MAJOR_STATUS = {
     freeze: "얼음",
 };
 
+// stat_levels: 공격, 방어, 특공, 특방, 스피드, 명중률, 회피율 (-6 ~ +6)
+const STAT_LABELS = ["공격", "방어", "특공", "특방", "스피드", "명중률", "회피율"];
+
 // Everything that is going on with a pokemon besides its HP: the status condition, confusion
 // and the temporary effects from moves (names are the moves' own Korean names).
 export function conditionsOf(pokemon) {
     const list = [];
-    const add = (label, kind) => list.push({ label, kind });
-    if (pokemon.status && MAJOR_STATUS[pokemon.status.name]) add(MAJOR_STATUS[pokemon.status.name], "status");
-    if (pokemon.confusion) add("혼란", "status");
+    const add = (label, kind, key) => list.push({ label, kind, key });
+    if (pokemon.status && MAJOR_STATUS[pokemon.status.name]) add(MAJOR_STATUS[pokemon.status.name], "status", pokemon.status.name);
+    if (pokemon.confusion) add("혼란", "status", "confusion");
+    // 능력치 단계의 상승/하락 (0이 아닌 것만)
+    (pokemon.stat_levels || []).forEach((level, i) => {
+        if (level && STAT_LABELS[i]) add(`${STAT_LABELS[i]} ${level > 0 ? "+" : ""}${level}`, level > 0 ? "good" : "bad");
+    });
     if (pokemon.substitute) add(`대타출동 (HP ${pokemon.substitute.hp})`, "field");
     if (pokemon.taunt) add(`도발 (${pokemon.taunt.turns}턴)`, "bad");
     if (pokemon.encore) add(`앵콜 (${pokemon.encore.turns}턴)`, "bad");
@@ -47,7 +54,7 @@ export function StatusBadges(props) {
     return (
         <div className="status-badges">
             {list.map((c) => (
-                <span key={c.label} className={"status-badge status-badge-" + c.kind}>
+                <span key={c.label} className={"status-badge status-badge-" + c.kind + (c.key ? " status-badge-" + c.key : "")}>
                     {c.label}
                 </span>
             ))}

@@ -44,9 +44,9 @@ class PoolAndFactorySetTests {
     ObjectMapper objectMapper;
 
     @Test
-    void poolHas549PokemonAndNoneAtOrAbove660() {
+    void poolHas426PokemonAndNoneAtOrAbove660() {
         List<Long> poolIds = pokemonRepository.findPoolIds();
-        assertEquals(549, poolIds.size());
+        assertEquals(426, poolIds.size());
 
         for (Pokemon p : pokemonRepository.findAll()) {
             if (p.isInPool()) {
@@ -152,7 +152,7 @@ class PoolAndFactorySetTests {
     }
 
     @Test
-    void poolPokemonWithoutASetGetAnEmptyResult() {
+    void everyPoolPokemonHasASet() {
         // 세트 파일에 나오는 종을 시드에서 읽어, 풀에서 그 종을 뺀 수를 기대값으로 쓴다
         Set<String> speciesWithSets = new HashSet<>();
         try (var in = new org.springframework.core.io.ClassPathResource("data/factory_sets.json").getInputStream()) {
@@ -174,8 +174,9 @@ class PoolAndFactorySetTests {
                 withoutSet++;
             }
         }
-        // 세트가 없는 풀 포켓몬은 무작위 로직으로 간다
-        assertEquals(expectedWithoutSet, withoutSet);
+        // 세트가 없는 포켓몬은 풀에서 빠져 있으므로, 풀의 모든 포켓몬에게 세트가 있다
+        assertEquals(0, withoutSet);
+        assertEquals(0, expectedWithoutSet);
         assertTrue(factorySetService.findRandomPayload("no-such-pokemon").isEmpty());
     }
 }

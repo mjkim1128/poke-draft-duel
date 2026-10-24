@@ -105,11 +105,11 @@ export const FINAL_FLOOR = 50;
 export const TRAINER_ORION = {
     floor: FINAL_FLOOR,
     pokemon: ["dragonite", "salamence", "metagross", "hydreigon", "heatran", "latios"],
-    name: "Orion",
-    nameKo: "오리온",
+    name: "Captain.P",
+    nameKo: "캡틴 포",
     text: ["You made it to the end. Few ever do.", "Now show me everything you've got!"],
     textKo: ["끝까지 올라왔구나. 여기까지 온 사람은 많지 않아.", "이제 가진 모든 것을 보여 줘!"],
-    img: "logo192.png",
+    img: "assets/trainer_captainp.png",
 };
 
 export const BOSSES = [
@@ -144,9 +144,10 @@ export function pickBossTeam(roster, lineup, random = Math.random) {
         if (rest.length === 0) break;
         chosen.push(pickOne(rest));
     }
-    // 앞에 나올 포켓몬은 무작위다
-    for (let i = chosen.length - 1; i > 0; i--) {
-        const j = Math.floor(random() * (i + 1));
+    // 날씨를 거는 포켓몬(첫 번째 규칙)이 먼저 나와야 날씨가 바로 깔린다. 나머지 순서는 무작위다.
+    const first = lineup && lineup.length > 0 && chosen[0] && chosen[0].ability && lineup[0].abilities.includes(chosen[0].ability.name) ? 1 : 0;
+    for (let i = chosen.length - 1; i > first; i--) {
+        const j = first + Math.floor(random() * (i - first + 1));
         [chosen[i], chosen[j]] = [chosen[j], chosen[i]];
     }
     return chosen;

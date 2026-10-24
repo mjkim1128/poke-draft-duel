@@ -13,6 +13,7 @@ import { effectiveSpeed } from "./speed";
 import { activeItem } from "./helditem";
 import {
     HAZARD_MOVES,
+    HAZARD_ON_HIT,
     CLEAR_OWN_SIDE_MOVES,
     CLEAR_BOTH_SIDES_MOVES,
     setHazard,
@@ -109,6 +110,7 @@ import {
     BINDING_MOVES,
     TRAPPING_MOVES,
     FIRST_TURN_ONLY_MOVES,
+    NEEDS_FOE_ATTACK_MOVES,
     REFLECTABLE_MOVES,
     DANCE_MOVES,
     SECONDARY_MOVES,
@@ -368,14 +370,16 @@ export function movePriority(mv, mon, field) {
     );
 }
 
-function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
+// Abilities that trigger on entering (Intimidate, Illusion, Imposter...) go off for both
+// starting pokemon before the first move, the faster one first. The battle screen calls this as
+// soon as the fight begins, so Imposter has copied the foe before the player picks a move.
+// (Only once per battle: doTurn calls it too, and then there is nothing left to do.)
+export function enterBattle(playerPokemon, opponentPokemon) {
     ensureField(playerPokemon, opponentPokemon);
     const field = playerPokemon.field;
     playerPokemon.isPlayerSide = true;
     opponentPokemon.isPlayerSide = false;
     refreshBattlefield(playerPokemon, opponentPokemon);
-    // Abilities that trigger on entering (Intimidate, Illusion, Imposter...) go off for both
-    // starting pokemon before the first turn's moves, the faster one first.
     const entryText = [];
     if (!playerPokemon.entered) {
         playerPokemon.entered = true;
@@ -387,6 +391,12 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
             addArrayToArray(entryText, runEntryAbilities(team, team === playerPokemon ? opponentPokemon : playerPokemon, field));
         }
     }
+    return entryText;
+}
+
+function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
+    const entryText = enterBattle(playerPokemon, opponentPokemon);
+    const field = playerPokemon.field;
     // The button the player pressed can be a snapshot copy, so find the real move (its PP
     // is what gets spent). A switch has no name to look up.
     let move = chosenMove;
@@ -394,7 +404,7 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
         move = playerPokemon[0].moveset.find((m) => m.name === move.name) || move;
     }
     move = forcedMove(playerPokemon[0], move);
-    const cpuMove = forcedMove(opponentPokemon[0], makeMove(playerPokemon, opponentPokemon));
+    const cpuMove = forcedMove(opponentPokemon[0], makeMove(playerPokemon, opponentPokemon, !isTrapped(opponentPokemon, playerPokemon)));
     const priorityOf = (mv, mon) => movePriority(mv, mon, field) + (hasCustapBoost(mon) ? 1 : 0);
     let playerPriority = priorityOf(move, playerPokemon[0]);
     let cpuPriority = priorityOf(cpuMove, opponentPokemon[0]);
@@ -428,11 +438,14 @@ function runEntryAbilities(team, foeTeam, field) {
 
 // What the UI needs to play a move's animation, or null when the move wasn't actually carried
 // out (a switch, a missed or failed move, a pokemon that couldn't act).
+const SELF_ANIM_TARGETS = new Set(["user", "users-field", "user-and-allies", "user-or-ally"]);
 function moveAnimOf(lines, move, isPlayer) {
     if (move.priority === 6 || !move.name) return null;
     if (!lines.some((l) => l.indexOf(" used ") >= 0)) return null;
     if (lines.some((l) => l.indexOf(" missed!") >= 0 || l.indexOf("But it failed!") >= 0)) return null;
-    return { side: isPlayer ? "player" : "opponent", move: move.name };
+    // 자기 자신에게 쓰는 기술(칼춤, 용의춤...)은 연출도 쓴 포켓몬 위에서 한다
+    const self = !!move.target && SELF_ANIM_TARGETS.has(move.target.name);
+    return { side: isPlayer ? "player" : "opponent", move: move.name, self };
 }
 
 // Plays out a turn from `step` onward: step 0 is whoever moves first, step 1 the other,
@@ -451,6 +464,15 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     const pushFrame = () => {
         if (text.length === frameStart) return;
         const frame = { text: text.slice(frameStart), ...snapshotTeams(playerPokemon, opponentPokemon) };
+        // who fainted last decides the winner when both sides run out of pokemon together
+        for (const line of frame.text) {
+            if (!line.endsWith(" fainted!")) continue;
+            const name = line.slice(0, -" fainted!".length);
+            const mine = pokemonNameToString(playerPokemon[0]) === name && playerPokemon[0].hp[0] <= 0;
+            const theirs = pokemonNameToString(opponentPokemon[0]) === name && opponentPokemon[0].hp[0] <= 0;
+            if (mine && !theirs) playerPokemon.lastFainted = "player";
+            else if (theirs && !mine) playerPokemon.lastFainted = "opponent";
+        }
         if (stepAnim) frame.anim = stepAnim;
         stepAnim = null;
         frames.push(frame);
@@ -798,6 +820,16 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
         text.push(pokemonNameToString(attacker) + " used " + moveNameToString(move) + "!");
         text.push("But it failed!");
         return;
+    }
+
+    // Sucker Punch / Thunderclap: fails unless the foe is still about to use a damaging move
+    if (NEEDS_FOE_ATTACK_MOVES.has(move.name)) {
+        const queued = opponentPokemon.queuedMove;
+        if (!queued || queued.priority === 6 || queued.damage_class.name === "status") {
+            text.push(pokemonNameToString(attacker) + " used " + moveNameToString(move) + "!");
+            text.push("But it failed!");
+            return;
+        }
     }
 
     // A pokemon that is up in the air / underground / underwater can't be reached
@@ -1562,7 +1594,8 @@ export function turnText(attacker, defender, move) {
             moveNameToString(move) +
             "!",
     ];
-    if (defender.hp[0] <= 0) {
+    // A move aimed at a foe that is already down fails; one aimed at the user or the field (Swords Dance...) doesn't care
+    if (defender.hp[0] <= 0 && aimsAtFoe(move)) {
         // attempt to stop turn when mon dies to recoil
         text.push("But it failed!");
         return text;
@@ -2754,7 +2787,7 @@ function rollHitCount(move, attacker) {
 
 export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = null) {
     let text = [];
-    if (defender.hp[0] <= 0) return text; // attempt to stop turn when mon dies to recoil
+    if (defender.hp[0] <= 0 && aimsAtFoe(move)) return text; // attempt to stop turn when mon dies to recoil
     const field = defenderTeam ? ensureField(defenderTeam, null) : null;
     // Sheer Force drops a move's secondary effect (and its Life Orb recoil) for extra power
     const sheerForced = removesSecondaries(attacker) && SECONDARY_MOVES.has(move.name) && move.damage_class.name !== "status";
@@ -3026,6 +3059,11 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
             if (defender.hp[0] > 0 && hpBefore > defender.hp[1] / 2 && defender.hp[0] <= defender.hp[1] / 2 && defenderTeam) {
                 runHook(defender, "onHpBelowHalf", { selfTeam: defenderTeam, text, ...abilityApi(field) }, attacker);
             }
+            // Stone Axe / Ceaseless Edge: the hit also lays Stealth Rock / Spikes on the target's side
+            // (Sheer Force strips it, since it is a secondary effect)
+            if (!sheerForced && HAZARD_ON_HIT[move.name] && defenderTeam) {
+                setHazard(defenderTeam, HAZARD_ON_HIT[move.name], text);
+            }
             // Eject Button: a damaging hit that leaves the holder standing knocks it out of battle
             // (not when Sheer Force stripped the move's extras). Its trainer picks the replacement.
             if (
@@ -3230,6 +3268,9 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         attacker.hp[0] = 0;
         text.push(pokemonNameToString(defender) + " took its attacker down with it!");
     }
+
+    // Recoil (or Rough Skin before it) can leave the attacker below 0; a fainted pokemon has exactly 0 HP
+    if (attacker.hp[0] < 0) attacker.hp[0] = 0;
 
     // Struggle: the user takes 1/4 of its own max HP no matter how much it dealt
     if (move.name === "struggle" && damage_number > 0 && attacker.hp[0] > 0) {

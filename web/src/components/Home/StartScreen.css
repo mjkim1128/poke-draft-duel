@@ -51,3 +51,32 @@
     margin-top: 10px;
     background: #2b6fd6;
 }
+
+.start-mode-label {
+    margin: 16px 0 6px;
+    font-size: 13px;
+    color: #666;
+}
+
+.start-mode {
+    display: flex;
+    gap: 6px;
+}
+
+.start-mode-option {
+    flex: 1;
+    min-height: 38px;
+    padding: 6px 8px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.start-mode-option.active {
+    border-color: #d9392b;
+    background: #fdecea;
+    font-weight: bold;
+}

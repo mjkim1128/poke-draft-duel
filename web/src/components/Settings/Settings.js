@@ -94,6 +94,11 @@ export function Settings() {
                             ))}
                         </div>
                         <p className="settings-note">
+                            합계 600 보정은 여섯 능력치의 합을 600으로 맞춰 약한 포켓몬도 쓸 만하게 합니다. 다음 전투부터 적용됩니다.
+                            <br />
+                            Total 600 scales every pokemon's stats to add up to 600. It applies from the next battle.
+                        </p>
+                        <p className="settings-note">
                             포켓몬·기술 이름과 전투 로그에 적용됩니다. 이미 나온 로그는 그대로 두고, 이후 로그부터 바뀝니다.
                             <br />
                             Applies to names and the battle log. Lines already shown stay as they are.

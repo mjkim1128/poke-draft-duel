@@ -45,11 +45,20 @@ export function switchWhenUseless(playerTeam, opponentTeam) {
 }
 
 // canSwitch가 true이면 피해를 줄 수 없을 때 교체를 고를 수 있다 (교체는 priority 6인 가짜 기술이다)
+// 세트에 "opening"이 있으면 그 포켓몬이 나온 뒤 첫 행동으로 그 기술을 쓴다 (기합의띠 파르셀의 껍질깨기 등)
+function openingMove(pokemon) {
+    const slug = pokemon.factorySet && pokemon.factorySet.opening;
+    if (!slug || pokemon.actionsSinceSwitch > 0 || pokemon.charging || pokemon.mustRecharge) return null;
+    return usableMoveset(pokemon).find((m) => m.name === slug) || null;
+}
+
 export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     if (canSwitch) {
         const index = switchWhenUseless(playerTeam, opponentTeam);
         if (index !== -1) return { priority: 6, index };
     }
+    const opening = openingMove(opponentTeam[0]);
+    if (opening) return opening;
     for (const move of usableMoveset(opponentTeam[0])) {
         // attempt for priority
         if (

@@ -28,6 +28,7 @@ import "./StartScreen.css";
 import { isKorean } from "shared/lang";
 import { playSong } from "audio/bgm";
 import { keepsRawPower } from "shared/movemechanics";
+import { isNormalizedStats, setNormalizedStats } from "shared/statMode";
 
 /// Beating the final boss unlocks Endless Mode (no named trainers) on this browser
 const ENDLESS_KEY = "battlefactory-endless";
@@ -57,6 +58,8 @@ export function Home() {
     const [winStreak, setWinStreak] = useState(0);
     /// Endless Mode: no named trainers, the run just keeps going
     const [endless, setEndless] = useState(false);
+    /// "Total 600" stat mode: picked on the title screen, before a run starts
+    const [stats600, setStats600] = useState(isNormalizedStats());
     const [endlessUnlocked, setEndlessUnlocked] = useState(isEndlessUnlocked());
     /// True while the options on screen were just loaded and nobody has started a game with them
     /// yet, so "Start!" doesn't have to load them a second time.
@@ -202,10 +205,20 @@ export function Home() {
         /// a named trainer with a lineup always brings a weather setter and a weather-reactive pokemon
         const boss = endless ? null : bossForFloor(winStreak);
         const opponentTeam = boss && boss.lineup ? pickBossTeam(opponentPokemon, boss.lineup) : shuffle([...opponentPokemon]).slice(0, 3);
+        /// The stat mode (settings) is applied as the fight starts, so a change made on the title screen counts
+        for (const poke of [...picked, ...opponentPokemon]) refreshStats(poke);
         for (const poke of opponentPokemon) poke.revealed = false;
         opponentTeam[0].revealed = true;
         setBattleTeams({ player: [...picked], opponent: opponentTeam });
         setBattleFactoryState("battle");
+    }
+
+    /// Recomputes a pokemon's base stats and HP for the current stat mode, keeping how hurt it is
+    function refreshStats(poke) {
+        const ratio = poke.hp[1] > 0 ? poke.hp[0] / poke.hp[1] : 1;
+        poke.base_stats = getBaseStats(poke);
+        const max = hpCalc(poke.base_stats[0]);
+        poke.hp = [Math.round(ratio * max), max];
     }
 
     async function getPokemonData(pokemonData, i, setFunc) {
@@ -274,7 +287,9 @@ export function Home() {
                         move.power = 80;
                     } else if (
                         move.name === "explosion" ||
-                        move.name === "self-destruct"
+                        move.name === "self-destruct" ||
+                        move.name === "misty-explosion" ||
+                        move.name === "mind-blown"
                     ) {
                         // Do nothing
                     } else if (move.meta && move.meta.drain < 0)
@@ -341,7 +356,9 @@ export function Home() {
                 move.power = 80;
             } else if (
                 move.name === "explosion" ||
-                move.name === "self-destruct"
+                move.name === "self-destruct" ||
+                move.name === "misty-explosion" ||
+                move.name === "mind-blown"
             ) {
                 // Do nothing
             } else if (move.meta && move.meta.drain < 0)
@@ -423,6 +440,25 @@ export function Home() {
                                 {isKorean() ? "엔드리스 모드" : "Endless Mode"}
                             </button>
                         )}
+                        <p className="start-mode-label">{isKorean() ? "능력치 (시작 화면에서만 바꿀 수 있어요)" : "Stats (can only be changed here)"}</p>
+                        <div className="start-mode">
+                            {[
+                                [false, isKorean() ? "원본 종족값" : "Original"],
+                                [true, isKorean() ? "합계 600 보정" : "Total 600"],
+                            ].map(([value, label]) => (
+                                <button
+                                    key={String(value)}
+                                    className={"start-mode-option" + (stats600 === value ? " active" : "")}
+                                    aria-pressed={stats600 === value}
+                                    onClick={() => {
+                                        setNormalizedStats(value);
+                                        setStats600(value);
+                                    }}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}

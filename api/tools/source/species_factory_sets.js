@@ -2,6 +2,8 @@
 // 그 종이 실전에서 쓸 수 있는 세트들의 배열을 값으로 가집니다. 각 세트를 뽑는 로직은
 // randompokemon.js의 pickFactorySet/resolveFactoryMoveSlugs를 참고하세요.
 // 슬러그 옆 /* 한글 */ 주석은 참고용이며 게임 로직에는 쓰이지 않습니다.
+// 세트에 "opening": "기술 슬러그"를 적으면, 상대(컴퓨터)가 그 포켓몬을 내보낸 첫 턴에 그 기술을 먼저 씁니다
+// (예: 기합의띠 파르셀이 나오자마자 껍질깨기). 그 기술은 세트의 기술 칸에 있어야 합니다.
 // eslint-disable-next-line import/no-anonymous-default-export
 const SPECIES_FACTORY_SETS = {
   "klefki": /* 클레피 */ [
@@ -7766,6 +7768,7 @@ const SPECIES_FACTORY_SETS = {
   "cloyster": /* 파르셀 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
+    "opening": "shell-smash" /* 나오자마자 쓰는 기술 */,
     "ability": "skill-link" /* 스킬링크 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
@@ -7786,6 +7789,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "focus-sash" /* 기합의띠 */,
+    "opening": "shell-smash" /* 나오자마자 쓰는 기술 */,
     "ability": "skill-link" /* 스킬링크 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
@@ -7796,6 +7800,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "focus-sash" /* 기합의띠 */,
+    "opening": "shell-smash" /* 나오자마자 쓰는 기술 */,
     "ability": "skill-link" /* 스킬링크 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
@@ -7806,6 +7811,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "focus-sash" /* 기합의띠 */,
+    "opening": "shell-smash" /* 나오자마자 쓰는 기술 */,
     "ability": "skill-link" /* 스킬링크 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
@@ -7816,6 +7822,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "focus-sash" /* 기합의띠 */,
+    "opening": "shell-smash" /* 나오자마자 쓰는 기술 */,
     "ability": "skill-link" /* 스킬링크 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
@@ -7826,6 +7833,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "focus-sash" /* 기합의띠 */,
+    "opening": "shell-smash" /* 나오자마자 쓰는 기술 */,
     "ability": "skill-link" /* 스킬링크 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],

@@ -92,3 +92,33 @@ describe("상대가 이미 쓰러져 있어도 자기 자신에게 쓰는 기술
         expect(foe[0].status).toBeNull();
     });
 });
+
+describe("세트의 opening 기술", () => {
+    const cloyster = () => {
+        const c = mon("cloyster", ["shell-smash", "icicle-spear"]);
+        c.factorySet = { opening: "shell-smash" };
+        return c;
+    };
+
+    test("나오자마자 첫 턴에 그 기술을 쓰고, 다음 턴부터는 쓰지 않는다", () => {
+        const [me, foe] = pair(mon("snorlax", ["splash"]), cloyster());
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].stat_levels[0]).toBe(2); // 껍질깨기: 공격 +2
+        const levelsAfterFirst = [...foe[0].stat_levels];
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].stat_levels).toEqual(levelsAfterFirst); // 두 번째 턴에는 껍질깨기를 또 쓰지 않는다
+    });
+
+    test("opening이 없으면 평소처럼 고른다", () => {
+        const [me, foe] = pair(mon("snorlax", ["splash"]), mon("cloyster", ["shell-smash", "icicle-spear"]));
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].stat_levels[0]).toBe(0);
+    });
+});
+
+test("미스트버스트를 쓰면 쓴 포켓몬이 쓰러진다", () => {
+    const [me, foe] = pair(mon("snorlax", ["misty-explosion"]), mon("blissey", ["splash"]));
+    doTurn(me, foe, me[0].moveset[0]);
+    expect(me[0].hp[0]).toBe(0);
+    expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+});

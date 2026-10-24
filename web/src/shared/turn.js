@@ -3258,9 +3258,13 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
                 Math.ceil((hpNumber / attacker.hp[1]) * 100) +
                 "% HP to recoil!"
         );
-    } else if (move.name === "explosion" || move.name === "self-destruct") {
+    } else if (move.name === "explosion" || move.name === "self-destruct" || move.name === "misty-explosion") {
         attacker.hp[0] = 0;
         text.push(pokemonNameToString(attacker) + " blew up!");
+    } else if (move.name === "mind-blown" && !sheerForced && !indirectDamageBlocked(attacker)) {
+        // Mind Blown: the user loses half of its max HP
+        attacker.hp[0] = Math.max(0, attacker.hp[0] - Math.ceil(attacker.hp[1] / 2));
+        text.push(pokemonNameToString(attacker) + " lost half of its HP!");
     }
 
     // Destiny Bond: whatever knocked it out goes down with it

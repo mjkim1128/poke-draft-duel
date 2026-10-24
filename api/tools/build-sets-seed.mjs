@@ -56,6 +56,9 @@ for (const [species, sets] of Object.entries(SETS)) {
                 if (!moveNames.has(option.slug)) problems.push(`${species}: 기술 없음 ${option.slug}`);
             }
         }
+        if (set.opening && !set.moves.some((slot) => slot.some((o) => o.slug === set.opening))) {
+            problems.push(`${species}: opening 기술이 세트의 기술에 없음 ${set.opening}`);
+        }
         rows.push({ species, set });
     }
 }

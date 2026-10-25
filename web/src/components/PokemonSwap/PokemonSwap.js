@@ -13,7 +13,7 @@ export function PokemonSwap(props) {
         const roster = [...playerRoster];
         roster[roster.indexOf(mine)] = theirs;
         setPlayerRoster(roster);
-        nextBattle();
+        nextBattle(roster);
     }
 
     function cell(poke, i, selected, onPick) {

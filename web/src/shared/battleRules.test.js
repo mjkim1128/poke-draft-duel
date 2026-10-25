@@ -122,3 +122,43 @@ test("미스트버스트를 쓰면 쓴 포켓몬이 쓰러진다", () => {
     expect(me[0].hp[0]).toBe(0);
     expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
 });
+
+describe("가속(Speed Boost)", () => {
+    test("배틀 시작 때 나와 있던 포켓몬은 첫 턴 끝에 스피드가 오른다", () => {
+        const [me, foe] = pair(mon("blaziken", ["protect"], "speed-boost"), mon("blissey", ["splash"]));
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].stat_levels[4]).toBe(1);
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].stat_levels[4]).toBe(2);
+    });
+});
+
+describe("일루전(Illusion)", () => {
+    const { strongestMove } = require("shared/computermove");
+
+    test("내 포켓몬의 일루전은 상대 컴퓨터가 속는다 (내 화면의 모습은 그대로)", () => {
+        const me = [mon("zoroark", ["splash"], "illusion"), mon("machamp", ["splash"])];
+        const foe = [mon("snorlax", ["psychic", "tackle"]), mon("snorlax", ["splash"])];
+        enterBattle(me, foe);
+        expect(me[0].illusion).toBeFalsy();
+        expect(me[0].disguise).toBe(me[1]);
+        // 조로아크(악 타입)에게 에스퍼 기술은 무효지만, 컴퓨터는 마기라스(격투, 에스퍼에 약함)로 본다
+        expect(strongestMove(me, foe).name).toBe("psychic");
+        me[0].disguise = null;
+        expect(strongestMove(me, foe).name).toBe("tackle");
+    });
+
+    test("한 번 맞으면 일루전이 풀린다", () => {
+        const me = [mon("zoroark", ["splash"], "illusion"), mon("blissey", ["splash"])];
+        const foe = [mon("snorlax", ["tackle"]), mon("snorlax", ["splash"])];
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].disguise).toBeNull();
+    });
+
+    test("상대(컴퓨터)의 일루전은 지금처럼 겉모습이 바뀐다", () => {
+        const me = [mon("snorlax", ["splash"]), mon("blissey", ["splash"])];
+        const foe = [mon("zoroark", ["splash"], "illusion"), mon("blissey", ["splash"])];
+        enterBattle(me, foe);
+        expect(foe[0].illusion).toBe(foe[1]);
+    });
+});

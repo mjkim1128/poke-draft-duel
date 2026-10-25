@@ -193,8 +193,8 @@ export function Home() {
         setOpponentPokemon(fresh);
     }
 
-    async function loadNewPokemon(init = true) {
-        const mine = init ? await loadOptions() : playerPokemon;
+    async function loadNewPokemon(init = true, roster = null) {
+        const mine = init ? await loadOptions() : roster || playerPokemon;
         await loadOpponentParty(mine);
         forceUpdate();
     }
@@ -398,13 +398,14 @@ export function Home() {
         setBattleFactoryState(next);
     }
 
-    async function nextBattle() {
+    /// `roster`: my party after a swap (the state hasn't updated yet when the swap screen calls this)
+    async function nextBattle(roster) {
         if (!endless && bossForFloor(winStreak) && battleFactoryState === "swap") {
             setBattleFactoryState("boss");
             return;
         }
         setApiLoading(true);
-        await loadNewPokemon(false);
+        await loadNewPokemon(false, roster);
         setBattleFactoryState("select");
         setApiLoading(false);
     }
@@ -440,6 +441,11 @@ export function Home() {
                                 {isKorean() ? "엔드리스 모드" : "Endless Mode"}
                             </button>
                         )}
+                        <p className="start-credit">
+                            {isKorean() ? "날씨·필드 연출: The Gen 9 Move Animation Project (KRLW890)" : "Weather and terrain animations: The Gen 9 Move Animation Project (KRLW890)"}
+                            <br />
+                            Thanks to the Reborn team for letting people use their resources.
+                        </p>
                         <p className="start-mode-label">{isKorean() ? "능력치 (시작 화면에서만 바꿀 수 있어요)" : "Stats (can only be changed here)"}</p>
                         <div className="start-mode">
                             {[

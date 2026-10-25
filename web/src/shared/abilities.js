@@ -338,14 +338,16 @@ export const ABILITIES = {
     // ---- looks like the last member of its party until the first hit lands ----
     illusion: {
         onSwitchIn({ self, selfTeam, selfIsPlayer }) {
-            // Only worth doing for the CPU: the player already knows their own team
-            if (selfIsPlayer) return;
-            const disguise = [...selfTeam].reverse().find((p) => p !== self && p.hp[0] > 0);
-            self.illusion = disguise || null;
+            const disguise = [...selfTeam].reverse().find((p) => p !== self && p.hp[0] > 0) || null;
+            // The CPU's Illusion is what the player sees (name, sprite). The player knows their own team,
+            // so mine is only a "disguise" the CPU falls for when it judges matchups (computermove.js).
+            if (selfIsPlayer) self.disguise = disguise;
+            else self.illusion = disguise;
         },
         onDamagingHit({ self, text, damage }) {
-            if (!self.illusion || !(damage > 0)) return;
+            if ((!self.illusion && !self.disguise) || !(damage > 0)) return;
             self.illusion = null;
+            self.disguise = null;
             text.push(pokemonNameToString(self) + "'s Illusion wore off!");
         },
     },
@@ -1636,6 +1638,7 @@ export function resetAbilityState(pokemon) {
         pokemon.mimicBackup = null;
     }
     pokemon.illusion = null;
+    pokemon.disguise = null;
     pokemon.gulp = null;
     pokemon.cudChew = null;
     pokemon.flashFire = false;

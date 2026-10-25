@@ -112,8 +112,15 @@ function fieldBox(map, box) {
     };
 }
 
+// 쇼다운에 연출이 없는 기술은 비슷한 기술의 연출을 빌려 쓴다 (쇼다운 id -> 빌려 올 쇼다운 id)
+const BORROWED = {
+    alluringvoice: "dazzlinggleam", // 매혹의보이스: 요정 타입의 반짝이는 소리
+    doubleironbash: "bulletpunch", // 더블펀처: 강철 주먹
+};
+const animOf = (id) => MOVES[id] || MOVES[BORROWED[id]];
+
 export function hasMoveAnim(slug) {
-    return !!MOVES[String(slug).replace(/-/g, "")];
+    return !!animOf(String(slug).replace(/-/g, ""));
 }
 
 // 기술 연출을 재생한다. 반환: { duration(ms), cancel() }. 재생할 수 없으면 null.
@@ -121,7 +128,7 @@ export function hasMoveAnim(slug) {
 //   self: 자기 자신에게 쓰는 기술이면 true (칼춤 등. 연출의 대상이 쓴 포켓몬이 된다)
 export function playMoveAnim(field, side, slug, self = false) {
     const id = String(slug).replace(/-/g, "");
-    const anim = MOVES[id];
+    const anim = animOf(id);
     const speed = TIME_SCALE[id] || 1; // 1보다 작으면 그만큼 짧게 재생한다
     if (!field || !anim || typeof field.animate !== "function") return null;
     const map = makeMapper(field);
@@ -309,3 +316,6 @@ export function playMoveAnim(field, side, slug, self = false) {
 }
 
 export const __test = { stageBox, EASING, OTHER };
+
+// 화면 확인용: 브라우저 콘솔에서 __ps.play(필드, "player", "thunderbolt")
+if (typeof window !== "undefined") window.__ps = { play: playMoveAnim };

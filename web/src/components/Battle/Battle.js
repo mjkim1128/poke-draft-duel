@@ -1,6 +1,7 @@
 import { localName, isKorean } from "shared/lang";
 import { localizeLine } from "shared/logTranslate";
 import { playMoveAnim } from "animations/fxEngine";
+import { playFieldAnim, prefetchFieldAnims } from "animations/pbEngine";
 import { isFxEnabled } from "animations/fxSetting";
 import {
     CurrentPokemon,
@@ -29,6 +30,7 @@ import {
     HAZARD_LABEL,
     switchPokemon,
     enterBattle,
+    fieldAnimOfLine,
     lodash,
 } from "shared";
 import "./Battle.css";
@@ -46,6 +48,11 @@ export function Battle(props) {
     ]);
     const [stepNumber, setStepNumber] = useState(0);
 
+    /// Load the weather and terrain animations now, so they can play the moment a weather or terrain starts
+    useEffect(() => {
+        prefetchFieldAnims();
+    }, []);
+
     /// The on-entry abilities of the two lead pokemon (Imposter, Intimidate...) go off as the fight begins
     useEffect(() => {
         const text = enterBattle(props.playerPokemon, props.opponentPokemon);
@@ -58,6 +65,14 @@ export function Battle(props) {
         setHistory(history);
         setStepNumber(history.length - 1);
         setAnnouncerMessage(text);
+        // a lead that sets the weather (Drizzle...) gets its animation as the fight begins
+        const startAnim = text.map(fieldAnimOfLine).filter(Boolean).pop();
+        if (startAnim && isFxEnabled()) {
+            prefetchFieldAnims().then(() => {
+                const fx = playFieldAnim(fieldRef.current, startAnim);
+                if (fx) setTimeout(fx.cancel, fx.duration + 100);
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     /// Portrait screens (a phone, a tall narrow window) swap the side-by-side board for a field
@@ -104,10 +119,13 @@ export function Battle(props) {
         setAnnouncerMessage(frame.text);
         /// The move's animation plays over the field while its lines are typed out
         const fx = frame.anim && isFxEnabled() ? playMoveAnim(fieldRef.current, frame.anim.side, frame.anim.move, frame.anim.self) : null;
-        const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0));
+        /// A weather or terrain that starts in this beat gets its own animation over the field
+        const fieldFx = frame.fieldAnim && isFxEnabled() ? playFieldAnim(fieldRef.current, frame.fieldAnim) : null;
+        const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0, fieldFx ? fieldFx.duration + 200 : 0));
         return () => {
             clearTimeout(timer);
             if (fx) fx.cancel();
+            if (fieldFx) fieldFx.cancel();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [animFrames, animIndex]);

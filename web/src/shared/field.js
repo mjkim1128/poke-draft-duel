@@ -46,6 +46,14 @@ const TERRAIN_END = {
     psychic: "The weirdness disappeared.",
 };
 
+// 날씨나 필드가 시작될 때 나오는 줄이면 그 연출의 이름(sun, rain, sand, hail, snow, electric-terrain...)을 돌려준다
+const START_ANIM = {};
+for (const [name, line] of Object.entries(WEATHER_START)) START_ANIM[line] = name;
+for (const [name, line] of Object.entries(TERRAIN_START)) START_ANIM[line] = name + "-terrain";
+export function fieldAnimOfLine(line) {
+    return START_ANIM[line] || null;
+}
+
 export const WEATHER_LABEL = { sun: "쾌청", rain: "비", sand: "모래바람", hail: "싸라기눈", snow: "설경" };
 export const TERRAIN_LABEL = { electric: "일렉트릭필드", grassy: "그래스필드", misty: "미스트필드", psychic: "사이코필드" };
 

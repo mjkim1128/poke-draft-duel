@@ -99,3 +99,19 @@
     width: 100%;
     margin: 10px 0 0;
 }
+
+.settings-credits {
+    margin-top: 10px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: #666;
+    text-align: left;
+}
+
+.settings-credits p {
+    margin: 3px 0;
+}
+
+.settings-credits .settings-label {
+    text-align: center;
+}

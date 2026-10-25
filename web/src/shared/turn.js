@@ -91,6 +91,7 @@ import {
     terrainBlocksPriority,
     weatherHealPercent,
     weatherEndOfTurnDamage,
+    fieldAnimOfLine,
 } from "./field";
 import {
     DEFROST_MOVES,
@@ -384,6 +385,9 @@ export function enterBattle(playerPokemon, opponentPokemon) {
     if (!playerPokemon.entered) {
         playerPokemon.entered = true;
         opponentPokemon.entered = true;
+        // the two leads have been out since the start, so Speed Boost already works on the first turn
+        playerPokemon[0].activeTurns = 1;
+        opponentPokemon[0].activeTurns = 1;
         const order = getEffectiveSpeed(playerPokemon[0], field) >= getEffectiveSpeed(opponentPokemon[0], field)
             ? [playerPokemon, opponentPokemon]
             : [opponentPokemon, playerPokemon];
@@ -464,6 +468,11 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     const pushFrame = () => {
         if (text.length === frameStart) return;
         const frame = { text: text.slice(frameStart), ...snapshotTeams(playerPokemon, opponentPokemon) };
+        // a weather or terrain that starts in this beat gets its field animation
+        for (const line of frame.text) {
+            const anim = fieldAnimOfLine(line);
+            if (anim) frame.fieldAnim = anim;
+        }
         // who fainted last decides the winner when both sides run out of pokemon together
         for (const line of frame.text) {
             if (!line.endsWith(" fainted!")) continue;

@@ -124,3 +124,16 @@ describe("재생 시간 배율", () => {
         expect(a.duration).toBeGreaterThan(500);
     });
 });
+
+test("세트에서 쓰는 모든 기술에 연출이 있다 (없는 두 기술은 비슷한 기술의 연출을 빌린다)", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const rows = fs
+        .readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/factory_sets.json"), "utf8")
+        .split(/\r?\n/)
+        .filter((l) => l.startsWith("{"))
+        .map((l) => JSON.parse(l.trim().replace(/,$/, "")));
+    const used = new Set(rows.flatMap((r) => r.set.moves.flatMap((slot) => slot.map((o) => o.slug))));
+    const missing = [...used].filter((s) => !hasMoveAnim(s));
+    expect(missing).toEqual([]);
+});

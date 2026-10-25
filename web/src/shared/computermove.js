@@ -3,6 +3,13 @@ import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES } from "./movemechanics";
 import { hitChance } from "./accuracy";
 import { getUsableMoves } from "./pp";
 
+// How the CPU sees my pokemon: one under Illusion looks like the pokemon it copies (its types and
+// stats), until the disguise breaks. The real battle math still uses the real pokemon.
+function perceived(pokemon) {
+    const d = pokemon.disguise;
+    return d ? { ...pokemon, types: d.types, base_stats: d.base_stats } : pokemon;
+}
+
 // What a single-hit damage number is really worth once the move's catch is counted: a
 // charge/recharge move costs a whole extra turn, a multi-hit move lands several times, and
 // a move that can miss is worth its chance to connect.
@@ -25,6 +32,7 @@ function usableMoveset(pokemon) {
 // 특성으로 흡수될 때) 바꿔 낼 포켓몬의 번호를 돌려준다. 바꿀 필요가 없거나 바꿀 수 없으면 -1.
 // 변화 기술만 가진 포켓몬은 원래 피해를 주지 않으므로 바꾸지 않는다.
 export function switchWhenUseless(playerTeam, opponentTeam) {
+    playerTeam = asSeen(playerTeam);
     const active = opponentTeam[0];
     if (active.charging || active.mustRecharge || playerTeam[0].hp[0] <= 0) return -1;
     const field = playerTeam.field || opponentTeam.field || null;
@@ -52,7 +60,17 @@ function openingMove(pokemon) {
     return usableMoveset(pokemon).find((m) => m.name === slug) || null;
 }
 
+// The player's team with its active pokemon replaced by what the CPU believes it is
+function asSeen(playerTeam) {
+    const seen = perceived(playerTeam[0]);
+    if (seen === playerTeam[0]) return playerTeam;
+    const copy = [seen, ...playerTeam.slice(1)];
+    copy.field = playerTeam.field;
+    return copy;
+}
+
 export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
+    playerTeam = asSeen(playerTeam);
     if (canSwitch) {
         const index = switchWhenUseless(playerTeam, opponentTeam);
         if (index !== -1) return { priority: 6, index };
@@ -86,6 +104,7 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
 }
 
 export function strongestMove(playerTeam, opponentTeam) {
+    playerTeam = asSeen(playerTeam);
     let damage = 0;
     let choice = null;
     const moves = usableMoveset(opponentTeam[0]);
@@ -107,6 +126,7 @@ export function strongestMove(playerTeam, opponentTeam) {
 }
 
 export function switchPokemon(playerTeam, opponentTeam) {
+    playerTeam = asSeen(playerTeam);
     let options = opponentTeam.filter(
         (poke) => poke !== opponentTeam[0] && poke.hp[0] > 0
     );

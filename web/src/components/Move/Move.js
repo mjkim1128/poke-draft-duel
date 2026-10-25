@@ -9,6 +9,7 @@ import {
     ppLeft,
     maxPP,
 } from "shared";
+import { moveConditionBlock } from "shared/movecondition";
 import "./Move.css";
 
 export function Move(props) {
@@ -87,6 +88,12 @@ export function Move(props) {
         return <div></div>;
     }
 
+    /// A move whose condition isn't met (Fake Out after the first turn, Sleep Talk while awake...) can't be picked
+    const unusableReason =
+        props.moveOwner !== "party" && props.attackerDefender
+            ? moveConditionBlock(props.attackerDefender[0], props.move, { foe: props.attackerDefender[1] })
+            : null;
+
     return (
         <div>
             <div className="move-div">
@@ -94,10 +101,12 @@ export function Move(props) {
                     ref={buttonRef}
                     className={moveClassName}
                     id={props.move.type.name}
+                    title={unusableReason || undefined}
                     disabled={
                         props.moveOwner !== "party" &&
                         props.move.name !== "struggle" &&
                         (ppLeft(props.move) <= 0 ||
+                            !!unusableReason ||
                             /// Disable (e.g. from Cursed Body) shuts the move off for a few turns
                             !!(
                                 props.attackerDefender &&

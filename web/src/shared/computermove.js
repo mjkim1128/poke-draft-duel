@@ -27,8 +27,8 @@ function moveValue(damage, move, attacker, defender, field) {
 
 // A Choice item holder can only pick the move it locked itself into, moves out of PP are
 // off the table, and with nothing left the only option is Struggle.
-function usableMoveset(pokemon) {
-    return getUsableMoves(pokemon);
+function usableMoveset(pokemon, foe = null) {
+    return getUsableMoves(pokemon, { foe });
 }
 
 // 세트에 "opening"이 있으면 그 포켓몬이 나온 뒤 첫 행동으로 그 기술을 쓴다 (기합의띠 파르셀의 껍질깨기 등)
@@ -55,7 +55,7 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     if (sleepTalk) return sleepTalk;
     const opening = openingMove(opponentTeam[0]);
     if (opening) return opening;
-    for (const move of usableMoveset(opponentTeam[0])) {
+    for (const move of usableMoveset(opponentTeam[0], playerTeam[0])) {
         // attempt for priority
         if (
             playerTeam[0].hp[0] -
@@ -93,7 +93,7 @@ export function strongestMove(playerTeam, opponentTeam) {
     playerTeam = asSeen(playerTeam);
     let damage = 0;
     let choice = null;
-    const moves = usableMoveset(opponentTeam[0]);
+    const moves = usableMoveset(opponentTeam[0], playerTeam[0]);
     for (const move of moves) {
         const field = playerTeam.field || opponentTeam.field || null;
         const value = moveValue(

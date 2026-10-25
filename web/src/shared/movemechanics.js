@@ -107,7 +107,7 @@ export const ALWAYS_CRIT_MOVES = new Set(["flower-trick", "frost-breath", "storm
 export const BINDING_MOVES = new Set(["bind", "clamp", "fire-spin", "infestation", "magma-storm", "sand-tomb", "snap-trap", "thunder-cage", "whirlpool", "wrap"]);
 export const TRAPPING_MOVES = new Set(["mean-look", "block", "spider-web", "anchor-shot", "spirit-shackle", "thousand-waves", "jaw-lock"]);
 // Only usable on the first turn after switching in (Showdown: activeMoveActions > 1 fails).
-export const FIRST_TURN_ONLY_MOVES = new Set(["fake-out", "first-impression"]);
+export const FIRST_TURN_ONLY_MOVES = new Set(["fake-out", "first-impression", "mat-block"]);
 // 상대가 이번 턴에 공격 기술을 쓰려고 할 때만 성공하는 기술 (방어 같은 변화 기술을 고르거나 이미 움직였으면 실패)
 export const NEEDS_FOE_ATTACK_MOVES = new Set(["sucker-punch", "thunderclap"]);
 

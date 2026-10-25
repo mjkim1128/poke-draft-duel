@@ -411,7 +411,9 @@ export function Battle(props) {
     /// A pokemon mid-way through a two-turn move (Fly, Solar Beam, ...) must finish it;
     /// a Choice item locks it to the move it already used.
     /// Encore locks it into its last move while that move has PP left.
-    const usableMoves = getUsableMoves(currentpoke);
+    const usableMoves = getUsableMoves(currentpoke, {
+        foe: isCurrent ? liveState.opponentPokemon[0] : history[stepNumber].opponentPokemon[0],
+    });
     const encoredMove = currentpoke.encore && usableMoves.find((move) => move.name === currentpoke.encore.move);
     const forcedMoveName =
         currentpoke.charging || choiceLockedMove(currentpoke) || (encoredMove && usableMoves.length === 1 ? encoredMove.name : null);

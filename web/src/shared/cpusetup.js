@@ -97,7 +97,7 @@ export function setupVerdict(kind, n) {
 // 한 번 쓸 때 줄 수 있는 가장 큰 피해 (명중은 따지지 않는다): 충전, 반동 기술은 두 턴이 걸리니 반으로, 연속기는 여러 번 맞는 것으로 센다
 export function bestDamage(attacker, defender, field) {
     let best = 0;
-    for (const move of getUsableMoves(attacker)) {
+    for (const move of getUsableMoves(attacker, { foe: defender })) {
         if (move.damage_class.name === "status") continue;
         let damage = damageCalc(attacker, defender, move, { field });
         if (CHARGE_MOVES.has(move.name) || RECHARGE_MOVES.has(move.name)) damage /= 2;

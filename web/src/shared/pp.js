@@ -1,6 +1,7 @@
 import { HEAL_MOVES } from "./movemechanics";
 import { CHOICE_ITEMS } from "./iteminfo";
 import { activeItem } from "./helditem";
+import { moveConditionBlock } from "./movecondition";
 // Move PP. Every move gets its base PP x 8/5 (the max with three PP Ups, what competitive
 // sets use), tracked per pokemon on the move object as ppLeft. A move object that has
 // never been used has no ppLeft yet, which just means "full".
@@ -72,7 +73,7 @@ export function choiceLockedMove(pokemon) {
 
 // The moves a pokemon can pick from right now: a Choice item locks it to one move, moves
 // out of PP are unusable, and with nothing left it has to Struggle.
-export function getUsableMoves(pokemon) {
+export function getUsableMoves(pokemon, ctx = {}) {
     let moves = pokemon.moveset;
     const lockedName = choiceLockedMove(pokemon);
     if (lockedName) {
@@ -90,7 +91,8 @@ export function getUsableMoves(pokemon) {
             hasPP(m) &&
             !(pokemon.disabled && pokemon.disabled.move === m.name) &&
             !(pokemon.taunt && m.damage_class && m.damage_class.name === "status")&&
-            !(pokemon.healBlock && HEAL_MOVES.has(m.name))
+            !(pokemon.healBlock && HEAL_MOVES.has(m.name)) &&
+            !moveConditionBlock(pokemon, m, ctx) // Fake Out after the first turn, Sleep Talk while awake, Recover at full HP...
     );
     return usable.length > 0 ? usable : [STRUGGLE];
 }

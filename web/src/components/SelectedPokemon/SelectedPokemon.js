@@ -10,7 +10,7 @@ export function SelectedPokemon(props) {
     /// first pokemon is picked.
     if (!props.pokemon) {
         return (
-            <div className="selected-pokemon-div selected-pokemon-empty">
+            <div className={"selected-pokemon-div selected-pokemon-empty" + (props.compact ? " compact" : "")}>
                 <p>포켓몬을 누르면 정보가 여기에 표시됩니다</p>
             </div>
         );
@@ -28,7 +28,7 @@ export function SelectedPokemon(props) {
     });
 
     return (
-        <div className="selected-pokemon-div">
+        <div className={"selected-pokemon-div" + (props.compact ? " compact" : "")}>
             <div className="selected-pokemon-row">
                 <img className="pokemon-img"
                     src={props.pokemon.sprites.front_default}
@@ -58,7 +58,7 @@ export function SelectedPokemon(props) {
                 </div>
             </div>
             <div className="selected-pokemon-row">
-                <StatsDisplay pokemon={props.pokemon} />
+                <StatsDisplay pokemon={props.pokemon} compact={props.compact} />
             </div>
             <div>
                 {moves !== null && (

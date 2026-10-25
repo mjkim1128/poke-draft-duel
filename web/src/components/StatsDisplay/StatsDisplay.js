@@ -12,13 +12,17 @@ export function StatsDisplay(props) {
     const options = {
         backgroundColor: "transparent",
         width: chartWidth,
+        // 폰 화면의 정보 칸에서는 그래프를 낮고 촘촘하게 그린다
+        ...(props.compact ? { height: window.innerHeight < 620 ? 82 : 100 } : {}),
         axisX: {
             reversed: true,
+            ...(props.compact ? { labelFontSize: 10 } : {}),
         },
         axisY: {
             includeZero: true,
             maximum: 200,
-            interval: 20,
+            interval: props.compact ? 50 : 20,
+            ...(props.compact ? { labelFontSize: 9 } : {}),
         },
         data: [{
             type: "bar",

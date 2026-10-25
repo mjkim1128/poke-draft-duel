@@ -90,3 +90,52 @@
 .team-select-go {
     font-weight: bold;
 }
+
+/* 좁은 화면(폰): 정보 칸과 두 파티를 한 화면에 들어오게 줄인다 (순서는 PC와 같다) */
+.team-select.compact {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 100vh;
+    min-height: 100dvh; /* 화면이 남으면 시작 버튼이 맨 아래에 붙는다 */
+    padding: 6px;
+    /* 칸 사이 간격: 화면이 높을수록 넓어지고(최대 30px), 낮으면 6px까지 줄어든다. 524px는 간격 6px일 때 내용의 전체 높이 */
+    --section-gap: clamp(6px, calc((100vh - 524px) / 3 + 6px), 30px);
+    --section-gap: clamp(6px, calc((100dvh - 524px) / 3 + 6px), 30px);
+}
+
+.team-select.compact .team-select-title {
+    margin: 2px 0 var(--section-gap);
+    font-size: 17px;
+}
+
+.team-select.compact .team-select-row {
+    margin-bottom: var(--section-gap);
+}
+
+.team-select.compact .team-select-label {
+    margin-bottom: 4px;
+    font-size: 12px;
+}
+
+.team-select.compact .team-select-hint {
+    display: none;
+}
+
+.team-select.compact .team-select-cell {
+    padding: 1px;
+}
+
+.team-select.compact .team-select-info {
+    margin-bottom: var(--section-gap);
+}
+
+.team-select.compact .team-select-bar {
+    margin: auto -6px -6px; /* 위쪽 auto: 화면이 남으면 맨 아래로 */
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+}
+
+.team-select.compact .team-select-bar button {
+    min-height: 42px;
+    font-size: 16px;
+}

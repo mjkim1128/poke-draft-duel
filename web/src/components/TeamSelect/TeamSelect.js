@@ -10,6 +10,8 @@ export function TeamSelect(props) {
     const { playerRoster, opponentRoster, winStreak, onConfirm } = props;
     const [picked, setPicked] = useState([]);
     const [focus, setFocus] = useState(null);
+    // 폰처럼 좁은 화면에서는 정보 칸을 줄여서 스크롤 없이 한 화면에 들어오게 한다
+    const compact = typeof window !== "undefined" && window.innerWidth <= 600;
 
     // 내 포켓몬을 누르면 선출, 이미 선출된 포켓몬을 다시 누르면 해제된다.
     // 해제되면 뒤의 순서가 하나씩 앞으로 당겨진다 (1 2 3 에서 2를 해제하면 1 3 이 1 2 가 된다).
@@ -38,10 +40,10 @@ export function TeamSelect(props) {
     }
 
     return (
-        <div className="team-select">
+        <div className={"team-select" + (compact ? " compact" : "")}>
             <h2 className="team-select-title">선출 - 현재 {winStreak}연승</h2>
             <div className="team-select-info">
-                <SelectedPokemon pokemon={focus} />
+                <SelectedPokemon pokemon={focus} compact={compact} />
             </div>
             <div className="team-select-row">
                 <div className="team-select-label">상대 파티 (이 중 3마리가 나옵니다)</div>
@@ -49,7 +51,8 @@ export function TeamSelect(props) {
             </div>
             <div className="team-select-row">
                 <div className="team-select-label">
-                    내 파티 - {PICK_COUNT}마리를 순서대로 누르세요, 다시 누르면 해제 ({picked.length}/{PICK_COUNT}, 첫 번째가 선두)
+                    내 파티 - {PICK_COUNT}마리를 순서대로 누르세요 ({picked.length}/{PICK_COUNT}, 다시 누르면 해제)
+                    <span className="team-select-hint"> · 첫 번째가 선두</span>
                 </div>
                 <div className="team-select-grid">{playerRoster.map((p, i) => cell(p, i, true))}</div>
             </div>

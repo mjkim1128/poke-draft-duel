@@ -14,6 +14,7 @@ export * from './processjson';
 export * from './bosspokemon';
 export * from './pp';
 export * from './field';
+export * from './animcues';
 export * from './abilities';
 export * from './hazards';
 export * from './helditem';

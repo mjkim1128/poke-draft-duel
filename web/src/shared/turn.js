@@ -10,6 +10,7 @@ import {
 import { FOE_TARGETS, isOhkoMove, ohkoImmune, rollAccuracy } from "./accuracy";
 import { spendPP, restorePP, ppLeft, maxPP, hasPP } from "./pp";
 import { effectiveSpeed } from "./speed";
+import { statusAnimsOf } from "./animcues";
 import { activeItem } from "./helditem";
 import {
     HAZARD_MOVES,
@@ -468,6 +469,12 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     const pushFrame = () => {
         if (text.length === frameStart) return;
         const frame = { text: text.slice(frameStart), ...snapshotTeams(playerPokemon, opponentPokemon) };
+        // a status condition or a stat change in this beat gets its animation over that pokemon
+        const statusAnims = statusAnimsOf(frame.text, {
+            player: pokemonNameToString(playerPokemon[0]),
+            opponent: pokemonNameToString(opponentPokemon[0]),
+        });
+        if (statusAnims.length > 0) frame.statusAnims = statusAnims;
         // a weather or terrain that starts in this beat gets its field animation
         for (const line of frame.text) {
             const anim = fieldAnimOfLine(line);

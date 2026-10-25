@@ -1,7 +1,6 @@
 import { localName, isKorean } from "shared/lang";
 import { localizeLine } from "shared/logTranslate";
-import { playMoveAnim } from "animations/fxEngine";
-import { playFieldAnim, prefetchFieldAnims } from "animations/pbEngine";
+import { playMoveAnim, playFieldAnim, prefetchMoveAnims, prefetchFieldAnims } from "animations/pbEngine";
 import { isFxEnabled } from "animations/fxSetting";
 import {
     CurrentPokemon,
@@ -48,9 +47,12 @@ export function Battle(props) {
     ]);
     const [stepNumber, setStepNumber] = useState(0);
 
-    /// Load the weather and terrain animations now, so they can play the moment a weather or terrain starts
+    /// Load the animations of every move in this fight, and the weather / terrain / status ones, now so they can play the moment they are needed
     useEffect(() => {
         prefetchFieldAnims();
+        const slugs = [...props.playerPokemon, ...props.opponentPokemon].flatMap((p) => (p.moveset || []).map((m) => m.name));
+        prefetchMoveAnims(slugs);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     /// The on-entry abilities of the two lead pokemon (Imposter, Intimidate...) go off as the fight begins
@@ -121,11 +123,15 @@ export function Battle(props) {
         const fx = frame.anim && isFxEnabled() ? playMoveAnim(fieldRef.current, frame.anim.side, frame.anim.move, frame.anim.self) : null;
         /// A weather or terrain that starts in this beat gets its own animation over the field
         const fieldFx = frame.fieldAnim && isFxEnabled() ? playFieldAnim(fieldRef.current, frame.fieldAnim) : null;
-        const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0, fieldFx ? fieldFx.duration + 200 : 0));
+        /// A status condition or a stat change in this beat plays its animation over that pokemon
+        const statusFx = isFxEnabled() && frame.statusAnims ? frame.statusAnims.map((a) => playFieldAnim(fieldRef.current, a.name, { on: a.side })).filter(Boolean) : [];
+        const statusEnd = Math.max(0, ...statusFx.map((f) => f.duration + 200));
+        const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0, fieldFx ? fieldFx.duration + 200 : 0, statusEnd));
         return () => {
             clearTimeout(timer);
             if (fx) fx.cancel();
             if (fieldFx) fieldFx.cancel();
+            statusFx.forEach((f) => f.cancel());
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [animFrames, animIndex]);

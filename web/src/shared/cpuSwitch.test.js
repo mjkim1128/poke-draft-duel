@@ -61,6 +61,7 @@ describe("피해를 줄 수 없으면 상대가 교체한다", () => {
 
 test("암석엑스는 맞으면 상대 쪽에 스텔스록을 깐다", () => {
     const me = [mon("hawlucha", null, ["stone-axe"]), mon("blissey", null, ["splash"])];
+    me[0].moveset[0].accuracy = null; // 빗나가지 않게
     const foe = [mon("snorlax", null, ["splash"]), mon("blissey", null, ["splash"])];
     doTurn(me, foe, me[0].moveset[0]);
     expect(foe.hazards && foe.hazards.stealthRock).toBe(true);
@@ -68,6 +69,7 @@ test("암석엑스는 맞으면 상대 쪽에 스텔스록을 깐다", () => {
 
 test("연속칼날은 맞으면 상대 쪽에 압정뿌리기를 깐다", () => {
     const me = [mon("kleavor", null, ["ceaseless-edge"]), mon("blissey", null, ["splash"])];
+    me[0].moveset[0].accuracy = null; // 빗나가지 않게
     const foe = [mon("snorlax", null, ["splash"]), mon("blissey", null, ["splash"])];
     doTurn(me, foe, me[0].moveset[0]);
     expect(foe.hazards && foe.hazards.spikes).toBe(1);

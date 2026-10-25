@@ -442,7 +442,7 @@ export function Home() {
                             </button>
                         )}
                         <p className="start-credit">
-                            {isKorean() ? "날씨·필드 연출: The Gen 9 Move Animation Project (KRLW890)" : "Weather and terrain animations: The Gen 9 Move Animation Project (KRLW890)"}
+                            {isKorean() ? "기술·날씨·필드 연출: The Gen 9 Move Animation Project (KRLW890)" : "Move, weather and terrain animations: The Gen 9 Move Animation Project (KRLW890)"}
                             <br />
                             Thanks to the Reborn team for letting people use their resources.
                         </p>

@@ -100,8 +100,7 @@ export function Settings() {
                         </p>
                         <div className="settings-credits">
                             <p className="settings-label settings-label-gap">크레딧 / Credits</p>
-                            <p>기술 연출 / Move animations: Pokémon Showdown (smogon/pokemon-showdown-client)</p>
-                            <p>날씨·필드 연출 / Weather and terrain animations: The Gen 9 Move Animation Project (KRLW890) and the Gen 8 Move Animation Project contributors</p>
+                            <p>기술·날씨·필드·상태 연출 / Move, weather, terrain and status animations: The Gen 9 Move Animation Project (KRLW890) and the Gen 8 Move Animation Project contributors</p>
                             <p>Thanks to the Reborn team for letting people use their resources.</p>
                             <p>연출 데이터 형식 / Format: Pokémon Essentials</p>
                         </div>

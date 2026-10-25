@@ -1,7 +1,11 @@
 """Gen 9 Move Animation Project (Pokemon Essentials) -> web JSON + sheets for the battle screen.
 
-Usage (from web/): python tools/pb/convert-pb-anims.py <project folder> public
-Only the weather and terrain animations are used. Writes public/pbanim/index.json, public/pbanim/a/<id>.json and public/pbanim/g/<sheet>.png
+Usage (from web/):
+    python tools/pb/convert-pb-anims.py <project folder> public ../api/src/main/resources/data/moves.json ../api/src/main/resources/data/factory_sets.json
+
+Writes public/pbanim/moves.json (move slug -> animation file), public/pbanim/index.json (weather, terrain, status and
+stat change animations), public/pbanim/a/<id>.json (one animation) and public/pbanim/g/<sheet>.png (pictures).
+Only the moves the sets use are converted (run it again after adding sets with new moves).
 """
 import sys, os, json, re, shutil
 
@@ -10,6 +14,9 @@ from rbmarshal import load
 
 P = sys.argv[1].rstrip("/\\") + "/"
 OUT = sys.argv[2].rstrip("/\\") + "/pbanim/"
+MOVES = json.load(open(sys.argv[3], encoding="utf-8"))
+SETS = [json.loads(l.strip().rstrip(",")) for l in open(sys.argv[4], encoding="utf-8") if l.startswith("{")]
+USED = {o["slug"] for r in SETS for slot in r["set"]["moves"] for o in slot}
 
 S = lambda b: b.decode("utf-8", "replace") if isinstance(b, bytes) else (b or "")
 norm = lambda s: re.sub(r"[^a-z0-9]", "", s.lower())
@@ -111,6 +118,65 @@ def emit(kind, key):
     return fid
 
 
+# Essentials' default animation by move type when a move has none (pbFindMoveAnimation)
+# [one target physical, one target special, user status, multi physical, multi special, non-user status]
+TYPE_DEFAULT = {
+    "normal": ["TACKLE", "SONICBOOM", "DEFENSECURL", "EXPLOSION", "SWIFT", "TAILWHIP"],
+    "fighting": ["MACHPUNCH", "AURASPHERE", "DETECT", None, None, None],
+    "flying": ["WINGATTACK", "GUST", "ROOST", None, "AIRCUTTER", "FEATHERDANCE"],
+    "poison": ["POISONSTING", "SLUDGE", "ACIDARMOR", None, "ACID", "POISONPOWDER"],
+    "ground": ["SANDTOMB", "MUDSLAP", None, "EARTHQUAKE", "EARTHPOWER", "MUDSPORT"],
+    "rock": ["ROCKTHROW", "POWERGEM", "ROCKPOLISH", "ROCKSLIDE", None, "SANDSTORM"],
+    "bug": ["TWINEEDLE", "BUGBUZZ", "QUIVERDANCE", None, "STRUGGLEBUG", "STRINGSHOT"],
+    "ghost": ["LICK", "SHADOWBALL", "GRUDGE", None, None, "CONFUSERAY"],
+    "steel": ["IRONHEAD", "MIRRORSHOT", "IRONDEFENSE", None, None, "METALSOUND"],
+    "fire": ["FIREPUNCH", "EMBER", "SUNNYDAY", None, "INCINERATE", "WILLOWISP"],
+    "water": ["CRABHAMMER", "WATERGUN", "AQUARING", None, "SURF", "WATERSPORT"],
+    "grass": ["VINEWHIP", "MEGADRAIN", "COTTONGUARD", "RAZORLEAF", None, "SPORE"],
+    "electric": ["THUNDERPUNCH", "THUNDERSHOCK", "CHARGE", None, "DISCHARGE", "THUNDERWAVE"],
+    "psychic": ["ZENHEADBUTT", "CONFUSION", "CALMMIND", None, "SYNCHRONOISE", "MIRACLEEYE"],
+    "ice": ["ICEPUNCH", "ICEBEAM", "MIST", None, "POWDERSNOW", "HAIL"],
+    "dragon": ["DRAGONCLAW", "DRAGONRAGE", "DRAGONDANCE", None, "TWISTER", None],
+    "dark": ["PURSUIT", "DARKPULSE", "HONECLAWS", None, "SNARL", "EMBARGO"],
+    "fairy": ["TACKLE", "FAIRYWIND", "MOONLIGHT", None, "SWIFT", "SWEETKISS"],
+}
+MULTI = {"all-opponents", "all-other-pokemon", "all-pokemon", "all-allies", "user-and-allies", "opponents-field", "entire-field"}
+USERISH = {"user", "users-field", "user-and-allies", "user-or-ally"}
+
+
+def fallback(m):
+    row = TYPE_DEFAULT.get(m["type"]["name"])
+    if not row:
+        return "tackle"
+    cat = {"physical": 0, "special": 1, "status": 2}[m["damage_class"]["name"]]
+    target = m["target"]["name"]
+    kind = (2 if target in USERISH else 5) if cat == 2 else cat + (3 if target in MULTI else 0)
+    for i in (kind, kind - 3 if kind >= 3 else None, 2):
+        if i is not None and row[i] and norm(row[i]) in byKind["Move"]:
+            return norm(row[i])
+    return "tackle"
+
+
+moveIndex = {}
+own = defaulted = 0
+for m in MOVES:
+    if m["name"] not in USED:
+        continue
+    key = norm(m["name"])
+    entry = {}
+    if key not in byKind["Move"]:
+        key = fallback(m)
+        entry["d"] = 1  # the type's default animation stands in
+        defaulted += 1
+    else:
+        own += 1
+    entry["a"] = emit("Move", key)
+    if key in byKind["OppMove"]:
+        entry["o"] = emit("OppMove", key)
+    moveIndex[m["name"]] = entry
+json.dump(moveIndex, open(OUT + "moves.json", "w", encoding="utf-8"), separators=(",", ":"))
+print(f"moves: {own} with their own animation, {defaulted} using a type default")
+
 # 날씨와 필드(테레인)의 공통 연출만 쓴다: 이름 -> 에센셜의 "Common:" 연출 이름
 COMMON = {
     "sun": "Sun",
@@ -122,6 +188,17 @@ COMMON = {
     "grassy-terrain": "GrassyTerrain",
     "misty-terrain": "MistyTerrain",
     "psychic-terrain": "PsychicTerrain",
+    # 상태이상과 능력치 변화 (포켓몬 위에서 재생된다)
+    "burn": "Burn",
+    "poison": "Poison",
+    "toxic": "Toxic",
+    "paralysis": "Paralysis",
+    "sleep": "Sleep",
+    "frozen": "Frozen",
+    "confusion": "Confusion",
+    "drowsy": "Drowsy",
+    "stat-up": "StatUp",
+    "stat-down": "StatDown",
 }
 common = {}
 for a in arr:
@@ -137,4 +214,4 @@ for key, name in COMMON.items():
 json.dump(index, open(OUT + "index.json", "w", encoding="utf-8"), separators=(",", ":"))
 total = sum(os.path.getsize(OUT + "a/" + f) for f in os.listdir(OUT + "a"))
 sheets = sum(os.path.getsize(OUT + "g/" + f) for f in os.listdir(OUT + "g"))
-print(f"weather/terrain animations: {len(index)} ({total // 1024} KB), picture files: {len(os.listdir(OUT + 'g'))} ({sheets // 1024} KB)")
+print(f"weather, terrain, status and stat animations: {len(index)} ({total // 1024} KB), picture files: {len(os.listdir(OUT + 'g'))} ({sheets // 1024} KB)")

@@ -73,23 +73,21 @@
     min-height: 220px;
     --sprite-w: min(38vw, 150px); /* 체력 바와 포켓몬 그림 칸의 너비 */
     --hp-h: 16px; /* 체력 바 높이 */
-    --me-shift: 28px; /* 내 포켓몬 전체(체력 바 + 이름·타입 + 그림)를 아래로 내리는 양. 배경은 그대로 */
+    --me-shift: 0px; /* 내 포켓몬 전체(체력 바 + 이름·타입 + 그림)를 아래로 내리는 양. 배경은 그대로 */
     --me-hp-gap: 8px; /* 내 체력 바와 그림 사이를 더 벌리는 간격 */
     --opp-hp-gap: var(--me-hp-gap); /* 상대 체력 바와 그림 사이 간격 (내 쪽과 같게) */
     --bench-h: 43px; /* 상대 교체 후보 아이콘 줄 높이 */
-    /* 그림을 아래로 내리는 양: 포켓몬 그림의 가운데가 아니라 '발'이 원 중심에 오게 한다 */
-    --feet-shift: calc(var(--sprite-w) * 0.32);
+    /* 포켓몬이 서는 자리 (필드 크기에 대한 비율). 몬스터볼 무늬의 빨강/하양 경계선을 기준으로 진영을 나눈다:
+       상대는 경계선 위쪽(빨간 쪽), 나는 경계선 아래쪽(하얀 쪽)에 선다.
+       배경 그림(경기장)은 세로로 긴 그림이라 필드를 가득 채우도록 자르고, 아래쪽을 조금 더 보여 준다. */
+    --opp-x: 76%;
+    --opp-y: 44%;
+    --me-x: 26%;
+    --me-y: 70%;
+    --me-scale: 1.5; /* 원근법: 앞쪽에 있는 내 포켓몬은 상대보다 1.5배 크게 보인다 */
     border: 1px solid #b8bfcc;
     border-radius: 8px;
-    /* 경기장 그림의 두 원 중심은 그림의 (가로, 세로) 비율로 내 쪽 (33.0%, 81.8%), 상대 쪽 (75.2%, 54.9%).
-       그림을 가로 112%, 세로 100%로 늘이고 가로로 83% 위치에 맞추면, 내 쪽 원이 필드의 (27%, 81.8%),
-       상대 쪽 원이 (74.3%, 54.9%)에 온다. 필드 크기가 달라져도 이 비율은 그대로라서 늘 같은 자리다.
-       포켓몬 그림은 이 두 점보다 --feet-shift만큼 위에 가운데를 두고, 그림 전체를 --feet-shift만큼 아래로 내려서
-       포켓몬의 발이 원 중심에 오게 한다. 그림 위쪽에 생기는 빈 띠는 하늘색(그림 맨 윗줄과 같은 색)으로 채운다. */
-    background:
-        linear-gradient(to bottom, #afe2d3 0, #afe2d3 var(--feet-shift), rgba(175, 226, 211, 0) calc(var(--feet-shift) + 24px)) no-repeat,
-        url(../../assets/battle-field.webp) 83% var(--feet-shift) / 112% 100% no-repeat,
-        #afe2d3;
+    background: url(../../assets/battle-field.webp) 14% 32% / 110% auto no-repeat, #a9cdbd;
     overflow: hidden;
 }
 
@@ -173,13 +171,13 @@
 }
 
 .bp-opponent .current-pokemon-div > div:first-child {
-    right: calc(25.7% + var(--sprite-w) / 2 + 4px);
-    top: calc(54.9% - var(--sprite-w) * 0.375 - var(--hp-h) - var(--opp-hp-gap));
+    right: calc(100% - var(--opp-x) + var(--sprite-w) / 2 + 4px);
+    top: calc(var(--opp-y) - var(--sprite-w) * 0.375 - var(--hp-h) - var(--opp-hp-gap));
 }
 
 .bp-player .current-pokemon-div > div:first-child {
-    left: calc(27% + var(--sprite-w) / 2 + 4px);
-    top: calc(81.8% - var(--sprite-w) * 0.375 - var(--hp-h) - var(--me-hp-gap) + var(--me-shift));
+    left: calc(var(--me-x) + var(--sprite-w) / 2 + 4px);
+    top: calc(var(--me-y) - var(--sprite-w) * 0.375 * var(--me-scale) - var(--hp-h) - var(--me-hp-gap) + var(--me-shift));
 }
 
 /* 상대 체력 바도 그림에서 같은 간격만큼 띄운다 */
@@ -205,15 +203,15 @@
 }
 
 .bp-opponent .current-pokemon-div > div:last-child {
-    left: 74.3%;
-    top: 54.9%;
+    left: var(--opp-x);
+    top: var(--opp-y);
 }
 
 .bp-player .current-pokemon-div > div:last-child {
-    left: 27%;
-    top: 81.8%;
+    left: var(--me-x);
+    top: var(--me-y);
     /* 내 포켓몬 전체를 --me-shift만큼 아래로 */
-    transform: translate(-50%, calc(-100% + var(--sprite-w) * 0.375 + var(--me-shift)));
+    transform: translate(-50%, calc(-100% + var(--sprite-w) * 0.375 * var(--me-scale) + var(--me-shift)));
 }
 
 .bp-opponent .current-pokemon-div img,
@@ -223,12 +221,17 @@
     object-fit: contain;
 }
 
+/* 내 포켓몬은 앞쪽에 있어서 더 크게 보인다 */
+.bp-player .current-pokemon-div img {
+    width: calc(75% * var(--me-scale));
+}
+
 /* 상대의 교체 후보는 작은 아이콘으로 */
 .bp-opponent .pokemon-party {
     position: absolute;
     /* 상대 체력 바의 오른쪽 끝에 맞춰 바로 위에 붙인다 (체력 바 오른쪽 끝 = 74.3% + 그림 칸 너비의 절반) */
-    right: calc(25.7% - var(--sprite-w) / 2);
-    top: calc(54.9% - var(--sprite-w) * 0.375 - var(--hp-h) - var(--opp-hp-gap) - var(--bench-h) - 2px);
+    right: calc(100% - var(--opp-x) - var(--sprite-w) / 2);
+    top: calc(var(--opp-y) - var(--sprite-w) * 0.375 - var(--hp-h) - var(--opp-hp-gap) - var(--bench-h) - 2px);
 }
 
 .bp-opponent .pokemon-party img {

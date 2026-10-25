@@ -25,7 +25,7 @@ export function CurrentPokemon(props) {
                     value={props.pokemon.hp[0]}
                     maxValue={props.pokemon.hp[1]}
                 />
-                <img ref={imgRef} id={props.pokemon.hp[0] > 0 ? "" : "fainted-current-pokemon"}
+                <img ref={imgRef} id={props.pokemon.hp[0] > 0 || props.pokemon.faintPending ? "" : "fainted-current-pokemon"}
                     className={showsDoll ? "substitute-doll" : ""}
                     src={showsDoll ? props.substituteImg : props.img}
                     alt=""

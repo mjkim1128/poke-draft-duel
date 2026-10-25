@@ -11,6 +11,7 @@ import { FOE_TARGETS, isOhkoMove, ohkoImmune, rollAccuracy } from "./accuracy";
 import { spendPP, restorePP, ppLeft, maxPP, hasPP } from "./pp";
 import { effectiveSpeed } from "./speed";
 import { statusAnimsOf } from "./animcues";
+import { splitMoveBeat } from "./beatsplit";
 import { activeItem } from "./helditem";
 import {
     HAZARD_MOVES,
@@ -466,22 +467,36 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     let frames = [];
     let frameStart = 0;
     let stepAnim = null; // the move this mover just used, so the UI can play its animation
+    let stepPre = null; // both teams just before that move, so its effects can be shown after its animation
+    let stepIsPlayer = false;
     const pushFrame = () => {
         if (text.length === frameStart) return;
-        const frame = { text: text.slice(frameStart), ...snapshotTeams(playerPokemon, opponentPokemon) };
-        // a status condition or a stat change in this beat gets its animation over that pokemon
-        const statusAnims = statusAnimsOf(frame.text, {
+        const lines = text.slice(frameStart);
+        const post = snapshotTeams(playerPokemon, opponentPokemon);
+        // A move that was carried out is shown in order: its animation first (HP unchanged), then the damage
+        // (the HP bar drops, a knocked-out pokemon is still standing), then everything that follows
+        // (fainting, recoil / Life Orb HP loss, stat changes, status conditions...)
+        const parts = stepAnim && stepPre ? splitMoveBeat(lines, stepPre, post, stepIsPlayer) : [{ text: lines, ...post }];
+        const names = {
             player: pokemonNameToString(playerPokemon[0]),
             opponent: pokemonNameToString(opponentPokemon[0]),
+        };
+        parts.forEach((frame, i) => {
+            // a status condition or a stat change in this part gets its animation over that pokemon
+            const statusAnims = statusAnimsOf(frame.text, names);
+            if (statusAnims.length > 0) frame.statusAnims = statusAnims;
+            // a weather or terrain that starts in this part gets its field animation
+            for (const line of frame.text) {
+                const anim = fieldAnimOfLine(line);
+                if (anim) frame.fieldAnim = anim;
+            }
+            if (i === 0 && stepAnim) frame.anim = stepAnim;
+            frames.push(frame);
         });
-        if (statusAnims.length > 0) frame.statusAnims = statusAnims;
-        // a weather or terrain that starts in this beat gets its field animation
-        for (const line of frame.text) {
-            const anim = fieldAnimOfLine(line);
-            if (anim) frame.fieldAnim = anim;
-        }
+        stepAnim = null;
+        stepPre = null;
         // who fainted last decides the winner when both sides run out of pokemon together
-        for (const line of frame.text) {
+        for (const line of lines) {
             if (!line.endsWith(" fainted!")) continue;
             const name = line.slice(0, -" fainted!".length);
             const mine = pokemonNameToString(playerPokemon[0]) === name && playerPokemon[0].hp[0] <= 0;
@@ -489,9 +504,6 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             if (mine && !theirs) playerPokemon.lastFainted = "player";
             else if (theirs && !mine) playerPokemon.lastFainted = "opponent";
         }
-        if (stepAnim) frame.anim = stepAnim;
-        stepAnim = null;
-        frames.push(frame);
         frameStart = text.length;
     };
     const field = ensureField(playerPokemon, opponentPokemon);
@@ -508,6 +520,8 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
         team.actingLast = step === 1; // Protect fails for whoever moves last
         foeTeam.queuedMove = step === 0 ? (isPlayer ? plan.cpuMove : plan.move) : null; // Me First copies it
         const textBefore = text.length;
+        stepPre = snapshotTeams(playerPokemon, opponentPokemon);
+        stepIsPlayer = isPlayer;
         text = addArrayToArray(text, playerTurn(team, foeTeam, move));
         stepAnim = moveAnimOf(text.slice(textBefore), move, isPlayer);
         foeTeam.queuedMove = null;

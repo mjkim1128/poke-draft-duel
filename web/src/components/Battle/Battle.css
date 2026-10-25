@@ -67,13 +67,13 @@
     flex: 0 0 auto;
     box-sizing: border-box;
     height: min(110vw, 520px);
-    /* 창 높이 - (바깥 여백/간격 24 + 안내창 85 + 조작판 최소 약 200) */
-    max-height: calc(100vh - 312px);
-    max-height: calc(100dvh - 312px);
+    /* 창 높이 - (바깥 여백/간격 24 + 안내창 약 73 + 조작판 최소 약 200 + 여유) */
+    max-height: calc(100vh - 309px);
+    max-height: calc(100dvh - 309px);
     min-height: 220px;
     --sprite-w: min(38vw, 150px); /* 체력 바와 포켓몬 그림 칸의 너비 */
     --hp-h: 16px; /* 체력 바 높이 */
-    --me-shift: 0px; /* 내 포켓몬 전체(체력 바 + 이름·타입 + 그림)를 아래로 내리는 양. 배경은 그대로 */
+    --me-shift: 20px; /* 내 포켓몬 전체(체력 바 + 이름·타입 + 그림)를 아래로 내리는 양. 배경은 그대로. 안내창을 줄여서 얻은 높이만큼 */
     --me-hp-gap: 8px; /* 내 체력 바와 그림 사이를 더 벌리는 간격 */
     --opp-hp-gap: var(--me-hp-gap); /* 상대 체력 바와 그림 사이 간격 (내 쪽과 같게) */
     --bench-h: 43px; /* 상대 교체 후보 아이콘 줄 높이 */
@@ -202,9 +202,10 @@
     top: calc(var(--opp-y) - var(--sprite-w) * 0.375 - var(--hp-h) - var(--opp-hp-gap));
 }
 
+/* 내 이름 / 타입 칸은 체력 바의 바로 위(왼쪽 맞춤)에 둔다. 오른쪽에 두면 상대 포켓몬 쪽으로 뻗어서 상대 그림을 가렸다. */
 .bp-player .current-pokemon-div > div:first-child {
-    left: calc(var(--me-x) + var(--sprite-w) / 2 + 4px);
-    top: calc(var(--me-y) - var(--sprite-w) * 0.375 * var(--me-scale) - var(--hp-h) - var(--me-hp-gap) + var(--me-shift));
+    left: calc(var(--me-x) - var(--sprite-w) / 2);
+    top: calc(var(--me-y) - var(--sprite-w) * 0.375 * var(--me-scale) - var(--hp-h) - var(--me-hp-gap) + var(--me-shift) - var(--hp-h) - 2px);
 }
 
 /* 상대 체력 바도 그림에서 같은 간격만큼 띄운다 */
@@ -273,7 +274,7 @@
 .bp-announcer {
     /* 문장 길이와 상관없이 크기가 변하지 않게 고정. 넘치면 안에서 스크롤 */
     flex: 0 0 auto;
-    height: 8.5em; /* 한 턴의 글이 7줄쯤 되어도 스크롤 없이 들어가는 높이 */
+    height: 5.6em; /* 글이 4줄쯤까지 스크롤 없이 들어가는 높이 (더 길면 안에서 스크롤) */
     overflow-y: auto;
     /* 넘쳐서 스크롤바가 생겨도 글 영역 폭이 바뀌지 않게 자리를 미리 잡아 둔다 (줄바꿈이 흔들리는 것을 막는다) */
     scrollbar-gutter: stable;

@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import {
     damageClassToString,
     damageCalc,
+    isFixedDamageMove,
     moveNameToString,
     pokemonNameToString,
     typeNameToString,
@@ -137,7 +138,7 @@ export function Move(props) {
             <FloatingPopup anchorRef={buttonRef} visible={hover}>
                 <div className="move-info-div">
                     <p>
-                        Power: {props.move.power}
+                        Power: {isFixedDamageMove(props.move) ? "-" : props.move.power}
                         {typeof props.move.accuracy === "number" &&
                             " / Accuracy: " + props.move.accuracy}
                     </p>

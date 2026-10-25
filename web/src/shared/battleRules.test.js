@@ -311,3 +311,38 @@ describe("일루전(Illusion)", () => {
         expect(foe[0].illusion).toBe(foe[1]);
     });
 });
+
+describe("카타스트로피와 자연의분노: 상대의 남은 HP를 절반으로 (접촉하지 않는 특수 기술)", () => {
+    const { makesContact } = require("shared/abilities");
+    test.each(["ruination", "natures-madness"])("%s는 상대의 현재 HP의 절반을 깎는다", (name) => {
+        const me = [mon("garchomp", [name])];
+        me[0].moveset[0].accuracy = null; // (명중률 90이라 가끔 빗나가는 것을 막는다)
+        const foe = [mon("blissey", ["splash"])];
+        foe[0].hp[0] = 101;
+        const full = foe[0].hp[1];
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].hp[0]).toBe(101 - Math.floor(101 / 2));
+        expect(foe[0].hp[1]).toBe(full);
+    });
+    test.each(["ruination", "natures-madness"])("%s는 위력이 아니라 고정 피해이고, 접촉하지 않는 특수 기술이다", (name) => {
+        const move = clone(MOVES.get(name));
+        expect(move.damage_class.name).toBe("special");
+        expect(makesContact(mon("garchomp", [name]), move)).toBe(false);
+        const me = mon("garchomp", [name]);
+        const foe = mon("blissey", ["splash"]);
+        foe.hp[0] = 100;
+        const { damageCalc } = require("shared");
+        expect(damageCalc(me, foe, move)).toBe(50);
+        // 능력치 단계나 반감 효과와 상관없다
+        me.stat_levels[2] = 6;
+        foe.stat_levels[3] = 6;
+        expect(damageCalc(me, foe, move)).toBe(50);
+    });
+    test("체력이 1이어도 최소 1은 깎는다", () => {
+        const { damageCalc } = require("shared");
+        const me = mon("garchomp", ["ruination"]);
+        const foe = mon("blissey", ["splash"]);
+        foe.hp[0] = 1;
+        expect(damageCalc(me, foe, clone(MOVES.get("ruination")))).toBe(1);
+    });
+});

@@ -34,7 +34,7 @@ import {
 // Moves that deal a fixed amount of damage: no crit, no screens, no stats, no type
 // effectiveness (an immunity still stops them). Level 100 pokemon only.
 const FIXED_DAMAGE_MOVES = new Set([
-    "final-gambit", "seismic-toss", "night-shade", "psywave", "super-fang", "natures-madness", "endeavor",
+    "final-gambit", "seismic-toss", "night-shade", "psywave", "super-fang", "natures-madness", "ruination", "endeavor",
     "counter", "mirror-coat", "metal-burst", "sonic-boom", "dragon-rage",
 ]);
 export const isFixedDamageMove = (move) => FIXED_DAMAGE_MOVES.has(move.name);
@@ -49,6 +49,7 @@ function fixedDamage(move, attacker, defender) {
             return Math.floor((100 * (50 + Math.floor(Math.random() * 101))) / 100);
         case "super-fang":
         case "natures-madness":
+        case "ruination": // Ruination (카타스트로피): half of the target's current HP, a non-contact special move
             return Math.max(1, Math.floor(defender.hp[0] / 2));
         case "endeavor": // brings the target down to the user's HP
             return Math.max(0, defender.hp[0] - attacker.hp[0]);

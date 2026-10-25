@@ -402,7 +402,16 @@ export function enterBattle(playerPokemon, opponentPokemon) {
     return entryText;
 }
 
+// Who reached 0 HP first decides a fight where both sides run out of pokemon in the same turn:
+// each fainting pokemon gets the next number, and the lower one lost.
+let faintClock = 0;
+function stampFaint(pokemon) {
+    if (!pokemon.faintStamp) pokemon.faintStamp = ++faintClock;
+}
+
 function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
+    playerPokemon.firstFainted = null; // who reached 0 HP first this turn
+    playerPokemon[0].faintStamp = opponentPokemon[0].faintStamp = 0;
     const entryText = enterBattle(playerPokemon, opponentPokemon);
     const field = playerPokemon.field;
     // The button the player pressed can be a snapshot copy, so find the real move (its PP
@@ -498,14 +507,20 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
         });
         stepAnim = null;
         stepPre = null;
-        // who fainted last decides the winner when both sides run out of pokemon together
+        // whoever's pokemon reached 0 HP first loses when both sides run out of pokemon together
+        // (the one that fell to a Life Orb recoil, Rough Skin... after knocking the other out still fainted second).
+        // A hit stamps its target the moment its HP hits 0; whatever else fainted gets its stamp now, from the log.
         for (const line of lines) {
             if (!line.endsWith(" fainted!")) continue;
             const name = line.slice(0, -" fainted!".length);
-            const mine = pokemonNameToString(playerPokemon[0]) === name && playerPokemon[0].hp[0] <= 0;
-            const theirs = pokemonNameToString(opponentPokemon[0]) === name && opponentPokemon[0].hp[0] <= 0;
-            if (mine && !theirs) playerPokemon.lastFainted = "player";
-            else if (theirs && !mine) playerPokemon.lastFainted = "opponent";
+            for (const p of [playerPokemon[0], opponentPokemon[0]]) {
+                if (p.hp[0] <= 0 && pokemonNameToString(p) === name) stampFaint(p);
+            }
+        }
+        if (!playerPokemon.firstFainted) {
+            const [mine, theirs] = [playerPokemon[0].faintStamp, opponentPokemon[0].faintStamp];
+            if (mine && (!theirs || mine < theirs)) playerPokemon.firstFainted = "player";
+            else if (theirs && (!mine || theirs < mine)) playerPokemon.firstFainted = "opponent";
         }
         frameStart = text.length;
     };
@@ -2992,6 +3007,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
             defender.hp[0] - damage > 0
                 ? [defender.hp[0] - damage, damage]
                 : [0, defender.hp[0]];
+        if (defender.hp[0] === 0) stampFaint(defender); // it reached 0 HP here, before any recoil or ability that follows
         // Final Gambit: the user gives everything it has left
         if (gambit) attacker.hp[0] = 0;
         if (disguiseBroke) {
@@ -3295,6 +3311,8 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         );
     } else if (move.name === "explosion" || move.name === "self-destruct" || move.name === "misty-explosion") {
         attacker.hp[0] = 0;
+        // the user pays with its own life, so it counts as having fainted first (it loses if both last pokemon go down)
+        if (!attacker.faintStamp) attacker.faintStamp = defender.faintStamp ? defender.faintStamp - 0.5 : ++faintClock;
         text.push(pokemonNameToString(attacker) + " blew up!");
     } else if (move.name === "mind-blown" && !sheerForced && !indirectDamageBlocked(attacker)) {
         // Mind Blown: the user loses half of its max HP
@@ -3502,6 +3520,8 @@ function doStatChangesRaw(pokemon, changes) {
 // Contrary/Simple rewrite every change the owner gets, its own included.
 export function doStatChanges(pokemon, move, source = null) {
     let texts = [];
+    // A pokemon that has fainted gets no stat changes (Weak Armor, Stamina... don't go off once it is knocked out)
+    if (pokemon.hp[0] <= 0) return texts;
     const stat_names = STAT_NAMES;
     // A pokemon from before accuracy/evasion existed only has five stages
     while (pokemon.stat_levels.length < STAT_NAMES.length) pokemon.stat_levels.push(0);

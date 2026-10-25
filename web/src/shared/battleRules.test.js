@@ -6,6 +6,7 @@ import { doTurn, enterBattle, getBaseStats, hpCalc } from "shared";
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
 const MOVES = new Map(read("moves.json").map((m) => [m.name, m]));
 const POKEMON = new Map(read("pokemon.json").map((p) => [p.name, p]));
+const ITEMS = new Map(read("items.json").map((i) => [i.name, i]));
 const clone = (x) => JSON.parse(JSON.stringify(x));
 const move = (name) => clone(MOVES.get(name));
 
@@ -66,7 +67,7 @@ test("복사한 칼춤이 실패하지 않는다", () => {
     expect(me[0].stat_levels[0]).toBe(2);
 });
 
-test("반동으로 상대의 마지막 포켓몬과 같이 쓰러지면 마지막에 쓰러진 쪽(공격한 쪽)이 기록된다", () => {
+test("반동으로 상대의 마지막 포켓몬과 같이 쓰러지면 먼저 쓰러진 쪽(맞은 쪽)이 기록된다", () => {
     const me = [mon("snorlax", ["double-edge"])];
     const foe = [mon("garchomp", ["splash"], "rough-skin")];
     foe[0].hp[0] = 1;
@@ -74,7 +75,87 @@ test("반동으로 상대의 마지막 포켓몬과 같이 쓰러지면 마지�
     doTurn(me, foe, me[0].moveset[0]);
     expect(me[0].hp[0]).toBe(0);
     expect(foe[0].hp[0]).toBe(0);
-    expect(me.lastFainted).toBe("player");
+    expect(me.firstFainted).toBe("opponent");
+});
+
+test("생명의구슬을 든 상대가 내 마지막 포켓몬을 쓰러뜨리고 반동으로 쓰러져도 먼저 쓰러진 쪽은 나다", () => {
+    const me = [mon("snorlax", ["splash"])];
+    const foe = [mon("garchomp", ["earthquake"])];
+    foe[0].item = foe[0].originalItem = clone(ITEMS.get("life-orb"));
+    foe[0].hp[0] = 1;
+    me[0].hp[0] = 1;
+    doTurn(me, foe, me[0].moveset[0]);
+    expect(me[0].hp[0]).toBe(0);
+    expect(foe[0].hp[0]).toBe(0);
+    expect(me.firstFainted).toBe("player");
+});
+
+test("폭발은 쓴 쪽이 먼저 쓰러진 것으로 치고, 둘 다 마지막 포켓몬이면 쓴 쪽이 진다", () => {
+    const me = [mon("snorlax", ["explosion"])];
+    const foe = [mon("blissey", ["splash"])];
+    foe[0].hp[0] = 1;
+    doTurn(me, foe, me[0].moveset[0]);
+    expect(me[0].hp[0]).toBe(0);
+    expect(foe[0].hp[0]).toBe(0);
+    expect(me.firstFainted).toBe("player");
+});
+
+describe("둘 다 쓰러지면 먼저 HP가 0이 된 쪽이 진다 (반동, 가시갑옷, 철가시)", () => {
+    // 상대가 나를 접촉 기술로 공격: 내 HP가 먼저 0이 되고, 그 뒤에 상대가 반동이나 내 특성으로 쓰러진다
+    test.each([
+        ["생명의구슬 반동", "life-orb", null],
+        ["내 까칠한피부", null, "rough-skin"],
+        ["내 철가시", null, "iron-barbs"],
+    ])("상대가 공격해 내가 먼저 쓰러지면, 상대가 그 뒤에 쓰러져도 내가 진다: %s", (_name, foeItem, myAbility) => {
+        const me = [mon("snorlax", ["splash"], myAbility)];
+        const foe = [mon("garchomp", ["tackle"])];
+        if (foeItem) foe[0].item = foe[0].originalItem = clone(ITEMS.get(foeItem));
+        foe[0].hp[0] = 1;
+        me[0].hp[0] = 1;
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].hp[0]).toBe(0);
+        expect(foe[0].hp[0]).toBe(0);
+        expect(me.firstFainted).toBe("player");
+    });
+
+    // 내가 상대를 접촉 기술로 공격: 상대의 HP가 먼저 0이 되고, 그 뒤에 내가 상대 특성이나 내 반동으로 쓰러진다
+    test.each([
+        ["상대 까칠한피부", "rough-skin", null],
+        ["상대 철가시", "iron-barbs", null],
+        ["내 생명의구슬 반동", null, "life-orb"],
+    ])("내가 공격해 상대가 먼저 쓰러지면, 내가 그 뒤에 쓰러져도 상대가 진다: %s", (_name, foeAbility, myItem) => {
+        const me = [mon("snorlax", ["tackle"])];
+        const foe = [mon("blissey", ["splash"], foeAbility)];
+        if (myItem) me[0].item = me[0].originalItem = clone(ITEMS.get(myItem));
+        foe[0].hp[0] = 1;
+        me[0].hp[0] = 1;
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].hp[0]).toBe(0);
+        expect(foe[0].hp[0]).toBe(0);
+        expect(me.firstFainted).toBe("opponent");
+    });
+});
+
+describe("쓰러진 포켓몬은 능력치가 바뀌지 않는다", () => {
+    const armorer = () => mon("armarouge", ["splash"], "weak-armor");
+    test("깨어진갑옷: 맞고 쓰러지면 방어와 스피드가 변하지 않는다", () => {
+        const me = [mon("garchomp", ["tackle"])];
+        const foe = [armorer()];
+        foe[0].hp[0] = 1;
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].hp[0]).toBe(0);
+        expect(foe[0].stat_levels[1]).toBe(0);
+        expect(foe[0].stat_levels[4]).toBe(0);
+    });
+    test("깨어진갑옷: 버티면 방어가 떨어지고 스피드가 오른다", () => {
+        const me = [mon("garchomp", ["tackle"])];
+        const foe = [armorer()];
+        foe[0].hp[0] = foe[0].hp[1];
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].hp[0]).toBeGreaterThan(0);
+        expect(foe[0].stat_levels[1]).toBe(-1);
+        expect(foe[0].stat_levels[4]).toBe(2);
+    });
 });
 
 describe("상대가 이미 쓰러져 있어도 자기 자신에게 쓰는 기술은 성공한다", () => {

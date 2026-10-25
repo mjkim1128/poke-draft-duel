@@ -169,9 +169,9 @@ export function Battle(props) {
         if (!isGameOver || isVictory !== null) return;
         const playerAlive = props.playerPokemon.some((poke) => poke.hp[0] > 0);
         const isOppAlive = props.opponentPokemon.some((poke) => poke.hp[0] > 0);
-        /// Both sides ran out together (recoil, Explosion, Destiny Bond...): whoever fainted last loses
+        /// Both sides ran out together (recoil, Explosion, Destiny Bond...): whoever reached 0 HP first loses
         const bothOut = !playerAlive && !isOppAlive;
-        const lost = surrenderedRef.current || (bothOut ? props.playerPokemon.lastFainted === "player" : !playerAlive);
+        const lost = surrenderedRef.current || (bothOut ? props.playerPokemon.firstFainted === "player" : !playerAlive);
         let [message, win] = lost ? ["You Lose!", false] : ["You Win!", true];
         updateTurnText(message);
         updateTurnText("Player2(CPU): GGWP!");

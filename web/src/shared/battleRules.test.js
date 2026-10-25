@@ -136,6 +136,71 @@ describe("둘 다 쓰러지면 먼저 HP가 0이 된 쪽이 진다 (반동, 가�
     });
 });
 
+describe("잠긴 기술을 쓸 수 없으면 발버둥만 쓸 수 있다", () => {
+    const { getUsableMoves } = require("shared");
+    const choiceHolder = () => {
+        const p = mon("snorlax", ["tackle", "splash", "rest"]);
+        p.item = p.originalItem = clone(ITEMS.get("choice-band"));
+        p.lockedMove = "tackle";
+        return p;
+    };
+    const names = (p) => getUsableMoves(p).map((m) => m.name);
+    test("구애 도구로 잠긴 기술이 사슬묶기에 당하면 발버둥만 남는다", () => {
+        const p = choiceHolder();
+        expect(names(p)).toEqual(["tackle"]);
+        p.disabled = { move: "tackle", turns: 3 };
+        expect(names(p)).toEqual(["struggle"]);
+    });
+    test("앙코르 기술이 사슬묶기에 당하면 발버둥만 남는다", () => {
+        const p = mon("snorlax", ["tackle", "splash"]);
+        p.encore = { move: "tackle", turns: 3 };
+        expect(names(p)).toEqual(["tackle"]);
+        p.disabled = { move: "tackle", turns: 3 };
+        expect(names(p)).toEqual(["struggle"]);
+    });
+    test("앙코르에 걸린 변화기가 도발에 막혀도 발버둥만 남는다", () => {
+        const p = mon("snorlax", ["tackle", "splash"]);
+        p.encore = { move: "splash", turns: 3 };
+        p.taunt = { turns: 3 };
+        expect(names(p)).toEqual(["struggle"]);
+    });
+    test("앙코르 기술을 쓸 수 있으면 그 기술만 나간다", () => {
+        const me = [mon("snorlax", ["tackle", "splash"]), mon("blissey", ["splash"])];
+        const foe = [mon("garchomp", ["splash"]), mon("blissey", ["splash"])];
+        me[0].encore = { move: "tackle", turns: 3 };
+        expect(doTurn(me, foe, me[0].moveset[1]).toString()).toContain("used Tackle");
+    });
+    test("앙코르 기술이 막혔으면 고른 발버둥이 그대로 나간다 (막힌 기술로 바뀌지 않는다)", () => {
+        const me = [mon("snorlax", ["tackle", "splash"]), mon("blissey", ["splash"])];
+        const foe = [mon("garchomp", ["splash"]), mon("blissey", ["splash"])];
+        me[0].encore = { move: "tackle", turns: 3 };
+        me[0].disabled = { move: "tackle", turns: 3 };
+        const struggle = getUsableMoves(me[0])[0];
+        const text = doTurn(me, foe, struggle).toString();
+        expect(text).toContain("used Struggle");
+        expect(text).not.toContain("is disabled");
+    });
+});
+
+describe("앙코르에 걸려도 교체할 수 있다", () => {
+    test("내가 앙코르에 걸려 있어도 교체를 고르면 교체되고, 앙코르는 풀린다", () => {
+        const me = [mon("snorlax", ["tackle", "splash"]), mon("blissey", ["splash"])];
+        const foe = [mon("garchomp", ["splash"]), mon("blissey", ["splash"])];
+        me[0].encore = { move: "tackle", turns: 3 };
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(me[0].name).toBe("blissey");
+        expect(me[1].encore).toBeNull();
+    });
+    test("교체하지 않으면 앙코르에 걸린 기술이 나간다", () => {
+        const me = [mon("snorlax", ["tackle", "splash"]), mon("blissey", ["splash"])];
+        const foe = [mon("garchomp", ["splash"]), mon("blissey", ["splash"])];
+        me[0].encore = { move: "tackle", turns: 3 };
+        const text = doTurn(me, foe, me[0].moveset[1]).toString();
+        expect(text).toContain("used Tackle");
+        expect(me[0].name).toBe("snorlax");
+    });
+});
+
 describe("쓰러진 포켓몬은 능력치가 바뀌지 않는다", () => {
     const armorer = () => mon("armarouge", ["splash"], "weak-armor");
     test("깨어진갑옷: 맞고 쓰러지면 방어와 스피드가 변하지 않는다", () => {

@@ -9,7 +9,7 @@ import {
     statNameToString,
 } from "./helpers";
 import { FOE_TARGETS, isOhkoMove, ohkoImmune, rollAccuracy } from "./accuracy";
-import { spendPP, restorePP, ppLeft, maxPP, hasPP } from "./pp";
+import { spendPP, restorePP, ppLeft, maxPP, hasPP, getUsableMoves } from "./pp";
 import { effectiveSpeed } from "./speed";
 import { statusAnimsOf } from "./animcues";
 import { splitMoveBeat } from "./beatsplit";
@@ -322,10 +322,11 @@ function getEffectiveSpeed(pokemon, field = null) {
 // A pokemon in the middle of a two-turn move has no say in what it does next.
 function forcedMove(pokemon, chosenMove) {
     if (pokemon.charging) return pokemon.moveset.find((m) => m.name === pokemon.charging) || chosenMove;
-    // Encore: it can only repeat the move it used last (while that move has PP left)
-    if (pokemon.encore) {
-        const encored = pokemon.moveset.find((m) => m.name === pokemon.encore.move);
-        if (encored && hasPP(encored)) return encored;
+    // Encore: it can only repeat the move it used last, while that move can still be used (PP left, not Disabled
+    // or Taunted). Switching out is still allowed.
+    if (pokemon.encore && chosenMove.priority !== 6) {
+        const usable = getUsableMoves(pokemon);
+        if (usable.length === 1 && usable[0].name === pokemon.encore.move) return usable[0];
     }
     return chosenMove;
 }

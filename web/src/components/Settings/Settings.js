@@ -1,5 +1,6 @@
 import "./Settings.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { canSurrender, onSurrenderChange, surrenderNow } from "shared/surrender";
 import { getLang, setLang } from "shared/lang";
 import { isFxEnabled, setFxEnabled } from "animations/fxSetting";
 import { getBgmState, setBgmEnabled, setBgmVolume } from "audio/bgm";
@@ -10,6 +11,8 @@ export function Settings() {
     const lang = getLang();
     const [fxOn, setFxOn] = useState(isFxEnabled());
     const [bgm, setBgm] = useState(getBgmState());
+    const [canSurr, setCanSurr] = useState(canSurrender());
+    useEffect(() => onSurrenderChange(setCanSurr), []);
 
     return (
         <>
@@ -104,6 +107,20 @@ export function Settings() {
                             <p>Thanks to the Reborn team for letting people use their resources.</p>
                             <p>연출 데이터 형식 / Format: Pokémon Essentials</p>
                         </div>
+                        {canSurr && (
+                            <>
+                                <p className="settings-label settings-label-gap">전투 / Battle</p>
+                                <button
+                                    className="settings-option settings-surrender"
+                                    onClick={() => {
+                                        setOpen(false);
+                                        surrenderNow();
+                                    }}
+                                >
+                                    항복 / Surrender
+                                </button>
+                            </>
+                        )}
                         <button className="settings-close" onClick={() => setOpen(false)}>
                             닫기 / Close
                         </button>

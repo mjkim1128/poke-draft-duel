@@ -98,6 +98,7 @@ export function Home() {
                 resetAbilityState(poke); /// ability, Transform, Illusion... back to how it started
                 resetBattleForms(poke); /// Hero Palafin, Noice Eiscue... are back to their normal form
                 poke.disguiseBusted = false;
+                poke.timesHit = 0;
                 poke.hangry = false;
                 poke.disabled = null;
                 restorePP(poke); /// PP is topped up in the Pokemon Center too

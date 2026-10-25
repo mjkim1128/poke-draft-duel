@@ -36,6 +36,7 @@ describe("기습(Sucker Punch)", () => {
 
     test("상대가 공격 기술을 고르면 먼저 맞힌다", () => {
         const [me, foe] = pair(mon("weavile", ["sucker-punch"]), mon("blissey", ["tackle"]));
+        foe[1].hp[0] = 0; // 바꿔 나올 포켓몬이 없어야 그대로 맞는다
         doTurn(me, foe, me[0].moveset[0]);
         expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
     });
@@ -104,15 +105,17 @@ describe("세트의 opening 기술", () => {
         const [me, foe] = pair(mon("snorlax", ["splash"]), cloyster());
         doTurn(me, foe, me[0].moveset[0]);
         expect(foe[0].stat_levels[0]).toBe(2); // 껍질깨기: 공격 +2
-        const levelsAfterFirst = [...foe[0].stat_levels];
+        // 평소 판단(랭업기 규칙)으로도 더는 올릴 수 없는 상태로 만들어서, 또 쓰는지는 opening만 가른다
+        foe[0].stat_levels.fill(6);
         doTurn(me, foe, me[0].moveset[0]);
-        expect(foe[0].stat_levels).toEqual(levelsAfterFirst); // 두 번째 턴에는 껍질깨기를 또 쓰지 않는다
+        expect(me[0].hp[0]).toBeLessThan(me[0].hp[1]); // 두 번째 턴에는 껍질깨기를 또 쓰지 않는다
     });
 
     test("opening이 없으면 평소처럼 고른다", () => {
         const [me, foe] = pair(mon("snorlax", ["splash"]), mon("cloyster", ["shell-smash", "icicle-spear"]));
+        foe[0].stat_levels.fill(6); // 랭업기 규칙으로도 쓸 수 없는 상태: 껍질깨기가 나온다면 opening 때문이다
         doTurn(me, foe, me[0].moveset[0]);
-        expect(foe[0].stat_levels[0]).toBe(0);
+        expect(me[0].hp[0]).toBeLessThan(me[0].hp[1]);
     });
 });
 

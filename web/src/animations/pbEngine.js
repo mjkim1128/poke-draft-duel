@@ -299,7 +299,9 @@ export function playMoveAnim(field, side, slug, self = false, opts = {}) {
     const animUser = { img: userIsMe ? meImg : oppImg, c: userIsMe ? me : opp };
     const animTarget = self ? animUser : { img: userIsMe ? oppImg : meImg, c: userIsMe ? opp : me };
     const k = (Math.abs(opp.x - me.x) / (TARGET.x - USER.x) + Math.abs(opp.y - me.y) / Math.abs(TARGET.y - USER.y)) / 2 || 1;
-    const geo = { u: animUser.c, t: animTarget.c, k, fieldW: fr.width, fieldH: fr.height };
+    // screenUnit: 화면 기준(focus 4) 조각의 크기 배율. 위치를 필드 너비에 맞춰 옮기므로 크기도 같은 비율로 줄여야
+    // 이어 붙인 조각(오물웨이브의 물결 등)이 겹치거나 틈이 생기지 않는다.
+    const geo = { u: animUser.c, t: animTarget.c, k, fieldW: fr.width, fieldH: fr.height, screenUnit: fr.width / SCREEN.w };
     return runAnim(field, anim, geo, { battlers: { user: animUser, target: animTarget }, rate: MOVE_SPEED, freezeFrame: opts.freezeFrame });
 }
 
@@ -374,8 +376,9 @@ function runAnim(field, anim, geo, opts) {
             }
             el.style.display = visible ? "block" : "none";
             el.style.backgroundPosition = `${-col * CELL}px ${-row * CELL}px`;
-            const sx = (zx / 100) * k * ((mirror > 0) !== place.flip ? -1 : 1);
-            const sy = (zy / 100) * k;
+            const unit = geo.screenUnit && c[10] === 4 ? geo.screenUnit : k;
+            const sx = (zx / 100) * unit * ((mirror > 0) !== place.flip ? -1 : 1);
+            const sy = (zy / 100) * unit;
             el.style.transform = `translate(${place.x - CELL / 2}px, ${place.y - CELL / 2}px) rotate(${-angle}deg) scale(${sx}, ${sy})`;
             el.style.opacity = String(Math.max(0, Math.min(255, opacity)) / 255);
             el.style.mixBlendMode = blend === 1 ? "plus-lighter" : "normal";

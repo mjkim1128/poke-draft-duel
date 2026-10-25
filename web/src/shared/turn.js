@@ -1,6 +1,7 @@
 import { localName } from "./lang";
 import { localizeTurnText, localizeLine } from "./logTranslate";
 import { makeMove, switchPokemon } from "./computermove";
+import { recordCpuMove } from "./cpustatus";
 import { damageCalc, statCalc, typeEffectiveness, isFixedDamageMove } from "./damagecalc";
 import {
     moveNameToString,
@@ -94,6 +95,7 @@ import {
     weatherHealPercent,
     weatherEndOfTurnDamage,
     fieldAnimOfLine,
+    fieldAnimInText,
 } from "./field";
 import {
     DEFROST_MOVES,
@@ -411,6 +413,7 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
     }
     move = forcedMove(playerPokemon[0], move);
     const cpuMove = forcedMove(opponentPokemon[0], makeMove(playerPokemon, opponentPokemon, !isTrapped(opponentPokemon, playerPokemon)));
+    recordCpuMove(opponentPokemon[0], cpuMove);
     const priorityOf = (mv, mon) => movePriority(mv, mon, field) + (hasCustapBoost(mon) ? 1 : 0);
     let playerPriority = priorityOf(move, playerPokemon[0]);
     let cpuPriority = priorityOf(cpuMove, opponentPokemon[0]);
@@ -560,7 +563,8 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
                 pushFrame();
                 return Object.assign(text, { frames });
             }
-            const index = switchPokemon(playerPokemon, opponentPokemon);
+            // 먼저 움직인 쪽의 U턴이면 나오는 포켓몬이 이번 턴에 상대 공격을 한 번 맞는다
+            const index = switchPokemon(playerPokemon, opponentPokemon, { freeHit: swapper === team && step === 0 });
             if (index !== -1) {
                 if (swapperActsLater) plan.skipSide = "cpu";
                 text.push(doSwitchRaw(opponentPokemon, index, { baton: pivot.baton, foeTeam: playerPokemon }));
@@ -3011,6 +3015,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         }
 
         trackDamageTaken(defender, move, damage_number);
+        if (damage_number > 0) defender.timesHit = (defender.timesHit || 0) + 1; // Rage Fist counts every hit taken
 
         // Air Balloon: pops the moment the holder takes any damage (ground hits never reach here, see typeEffectiveness)
         if (activeItem(defender) && defender.item.name === AIR_BALLOON && damage_number > 0) {
@@ -3831,4 +3836,10 @@ export function resumeTurn(playerPokemon, opponentPokemon, index) {
 
 export function doSwitch(pokemon, index, options = {}) {
     return localizeLine(doSwitchRaw(pokemon, index, options));
+}
+
+// doSwitch와 같지만, 나오는 포켓몬이 날씨나 필드를 깔았으면 그 연출의 이름도 돌려준다 ({ text, fieldAnim })
+export function doSwitchWithField(pokemon, index, options = {}) {
+    const raw = doSwitchRaw(pokemon, index, options);
+    return { text: localizeLine(raw), fieldAnim: fieldAnimInText(raw) };
 }

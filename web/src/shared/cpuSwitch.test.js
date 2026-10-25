@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { doTurn, getBaseStats, hpCalc } from "shared";
-import { switchWhenUseless } from "shared/computermove";
+import { chooseSwitch } from "shared/cpuswitch";
 
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
 const MOVES = new Map(read("moves.json").map((m) => [m.name, m]));
@@ -29,7 +29,7 @@ describe("피해를 줄 수 없으면 상대가 교체한다", () => {
     test("노말 기술뿐인데 상대가 고스트이면 교체를 고른다", () => {
         const me = [mon("gengar", null, ["splash"]), mon("blissey", null, ["splash"])];
         const foe = [mon("snorlax", null, ["return", "body-slam"]), mon("garchomp", null, ["earthquake"])];
-        expect(switchWhenUseless(me, foe)).toBe(1);
+        expect(chooseSwitch(me, foe)).toBe(1);
     });
 
     test("교체한 뒤에는 그 포켓몬이 나와 있다", () => {
@@ -40,22 +40,23 @@ describe("피해를 줄 수 없으면 상대가 교체한다", () => {
         expect(result.toString()).toContain("Garchomp");
     });
 
-    test("피해를 줄 수 있으면 교체하지 않는다", () => {
+    test("한 방에 잡을 수 있으면 교체하지 않는다", () => {
         const me = [mon("snorlax", null, ["splash"]), mon("blissey", null, ["splash"])];
+        me[0].hp = [10, me[0].hp[1]];
         const foe = [mon("snorlax", null, ["return"]), mon("garchomp", null, ["earthquake"])];
-        expect(switchWhenUseless(me, foe)).toBe(-1);
+        expect(chooseSwitch(me, foe)).toBe(-1);
     });
 
     test("변화 기술만 가진 포켓몬은 교체하지 않는다", () => {
         const me = [mon("gengar", null, ["splash"]), mon("blissey", null, ["splash"])];
         const foe = [mon("blissey", null, ["toxic", "soft-boiled"]), mon("garchomp", null, ["earthquake"])];
-        expect(switchWhenUseless(me, foe)).toBe(-1);
+        expect(chooseSwitch(me, foe)).toBe(-1);
     });
 
     test("바꿔 나올 포켓몬도 피해를 줄 수 없으면 그대로 있는다", () => {
         const me = [mon("gengar", null, ["splash"]), mon("blissey", null, ["splash"])];
         const foe = [mon("snorlax", null, ["return"]), mon("blissey", null, ["return"])];
-        expect(switchWhenUseless(me, foe)).toBe(-1);
+        expect(chooseSwitch(me, foe)).toBe(-1);
     });
 });
 

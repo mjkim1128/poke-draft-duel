@@ -2,6 +2,9 @@ import { damageCalc } from "./damagecalc";
 import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES } from "./movemechanics";
 import { hitChance } from "./accuracy";
 import { getUsableMoves } from "./pp";
+import { chooseSupportMove } from "./cpustatus";
+import { sleepTalkMove } from "./cpuboardmoves";
+import { chooseSwitch, pickReplacement } from "./cpuswitch";
 
 // How the CPU sees my pokemon: one under Illusion looks like the pokemon it copies (its types and
 // stats), until the disguise breaks. The real battle math still uses the real pokemon.
@@ -28,31 +31,6 @@ function usableMoveset(pokemon) {
     return getUsableMoves(pokemon);
 }
 
-// 상대(컴퓨터)가 지금 나와 있는 포켓몬으로는 아무 피해도 줄 수 없을 때(공격 기술이 전부 무효이거나
-// 특성으로 흡수될 때) 바꿔 낼 포켓몬의 번호를 돌려준다. 바꿀 필요가 없거나 바꿀 수 없으면 -1.
-// 변화 기술만 가진 포켓몬은 원래 피해를 주지 않으므로 바꾸지 않는다.
-export function switchWhenUseless(playerTeam, opponentTeam) {
-    playerTeam = asSeen(playerTeam);
-    const active = opponentTeam[0];
-    if (active.charging || active.mustRecharge || playerTeam[0].hp[0] <= 0) return -1;
-    const field = playerTeam.field || opponentTeam.field || null;
-    const attacks = usableMoveset(active).filter((m) => m.damage_class.name !== "status" && m.name !== "struggle");
-    if (attacks.length === 0) return -1;
-    if (attacks.some((m) => damageCalc(active, playerTeam[0], m, { field }) > 0)) return -1;
-    // 피해를 줄 수 있는 포켓몬 중 가장 센 기술을 가진 쪽으로 바꾼다
-    let best = -1;
-    let bestDamage = 0;
-    opponentTeam.forEach((poke, i) => {
-        if (i === 0 || poke.hp[0] <= 0) return;
-        for (const m of getUsableMoves(poke)) {
-            const d = damageCalc(poke, playerTeam[0], m, { field });
-            if (d > bestDamage) [best, bestDamage] = [i, d];
-        }
-    });
-    return best;
-}
-
-// canSwitch가 true이면 피해를 줄 수 없을 때 교체를 고를 수 있다 (교체는 priority 6인 가짜 기술이다)
 // 세트에 "opening"이 있으면 그 포켓몬이 나온 뒤 첫 행동으로 그 기술을 쓴다 (기합의띠 파르셀의 껍질깨기 등)
 function openingMove(pokemon) {
     const slug = pokemon.factorySet && pokemon.factorySet.opening;
@@ -69,12 +47,12 @@ function asSeen(playerTeam) {
     return copy;
 }
 
+// canSwitch가 true이면 교체를 고를 수 있다 (교체는 priority 6인 가짜 기술이다)
 export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     playerTeam = asSeen(playerTeam);
-    if (canSwitch) {
-        const index = switchWhenUseless(playerTeam, opponentTeam);
-        if (index !== -1) return { priority: 6, index };
-    }
+    // 자고 있으면 다른 기술은 나가지 않으니 잠꼬대로 아무 기술이나 쓴다
+    const sleepTalk = sleepTalkMove(opponentTeam[0]);
+    if (sleepTalk) return sleepTalk;
     const opening = openingMove(opponentTeam[0]);
     if (opening) return opening;
     for (const move of usableMoveset(opponentTeam[0])) {
@@ -99,6 +77,14 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
             playerTeam[0].base_stats[5] > opponentTeam[0].base_stats[5]
         )
             return move;
+    }
+    // 선공기로 마무리할 수 없으면, 함정 / 회복 / 상태이상 / 랭업기를 써도 되는 상황인지 본다 (한 방에 잡을 수 있으면 건너뛴다)
+    const support = chooseSupportMove(playerTeam, opponentTeam);
+    if (support) return support;
+    // 그럴 상황이 아니면, 지금 포켓몬으로 계속 싸워도 되는지 본다 (cpuswitch.js의 교체 이유와 후보 평가)
+    if (canSwitch) {
+        const index = chooseSwitch(playerTeam, opponentTeam);
+        if (index !== -1) return { priority: 6, index };
     }
     return strongestMove(playerTeam, opponentTeam);
 }
@@ -125,31 +111,8 @@ export function strongestMove(playerTeam, opponentTeam) {
     return choice;
 }
 
-export function switchPokemon(playerTeam, opponentTeam) {
-    playerTeam = asSeen(playerTeam);
-    let options = opponentTeam.filter(
-        (poke) => poke !== opponentTeam[0] && poke.hp[0] > 0
-    );
-    for (const option of options) {
-        if (
-            option.base_stats[5] > playerTeam[0].base_stats[5] &&
-            doesMoveKill(option, playerTeam[0], strongestMove(playerTeam, [option]))
-        ) {
-            return opponentTeam.indexOf(option);
-        }
-    }
-    let damages = options.map((poke) => {
-        return [damageCalc(
-            poke,
-            playerTeam[0],
-            strongestMove(playerTeam, [poke]), poke.hp[0] - damageCalc(playerTeam[0], poke, strongestMove([poke], playerTeam)) > 0 )]
-    });
-    if (options.length > 1 && damages[0][0] < damages[1][0] && damages[1][1])
-        return opponentTeam.indexOf(options[1]);
-    else if (options.length >= 1) return opponentTeam.indexOf(options[0]);
-    else return -1;
-}
-
-export function doesMoveKill(attacker, defender, move) {
-    return defender.hp[0] - damageCalc(attacker, defender, move) <= 0;
+// 쓰러지거나 U턴 같은 기술로 빠진 뒤 나올 포켓몬의 번호 (없으면 -1). cpuswitch.js의 후보 평가를 쓴다.
+// freeHit: 나오는 턴에 상대가 공격을 한 번 하는 경우 (먼저 움직인 U턴 등)
+export function switchPokemon(playerTeam, opponentTeam, options = {}) {
+    return pickReplacement(asSeen(playerTeam), opponentTeam, options);
 }

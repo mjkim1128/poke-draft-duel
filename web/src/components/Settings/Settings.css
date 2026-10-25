@@ -115,3 +115,9 @@
 .settings-credits .settings-label {
     text-align: center;
 }
+
+/* 항복 버튼은 실수로 누르지 않도록 붉은 글씨로 구분한다 */
+.settings-surrender {
+    color: #b33;
+    border-color: #b33;
+}

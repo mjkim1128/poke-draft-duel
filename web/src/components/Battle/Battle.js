@@ -1,5 +1,6 @@
 import { localName, isKorean } from "shared/lang";
 import { localizeLine } from "shared/logTranslate";
+import { setSurrenderHandler } from "shared/surrender";
 import { playMoveAnim, playFieldAnim, prefetchMoveAnims, prefetchFieldAnims } from "animations/pbEngine";
 import { isFxEnabled } from "animations/fxSetting";
 import {
@@ -17,7 +18,7 @@ import {
     pokemonNameToString,
     moveNameToString,
     abilityLabel,
-    doSwitch,
+    doSwitchWithField,
     doTurn,
     resumeTurn,
     isTrapped,
@@ -89,6 +90,7 @@ export function Battle(props) {
     const [animFrames, setAnimFrames] = useState(null);
     const [animIndex, setAnimIndex] = useState(0);
     const animDoneRef = useRef(null);
+    const surrenderedRef = useRef(false);
     const fieldRef = useRef(null);
     /// A beat needs to stay up long enough for the typewriter (10ms/char, see useTypedMessage)
     /// to finish typing it out, plus a short pause so it can actually be read.
@@ -169,7 +171,7 @@ export function Battle(props) {
         const isOppAlive = props.opponentPokemon.some((poke) => poke.hp[0] > 0);
         /// Both sides ran out together (recoil, Explosion, Destiny Bond...): whoever fainted last loses
         const bothOut = !playerAlive && !isOppAlive;
-        const lost = bothOut ? props.playerPokemon.lastFainted === "player" : !playerAlive;
+        const lost = surrenderedRef.current || (bothOut ? props.playerPokemon.lastFainted === "player" : !playerAlive);
         let [message, win] = lost ? ["You Lose!", false] : ["You Win!", true];
         updateTurnText(message);
         updateTurnText("Player2(CPU): GGWP!");
@@ -195,6 +197,23 @@ export function Battle(props) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stepNumber]);
+
+    /// Giving up counts as a loss, whatever the board looks like
+    function surrender() {
+        if (isGameOver || isAnimating) return;
+        if (!window.confirm(isKorean() ? "항복하시겠습니까? 패배로 처리되고 연승이 초기화됩니다." : "Surrender? This counts as a loss and resets your win streak.")) return;
+        surrenderedRef.current = true;
+        setForceSwitch(false);
+        setGameOver(true);
+    }
+
+    /// The Surrender button lives in the settings window; it reaches this battle through here
+    const surrenderRef = useRef(surrender);
+    surrenderRef.current = surrender;
+    useEffect(() => {
+        setSurrenderHandler(() => surrenderRef.current());
+        return () => setSurrenderHandler(null);
+    }, []);
 
     function nextTurn(move) {
         if (isAnimating) return;
@@ -269,11 +288,16 @@ export function Battle(props) {
         }
         setForceSwitch(false);
         /// (the other side is needed for on-entry abilities like Intimidate)
-        let text = doSwitch(pokemonArr, switch_index, {
+        const { text, fieldAnim } = doSwitchWithField(pokemonArr, switch_index, {
             foeTeam: pokemonArr === props.playerPokemon ? props.opponentPokemon : props.playerPokemon,
         });
         updateTurnText(text);
         setAnnouncerMessage([text]);
+        /// A replacement that sets the weather or a terrain on arrival (Drizzle, Electric Surge...) gets that animation too
+        if (fieldAnim && isFxEnabled()) {
+            const fx = playFieldAnim(fieldRef.current, fieldAnim);
+            if (fx) setTimeout(fx.cancel, fx.duration + 100);
+        }
         /// The replacement can faint to entry hazards the moment it arrives
         if (pokemonArr[0].hp[0] <= 0) {
             if (pokemonArr === props.opponentPokemon) {
@@ -482,7 +506,8 @@ export function Battle(props) {
         ];
         return (
             <div className="battle-portrait">
-                <div className="bp-field" ref={fieldRef}>
+                {/* 필드(그래스필드 등)가 깔려 있는 동안은 경기장에 그 색이 옅게 깔린다. 연출이 재생되는 동안은 연출이 대신 보여 준다. */}
+                <div className={"bp-field" + (field && field.terrain && !animFrames ? " terrain-" + field.terrain.name : "")} ref={fieldRef}>
                     <div className="bp-head">
                         <span>
                             {isKorean() ? "턴 " : "Turn "}{isCurrent ? turns.length : stepNumber} · {isKorean() ? "현재 " + props.winStreak + "연승" : props.winStreak + " win streak"}
@@ -575,8 +600,7 @@ export function Battle(props) {
                             <h2>
                                 Turn {isCurrent ? turns.length : stepNumber}
                             </h2>
-                            {fieldText && <p className="field-info">{fieldText}</p>}
-                        </div>
+                            {fieldText && <p className="field-info">{fieldText}</p>}                        </div>
                     )}
                 </div>
                 <div className="opponent">

@@ -73,6 +73,8 @@ export function dynamicPower(move, attacker, defender, field) {
     switch (move.name) {
         case "return":
             return 102;
+        case "rage-fist": // 50 more power for every time the user was hit this battle, up to 350
+            return Math.min(350, 50 + 50 * (attacker.timesHit || 0));
         case "frustration":
             return 1;
         case "gyro-ball": {

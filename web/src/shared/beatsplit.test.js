@@ -51,6 +51,7 @@ test("쓰러뜨릴 때는 체력이 다 줄어든 뒤에 기절한다", () => {
     const me = team(mon("garchomp", ["tackle"]));
     const foe = team(mon("snorlax", ["splash"]));
     foe[0].hp[0] = 1;
+    foe[1].hp[0] = 0; // 바꿔 나올 포켓몬이 없어야 도망치지 않고 그대로 쓰러진다
     const [first, damage, after] = moveFrames(framesOf(me, foe));
     expect(first.opponentPokemon[0].hp[0]).toBe(1);
     expect(damage.opponentPokemon[0].hp[0]).toBe(0);
@@ -98,4 +99,16 @@ test("변화 기술은 연출 박자 다음에 효과 박자가 온다", () => {
     expect(first.playerPokemon[0].stat_levels[0]).toBe(0);
     expect(effect.playerPokemon[0].stat_levels[0]).toBe(2);
     expect(effect.statusAnims).toEqual([{ name: "stat-up", side: "player" }]);
+});
+
+test("교체해 나온 포켓몬이 깐 날씨와 필드의 연출 이름을 알 수 있다", () => {
+    const { doSwitchWithField } = require("shared");
+    const me = [mon("snorlax", ["splash"]), mon("blissey", ["splash"])];
+    const ability = (p, name) => Object.assign(p, { ability: { name }, baseAbility: { name } });
+    const foe1 = [mon("snorlax", ["splash"]), ability(mon("garchomp", ["splash"]), "sand-stream")];
+    expect(doSwitchWithField(foe1, 1, { foeTeam: me }).fieldAnim).toBe("sand");
+    const foe2 = [mon("snorlax", ["splash"]), ability(mon("garchomp", ["splash"]), "electric-surge")];
+    expect(doSwitchWithField(foe2, 1, { foeTeam: me }).fieldAnim).toBe("electric-terrain");
+    const foe3 = [mon("snorlax", ["splash"]), mon("blissey", ["splash"])];
+    expect(doSwitchWithField(foe3, 1, { foeTeam: me }).fieldAnim).toBe(null);
 });

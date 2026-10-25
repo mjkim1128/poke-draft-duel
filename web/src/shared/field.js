@@ -54,6 +54,13 @@ export function fieldAnimOfLine(line) {
     return START_ANIM[line] || null;
 }
 
+// 여러 줄이 이어 붙은 글(교체 글처럼)에 날씨나 필드가 시작되는 줄이 들어 있으면 그 연출의 이름
+export function fieldAnimInText(text) {
+    let found = null;
+    for (const [line, name] of Object.entries(START_ANIM)) if (text.includes(line)) found = name;
+    return found;
+}
+
 export const WEATHER_LABEL = { sun: "쾌청", rain: "비", sand: "모래바람", hail: "싸라기눈", snow: "설경" };
 export const TERRAIN_LABEL = { electric: "일렉트릭필드", grassy: "그래스필드", misty: "미스트필드", psychic: "사이코필드" };
 

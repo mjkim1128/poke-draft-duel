@@ -187,6 +187,13 @@ const skinAbility = (type) => ({
         if (move.type.name === "normal" && move.damage_class.name !== "status") return { type, power: 4915 / 4096 };
     },
 });
+// Beast Boost / Eelevate: after a knock-out the highest of its five stats goes up a stage
+function raiseHighestStat({ self, text, boost }) {
+    const names = ["attack", "defense", "special-attack", "special-defense", "speed"];
+    let best = 0;
+    for (let i = 1; i < 5; i++) if (self.base_stats[i + 1] > self.base_stats[best + 1]) best = i;
+    boost(self, [{ stat: { name: names[best] }, change: 1 }], text);
+}
 const recoilMove = (move) => (move.meta && move.meta.drain < 0 && move.name !== "struggle") || CRASH_MOVES.has(move.name);
 
 // Does this attacker's move ignore the target's breakable abilities? (Mycelium Might does it
@@ -591,15 +598,9 @@ export const ABILITIES = {
             boost(self, [{ stat: { name: "attack" }, change: 1 }], text);
         },
     },
-    "beast-boost": {
-        onKO({ self, text, boost }) {
-            // raises whichever of its five stats is highest
-            const names = ["attack", "defense", "special-attack", "special-defense", "speed"];
-            let best = 0;
-            for (let i = 1; i < 5; i++) if (self.base_stats[i + 1] > self.base_stats[best + 1]) best = i;
-            boost(self, [{ stat: { name: names[best] }, change: 1 }], text);
-        },
-    },
+    "beast-boost": { onKO: raiseHighestStat },
+    // Mega Eelektross: floats like Levitate, and a knock-out raises its highest stat like Beast Boost
+    eelevate: { breakable: true, groundImmune: true, onKO: raiseHighestStat },
 
     // ---- being hit ----
     justified: {
@@ -946,6 +947,8 @@ export const ABILITIES = {
 
     // ---- moves that change type / priority ----
     pixilate: skinAbility("fairy"),
+    aerilate: skinAbility("flying"),
+    dragonize: skinAbility("dragon"),
     refrigerate: skinAbility("ice"),
     normalize: {
         onModifyType({ move }) {
@@ -1319,6 +1322,20 @@ export const ABILITIES = {
     "suction-cups": { breakable: true, preventsDrag: true },
     // Its contact moves ignore Protect and its relatives (see isBlockedByProtection in turn.js)
     "unseen-fist": { unseenFist: true },
+    // Mega Excadrill: its contact moves get through Protect and its relatives too, but for a quarter of the damage
+    "piercing-drill": { piercingDrill: true },
+    // Mega Lucario Z: contact moves hurt it half as much
+    "aura-guard": {
+        breakable: true,
+        onSourceModifyDamage({ attacker, move }) {
+            if (makesContact(attacker, move)) return 0.5;
+        },
+    },
+    // Hits twice with a damaging move, the second time for a quarter of the power (see rollHitCount in turn.js)
+    "parental-bond": { parentalBond: true },
+    // These only matter next to an ally or with moves that draw attacks in, so there is nothing to do in a one-on-one battle
+    healer: {},
+    stalwart: {},
     // Copies the stat boosts the other side gets (turn.js compares stages around every action)
     opportunist: { copiesFoeBoosts: true },
     // Its item has no effect (see activeItem in helditem.js). It can still be handed one by Trick
@@ -1486,6 +1503,8 @@ export const hasEarlyBird = (pokemon) => flag(pokemon, "earlyBird");
 export const preventsDisable = (pokemon, attacker = null) => flag(pokemon, "preventsDisable", attacker); // Aroma Veil
 export const hasSlowStatusMoves = (pokemon) => flag(pokemon, "slowStatusMoves"); // Mycelium Might
 export const hasUnseenFist = (pokemon) => flag(pokemon, "unseenFist");
+export const hasPiercingDrill = (pokemon) => flag(pokemon, "piercingDrill");
+export const hasParentalBond = (pokemon) => flag(pokemon, "parentalBond");
 export const preventsTaunt = (pokemon, attacker = null) => flag(pokemon, "preventsTaunt", attacker); // Oblivious
 export const preventsDrag = (pokemon, attacker = null) => flag(pokemon, "preventsDrag", attacker); // Suction Cups, Guard Dog
 export const copiesFoeBoosts = (pokemon) => flag(pokemon, "copiesFoeBoosts"); // Opportunist

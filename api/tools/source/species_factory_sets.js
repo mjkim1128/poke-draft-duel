@@ -348,6 +348,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "ice-punch" /* 냉동펀치 */ } ]
     ]
+  },
+  {
+    "item": "tyranitarite" /* 마기라스나이트 */,
+    "ability": "sand-stream" /* 모래날림 */,
+    "moves": [
+      [ { "slug": "rock-slide" /* 스톤샤워 */ } ],
+      [ { "slug": "crunch" /* 깨물어부수기 */ } ],
+      [ { "slug": "pursuit" /* 따라가때리기 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
   }
   ],
   "salamence": /* 보만다 */ [
@@ -440,6 +450,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "dragon-dance" /* 용의춤 */ } ]
     ]
+  },
+  {
+    "item": "salamencite" /* 보만다나이트 */,
+    "ability": "moxie" /* 자기과신 */,
+    "moves": [
+      [ { "slug": "dual-wingbeat" /* 더블윙 */ } ],
+      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
   }
   ],
   "sableye": /* 깜까미 */ [
@@ -461,6 +481,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "taunt" /* 도발 */ } ],
       [ { "slug": "recover" /* HP회복 */ } ],
       [ { "slug": "foul-play" /* 속임수 */ } ]
+    ]
+  },
+  {
+    "item": "sablenite" /* 깜까미나이트 */,
+    "ability": "prankster" /* 짓궂은마음 */,
+    "moves": [
+      [ { "slug": "recover" /* HP회복 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
   },
   ],
@@ -492,6 +522,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "play-rough" /* 치근거리기 */ } ],
       [ { "slug": "iron-head" /* 아이언헤드 */ } ],
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ]
+    ]
+  },
+  {
+    "item": "mawilite" /* 입치트나이트 */,
+    "ability": "sheer-force" /* 우격다짐 */,
+    "moves": [
+      [ { "slug": "play-rough" /* 치근거리기 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
       [ { "slug": "sucker-punch" /* 기습 */ } ]
     ]
   }
@@ -605,6 +645,26 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "close-combat" /* 인파이트 */ } ],
       [ { "slug": "meteor-mash" /* 코멧펀치 */ } ],
       [ { "slug": "extreme-speed" /* 신속 */ } ]
+    ]
+  },
+  {
+    "item": "lucarionite" /* 루카리오나이트 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "crunch" /* 깨물어부수기 */ } ]
+    ]
+  },
+  {
+    "item": "lucarionite-z" /* 루카리오나이트Z */,
+    "ability": "steadfast" /* 불굴의마음 */,
+    "moves": [
+      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
+      [ { "slug": "vacuum-wave" /* 진공파 */ } ],
+      [ { "slug": "aura-sphere" /* 파동탄 */ } ],
+      [ { "slug": "flash-cannon" /* 러스터캐논 */ } ]
     ]
   }
   ],
@@ -898,6 +958,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "calm-mind" /* 명상 */ } ],
       [ { "slug": "recover" /* HP회복 */ } ]
     ]
+  },
+  {
+    "item": "latiosite" /* 라티오스나이트 */,
+    "ability": "levitate" /* 부유 */,
+    "moves": [
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */ } ],
+      [ { "slug": "defog" /* 안개제거 */ } ]
+    ]
   }
   ],
   "latias": /* 라티아스 */ [
@@ -1000,6 +1070,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "defog" /* 안개제거 */ } ],
       [ { "slug": "healing-wish" /* 치유소원 */ } ]
     ]
+  },
+  {
+    "item": "latiasite" /* 라티아스나이트 */,
+    "ability": "levitate" /* 부유 */,
+    "moves": [
+      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */ }, { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
   }
   ],
   "kangaskhan": /* 캥카 */ [
@@ -1008,6 +1088,16 @@ const SPECIES_FACTORY_SETS = {
     "ability": "scrappy" /* 배짱 */,
     "moves": [
       [ { "slug": "fake-out" /* 속이다 */ } ],
+      [ { "slug": "double-edge" /* 이판사판태클 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "kangaskhanite" /* 캥카나이트 */,
+    "ability": "scrappy" /* 배짱 */,
+    "moves": [
+      [ { "slug": "fake-out" /* 속이기 */ } ],
       [ { "slug": "double-edge" /* 이판사판태클 */ } ],
       [ { "slug": "sucker-punch" /* 기습 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
@@ -1184,6 +1274,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "ice-beam" /* 냉동빔 */ } ],
       [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
+  },
+  {
+    "item": "greninjite" /* 개굴닌자나이트 */,
+    "ability": "protean" /* 변환자재 */,
+    "moves": [
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "gunk-shot" /* 더스트슈트 */ } ],
+      [ { "slug": "extrasensory" /* 신통력 */ } ],
+      [ { "slug": "hydro-pump" /* 하이드로펌프 */ } ]
+    ]
   }
   ],
   "gengar": /* 팬텀 */ [
@@ -1325,6 +1425,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
       [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
       [ { "slug": "encore" /* 앵콜 */ } ]
+    ]
+  },
+  {
+    "item": "gengarite" /* 팬텀나이트 */,
+    "ability": "levitate" /* 부유 */,
+    "moves": [
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
     ]
   }
   ],
@@ -1572,6 +1682,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "iron-head" /* 아이언헤드 */ } ],
       [ { "slug": "swords-dance" /* 칼춤 */ } ]
     ]
+  },
+  {
+    "item": "excadrite" /* 몰드류나이트 */,
+    "ability": "sand-rush" /* 모래헤치기 */,
+    "moves": [
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "rock-slide" /* 스톤샤워 */ } ],
+      [ { "slug": "rapid-spin" /* 고속스핀 */ } ]
+    ]
   }
   ],
   "darkrai": /* 다크라이 */ [
@@ -1687,6 +1807,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
       [ { "slug": "close-combat" /* 인파이트 */ } ],
       [ { "slug": "thunder-punch" /* 번개펀치 */ }, { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "blazikenite" /* 번치코나이트 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "low-kick" /* 안다리걸기 */ } ],
+      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
+      [ { "slug": "protect" /* 방어 */ } ],
+      [ { "slug": "stone-edge" /* 스톤에지 */ }, { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
   }
   ],
@@ -1850,6 +1980,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "close-combat" /* 인파이트 */ } ],
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
+  },
+  {
+    "item": "scizorite" /* 핫삼나이트 */,
+    "ability": "technician" /* 테크니션 */,
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ } ]
+    ]
   }
   ],
   "diancie": /* 디안시 */ [
@@ -1941,6 +2081,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "meteor-beam" /* 메테오빔 */ } ],
       [ { "slug": "earth-power" /* 대지의힘 */ } ]
+    ]
+  },
+  {
+    "item": "diancite" /* 디안시나이트 */,
+    "ability": "clear-body" /* 클리어바디 */,
+    "moves": [
+      [ { "slug": "trick-room" /* 트릭룸 */ } ],
+      [ { "slug": "diamond-storm" /* 다이아스톰 */ } ],
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "explosion" /* 대폭발 */ } ]
     ]
   }
   ],
@@ -2685,6 +2835,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "defog" /* 안개제거 */ } ],
       [ { "slug": "u-turn" /* 유턴 */ }, { "slug": "close-combat" /* 인파이트 */ } ]
     ]
+  },
+  {
+    "item": "staraptite" /* 찌르호크나이트 */,
+    "ability": "intimidate" /* 위협 */,
+    "moves": [
+      [ { "slug": "brave-bird" /* 브레이브버드 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ],
+      [ { "slug": "defog" /* 안개제거 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ }, { "slug": "close-combat" /* 인파이트 */ } ]
+    ]
   }
   ],
   "scolipede": /* 펜드라 */ [
@@ -2748,6 +2908,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "rock-slide" /* 스톤샤워 */ }, { "slug": "protect" /* 방어 */ } ]
     ]
   },
+  {
+    "item": "scolipite" /* 펜드라나이트 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "megahorn" /* 메가혼 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "poison-jab" /* 독찌르기 */ } ],
+      [ { "slug": "protect" /* 방어 */ } ]
+    ]
+  },
   ],
   "medicham": /* 요가램 */ [
   {
@@ -2788,6 +2958,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "trick" /* 트릭 */ } ],
       [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ],
       [ { "slug": "high-jump-kick" /* 무릎차기 */ } ]
+    ]
+  },
+  {
+    "item": "medichamite" /* 요가램나이트 */,
+    "ability": "pure-power" /* 순수한힘 */,
+    "moves": [
+      [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
+      [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ],
+      [ { "slug": "thunder-punch" /* 번개펀치 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ]
     ]
   }
   ],
@@ -2902,6 +3082,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
       [ { "slug": "acrobatics" /* 애크러뱃 */ } ],
       [ { "slug": "defog" /* 안개제거 */ } ]
+    ]
+  },
+  {
+    "item": "hawluchanite" /* 루차불나이트 */,
+    "ability": "unburden" /* 곡예 */,
+    "moves": [
+      [ { "slug": "sky-attack" /* 불새 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   },
   ],
@@ -3120,6 +3310,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "counter" /* 카운터 */ } ]
     ]
   },
+  {
+    "item": "alakazite" /* 후디나이트 */,
+    "ability": "magic-guard" /* 매직가드 */,
+    "moves": [
+      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
+    ]
+  },
   ],
   "zapdos": /* 썬더 */ [
   {
@@ -3292,6 +3492,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
       [ { "slug": "giga-drain" /* 기가드레인 */ } ],
       [ { "slug": "synthesis" /* 광합성 */ } ]
+    ]
+  },
+  {
+    "item": "venusaurite" /* 이상해꽃나이트 */,
+    "ability": "overgrow" /* 심록 */,
+    "moves": [
+      [ { "slug": "leaf-storm" /* 리프스톰 */ } ],
+      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
+      [ { "slug": "synthesis" /* 광합성 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
     ]
   }
   ],
@@ -3671,6 +3881,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "calm-mind" /* 명상 */ } ]
     ]
   },
+  {
+    "item": "slowbronite" /* 야도란나이트 */,
+    "ability": "regenerator" /* 재생력 */,
+    "moves": [
+      [ { "slug": "scald" /* 열탕 */ } ],
+      [ { "slug": "fire-blast" /* 불대문자 */ }, { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "ice-beam" /* 냉동빔 */ }, { "slug": "grass-knot" /* 풀묶기 */ } ],
+      [ { "slug": "slack-off" /* 게으름피우기 */ } ]
+    ]
+  },
   ],
   "skarmory": /* 무장조 */ [
   {
@@ -3842,6 +4062,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "spikes" /* 압정뿌리기 */ } ],
       [ { "slug": "brave-bird" /* 브레이브버드 */ } ]
     ]
+  },
+  {
+    "item": "skarmorite" /* 무장조나이트 */,
+    "ability": "sturdy" /* 옹골참 */,
+    "moves": [
+      [ { "slug": "body-press" /* 바디프레스 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ],
+      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
+      [ { "slug": "brave-bird" /* 브레이브버드 */ } ]
+    ]
   }
   ],
   "pinsir": /* 쁘사이저 */ [
@@ -3880,6 +4110,16 @@ const SPECIES_FACTORY_SETS = {
     "ability": "mold-breaker" /* 틀깨기 */,
     "moves": [
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "x-scissor" /* 시저크로스 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "stone-edge" /* 스톤에지 */ } ]
+    ]
+  },
+  {
+    "item": "pinsirite" /* 쁘사이저나이트 */,
+    "ability": "mold-breaker" /* 틀깨기 */,
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "x-scissor" /* 시저크로스 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "stone-edge" /* 스톤에지 */ } ]
@@ -4098,6 +4338,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "bullet-punch" /* 불릿펀치 */ } ]
     ]
+  },
+  {
+    "item": "metagrossite" /* 메타그로스나이트 */,
+    "ability": "clear-body" /* 클리어바디 */,
+    "moves": [
+      [ { "slug": "meteor-mash" /* 코멧펀치 */ } ],
+      [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ],
+      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
   }
   ],
   "manectric": /* 썬더볼트 */ [
@@ -4139,6 +4389,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
       [ { "slug": "overheat" /* 오버히트 */ }, { "slug": "flamethrower" /* 화염방사 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "grass" } ]
+    ]
+  },
+  {
+    "item": "manectite" /* 썬더볼트나이트 */,
+    "ability": "lightning-rod" /* 피뢰침 */,
+    "moves": [
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ }, { "slug": "overheat" /* 오버히트 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
     ]
   },
   ],
@@ -4559,6 +4819,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
       [ { "slug": "encore" /* 앵콜 */ }, { "slug": "substitute" /* 대타출동 */ } ]
     ]
+  },
+  {
+    "item": "lopunnite" /* 이어롭나이트 */,
+    "ability": "limber" /* 유연 */,
+    "moves": [
+      [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
+      [ { "slug": "return" /* 은혜갚기 */ } ],
+      [ { "slug": "fake-out" /* 속이기 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ]
+    ]
   }
   ],
   "heracross": /* 헤라크로스 */ [
@@ -4650,6 +4920,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "close-combat" /* 인파이트 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+    ]
+  },
+  {
+    "item": "heracronite" /* 헤라크로스나이트 */,
+    "ability": "moxie" /* 자기과신 */,
+    "moves": [
+      [ { "slug": "megahorn" /* 메가혼 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   }
   ],
@@ -4924,6 +5204,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "tera-blast" /* 테라버스트 */ } ],
       [ { "slug": "rest" /* 잠자기 */ } ]
     ]
+  },
+  {
+    "item": "gyaradosite" /* 갸라도스나이트 */,
+    "ability": "intimidate" /* 위협 */,
+    "moves": [
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
+      [ { "slug": "waterfall" /* 폭포오르기 */ } ],
+      [ { "slug": "bounce" /* 뛰어오르기 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "stone-edge" /* 스톤에지 */ } ]
+    ]
   }
   ],
   "gallade": /* 엘레이드 */ [
@@ -4985,6 +5275,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "psycho-cut" /* 사이코커터 */ }, { "slug": "zen-headbutt" /* 사념의박치기 */ } ],
       [ { "slug": "shadow-sneak" /* 야습 */ }, { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
       [ { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  },
+  {
+    "item": "galladite" /* 엘레이드나이트 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "rock-slide" /* 스톤샤워 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ]
     ]
   }
   ],
@@ -5200,6 +5500,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ]
     ]
+  },
+  {
+    "item": "gardevoirite" /* 가디안나이트 */,
+    "ability": "trace" /* 트레이스 */,
+    "moves": [
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+    ]
   }
   ],
   "garchomp": /* 한카리아스 */ [
@@ -5251,6 +5561,26 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "fire-fang" /* 불꽃엄니 */ } ],
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "scale-shot" /* 스케일샷 */ } ]
+    ]
+  },
+  {
+    "item": "garchompite" /* 한카리아스나이트 */,
+    "ability": "rough-skin" /* 까칠한피부 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "dragon-tail" /* 드래곤테일 */ } ],
+      [ { "slug": "fire-blast" /* 불대문자 */ } ]
+    ]
+  },
+  {
+    "item": "garchompite-z" /* 한카리아스나이트Z */,
+    "ability": "rough-skin" /* 까칠한피부 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "dragon-tail" /* 드래곤테일 */ } ],
+      [ { "slug": "fire-blast" /* 불대문자 */ } ]
     ]
   },
   ],
@@ -5353,6 +5683,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "extreme-speed" /* 신속 */ } ],
       [ { "slug": "outrage" /* 역린 */ } ],
       [ { "slug": "ice-spinner" /* 아이스스피너 */ } ]
+    ]
+  },
+  {
+    "item": "dragoninite" /* 망나뇽나이트 */,
+    "ability": "multiscale" /* 멀티스케일 */,
+    "moves": [
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
+      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "extreme-speed" /* 신속 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   }
   ],
@@ -5548,6 +5888,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
+  },
+  {
+    "item": "clefablite" /* 픽시나이트 */,
+    "ability": "magic-guard" /* 매직가드 */,
+    "moves": [
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "soft-boiled" /* 알낳기 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ]
+    ]
   }
   ],
   "charizard": /* 리자몽 */ [
@@ -5619,6 +5969,26 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
       [ { "slug": "roost" /* 날개쉬기 */ }, { "slug": "thunder-punch" /* 번개펀치 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "charizardite-x" /* 리자몽나이트X */,
+    "ability": "blaze" /* 맹화 */,
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ }, { "slug": "thunder-punch" /* 번개펀치 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "charizardite-y" /* 리자몽나이트Y */,
+    "ability": "blaze" /* 맹화 */,
+    "moves": [
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "air-slash" /* 에어슬래시 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   }
   ],
@@ -5846,6 +6216,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "defog" /* 안개제거 */ } ],
       [ { "slug": "will-o-wisp" /* 도깨비불 */ }, { "slug": "haze" /* 흑안개 */ }, { "slug": "roar" /* 울부짖기 */ } ]
     ]
+  },
+  {
+    "item": "altarianite" /* 파비코리나이트 */,
+    "ability": "natural-cure" /* 자연회복 */,
+    "moves": [
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
+      [ { "slug": "dragon-claw" /* 드래곤클로 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ }, { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
   }
   ],
   "serperior": /* 샤로다 */ [
@@ -6049,6 +6429,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
       [ { "slug": "liquidation" /* 아쿠아브레이크 */ }, { "slug": "ice-punch" /* 냉동펀치 */ } ],
       [ { "slug": "crunch" /* 깨물어부수기 */ } ]
+    ]
+  },
+  {
+    "item": "feraligite" /* 장크로다일나이트 */,
+    "ability": "sheer-force" /* 우격다짐 */,
+    "moves": [
+      [ { "slug": "waterfall" /* 폭포오르기 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ } ],
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ]
     ]
   }
   ],
@@ -6642,6 +7032,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "dragon-dance" /* 용의춤 */ } ]
     ]
+  },
+  {
+    "item": "aerodactylite" /* 프테라나이트 */,
+    "ability": "unnerve" /* 긴장감 */,
+    "moves": [
+      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "ice-fang" /* 얼음엄니 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "pursuit" /* 따라가때리기 */ } ]
+    ]
   }
   ],
   "hydreigon": /* 삼삼드래 */ [
@@ -6990,6 +7390,26 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "sucker-punch" /* 기습 */ } ],
       [ { "slug": "play-rough" /* 치근거리기 */ } ]
     ]
+  },
+  {
+    "item": "absolite" /* 앱솔나이트 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "iron-tail" /* 아이언테일 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ]
+    ]
+  },
+  {
+    "item": "absolite-z" /* 앱솔나이트Z */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "iron-tail" /* 아이언테일 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ]
+    ]
   }
   ],
   "aggron": /* 보스로라 */ [
@@ -7042,6 +7462,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
       [ { "slug": "protect" /* 방어 */ }, { "slug": "roar" /* 울부짖기 */ }, { "slug": "toxic" /* 맹독 */ } ]
     ]
+  },
+  {
+    "item": "aggronite" /* 보스로라나이트 */,
+    "ability": "rock-head" /* 돌머리 */,
+    "moves": [
+      [ { "slug": "head-smash" /* 양날박치기 */ } ],
+      [ { "slug": "heavy-slam" /* 헤비봄버 */ } ],
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
+    ]
   }
   ],
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
@@ -7085,6 +7515,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
+  },
+  {
+    "item": "beedrillite" /* 독침붕나이트 */,
+    "ability": "sniper" /* 스나이퍼 */,
+    "moves": [
+      [ { "slug": "poison-jab" /* 독찌르기 */ } ],
+      [ { "slug": "drill-run" /* 드릴라이너 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
   }
   ],
   "blastoise": /* 거북왕 */ [
@@ -7106,6 +7546,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "rapid-spin" /* 고속스핀 */ } ],
       [ { "slug": "refresh" /* 리프레쉬 */ } ],
       [ { "slug": "toxic" /* 맹독 */ } ]
+    ]
+  },
+  {
+    "item": "blastoisinite" /* 거북왕나이트 */,
+    "ability": "torrent" /* 급류 */,
+    "moves": [
+      [ { "slug": "scald" /* 열탕 */ } ],
+      [ { "slug": "rapid-spin" /* 고속스핀 */ } ],
+      [ { "slug": "toxic" /* 맹독 */ } ],
+      [ { "slug": "foresight" /* 꿰뚫어보기 */ } ]
     ]
   }
   ],
@@ -7525,6 +7975,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ }, { "slug": "roar" /* 울부짖기 */ } ],
       [ { "slug": "flip-turn" /* 퀵턴 */ } ]
     ]
+  },
+  {
+    "item": "swampertite" /* 대짱이나이트 */,
+    "ability": "torrent" /* 급류 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ }, { "slug": "roar" /* 울부짖기 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ]
+    ]
   }
   ],
   "ampharos": /* 전룡 */ [
@@ -7536,6 +7996,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ice" } ]
+    ]
+  },
+  {
+    "item": "ampharosite" /* 전룡나이트 */,
+    "ability": "static" /* 정전기 */,
+    "moves": [
+      [ { "slug": "agility" /* 고속이동 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
     ]
   },
   ],
@@ -7721,6 +8191,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "energy-ball" /* 에너지볼 */ } ],
       [ { "slug": "calm-mind" /* 명상 */ } ]
     ]
+  },
+  {
+    "item": "chandelurite" /* 샹델라나이트 */,
+    "ability": "flash-fire" /* 타오르는불꽃 */,
+    "moves": [
+      [ { "slug": "fire-blast" /* 불대문자 */ }, { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "energy-ball" /* 에너지볼 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ } ]
+    ]
   }
   ],
   "chesnaught": /* 브리가론 */ [
@@ -7762,6 +8242,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
       [ { "slug": "synthesis" /* 광합성 */ } ],
       [ { "slug": "body-press" /* 바디프레스 */ } ]
+    ]
+  },
+  {
+    "item": "chesnaughtite" /* 브리가론나이트 */,
+    "ability": "bulletproof" /* 방탄 */,
+    "moves": [
+      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
+      [ { "slug": "wood-hammer" /* 우드해머 */ } ],
+      [ { "slug": "synthesis" /* 광합성 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ]
     ]
   }
   ],
@@ -9345,6 +9835,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
       [ { "slug": "poison-jab" /* 독찌르기 */ }, { "slug": "ice-punch" /* 냉동펀치 */ } ]
     ]
+  },
+  {
+    "item": "scraftinite" /* 곤율거니나이트 */,
+    "ability": "moxie" /* 자기과신 */,
+    "moves": [
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ]
+    ]
   }
   ],
   "snorlax": /* 잠만보 */ [
@@ -9797,6 +10297,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "switcheroo" /* 바꿔치기 */ } ],
       [ { "slug": "spikes" /* 압정뿌리기 */ } ]
     ]
+  },
+  {
+    "item": "froslassite" /* 눈여아나이트 */,
+    "ability": "cursed-body" /* 저주받은바디 */,
+    "moves": [
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "switcheroo" /* 바꿔치기 */ } ],
+      [ { "slug": "destiny-bond" /* 길동무 */ } ]
+    ]
   }
   ],
   "houndoom": /* 헬가 */ [
@@ -9818,6 +10328,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "crunch" /* 깨물어부수기 */ } ],
       [ { "slug": "sucker-punch" /* 기습 */ } ],
       [ { "slug": "pursuit" /* 따라가때리기 */ } ]
+    ]
+  },
+  {
+    "item": "houndoominite" /* 헬가나이트 */,
+    "ability": "flash-fire" /* 타오르는불꽃 */,
+    "moves": [
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ]
     ]
   },
   ],
@@ -10395,6 +10915,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
       [ { "slug": "flip-turn" /* 퀵턴 */ } ]
     ]
+  },
+  {
+    "item": "dragalgite" /* 드래캄나이트 */,
+    "ability": "adaptability" /* 적응력 */,
+    "moves": [
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "dragon-pulse" /* 용의파동 */ } ]
+    ]
   }
   ],
   "reuniclus": /* 란쿨루스 */ [
@@ -10640,6 +11170,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "close-combat" /* 인파이트 */ } ],
       [ { "slug": "protect" /* 방어 */ } ]
     ]
+  },
+  {
+    "item": "sharpedonite" /* 샤크니아나이트 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "waterfall" /* 폭포오르기 */ } ],
+      [ { "slug": "crunch" /* 깨물어부수기 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "protect" /* 방어 */ } ]
+    ]
   }
   ],
   "sceptile": /* 나무킹 */ [
@@ -10650,6 +11190,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "leaf-storm" /* 리프스톰 */ } ],
       [ { "slug": "giga-drain" /* 기가드레인 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ice" } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ]
+    ]
+  },
+  {
+    "item": "sceptilite" /* 나무킹나이트 */,
+    "ability": "overgrow" /* 심록 */,
+    "moves": [
+      [ { "slug": "leaf-storm" /* 리프스톰 */ } ],
+      [ { "slug": "giga-drain" /* 기가드레인 */ } ],
+      [ { "slug": "hidden-power" /* 잠재파워 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ]
     ]
   }
@@ -11072,12 +11622,32 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
       [ { "slug": "rock-slide" /* 스톤샤워 */ } ]
     ]
+  },
+  {
+    "item": "abomasite" /* 눈설왕나이트 */,
+    "ability": "snow-warning" /* 눈퍼뜨리기 */,
+    "moves": [
+      [ { "slug": "blizzard" /* 눈보라 */ } ],
+      [ { "slug": "wood-hammer" /* 우드해머 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ]
+    ]
   }
   ],
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
   "banette": /* 다크펫 */ [
   {
     "item": "focus-sash" /* 집중띠 */,
+    "ability": "insomnia" /* 불면 */,
+    "moves": [
+      [ { "slug": "destiny-bond" /* 길동무 */ }, { "slug": "gunk-shot" /* 더스트슈트 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ }, { "slug": "taunt" /* 도발 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
+    ]
+  },
+  {
+    "item": "banettite" /* 다크펫나이트 */,
     "ability": "insomnia" /* 불면 */,
     "moves": [
       [ { "slug": "destiny-bond" /* 길동무 */ }, { "slug": "gunk-shot" /* 더스트슈트 */ } ],
@@ -11270,6 +11840,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "protect" /* 방어 */ } ],
       [ { "slug": "toxic" /* 맹독 */ } ],
       [ { "slug": "flamethrower" /* 화염방사 */ } ]
+    ]
+  },
+  {
+    "item": "delphoxite" /* 마폭시나이트 */,
+    "ability": "blaze" /* 맹화 */,
+    "moves": [
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
+      [ { "slug": "grass-knot" /* 풀묶기 */ } ]
     ]
   }
   ],
@@ -11739,6 +12319,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flamethrower" /* 화염방사 */ } ],
       [ { "slug": "acid-spray" /* 애시드봄 */ } ]
     ]
+  },
+  {
+    "item": "eelektrossite" /* 저리더프나이트 */,
+    "ability": "levitate" /* 부유 */,
+    "moves": [
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "giga-drain" /* 기가드레인 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+    ]
   }
   ],
   "druddigon": /* 크리만 */ [
@@ -11950,6 +12540,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "roar" /* 울부짖기 */ }, { "slug": "toxic" /* 맹독 */ } ]
     ]
   },
+  {
+    "item": "cameruptite" /* 폭타나이트 */,
+    "ability": "solid-rock" /* 하드록 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "lava-plume" /* 분연 */ }, { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "roar" /* 울부짖기 */ }, { "slug": "toxic" /* 맹독 */ } ]
+    ]
+  },
   ],
   "hitmonlee": /* 시라소몬 */ [
   {
@@ -11997,6 +12597,16 @@ const SPECIES_FACTORY_SETS = {
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "moody" /* 정신력 */,
+    "moves": [
+      [ { "slug": "protect" /* 방어 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "sheer-cold" /* 절대영도 */ } ]
+    ]
+  },
+  {
+    "item": "glalitite" /* 얼음귀신나이트 */,
+    "ability": "moody" /* 변덕쟁이 */,
     "moves": [
       [ { "slug": "protect" /* 방어 */ } ],
       [ { "slug": "substitute" /* 대타출동 */ } ],
@@ -12148,6 +12758,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "superpower" /* 엄청난힘 */ } ],
       [ { "slug": "wild-charge" /* 와일드볼트 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "emboarite" /* 염무왕나이트 */,
+    "ability": "reckless" /* 이판사판 */,
+    "moves": [
+      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ } ],
+      [ { "slug": "wild-charge" /* 와일드볼트 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ]
     ]
   }
   ],
@@ -12787,6 +13407,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "protect" /* 방어 */ } ],
       [ { "slug": "toxic" /* 맹독 */ } ]
     ]
+  },
+  {
+    "item": "audinite" /* 다부니나이트 */,
+    "ability": "regenerator" /* 재생력 */,
+    "moves": [
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "wish" /* 희망사항 */ } ],
+      [ { "slug": "protect" /* 방어 */ } ],
+      [ { "slug": "double-edge" /* 이판사판태클 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
+    ]
   }
   ],
   "mesprit": /* 엠라이트 */ [
@@ -12962,6 +13592,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
       [ { "slug": "psycho-cut" /* 사이코커터 */ } ],
       [ { "slug": "switcheroo" /* 바꿔치기 */ } ]
+    ]
+  },
+  {
+    "item": "malamarite" /* 칼라마네로나이트 */,
+    "ability": "contrary" /* 심술꾸러기 */,
+    "moves": [
+      [ { "slug": "superpower" /* 엄청난힘 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "rest" /* 잠자기 */ } ],
+      [ { "slug": "sleep-talk" /* 잠꼬대 */ } ]
     ]
   },
   ],
@@ -13158,6 +13798,16 @@ const SPECIES_FACTORY_SETS = {
   "barbaracle": /* 거북손데스 */ [
   {
     "item": "shuca-berry" /* 슈캐열매 */,
+    "ability": "tough-claws" /* 단단한발톱 */,
+    "moves": [
+      [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
+      [ { "slug": "razor-shell" /* 셸블레이드 */ } ],
+      [ { "slug": "return" /* 은혜갚기 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+    ]
+  },
+  {
+    "item": "barbaracite" /* 거북손데스나이트 */,
     "ability": "tough-claws" /* 단단한발톱 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
@@ -14238,6 +14888,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "poltergeist" /* 폴터가이스트 */ } ],
       [ { "slug": "stone-edge" /* 스톤에지 */ } ],
       [ { "slug": "close-combat" /* 인파이트 */ } ]
+    ]
+  },
+  {
+    "item": "golurkite" /* 골루그나이트 */,
+    "ability": "iron-fist" /* 철주먹 */,
+    "moves": [
+      [ { "slug": "rock-polish" /* 록커트 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "shadow-punch" /* 섀도펀치 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ]
     ]
   }
   ],
@@ -15331,6 +15991,26 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ice" } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ]
+    ]
+  },
+  {
+    "item": "raichunite-x" /* 라이츄나이트X */,
+    "ability": "lightning-rod" /* 피뢰침 */,
+    "moves": [
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "signal-beam" /* 시그널빔 */ } ]
+    ]
+  },
+  {
+    "item": "raichunite-y" /* 라이츄나이트Y */,
+    "ability": "lightning-rod" /* 피뢰침 */,
+    "moves": [
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "signal-beam" /* 시그널빔 */ } ]
     ]
   }
   ],
@@ -17704,6 +18384,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ground" } ],
       [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
+  },
+  {
+    "item": "pidgeotite" /* 피죤투나이트 */,
+    "ability": "big-pecks" /* 부풀린가슴 */,
+    "moves": [
+      [ { "slug": "hurricane" /* 폭풍 */ } ],
+      [ { "slug": "heat-wave" /* 열풍 */ } ],
+      [ { "slug": "work-up" /* 분발 */ }, { "slug": "hidden-power" /* 잠재파워 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
   }
   ],
   "starmie": /* 아쿠스타 */ [
@@ -17765,6 +18455,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
       [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
       [ { "slug": "recover" /* HP회복 */ } ]
+    ]
+  },
+  {
+    "item": "starminite" /* 아쿠스타나이트 */,
+    "ability": "analytic" /* 애널라이즈 */,
+    "moves": [
+      [ { "slug": "hydro-pump" /* 하이드로펌프 */ } ],
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ]
     ]
   }
   ],
@@ -17983,6 +18683,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "heavy-slam" /* 헤비봄버 */ } ],
       [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "protect" /* 방어 */ } ],
       [ { "slug": "toxic" /* 맹독 */ } ]
+    ]
+  },
+  {
+    "item": "steelixite" /* 강철톤나이트 */,
+    "ability": "sturdy" /* 옹골참 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "heavy-slam" /* 헤비봄버 */ } ],
+      [ { "slug": "curse" /* 저주 */ } ]
     ]
   }
   ],
@@ -18375,6 +19085,16 @@ const SPECIES_FACTORY_SETS = {
   "golisopod": /* 갑주무사 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
+    "ability": "emergency-exit" /* 위기회피 */,
+    "moves": [
+      [ { "slug": "first-impression" /* 만나자마자 */ } ],
+      [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ],
+      [ { "slug": "leech-life" /* 흡혈 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ]
+    ]
+  },
+  {
+    "item": "golisopite" /* 갑주무사나이트 */,
     "ability": "emergency-exit" /* 위기회피 */,
     "moves": [
       [ { "slug": "first-impression" /* 만나자마자 */ } ],
@@ -18868,6 +19588,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flamethrower" /* 화염방사 */ }, { "slug": "surf" /* 파도타기 */ } ],
       [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
+  },
+  {
+    "item": "drampanite" /* 할비롱나이트 */,
+    "ability": ["berserk","sap-sipper"] /* 발끈, 초식 */,
+    "moves": [
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
   }
   ],
   "kecleon": /* 켈리몬 */ [
@@ -19002,11 +19732,31 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
       [ { "slug": "weather-ball" /* 웨더볼 */ } ]
     ]
+  },
+  {
+    "item": "victreebelite" /* 우츠보트나이트 */,
+    "ability": "chlorophyll" /* 엽록소 */,
+    "moves": [
+      [ { "slug": "sunny-day" /* 쾌청 */ } ],
+      [ { "slug": "solar-beam" /* 솔라빔 */ } ],
+      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
+      [ { "slug": "weather-ball" /* 웨더볼 */ } ]
+    ]
   }
   ],
   "crabominable": /* 모단단게 */ [
   {
     "item": "assault-vest" /* 돌격조끼 */,
+    "ability": "iron-fist" /* 철주먹 */,
+    "moves": [
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "ice-hammer" /* 아이스해머 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ]
+    ]
+  },
+  {
+    "item": "crabominite" /* 모단단게나이트 */,
     "ability": "iron-fist" /* 철주먹 */,
     "moves": [
       [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
@@ -19790,6 +20540,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "spikes" /* 압정뿌리기 */ } ],
       [ { "slug": "mortal-spin" /* 킬러스핀 */ } ],
       [ { "slug": "mud-shot" /* 머드숏 */ } ],
+      [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ]
+    ]
+  },
+  {
+    "item": "glimmoranite" /* 킬라플로르나이트 */,
+    "ability": "toxic-debris" /* 독치장 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "spikes" /* 압정뿌리기 */ } ],
+      [ { "slug": "mortal-spin" /* 킬러스핀 */ } ],
+      [ { "slug": "mud-shot" /* 머드샷 */ } ],
       [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ]
     ]
   }
@@ -21636,7 +22396,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": null,
+    "item": "focus-sash" /* 기합의띠 */,
     "ability": "adaptability" /* 적응력 */,
     "moves": [
       [ { "slug": "wave-crash" /* 웨이브태클 */ } ],
@@ -22057,6 +22817,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
       [ { "slug": "icicle-spear" /* 고드름침 */ } ]
+    ]
+  },
+  {
+    "item": "baxcalibrite" /* 드닐레이브나이트 */,
+    "ability": "thermal-exchange" /* 열교환 */,
+    "moves": [
+      [ { "slug": "icicle-crash" /* 고드름떨구기 */ }, { "slug": "icicle-spear" /* 고드름침 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
+      [ { "slug": "glaive-rush" /* 대검돌격 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   }
   ],

@@ -5,7 +5,8 @@
 //
 // 입력 (tools/source):
 //   eligible_pokemon_ids.json   게임에 등장하는 포켓몬 번호 목록 (종족값 660 미만의 최종 진화형 등)
-//   species_factory_sets.js     종족별 실전 세트 (도구, 특성, 기술). 한글 주석이 달린 사람이 고치는 원본
+//   species_factory_sets.js     종족별 실전 세트 (도구, 특성, 기술). 한글 주석이 달린 사람이 고치는 원본.
+//                               메가스톤을 든 세트(메가 폼마다 하나 이상)도 여기에 같이 있다
 //
 // 출력 (src/main/resources/data):
 //   pool.json          [번호, ...]
@@ -26,6 +27,7 @@ const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "bf-sets-"));
 const copy = path.join(tmp, "species_factory_sets.mjs");
 fs.copyFileSync(path.join(sourceDir, "species_factory_sets.js"), copy);
 const SETS = (await import(pathToFileURL(copy).href)).default;
+const MEGAS = JSON.parse(fs.readFileSync(path.join(here, "..", "..", "web", "src", "shared", "megas.json"), "utf8"));
 const ELIGIBLE = JSON.parse(fs.readFileSync(path.join(sourceDir, "eligible_pokemon_ids.json"), "utf8"));
 
 const read = (name) => JSON.parse(fs.readFileSync(path.join(dataDir, name), "utf8"));
@@ -62,6 +64,17 @@ for (const [species, sets] of Object.entries(SETS)) {
         rows.push({ species, set });
     }
 }
+// 메가스톤을 든 세트: 그 스톤의 포켓몬 세트에만 있어야 하고, 메가 폼마다 하나 이상 있어야 한다
+const stoneOwner = new Map(MEGAS.map((m) => [m.stone, m.base]));
+let megaSetCount = 0;
+for (const { species, set } of rows) {
+    if (!stoneOwner.has(set.item)) continue;
+    megaSetCount++;
+    if (stoneOwner.get(set.item) !== species) problems.push(`${species}: 다른 포켓몬의 메가스톤을 들고 있음 ${set.item}`);
+}
+for (const m of MEGAS) {
+    if (!rows.some((r) => r.species === m.base && r.set.item === m.stone)) problems.push(`메가 폼에 세트가 없음: ${m.name} (${m.stone})`);
+}
 for (const id of ELIGIBLE) if (!pokemonIds.has(id)) problems.push(`풀의 번호가 pokemon.json에 없음: ${id}`);
 if (new Set(ELIGIBLE).size !== ELIGIBLE.length) problems.push("풀에 중복된 번호가 있음");
 
@@ -80,6 +93,7 @@ console.log(JSON.stringify({
     pool: POOL.length,
     species: Object.keys(SETS).length,
     sets: rows.length,
+    megaSets: megaSetCount,
     setsWithoutItem: rows.filter((r) => !r.set.item).length,
     leftOutForNoSet: ELIGIBLE.length - POOL.length,
     files: { pool: kb("pool.json"), factory_sets: kb("factory_sets.json") },

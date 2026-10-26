@@ -9,6 +9,8 @@ import {
     statNameToString,
 } from "./helpers";
 import { FOE_TARGETS, isOhkoMove, ohkoImmune, rollAccuracy } from "./accuracy";
+import { megaFormOf, canMegaEvolve, megaEnglishName } from "./mega";
+import { getBaseStats } from "./randompokemon";
 import { spendPP, restorePP, ppLeft, maxPP, hasPP, getUsableMoves } from "./pp";
 import { effectiveSpeed } from "./speed";
 import { statusAnimsOf } from "./animcues";
@@ -72,6 +74,8 @@ import {
     preventsDrag,
     copiesFoeBoosts,
     hasUnseenFist,
+    hasPiercingDrill,
+    hasParentalBond,
     preventsTaunt,
     preventsDisable as preventsMoveLock,
     getAbility,
@@ -412,7 +416,40 @@ function stampFaint(pokemon) {
     if (!pokemon.faintStamp) pokemon.faintStamp = ++faintClock;
 }
 
-function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
+// Mega Evolution: the front pokemon of `team` turns into its Mega form for the rest of the battle (until
+// revertMega puts it back). Its base stats, types, ability and sprites change; HP, moves, item and stat stages
+// stay. The new ability's on-entry effect (Intimidate, Drought...) goes off right away.
+export function megaEvolve(team, foeTeam, text) {
+    const mon = team[0];
+    const form = megaFormOf(mon);
+    team.megaUsed = true;
+    const shownBefore = pokemonNameToString(mon);
+    text.push(shownBefore + "'s " + itemLabel(mon) + " is reacting!");
+    mon.megaOriginal = {
+        korean_name: mon.korean_name,
+        english_name: mon.english_name,
+        base_stats: mon.base_stats,
+        types: mon.types,
+        ability: mon.ability,
+        baseAbility: mon.baseAbility,
+        sprites: mon.sprites,
+    };
+    const stats = getBaseStats({ stats: form.stats });
+    stats[0] = mon.base_stats[0]; // max HP doesn't change
+    mon.base_stats = stats;
+    mon.types = form.types.map((t) => ({ ...t, type: { ...t.type } }));
+    mon.ability = getAbility(form.abilities[0].ability.name);
+    mon.baseAbility = mon.ability; // what it goes back to after Trace / Transform
+    mon.sprites = { ...mon.sprites, front_default: form.sprites.front_default, back_default: form.sprites.back_default };
+    mon.korean_name = form.korean_name;
+    mon.english_name = megaEnglishName(form);
+    mon.boosterStat = null;
+    text.push(shownBefore + " Mega Evolved into " + pokemonNameToString(mon) + "!");
+    const field = ensureField(team, foeTeam);
+    if (foeTeam[0].hp[0] > 0) addArrayToArray(text, runEntryAbilities(team, foeTeam, field));
+}
+
+function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     playerPokemon.firstFainted = null; // who reached 0 HP first this turn
     playerPokemon[0].faintStamp = opponentPokemon[0].faintStamp = 0;
     const entryText = enterBattle(playerPokemon, opponentPokemon);
@@ -424,7 +461,13 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove) {
         move = playerPokemon[0].moveset.find((m) => m.name === move.name) || move;
     }
     move = forcedMove(playerPokemon[0], move);
+    // Mega Evolution comes before any move (a pokemon that switches in this turn can't evolve yet), and the
+    // speeds below are worked out with the new stats
+    const megaText = [];
+    if (options.mega && chosenMove.priority !== 6 && canMegaEvolve(playerPokemon)) megaEvolve(playerPokemon, opponentPokemon, megaText);
     const cpuMove = forcedMove(opponentPokemon[0], makeMove(playerPokemon, opponentPokemon, !isTrapped(opponentPokemon, playerPokemon)));
+    if (cpuMove.priority !== 6 && canMegaEvolve(opponentPokemon)) megaEvolve(opponentPokemon, playerPokemon, megaText);
+    entryText.push(...megaText);
     recordCpuMove(opponentPokemon[0], cpuMove);
     const priorityOf = (mv, mon) => movePriority(mv, mon, field) + (hasCustapBoost(mon) ? 1 : 0);
     let playerPriority = priorityOf(move, playerPokemon[0]);
@@ -759,6 +802,7 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
     trackRampage(playerPokemon, opponentPokemon, chosenMove, text.slice(linesBefore), text);
     if (playerPokemon.field) playerPokemon.field.lastMove = chosenMove; // (Copycat copies what was used before it)
     attacker.ignoresAbilityNow = false;
+    attacker.piercingNow = false;
     return text;
 }
 
@@ -796,6 +840,7 @@ function trackRampage(team, foeTeam, move, lines, text) {
 function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
     const field = ensureField(playerPokemon, opponentPokemon);
     const attacker = playerPokemon[0];
+    attacker.piercingNow = false; // set again below if Piercing Drill gets this move through a protection
     // An Encore that landed earlier this turn (before this pokemon moved) already locks the move it uses now
     if (!opts.copied && !opts.bounced) chosenMove = forcedMove(attacker, chosenMove);
     // Weather Ball, Terrain Pulse and Grassy Glide change with the field; Pixilate, Normalize
@@ -1335,6 +1380,11 @@ function isBlockedByProtection(foe, attacker, move) {
     if (!shield || !PROTECT_BLOCKED.has(move.name)) return false;
     if (shield.kind === "damaging" && move.damage_class.name === "status") return false;
     if (hasUnseenFist(attacker) && makesContact(attacker, move)) return false;
+    // Piercing Drill gets through too, but only a quarter of the damage (taken off in doAttack)
+    if (hasPiercingDrill(attacker) && makesContact(attacker, move)) {
+        attacker.piercingNow = true;
+        return false;
+    }
     return true;
 }
 
@@ -2882,7 +2932,24 @@ function tryInflictAilment(attacker, defender, move, text, field, defenderTeam =
 
 // How many times a multi-hit move strikes: fixed for most, the standard 35/35/15/15 split
 // over 2-5 hits for the "2-5 times" moves.
+// Parental Bond: damaging single-hit moves strike twice (not the ones below, nor one-hit KOs or charging moves)
+const NO_PARENTAL_BOND = new Set([
+    "counter", "mirror-coat", "metal-burst", "endeavor", "final-gambit", "fling", "explosion", "self-destruct", "misty-explosion",
+    "mind-blown", "bide", "rollout", "ice-ball", "uproar", "sky-drop", "beat-up",
+]);
+function parentalBondApplies(attacker, move) {
+    return (
+        hasParentalBond(attacker) &&
+        move.damage_class.name !== "status" &&
+        !MULTIHIT_MOVES[move.name] &&
+        !NO_PARENTAL_BOND.has(move.name) &&
+        !CHARGE_MOVES.has(move.name) &&
+        !isOhkoMove(move)
+    );
+}
+
 function rollHitCount(move, attacker) {
+    if (parentalBondApplies(attacker, move)) return 2;
     const range = MULTIHIT_MOVES[move.name];
     if (!range) return 1;
     const [min, max] = range;
@@ -2910,7 +2977,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         return text;
     }
     // Fling: fails if the attacker has nothing to throw
-    if (move.name === "fling" && !activeItem(attacker)) {
+    if (move.name === "fling" && (!activeItem(attacker) || !isRemovable(attacker.item))) {
         text.push("But it failed!");
         return text;
     }
@@ -2965,6 +3032,10 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         const gambit = move.name === "final-gambit";
         const isCrit = !ohko && !fixed && !(defenderTeam && defenderTeam.luckyChantTurns > 0) && rollCrit(attacker, defender, move);
         let damage = ohko ? defender.hp[0] : damageCalc(attacker, defender, hitMove, { crit: isCrit, field });
+        // Parental Bond's second strike has a quarter of the power
+        if (hit > 0 && !beatUpAllies && parentalBondApplies(attacker, move)) damage = Math.floor(damage / 4);
+        // Piercing Drill through a protection: a quarter of the damage
+        if (attacker.piercingNow && damage > 0) damage = Math.max(1, Math.floor(damage / 4));
         const typeEff = typeEffectiveness(move, defender, attacker);
 
         // Reflect/Light Screen/Aurora Veil: halve incoming damage of the matching category for
@@ -3921,8 +3992,9 @@ function doEndOfTurn(pokemon, field, foe) {
 }
 
 // 화면에 나가는 글은 언어 설정에 맞춰 번역해서 돌려준다.
-export function doTurn(playerPokemon, opponentPokemon, chosenMove) {
-    return localizeTurnText(doTurnRaw(playerPokemon, opponentPokemon, chosenMove));
+// options.mega: the player also pressed Mega Evolution this turn
+export function doTurn(playerPokemon, opponentPokemon, chosenMove, options = {}) {
+    return localizeTurnText(doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options));
 }
 
 export function resumeTurn(playerPokemon, opponentPokemon, index) {

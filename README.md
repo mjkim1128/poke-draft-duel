@@ -48,6 +48,7 @@ docker run -p 8080:10000 -e PORT=10000 battlefactory
 |---|---|
 | 등장 포켓몬(풀), 종족별 세트 | `api/tools/source/`의 `eligible_pokemon_ids.json`, `species_factory_sets.js`를 고친 뒤 `cd api && node tools/build-sets-seed.mjs` (결과를 검증한 뒤 `src/main/resources/data/`에 씀) |
 | 포켓몬, 기술, 도구 원본 데이터 | `node tools/build-seed-from-pokeapi.mjs <게임의 src/shared 폴더>` 로 PokeAPI에서 다시 받아 `seed/`에 만들고, 결과를 `src/main/resources/data/`로 복사 |
+| 메가진화 폼, 메가스톤 | `cd api && node tools/build-megas.mjs` 로 PokeAPI에서 받아 `web/src/shared/megas.json`을 만들고, 메가스톤을 `items.json`에, 이름 없는 특성을 `ability_names.json`에 넣는다 (이미 있는 것은 건드리지 않는다) |
 | 배경음악 | `web/public/bgm/`의 mp3를 쓴다: 선출·교체 화면은 `select1/2.mp3`, 일반 배틀은 `battle1/2.mp3`, 네임드 보스는 `boss1/2.mp3` 중 하나를 화면에 들어올 때마다 무작위로 고른다(`web/src/audio/bgm.js`의 `FILE_SONGS`). 파일을 못 불러오면 `web/src/audio/songs.js`의 8비트 곡이 대신 나오고, 타이틀·승리·패배는 늘 8비트 곡이다 |
 
 ## Render에 올리기

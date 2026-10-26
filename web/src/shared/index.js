@@ -19,3 +19,4 @@ export * from './abilities';
 export * from './hazards';
 export * from './helditem';
 export * from './speed';
+export * from './mega';

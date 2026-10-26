@@ -24,3 +24,23 @@
         clip-path: inset(0 0 100% 0);
     }
 }
+
+/* 메가진화: 하얗게 번쩍였다가 보라빛으로 가라앉는다 */
+.mega-flash {
+    animation: mega-flash 1s ease-out;
+}
+
+@keyframes mega-flash {
+    0% {
+        filter: none;
+    }
+    20% {
+        filter: brightness(5) saturate(0) drop-shadow(0 0 14px #fff);
+    }
+    55% {
+        filter: brightness(1.6) drop-shadow(0 0 14px #b57cff);
+    }
+    100% {
+        filter: none;
+    }
+}

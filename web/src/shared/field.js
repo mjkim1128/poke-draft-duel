@@ -89,7 +89,7 @@ export function isGrounded(pokemon) {
     if (pokemon.types.some((t) => t.type.name === "flying")) return false;
     if (activeItem(pokemon) && pokemon.item.name === "air-balloon") return false;
     if (pokemon.levitates) return false;
-    if (pokemon.ability && pokemon.ability.name === "levitate") return false;
+    if (pokemon.ability && (pokemon.ability.name === "levitate" || pokemon.ability.name === "eelevate")) return false;
     return true;
 }
 

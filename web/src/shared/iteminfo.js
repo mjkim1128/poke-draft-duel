@@ -1,3 +1,4 @@
+import { MEGA_STONES } from "./mega";
 // Items this game actually gives real battle effects to. Left out on purpose: anything
 // that only matters with a system this engine doesn't have (entry hazards, weather,
 // accuracy/crit rolls, sound-move flags). Those items exist in the Pokedex/UI but were
@@ -200,7 +201,8 @@ export const CHOICE_ITEMS = {
 // also protect Mega Stones/Z-Crystals/Plates/Drives/orbs this way, but none of those
 // are in ITEM_POOL, so Soul Dew is the only one that matters here. Booster Energy joins it: the
 // real games only protect it on Paradox pokemon, and those are the only ones the sets give it to.
-export const UNREMOVABLE_ITEMS = new Set([SOUL_DEW, BOOSTER_ENERGY]);
+// Mega Stones are protected the same way (they only ever sit on the pokemon they belong to).
+export const UNREMOVABLE_ITEMS = new Set([SOUL_DEW, BOOSTER_ENERGY, ...MEGA_STONES]);
 
 // Real Fling base power per item (Bulbapedia's Fling power list); best-effort for the
 // items in ITEM_POOL specifically. Falls back to 30 for an unlisted general item, since

@@ -23,6 +23,7 @@ import {
     pickAbility,
     resetAbilityState,
     resetBattleForms,
+    revertMega,
 } from "shared";
 import "./StartScreen.css";
 import { isKorean } from "shared/lang";
@@ -95,6 +96,7 @@ export function Home() {
                 poke.torment = false;
                 poke.actionsSinceSwitch = 0;
                 poke.activeTurns = 0;
+                revertMega(poke); /// a Mega Evolved pokemon is back to its normal form
                 resetAbilityState(poke); /// ability, Transform, Illusion... back to how it started
                 resetBattleForms(poke); /// Hero Palafin, Noice Eiscue... are back to their normal form
                 poke.disguiseBusted = false;
@@ -109,6 +111,7 @@ export function Home() {
                 poke.consumedItem = null;
             }
             /// Reflect/Light Screen live on the team array itself, not on a pokemon
+            arr.megaUsed = false; /// the team can Mega Evolve again next battle
             arr.reflectTurns = 0;
             arr.lightScreenTurns = 0;
             arr.auroraTurns = 0;

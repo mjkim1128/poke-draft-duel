@@ -558,3 +558,81 @@ describe("역린 계열: 2~3턴 같은 기술로 고정되고 끝나면 혼란",
         expect(t).not.toContain("due to fatigue");
     });
 });
+
+describe("메가진화 특성", () => {
+    afterEach(() => jest.restoreAllMocks());
+    // 같은 조건에서 공격 한 번이 준 피해
+    const damageOf = (attackerSpecies, ability, moves, foeSpecies, foeMoves = ["splash"], foeAbility = null) => {
+        jest.spyOn(Math, "random").mockReturnValue(0.5);
+        const me = [mon(attackerSpecies, moves, ability)];
+        const foe = [mon(foeSpecies, foeMoves, foeAbility)];
+        me[0].moveset[0].accuracy = null;
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { dealt: foe[0].hp[1] - foe[0].hp[0], text, me, foe };
+    };
+
+    test("스카이스킨(Aerilate): 노말 기술이 비행 타입이 되고 위력이 오른다", () => {
+        const plain = damageOf("pinsir", null, ["tackle"], "venusaur").dealt;
+        const aerilate = damageOf("pinsir", "aerilate", ["tackle"], "venusaur").dealt;
+        expect(aerilate).toBeGreaterThan(plain * 1.8); // 풀 타입에 효과가 굉장한 비행 기술이 된다
+    });
+
+    test("드래곤스킨(Dragonize): 노말 기술이 드래곤 타입이 되고 위력이 오른다", () => {
+        const plain = damageOf("feraligatr", null, ["tackle"], "dragonite").dealt;
+        const dragonize = damageOf("feraligatr", "dragonize", ["tackle"], "dragonite").dealt;
+        expect(dragonize).toBeGreaterThan(plain * 1.8);
+    });
+
+    test("오라가드(Aura Guard): 접촉 기술의 피해가 절반이 되고, 비접촉 기술은 그대로다", () => {
+        const plain = damageOf("garchomp", null, ["tackle"], "lucario").dealt;
+        const guarded = damageOf("garchomp", null, ["tackle"], "lucario", ["splash"], "aura-guard").dealt;
+        expect(guarded).toBeLessThanOrEqual(Math.ceil(plain / 2) + 1);
+        expect(guarded).toBeGreaterThanOrEqual(Math.floor(plain / 2) - 1);
+        const plainSpecial = damageOf("garchomp", null, ["swift"], "lucario").dealt;
+        const guardedSpecial = damageOf("garchomp", null, ["swift"], "lucario", ["splash"], "aura-guard").dealt;
+        expect(guardedSpecial).toBe(plainSpecial);
+    });
+
+    test("일렉트릭블래스트(Eelevate): 땅 기술을 맞지 않고, 쓰러뜨리면 가장 높은 능력치가 오른다", () => {
+        const hit = damageOf("garchomp", null, ["earthquake"], "eelektross", ["splash"], "eelevate");
+        expect(hit.dealt).toBe(0);
+        const me = [mon("eelektross", ["tackle"], "eelevate")];
+        const foe = [mon("blissey", ["splash"])];
+        me[0].moveset[0].accuracy = null;
+        foe[0].hp[0] = 1;
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].stat_levels.some((level) => level === 1)).toBe(true);
+    });
+
+    test("부자유친(Parental Bond): 한 번 쓰면 두 번 맞히고, 두 번째는 4분의 1 위력이다", () => {
+        const single = damageOf("kangaskhan", null, ["tackle"], "snorlax");
+        const double = damageOf("kangaskhan", "parental-bond", ["tackle"], "snorlax");
+        expect(double.text).toContain("Hit 2 times!");
+        expect(double.dealt).toBeGreaterThan(single.dealt * 1.15);
+        expect(double.dealt).toBeLessThan(single.dealt * 1.35);
+    });
+
+    test("부자유친은 여러 번 때리는 기술과 변화 기술에는 적용되지 않는다", () => {
+        const multi = damageOf("kangaskhan", "parental-bond", ["double-kick"], "snorlax");
+        expect(multi.text).toContain("Hit 2 times!");
+        const triple = damageOf("kangaskhan", "parental-bond", ["triple-kick"], "snorlax");
+        expect(triple.text).toContain("Hit 3 times!");
+        const status = damageOf("kangaskhan", "parental-bond", ["splash"], "snorlax");
+        expect(status.text).not.toContain("Hit 2 times!");
+    });
+
+    test("관통드릴(Piercing Drill): 접촉 기술이 방어를 뚫고 4분의 1 피해를 준다", () => {
+        const open = damageOf("excadrill", null, ["tackle"], "snorlax").dealt;
+        const pierced = damageOf("excadrill", "piercing-drill", ["tackle"], "snorlax", ["protect"]);
+        expect(pierced.text).not.toContain("protected itself");
+        expect(pierced.dealt).toBeGreaterThanOrEqual(Math.floor(open / 4) - 1);
+        expect(pierced.dealt).toBeLessThanOrEqual(Math.ceil(open / 4) + 1);
+        const blocked = damageOf("excadrill", null, ["tackle"], "snorlax", ["protect"]);
+        expect(blocked.dealt).toBe(0);
+    });
+
+    test("관통드릴도 접촉하지 않는 기술은 방어에 막힌다", () => {
+        const swift = damageOf("excadrill", "piercing-drill", ["swift"], "snorlax", ["protect"]);
+        expect(swift.dealt).toBe(0);
+    });
+});

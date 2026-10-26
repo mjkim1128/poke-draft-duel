@@ -20,6 +20,7 @@ import {
     abilityLabel,
     doSwitchWithField,
     doTurn,
+    canMegaEvolve,
     resumeTurn,
     isTrapped,
     getUsableMoves,
@@ -82,6 +83,8 @@ export function Battle(props) {
     /// on top and a tabbed control panel (moves / switch / log) underneath.
     const portrait = useCompactLayout();
     const [panelTab, setPanelTab] = useState("moves");
+    /// "메가진화" switched on for the move about to be picked
+    const [megaOn, setMegaOn] = useState(false);
     const [announcerMessage, setAnnouncerMessage] = useState([]);
     const [isAnimating, setAnimating] = useState(false);
     /// A turn plays out one beat at a time instead of jumping straight to the end result:
@@ -229,7 +232,9 @@ export function Battle(props) {
             alert(localizeLine("Pick a pokemon to switch into!"));
             return;
         }
-        let text = doTurn(props.playerPokemon, props.opponentPokemon, move);
+        const useMega = megaOn && canMegaEvolve(props.playerPokemon);
+        setMegaOn(false);
+        let text = doTurn(props.playerPokemon, props.opponentPokemon, move, { mega: useMega });
         let t = [...turns];
         t.push(text);
         setTurns(t);
@@ -429,6 +434,12 @@ export function Battle(props) {
     /// Out of PP on every move (or on the one it is locked into): Struggle is all that's left
     if (usableMoves.length === 1 && usableMoves[0] === STRUGGLE) playableMoves = [STRUGGLE];
     if (playableMoves.length === 0) playableMoves = currentpoke.moveset;
+    const megaButton =
+        awaitingInput && canMegaEvolve(props.playerPokemon) ? (
+            <button type="button" className={"mega-toggle" + (megaOn ? " on" : "")} aria-pressed={megaOn} onClick={() => setMegaOn(!megaOn)}>
+                {megaOn ? "메가진화 켜짐" : "메가진화"}
+            </button>
+        ) : null;
     let moves = playableMoves.map((move, index) => {
         return (
             <div key={index}>
@@ -568,7 +579,12 @@ export function Battle(props) {
                         ))}
                     </div>
                     <div className="bp-body">
-                        {panelTab === "moves" && <div className="pokemon-moves bp-moves">{moves}</div>}
+                        {panelTab === "moves" && (
+                            <>
+                                {megaButton}
+                                <div className="pokemon-moves bp-moves">{moves}</div>
+                            </>
+                        )}
                         {panelTab === "switch" && <div className="bp-party">{partyRows}</div>}
                         {panelTab === "log" && (
                             <div className="bp-log">
@@ -652,6 +668,7 @@ export function Battle(props) {
                                       .back_default
                         }
                     />
+                    {megaButton}
                     <div className="pokemon-moves">{moves}</div>
                     <PokemonParty
                         pokemon={

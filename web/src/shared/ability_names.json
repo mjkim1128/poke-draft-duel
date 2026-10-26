@@ -974,5 +974,33 @@
  "tera-shift": {
   "en": "Tera Shift",
   "ko": "테라체인지"
+ },
+ "parental-bond": {
+  "en": "Parental Bond",
+  "ko": "부자유친"
+ },
+ "aerilate": {
+  "en": "Aerilate",
+  "ko": "스카이스킨"
+ },
+ "dragonize": {
+  "en": "Dragonize",
+  "ko": "드래곤스킨"
+ },
+ "aura-guard": {
+  "en": "Aura Guard",
+  "ko": "파동의방호"
+ },
+ "piercing-drill": {
+  "en": "Piercing Drill",
+  "ko": "관통드릴"
+ },
+ "healer": {
+  "en": "Healer",
+  "ko": "치유의마음"
+ },
+ "eelevate": {
+  "en": "Eelevate",
+  "ko": "천정부지"
  }
 }

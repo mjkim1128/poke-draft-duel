@@ -1,0 +1,5628 @@
+[
+ {
+  "id": 10033,
+  "name": "venusaur-mega",
+  "base": "venusaur",
+  "baseId": 3,
+  "korean_name": "메가이상해꽃",
+  "koreanNameIsOfficial": true,
+  "stone": "venusaurite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "grass"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "poison"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "thick-fat"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 123,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 122,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10033.png"
+  }
+ },
+ {
+  "id": 10034,
+  "name": "charizard-mega-x",
+  "base": "charizard",
+  "baseId": 6,
+  "korean_name": "메가리자몽X",
+  "koreanNameIsOfficial": true,
+  "stone": "charizardite-x",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fire"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dragon"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "tough-claws"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 78,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 111,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10034.png"
+  }
+ },
+ {
+  "id": 10035,
+  "name": "charizard-mega-y",
+  "base": "charizard",
+  "baseId": 6,
+  "korean_name": "메가리자몽Y",
+  "koreanNameIsOfficial": true,
+  "stone": "charizardite-y",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fire"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "drought"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 78,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 104,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 78,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 159,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10035.png"
+  }
+ },
+ {
+  "id": 10036,
+  "name": "blastoise-mega",
+  "base": "blastoise",
+  "baseId": 9,
+  "korean_name": "메가거북왕",
+  "koreanNameIsOfficial": true,
+  "stone": "blastoisinite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "mega-launcher"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 79,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 103,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 78,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10036.png"
+  }
+ },
+ {
+  "id": 10090,
+  "name": "beedrill-mega",
+  "base": "beedrill",
+  "baseId": 15,
+  "korean_name": "메가독침붕",
+  "koreanNameIsOfficial": true,
+  "stone": "beedrillite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "bug"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "poison"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "adaptability"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 40,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 15,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10090.png"
+  }
+ },
+ {
+  "id": 10073,
+  "name": "pidgeot-mega",
+  "base": "pidgeot",
+  "baseId": 18,
+  "korean_name": "메가피죤투",
+  "koreanNameIsOfficial": true,
+  "stone": "pidgeotite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "normal"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "no-guard"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 83,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 121,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10073.png"
+  }
+ },
+ {
+  "id": 10304,
+  "name": "raichu-mega-x",
+  "base": "raichu",
+  "baseId": 26,
+  "korean_name": "메가라이츄X",
+  "koreanNameIsOfficial": false,
+  "stone": "raichunite-x",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "electric"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "electric-surge"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10304.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10304.png"
+  }
+ },
+ {
+  "id": 10305,
+  "name": "raichu-mega-y",
+  "base": "raichu",
+  "baseId": 26,
+  "korean_name": "메가라이츄Y",
+  "koreanNameIsOfficial": false,
+  "stone": "raichunite-y",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "electric"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "no-guard"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 55,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 160,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10305.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10305.png"
+  }
+ },
+ {
+  "id": 10278,
+  "name": "clefable-mega",
+  "base": "clefable",
+  "baseId": 36,
+  "korean_name": "메가픽시",
+  "koreanNameIsOfficial": false,
+  "stone": "clefablite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fairy"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "magic-bounce"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 93,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10278.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10278.png"
+  }
+ },
+ {
+  "id": 10037,
+  "name": "alakazam-mega",
+  "base": "alakazam",
+  "baseId": 65,
+  "korean_name": "메가후딘",
+  "koreanNameIsOfficial": true,
+  "stone": "alakazite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "trace"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 55,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 50,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 175,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10037.png"
+  }
+ },
+ {
+  "id": 10279,
+  "name": "victreebel-mega",
+  "base": "victreebel",
+  "baseId": 71,
+  "korean_name": "메가우츠보트",
+  "koreanNameIsOfficial": false,
+  "stone": "victreebelite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "grass"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "poison"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "innards-out"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10279.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10279.png"
+  }
+ },
+ {
+  "id": 10071,
+  "name": "slowbro-mega",
+  "base": "slowbro",
+  "baseId": 80,
+  "korean_name": "메가야도란",
+  "koreanNameIsOfficial": true,
+  "stone": "slowbronite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "shell-armor"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 180,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 30,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10071.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10071.png"
+  }
+ },
+ {
+  "id": 10038,
+  "name": "gengar-mega",
+  "base": "gengar",
+  "baseId": 94,
+  "korean_name": "메가팬텀",
+  "koreanNameIsOfficial": true,
+  "stone": "gengarite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "ghost"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "poison"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "shadow-tag"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 170,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10038.png"
+  }
+ },
+ {
+  "id": 10039,
+  "name": "kangaskhan-mega",
+  "base": "kangaskhan",
+  "baseId": 115,
+  "korean_name": "메가캥카",
+  "koreanNameIsOfficial": true,
+  "stone": "kangaskhanite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "normal"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "parental-bond"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10039.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10039.png"
+  }
+ },
+ {
+  "id": 10280,
+  "name": "starmie-mega",
+  "base": "starmie",
+  "baseId": 121,
+  "korean_name": "메가아쿠스타",
+  "koreanNameIsOfficial": false,
+  "stone": "starminite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "huge-power"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10280.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10280.png"
+  }
+ },
+ {
+  "id": 10040,
+  "name": "pinsir-mega",
+  "base": "pinsir",
+  "baseId": 127,
+  "korean_name": "메가쁘사이저",
+  "koreanNameIsOfficial": true,
+  "stone": "pinsirite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "bug"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "aerilate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 155,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10040.png"
+  }
+ },
+ {
+  "id": 10041,
+  "name": "gyarados-mega",
+  "base": "gyarados",
+  "baseId": 130,
+  "korean_name": "메가갸라도스",
+  "koreanNameIsOfficial": true,
+  "stone": "gyaradosite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dark"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "mold-breaker"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 155,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 109,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 81,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10041.png"
+  }
+ },
+ {
+  "id": 10042,
+  "name": "aerodactyl-mega",
+  "base": "aerodactyl",
+  "baseId": 142,
+  "korean_name": "메가프테라",
+  "koreanNameIsOfficial": true,
+  "stone": "aerodactylite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "rock"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "tough-claws"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10042.png"
+  }
+ },
+ {
+  "id": 10281,
+  "name": "dragonite-mega",
+  "base": "dragonite",
+  "baseId": 149,
+  "korean_name": "메가망나뇽",
+  "koreanNameIsOfficial": false,
+  "stone": "dragoninite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "multiscale"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 91,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 124,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10281.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10281.png"
+  }
+ },
+ {
+  "id": 10283,
+  "name": "feraligatr-mega",
+  "base": "feraligatr",
+  "baseId": 160,
+  "korean_name": "메가장크로다일",
+  "koreanNameIsOfficial": false,
+  "stone": "feraligite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dragon"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "dragonize"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 160,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 89,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 93,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 78,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10283.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10283.png"
+  }
+ },
+ {
+  "id": 10045,
+  "name": "ampharos-mega",
+  "base": "ampharos",
+  "baseId": 181,
+  "korean_name": "메가전룡",
+  "koreanNameIsOfficial": true,
+  "stone": "ampharosite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "electric"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dragon"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "mold-breaker"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 165,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 45,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10045.png"
+  }
+ },
+ {
+  "id": 10072,
+  "name": "steelix-mega",
+  "base": "steelix",
+  "baseId": 208,
+  "korean_name": "메가강철톤",
+  "koreanNameIsOfficial": true,
+  "stone": "steelixite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "steel"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ground"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "sand-force"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 230,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 55,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 30,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10072.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10072.png"
+  }
+ },
+ {
+  "id": 10046,
+  "name": "scizor-mega",
+  "base": "scizor",
+  "baseId": 212,
+  "korean_name": "메가핫삼",
+  "koreanNameIsOfficial": true,
+  "stone": "scizorite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "bug"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "steel"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "technician"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10046.png"
+  }
+ },
+ {
+  "id": 10047,
+  "name": "heracross-mega",
+  "base": "heracross",
+  "baseId": 214,
+  "korean_name": "메가헤라크로스",
+  "koreanNameIsOfficial": true,
+  "stone": "heracronite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "bug"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "skill-link"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 185,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 40,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10047.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10047.png"
+  }
+ },
+ {
+  "id": 10284,
+  "name": "skarmory-mega",
+  "base": "skarmory",
+  "baseId": 227,
+  "korean_name": "메가무장조",
+  "koreanNameIsOfficial": false,
+  "stone": "skarmorite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "steel"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "stalwart"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 40,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10284.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10284.png"
+  }
+ },
+ {
+  "id": 10048,
+  "name": "houndoom-mega",
+  "base": "houndoom",
+  "baseId": 229,
+  "korean_name": "메가헬가",
+  "koreanNameIsOfficial": true,
+  "stone": "houndoominite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dark"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fire"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "solar-power"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10048.png"
+  }
+ },
+ {
+  "id": 10049,
+  "name": "tyranitar-mega",
+  "base": "tyranitar",
+  "baseId": 248,
+  "korean_name": "메가마기라스",
+  "koreanNameIsOfficial": true,
+  "stone": "tyranitarite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "rock"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dark"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "sand-stream"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 164,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 71,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10049.png"
+  }
+ },
+ {
+  "id": 10065,
+  "name": "sceptile-mega",
+  "base": "sceptile",
+  "baseId": 254,
+  "korean_name": "메가나무킹",
+  "koreanNameIsOfficial": true,
+  "stone": "sceptilite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "grass"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dragon"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "lightning-rod"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10065.png"
+  }
+ },
+ {
+  "id": 10050,
+  "name": "blaziken-mega",
+  "base": "blaziken",
+  "baseId": 257,
+  "korean_name": "메가번치코",
+  "koreanNameIsOfficial": true,
+  "stone": "blazikenite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fire"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "speed-boost"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 160,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10050.png"
+  }
+ },
+ {
+  "id": 10064,
+  "name": "swampert-mega",
+  "base": "swampert",
+  "baseId": 260,
+  "korean_name": "메가대짱이",
+  "koreanNameIsOfficial": true,
+  "stone": "swampertite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ground"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "swift-swim"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10064.png"
+  }
+ },
+ {
+  "id": 10051,
+  "name": "gardevoir-mega",
+  "base": "gardevoir",
+  "baseId": 282,
+  "korean_name": "메가가디안",
+  "koreanNameIsOfficial": true,
+  "stone": "gardevoirite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "psychic"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fairy"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "pixilate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 68,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 165,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10051.png"
+  }
+ },
+ {
+  "id": 10066,
+  "name": "sableye-mega",
+  "base": "sableye",
+  "baseId": 302,
+  "korean_name": "메가깜까미",
+  "koreanNameIsOfficial": true,
+  "stone": "sablenite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dark"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ghost"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "magic-bounce"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 50,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 20,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10066.png"
+  }
+ },
+ {
+  "id": 10052,
+  "name": "mawile-mega",
+  "base": "mawile",
+  "baseId": 303,
+  "korean_name": "메가입치트",
+  "koreanNameIsOfficial": true,
+  "stone": "mawilite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "steel"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fairy"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "huge-power"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 50,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 55,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 50,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10052.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10052.png"
+  }
+ },
+ {
+  "id": 10053,
+  "name": "aggron-mega",
+  "base": "aggron",
+  "baseId": 306,
+  "korean_name": "메가보스로라",
+  "koreanNameIsOfficial": true,
+  "stone": "aggronite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "steel"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "filter"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 230,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 50,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10053.png"
+  }
+ },
+ {
+  "id": 10054,
+  "name": "medicham-mega",
+  "base": "medicham",
+  "baseId": 308,
+  "korean_name": "메가요가램",
+  "koreanNameIsOfficial": true,
+  "stone": "medichamite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fighting"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "pure-power"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10054.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10054.png"
+  }
+ },
+ {
+  "id": 10055,
+  "name": "manectric-mega",
+  "base": "manectric",
+  "baseId": 310,
+  "korean_name": "메가썬더볼트",
+  "koreanNameIsOfficial": true,
+  "stone": "manectite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "electric"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "intimidate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10055.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10055.png"
+  }
+ },
+ {
+  "id": 10070,
+  "name": "sharpedo-mega",
+  "base": "sharpedo",
+  "baseId": 319,
+  "korean_name": "메가샤크니아",
+  "koreanNameIsOfficial": true,
+  "stone": "sharpedonite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dark"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "strong-jaw"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10070.png"
+  }
+ },
+ {
+  "id": 10087,
+  "name": "camerupt-mega",
+  "base": "camerupt",
+  "baseId": 323,
+  "korean_name": "메가폭타",
+  "koreanNameIsOfficial": true,
+  "stone": "cameruptite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fire"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ground"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "sheer-force"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 20,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10087.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10087.png"
+  }
+ },
+ {
+  "id": 10067,
+  "name": "altaria-mega",
+  "base": "altaria",
+  "baseId": 334,
+  "korean_name": "메가파비코리",
+  "koreanNameIsOfficial": true,
+  "stone": "altarianite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fairy"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "pixilate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10067.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10067.png"
+  }
+ },
+ {
+  "id": 10056,
+  "name": "banette-mega",
+  "base": "banette",
+  "baseId": 354,
+  "korean_name": "메가다크펫",
+  "koreanNameIsOfficial": true,
+  "stone": "banettite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "ghost"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "prankster"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 64,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 165,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 93,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 83,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10056.png"
+  }
+ },
+ {
+  "id": 10057,
+  "name": "absol-mega",
+  "base": "absol",
+  "baseId": 359,
+  "korean_name": "메가앱솔",
+  "koreanNameIsOfficial": true,
+  "stone": "absolite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dark"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "magic-bounce"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10057.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10057.png"
+  }
+ },
+ {
+  "id": 10307,
+  "name": "absol-mega-z",
+  "base": "absol",
+  "baseId": 359,
+  "korean_name": "메가앱솔Z",
+  "koreanNameIsOfficial": false,
+  "stone": "absolite-z",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dark"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ghost"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "sharpness"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 154,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 151,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10307.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10307.png"
+  }
+ },
+ {
+  "id": 10074,
+  "name": "glalie-mega",
+  "base": "glalie",
+  "baseId": 362,
+  "korean_name": "메가얼음귀신",
+  "koreanNameIsOfficial": true,
+  "stone": "glalitite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "ice"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "refrigerate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10074.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10074.png"
+  }
+ },
+ {
+  "id": 10089,
+  "name": "salamence-mega",
+  "base": "salamence",
+  "baseId": 373,
+  "korean_name": "메가보만다",
+  "koreanNameIsOfficial": true,
+  "stone": "salamencite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "aerilate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10089.png"
+  }
+ },
+ {
+  "id": 10076,
+  "name": "metagross-mega",
+  "base": "metagross",
+  "baseId": 376,
+  "korean_name": "메가메타그로스",
+  "koreanNameIsOfficial": true,
+  "stone": "metagrossite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "steel"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "tough-claws"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10076.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10076.png"
+  }
+ },
+ {
+  "id": 10062,
+  "name": "latias-mega",
+  "base": "latias",
+  "baseId": 380,
+  "korean_name": "메가라티아스",
+  "koreanNameIsOfficial": true,
+  "stone": "latiasite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "levitate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10062.png"
+  }
+ },
+ {
+  "id": 10063,
+  "name": "latios-mega",
+  "base": "latios",
+  "baseId": 381,
+  "korean_name": "메가라티오스",
+  "koreanNameIsOfficial": true,
+  "stone": "latiosite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "levitate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 160,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10063.png"
+  }
+ },
+ {
+  "id": 10308,
+  "name": "staraptor-mega",
+  "base": "staraptor",
+  "baseId": 398,
+  "korean_name": "메가찌르호크",
+  "koreanNameIsOfficial": false,
+  "stone": "staraptite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fighting"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "contrary"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10308.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10308.png"
+  }
+ },
+ {
+  "id": 10088,
+  "name": "lopunny-mega",
+  "base": "lopunny",
+  "baseId": 428,
+  "korean_name": "메가이어롭",
+  "koreanNameIsOfficial": true,
+  "stone": "lopunnite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "normal"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "scrappy"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 136,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 94,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 54,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 96,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10088.png"
+  }
+ },
+ {
+  "id": 10058,
+  "name": "garchomp-mega",
+  "base": "garchomp",
+  "baseId": 445,
+  "korean_name": "메가한카리아스",
+  "koreanNameIsOfficial": true,
+  "stone": "garchompite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ground"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "sand-force"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 108,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 170,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 92,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10058.png"
+  }
+ },
+ {
+  "id": 10309,
+  "name": "garchomp-mega-z",
+  "base": "garchomp",
+  "baseId": 445,
+  "korean_name": "메가한카리아스Z",
+  "koreanNameIsOfficial": false,
+  "stone": "garchompite-z",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "levitate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 108,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 141,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 151,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10309.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10309.png"
+  }
+ },
+ {
+  "id": 10059,
+  "name": "lucario-mega",
+  "base": "lucario",
+  "baseId": 448,
+  "korean_name": "메가루카리오",
+  "koreanNameIsOfficial": true,
+  "stone": "lucarionite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fighting"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "steel"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "adaptability"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 88,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 112,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10059.png"
+  }
+ },
+ {
+  "id": 10310,
+  "name": "lucario-mega-z",
+  "base": "lucario",
+  "baseId": 448,
+  "korean_name": "메가루카리오Z",
+  "koreanNameIsOfficial": false,
+  "stone": "lucarionite-z",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fighting"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "steel"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "aura-guard"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 164,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 151,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10310.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10310.png"
+  }
+ },
+ {
+  "id": 10060,
+  "name": "abomasnow-mega",
+  "base": "abomasnow",
+  "baseId": 460,
+  "korean_name": "메가눈설왕",
+  "koreanNameIsOfficial": true,
+  "stone": "abomasite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "grass"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ice"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "snow-warning"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 132,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 132,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 30,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10060.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10060.png"
+  }
+ },
+ {
+  "id": 10068,
+  "name": "gallade-mega",
+  "base": "gallade",
+  "baseId": 475,
+  "korean_name": "메가엘레이드",
+  "koreanNameIsOfficial": true,
+  "stone": "galladite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "psychic"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "inner-focus"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 68,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 165,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 95,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10068.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10068.png"
+  }
+ },
+ {
+  "id": 10285,
+  "name": "froslass-mega",
+  "base": "froslass",
+  "baseId": 478,
+  "korean_name": "메가눈여아",
+  "koreanNameIsOfficial": false,
+  "stone": "froslassite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "ice"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ghost"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "snow-warning"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10285.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10285.png"
+  }
+ },
+ {
+  "id": 10286,
+  "name": "emboar-mega",
+  "base": "emboar",
+  "baseId": 500,
+  "korean_name": "메가염무왕",
+  "koreanNameIsOfficial": false,
+  "stone": "emboarite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fire"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "mold-breaker"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 148,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10286.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10286.png"
+  }
+ },
+ {
+  "id": 10287,
+  "name": "excadrill-mega",
+  "base": "excadrill",
+  "baseId": 530,
+  "korean_name": "메가몰드류",
+  "koreanNameIsOfficial": false,
+  "stone": "excadrite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "ground"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "steel"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "piercing-drill"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 165,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 103,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10287.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10287.png"
+  }
+ },
+ {
+  "id": 10069,
+  "name": "audino-mega",
+  "base": "audino",
+  "baseId": 531,
+  "korean_name": "메가다부니",
+  "koreanNameIsOfficial": true,
+  "stone": "audinite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "normal"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fairy"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "healer"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 103,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 126,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 126,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 50,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10069.png"
+  }
+ },
+ {
+  "id": 10288,
+  "name": "scolipede-mega",
+  "base": "scolipede",
+  "baseId": 545,
+  "korean_name": "메가펜드라",
+  "koreanNameIsOfficial": false,
+  "stone": "scolipite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "bug"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "poison"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "shell-armor"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 149,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 99,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 62,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10288.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10288.png"
+  }
+ },
+ {
+  "id": 10289,
+  "name": "scrafty-mega",
+  "base": "scrafty",
+  "baseId": 560,
+  "korean_name": "메가곤율거니",
+  "koreanNameIsOfficial": false,
+  "stone": "scraftinite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dark"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "intimidate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 55,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 68,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10289.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10289.png"
+  }
+ },
+ {
+  "id": 10290,
+  "name": "eelektross-mega",
+  "base": "eelektross",
+  "baseId": 604,
+  "korean_name": "메가저리더프",
+  "koreanNameIsOfficial": false,
+  "stone": "eelektrossite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "electric"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "eelevate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 145,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 135,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 80,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10290.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10290.png"
+  }
+ },
+ {
+  "id": 10291,
+  "name": "chandelure-mega",
+  "base": "chandelure",
+  "baseId": 609,
+  "korean_name": "메가샹델라",
+  "koreanNameIsOfficial": false,
+  "stone": "chandelurite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "ghost"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fire"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "infiltrator"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 60,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 175,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10291.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10291.png"
+  }
+ },
+ {
+  "id": 10313,
+  "name": "golurk-mega",
+  "base": "golurk",
+  "baseId": 623,
+  "korean_name": "메가골루그",
+  "koreanNameIsOfficial": false,
+  "stone": "golurkite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "ground"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ghost"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "unseen-fist"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 89,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 159,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 55,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10313.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10313.png"
+  }
+ },
+ {
+  "id": 10292,
+  "name": "chesnaught-mega",
+  "base": "chesnaught",
+  "baseId": 652,
+  "korean_name": "메가브리가론",
+  "koreanNameIsOfficial": false,
+  "stone": "chesnaughtite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "grass"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "bulletproof"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 88,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 137,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 172,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 74,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 44,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10292.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10292.png"
+  }
+ },
+ {
+  "id": 10293,
+  "name": "delphox-mega",
+  "base": "delphox",
+  "baseId": 655,
+  "korean_name": "메가마폭시",
+  "koreanNameIsOfficial": false,
+  "stone": "delphoxite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fire"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "levitate"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 69,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 72,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 159,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 134,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10293.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10293.png"
+  }
+ },
+ {
+  "id": 10294,
+  "name": "greninja-mega",
+  "base": "greninja",
+  "baseId": 658,
+  "korean_name": "메가개굴닌자",
+  "koreanNameIsOfficial": false,
+  "stone": "greninjite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "water"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dark"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "protean"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 72,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 125,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 77,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 133,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 81,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 142,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10294.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10294.png"
+  }
+ },
+ {
+  "id": 10297,
+  "name": "malamar-mega",
+  "base": "malamar",
+  "baseId": 687,
+  "korean_name": "메가칼라마네로",
+  "koreanNameIsOfficial": false,
+  "stone": "malamarite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dark"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "psychic"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "contrary"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 86,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 102,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 88,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 98,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 88,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10297.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10297.png"
+  }
+ },
+ {
+  "id": 10298,
+  "name": "barbaracle-mega",
+  "base": "barbaracle",
+  "baseId": 689,
+  "korean_name": "메가거북손데스",
+  "koreanNameIsOfficial": false,
+  "stone": "barbaracite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "rock"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fighting"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "tough-claws"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 72,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 140,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 130,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 64,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 106,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 88,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10298.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10298.png"
+  }
+ },
+ {
+  "id": 10299,
+  "name": "dragalge-mega",
+  "base": "dragalge",
+  "baseId": 691,
+  "korean_name": "메가드래캄",
+  "koreanNameIsOfficial": false,
+  "stone": "dragalgite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "poison"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dragon"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "regenerator"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 65,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 132,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 163,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 44,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10299.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10299.png"
+  }
+ },
+ {
+  "id": 10300,
+  "name": "hawlucha-mega",
+  "base": "hawlucha",
+  "baseId": 701,
+  "korean_name": "메가루차불",
+  "koreanNameIsOfficial": false,
+  "stone": "hawluchanite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fighting"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "flying"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "no-guard"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 78,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 137,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 100,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 74,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 93,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 118,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10300.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10300.png"
+  }
+ },
+ {
+  "id": 10075,
+  "name": "diancie-mega",
+  "base": "diancie",
+  "baseId": 719,
+  "korean_name": "메가디안시",
+  "koreanNameIsOfficial": true,
+  "stone": "diancite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "rock"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "fairy"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "magic-bounce"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 50,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 160,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 160,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10075.png"
+  }
+ },
+ {
+  "id": 10315,
+  "name": "crabominable-mega",
+  "base": "crabominable",
+  "baseId": 740,
+  "korean_name": "메가모단단게",
+  "koreanNameIsOfficial": false,
+  "stone": "crabominite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "fighting"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ice"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "iron-fist"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 97,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 157,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 122,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 62,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 107,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 33,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10315.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10315.png"
+  }
+ },
+ {
+  "id": 10316,
+  "name": "golisopod-mega",
+  "base": "golisopod",
+  "baseId": 768,
+  "korean_name": "메가갑주무사",
+  "koreanNameIsOfficial": false,
+  "stone": "golisopite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "bug"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "steel"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "tough-claws"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 75,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 175,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 70,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 120,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 40,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10316.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10316.png"
+  }
+ },
+ {
+  "id": 10302,
+  "name": "drampa-mega",
+  "base": "drampa",
+  "baseId": 780,
+  "korean_name": "메가할비롱",
+  "koreanNameIsOfficial": false,
+  "stone": "drampanite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "normal"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "dragon"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "berserk"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 78,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 85,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 110,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 160,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 116,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 36,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10302.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10302.png"
+  }
+ },
+ {
+  "id": 10321,
+  "name": "glimmora-mega",
+  "base": "glimmora",
+  "baseId": 970,
+  "korean_name": "메가킬라플로르",
+  "koreanNameIsOfficial": false,
+  "stone": "glimmoranite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "rock"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "poison"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "adaptability"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 83,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 90,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 150,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 96,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 101,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10321.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10321.png"
+  }
+ },
+ {
+  "id": 10325,
+  "name": "baxcalibur-mega",
+  "base": "baxcalibur",
+  "baseId": 998,
+  "korean_name": "메가드닐레이브",
+  "koreanNameIsOfficial": false,
+  "stone": "baxcalibrite",
+  "types": [
+   {
+    "slot": 1,
+    "type": {
+     "name": "dragon"
+    }
+   },
+   {
+    "slot": 2,
+    "type": {
+     "name": "ice"
+    }
+   }
+  ],
+  "abilities": [
+   {
+    "ability": {
+     "name": "thermal-exchange"
+    },
+    "is_hidden": false,
+    "slot": 1
+   }
+  ],
+  "stats": [
+   {
+    "base_stat": 115,
+    "stat": {
+     "name": "hp"
+    }
+   },
+   {
+    "base_stat": 175,
+    "stat": {
+     "name": "attack"
+    }
+   },
+   {
+    "base_stat": 117,
+    "stat": {
+     "name": "defense"
+    }
+   },
+   {
+    "base_stat": 105,
+    "stat": {
+     "name": "special-attack"
+    }
+   },
+   {
+    "base_stat": 101,
+    "stat": {
+     "name": "special-defense"
+    }
+   },
+   {
+    "base_stat": 87,
+    "stat": {
+     "name": "speed"
+    }
+   }
+  ],
+  "sprites": {
+   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10325.png",
+   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10325.png"
+  }
+ }
+]

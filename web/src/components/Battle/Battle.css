@@ -448,3 +448,21 @@
     pointer-events: none;
 }
 
+
+/* 메가진화 켜기 / 끄기 (기술을 고르기 전에 누른다) */
+.mega-toggle {
+    align-self: flex-start;
+    margin: 0 0 6px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    border: 2px solid #8a4fd6;
+    border-radius: 14px;
+    background: #fff;
+    color: #8a4fd6;
+}
+
+.mega-toggle.on {
+    background: #8a4fd6;
+    color: #fff;
+}

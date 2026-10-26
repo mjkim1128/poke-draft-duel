@@ -433,7 +433,7 @@ export function Home() {
                 <div className="start-screen">
                     <div className="start-card">
                         <img className="start-ball" src={process.env.PUBLIC_URL + "/logo192.png"} alt="" />
-                        <h1 className="start-title">Battle Factory</h1>
+                        <h1 className="start-title">Poke Draft Duel</h1>
                         <button className="start-button" onClick={() => startGame(false)}>
                             {isKorean() ? "시작하기" : "Start!"}
                         </button>

@@ -1,6 +1,6 @@
-# Battle Factory (배포용)
+# Poke Draft Duel (배포용)
 
-포켓몬 배틀 팩토리 웹게임. React 게임(`web/`)과 Spring Boot 서버(`api/`)를 컨테이너 하나로 묶어 배포한다.
+포켓몬 배틀 팩토리에서 출발해 연승전, 보스, 컴퓨터 AI로 발전한 웹게임. React 게임(`web/`)과 Spring Boot 서버(`api/`)를 컨테이너 하나로 묶어 배포한다.
 
 ```
 브라우저 ──▶ Spring Boot 서버 하나

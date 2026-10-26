@@ -758,6 +758,8 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
 function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
     const field = ensureField(playerPokemon, opponentPokemon);
     const attacker = playerPokemon[0];
+    // An Encore that landed earlier this turn (before this pokemon moved) already locks the move it uses now
+    if (!opts.copied && !opts.bounced) chosenMove = forcedMove(attacker, chosenMove);
     // Weather Ball, Terrain Pulse and Grassy Glide change with the field; Pixilate, Normalize
     // and Liquid Voice change a move's type
     const move = abilityAdaptMove(attacker, adaptMoveToField(chosenMove, attacker, field));

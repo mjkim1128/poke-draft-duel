@@ -406,3 +406,15 @@ describe("폭발 계열은 효과가 없어도 쓴 쪽이 쓰러진다", () => {
         expect(me[0].hp[0]).toBe(0);
     });
 });
+
+test("같은 턴에 상대의 앙코르가 먼저 걸리면, 그 턴에 쓰는 기술도 앙코르된 기술로 바뀐다", () => {
+    const slow = mon("venusaur", ["leaf-storm", "synthesis"]);
+    slow.base_stats[5] = 1;
+    const me = [slow, mon("snorlax", ["splash"])];
+    const foe = [mon("blissey", ["encore"]), mon("snorlax", ["splash"])];
+    doTurn(me, foe, slow.moveset[0]);
+    const text = doTurn(me, foe, slow.moveset[1]).join(" ");
+    expect(text).toContain("received an encore");
+    expect(text).toContain("Venusaur used Leaf Storm");
+    expect(text).not.toContain("Venusaur used Synthesis");
+});

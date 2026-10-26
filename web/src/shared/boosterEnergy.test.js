@@ -97,3 +97,25 @@ test("a boost from the item stays when a terrain comes and goes, and is gone aft
     expect(valiant.boosterStat).toBeNull();
     expect(valiant.boosterFromItem).toBe(false);
 });
+
+test("끈적끈적네트로 스피드가 떨어져도 고대활성은 단계를 무시하고 원래 가장 높은 능력치를 고른다", () => {
+    const mine = [mon("snorlax", null, null), mon("flutter-mane", "protosynthesis", "booster-energy")];
+    const foe = foeTeam();
+    mine.hazards = { stealthRock: false, spikes: 0, toxicSpikes: 0, stickyWeb: true };
+    const flutter = mine[1];
+    // 단계를 무시한 가장 높은 능력치 (끈적끈적네트가 없을 때 고르는 것과 같아야 한다)
+    const plain = [mon("snorlax", null, null), mon("flutter-mane", "protosynthesis", "booster-energy")];
+    doSwitch(plain, 1, { foeTeam: foe });
+    doSwitch(mine, 1, { foeTeam: foe });
+    expect(flutter.stat_levels[4]).toBe(-1);
+    expect(flutter.boosterStat).toBe(plain[0].boosterStat);
+});
+
+test("고대활성은 나오자마자 발동해서 끈적끈적네트보다 먼저다", () => {
+    const mine = [mon("snorlax", null, null), mon("flutter-mane", "protosynthesis", "booster-energy")];
+    mine.hazards = { stealthRock: false, spikes: 0, toxicSpikes: 0, stickyWeb: true };
+    const text = doSwitch(mine, 1, { foeTeam: foeTeam() });
+    const joined = [].concat(text).join(" ");
+    expect(joined.indexOf("boosted its")).toBeGreaterThan(-1);
+    expect(joined).toMatch(/boosted its.*(lowered|sticky web)/s);
+});

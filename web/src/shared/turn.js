@@ -1443,7 +1443,16 @@ function tryPerishSong(attacker, foe, move, text) {
 
 // Jump Kick / High Jump Kick / Supercell Slam / Axe Kick: missing (or hitting something
 // immune) costs the user half its max HP.
+// Explosion / Self-Destruct / Misty Explosion also cost the user its life when they miss, are
+// blocked or hit something immune.
+const SELF_DESTRUCT_MOVES = new Set(["explosion", "self-destruct", "misty-explosion"]);
 function tryCrashDamage(attacker, move, text) {
+    if (SELF_DESTRUCT_MOVES.has(move.name) && attacker.hp[0] > 0) {
+        attacker.hp[0] = 0;
+        if (!attacker.faintStamp) attacker.faintStamp = ++faintClock;
+        text.push(pokemonNameToString(attacker) + " blew up!");
+        return;
+    }
     if (!CRASH_MOVES.has(move.name)) return;
     attacker.hp[0] = Math.max(0, attacker.hp[0] - Math.floor(attacker.hp[1] / 2));
     text.push(pokemonNameToString(attacker) + " kept going and crashed!");
@@ -1657,6 +1666,7 @@ export function turnText(attacker, defender, move) {
     }
     if (
         move.damage_class.name !== "status" && // a status move deals no damage, so no effectiveness text
+        !isFixedDamageMove(move) && // Counter, Mirror Coat, Seismic Toss...: fixed damage ignores type effectiveness
         typeEffectiveness(move, defender, attacker) > 0 &&
         typeEffectiveness(move, defender, attacker) !== 1
     ) {
@@ -3431,6 +3441,11 @@ function doSwitchRaw(pokemon, index, options = {}) {
     // Healing Wish / Lunar Dance heal the newcomer before anything else touches it
     const hazardText = [];
     applyHealingWish(pokemon, hazardText);
+    // Protosynthesis / Quark Drive (and Booster Energy) kick in the moment it comes out, before the hazards
+    if (options.foeTeam && pokemon[0].hp[0] > 0) {
+        refreshBattlefield(pokemon, options.foeTeam);
+        runHook(pokemon[0], "onUpdate", { field: ensureField(pokemon, options.foeTeam), text: hazardText, ...abilityApi(ensureField(pokemon, options.foeTeam)) });
+    }
     // Entry hazards hit first; a pokemon that faints to them never gets its ability going
     applyHazards(pokemon[0], pokemon, hazardText, (p, changes, t) =>
         addArrayToArray(t, doStatChanges(p, { stat_changes: changes }))

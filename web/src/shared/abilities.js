@@ -99,7 +99,8 @@ const bestStatName = (p) => {
     let best = STAT_SLOTS[0];
     let value = -1;
     for (const slot of STAT_SLOTS) {
-        const v = stageStat(p.base_stats[slot[1]], (p.stat_levels && p.stat_levels[slot[2]]) || 0);
+        // 능력치 단계는 무시한다 (끈적끈적네트로 스피드가 떨어져도 가장 높은 능력치는 그대로)
+        const v = stageStat(p.base_stats[slot[1]], 0);
         if (v > value) [best, value] = [slot, v];
     }
     return best[0];

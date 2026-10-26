@@ -389,3 +389,20 @@ describe("카타스트로피와 자연의분노: 상대의 남은 HP를 절반�
         expect(damageCalc(me, foe, clone(MOVES.get("ruination")))).toBe(1);
     });
 });
+
+describe("폭발 계열은 효과가 없어도 쓴 쪽이 쓰러진다", () => {
+    test("고스트 타입에게 폭발을 써도 쓴 쪽은 쓰러진다", () => {
+        const me = [mon("snorlax", ["explosion"]), mon("blissey", ["splash"])];
+        const foe = [mon("gengar", ["splash"])];
+        const before = foe[0].hp[0];
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].hp[0]).toBe(before);
+        expect(me[0].hp[0]).toBe(0);
+    });
+    test("지키기에 막혀도 자폭한다", () => {
+        const me = [mon("snorlax", ["self-destruct"]), mon("blissey", ["splash"])];
+        const foe = [mon("blissey", ["protect"])];
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].hp[0]).toBe(0);
+    });
+});

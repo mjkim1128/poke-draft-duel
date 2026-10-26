@@ -282,6 +282,34 @@ describe("가속(Speed Boost)", () => {
     });
 });
 
+describe("가속(Speed Boost): 나온 턴의 끝부터", () => {
+    test("교체해서 나온 턴의 끝에 스피드가 오르고, 그다음 턴 끝에 또 오른다", () => {
+        const me = [mon("snorlax", ["splash"]), mon("blaziken", ["splash"], "speed-boost")];
+        const foe = [mon("blissey", ["splash"]), mon("blissey", ["splash"])];
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(me[0].name).toBe("blaziken");
+        expect(me[0].stat_levels[4]).toBe(1);
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].stat_levels[4]).toBe(2);
+    });
+    test("앞에 있던 포켓몬이 쓰러지고 나온 포켓몬도 그 턴의 끝부터 오른다", () => {
+        const fast = mon("blaziken", ["splash"], "speed-boost");
+        const me = [fast, mon("snorlax", ["splash"])];
+        const foe = [mon("blissey", ["splash"])];
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(fast.stat_levels[4]).toBe(1);
+    });
+    test("상대 쪽 가속도 같다", () => {
+        const me = [mon("snorlax", ["splash"])];
+        const foe = [mon("snorlax", ["splash"]), mon("blaziken", ["splash"], "speed-boost")];
+        doTurn(me, foe, me[0].moveset[0]);
+        foe.splice(0, 1, foe[1], foe[0]); // 선두를 바꿔 낸다
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].name).toBe("blaziken");
+        expect(foe[0].stat_levels[4]).toBeGreaterThanOrEqual(1);
+    });
+});
+
 describe("일루전(Illusion)", () => {
     const { strongestMove } = require("shared/computermove");
 

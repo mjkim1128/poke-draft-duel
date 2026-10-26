@@ -578,8 +578,9 @@ export const ABILITIES = {
 
     // ---- every turn ----
     "speed-boost": {
+        // 나온 턴의 끝부터 매 턴 끝에 스피드가 오른다
         onResidual({ self, text, boost }) {
-            if (self.hp[0] > 0 && self.activeTurns) boost(self, [{ stat: { name: "speed" }, change: 1 }], text);
+            if (self.hp[0] > 0) boost(self, [{ stat: { name: "speed" }, change: 1 }], text);
         },
     },
 

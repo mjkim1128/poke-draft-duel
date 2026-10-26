@@ -7,8 +7,8 @@ import { isGrounded, weatherHealPercent, weatherBlocksStatus, terrainBlocksStatu
 import { HAZARD_MOVES, hasHazards } from "./hazards";
 import { LIGHT_CLAY } from "./iteminfo";
 import { activeItem } from "./helditem";
-import { abilityBlocksStatus, bypassesScreens, canPoisonAnything, isPowderImmune } from "./abilities";
-import { POWDER_MOVES, STATUS_IMMUNE_TYPES, STATUS_TYPE_BLOCKED_MOVES, TOXIC_MOVES } from "./movemechanics";
+import { abilityBlocksStatus, bouncesMoves, bypassesScreens, canPoisonAnything, isPowderImmune } from "./abilities";
+import { POWDER_MOVES, REFLECTABLE_MOVES, STATUS_IMMUNE_TYPES, STATUS_TYPE_BLOCKED_MOVES, TOXIC_MOVES } from "./movemechanics";
 import { bestDamage, hitsToKO, chooseSetupMove } from "./cpusetup";
 import {
     destinyBondMove,
@@ -199,6 +199,8 @@ export function chooseSupportMove(playerTeam, opponentTeam) {
     const foe = playerTeam[0];
     if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.mustRecharge) return null;
     const s = situation(playerTeam, opponentTeam);
+    // 상대가 매직미러면 상대에게 거는 변화기(함정, 도발, 상태이상...)는 내게 되돌아오니 후보에서 뺀다
+    if (bouncesMoves(foe, me)) s.me = { ...me, moveset: me.moveset.filter((m) => !REFLECTABLE_MOVES.has(m.name)) };
     if (s.attacksBefore === 1) return null; // 1순위: 한 방에 잡을 수 있으면 공격
     const holdingClay = activeItem(me) && me.item.name === LIGHT_CLAY;
     return (

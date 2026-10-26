@@ -9,10 +9,8 @@ export const BANNED_MOVES = [
     "dynamic-punch",
     "belch",
     "zap-cannon",
-    "petal-dance",
     "burn-up",
     "last-resort",
-    "thrash",
     "steel-beam",
     "round",
     "future-sight", /// For now

@@ -322,6 +322,8 @@ function getEffectiveSpeed(pokemon, field = null) {
 // A pokemon in the middle of a two-turn move has no say in what it does next.
 function forcedMove(pokemon, chosenMove) {
     if (pokemon.charging) return pokemon.moveset.find((m) => m.name === pokemon.charging) || chosenMove;
+    // Outrage & co.: keeps using the same move until the rampage is over (switching out is still allowed)
+    if (pokemon.rampage && chosenMove.priority !== 6) return pokemon.moveset.find((m) => m.name === pokemon.rampage.move) || chosenMove;
     // Encore: it can only repeat the move it used last, while that move can still be used (PP left, not Disabled
     // or Taunted). Switching out is still allowed.
     if (pokemon.encore && chosenMove.priority !== 6) {
@@ -629,6 +631,11 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     refreshBattlefield(playerPokemon, opponentPokemon);
     for (const t of [playerPokemon, opponentPokemon]) runHook(t[0], "onUpdate", { field, text, ...abilityApi(field) });
     for (const team of [playerPokemon, opponentPokemon]) {
+        // a rampage only goes on while the user keeps getting its turns in (asleep, flinched, fully paralyzed... end it)
+        if (team[0].rampage) {
+            if (team[0].rampage.moved && team[0].hp[0] > 0) team[0].rampage.moved = false;
+            else team[0].rampage = null;
+        }
         team[0].movedThisTurn = false;
         team[0].itemUsedThisTurn = false;
         // Protect & co. only last the turn; a stall move that wasn't used again this turn starts
@@ -736,7 +743,7 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
     attacker.lastMove = chosenMove.name;
     // Using a move spends a PP (the second turn of a two-turn move is free); Pressure on the
     // other side makes it two
-    if (attacker.charging !== chosenMove.name) {
+    if (attacker.charging !== chosenMove.name && !(attacker.rampage && attacker.rampage.move === chosenMove.name)) {
         const pressured = opponentPokemon[0].hp[0] > 0 && abilityName(opponentPokemon[0]) === "pressure" && aimsAtFoe(chosenMove);
         spendPP(chosenMove, pressured ? 2 : 1);
     }
@@ -747,10 +754,40 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
         attacker.lockedMove = chosenMove.name;
     }
     attacker.ignoresAbilityNow = chosenMove.damage_class.name === "status" && hasSlowStatusMoves(attacker);
+    const linesBefore = text.length;
     executeMove(playerPokemon, opponentPokemon, chosenMove, text, {});
+    trackRampage(playerPokemon, opponentPokemon, chosenMove, text.slice(linesBefore), text);
     if (playerPokemon.field) playerPokemon.field.lastMove = chosenMove; // (Copycat copies what was used before it)
     attacker.ignoresAbilityNow = false;
     return text;
+}
+
+// Outrage / Thrash / Petal Dance / Raging Fury: the user is locked into the move for 2-3 turns in a
+// row and ends up confused once the rampage runs its course. A move that misses, is blocked, has no
+// effect (or a turn the user couldn't move at all, see the end of the turn) breaks the rampage and
+// no confusion follows.
+const RAMPAGE_MOVES = new Set(["outrage", "thrash", "petal-dance", "raging-fury"]);
+function trackRampage(team, foeTeam, move, lines, text) {
+    const attacker = team[0];
+    if (!RAMPAGE_MOVES.has(move.name)) return;
+    const failed = lines.some((l) => /missed!|doesn.{0,3}t affect|protected itself|protected |But it failed|absorbed|immune/i.test(l));
+    if (failed || !lines.some((l) => l.indexOf(" used ") >= 0)) {
+        attacker.rampage = null;
+        return;
+    }
+    if (!attacker.rampage) {
+        attacker.rampage = { move: move.name, remaining: 1 + Math.floor(Math.random() * 2), moved: true }; // 2-3 turns in all
+        return;
+    }
+    attacker.rampage.moved = true;
+    if (--attacker.rampage.remaining > 0) return;
+    attacker.rampage = null;
+    const field = ensureField(team, foeTeam);
+    if (attacker.hp[0] <= 0 || attacker.confusion) return;
+    if (terrainBlocksStatus(attacker, "confusion", field) || abilityBlocksStatus(attacker, "confusion", null, field)) return;
+    attacker.confusion = { counter: 2 + Math.floor(Math.random() * 4) };
+    text.push(pokemonNameToString(attacker) + " became confused due to fatigue!");
+    tryConsumeStatusCureItem(attacker, text);
 }
 
 // Carries out a move that has already been paid for (PP spent, able to act): the same steps
@@ -3412,6 +3449,7 @@ function doSwitchRaw(pokemon, index, options = {}) {
     oldCurrent.perish = null;
     resetStatChanges(oldCurrent); // Reset stat changes on switch out
     oldCurrent.lockedMove = null;
+    oldCurrent.rampage = null;
     oldCurrent.charging = null;
     oldCurrent.mustRecharge = false;
     oldCurrent.flinched = false;
@@ -3430,6 +3468,7 @@ function doSwitchRaw(pokemon, index, options = {}) {
     pokemon[index] = oldCurrent;
     pokemon[0].revealed = true; // the opponent's party shows a pokemon only once it has come out
     pokemon[0].lockedMove = null;
+    pokemon[0].rampage = null;
     pokemon[0].charging = null;
     pokemon[0].mustRecharge = false;
     pokemon[0].flinched = false;

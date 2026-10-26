@@ -125,7 +125,7 @@ function stayEvaluation(me, foe, field) {
 export function chooseSwitch(playerTeam, opponentTeam) {
     const me = opponentTeam[0];
     const foe = playerTeam[0];
-    if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.mustRecharge) return -1;
+    if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.rampage || me.mustRecharge) return -1;
     const field = playerTeam.field || opponentTeam.field || null;
     const stay = stayEvaluation(me, foe, field);
     // 랭크업이 지워진 직후 한 번만 따진다: 50%는 교체를 고민하고, 50%는 하던 대로 한다

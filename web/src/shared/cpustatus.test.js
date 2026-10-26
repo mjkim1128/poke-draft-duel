@@ -424,3 +424,20 @@ describe("우선순위", () => {
         expect(makeMove(human(), [cpu(["swords-dance", "toxic"])]).name).toBe("toxic");
     });
 });
+
+describe("매직미러", () => {
+    test("상대가 매직미러면 함정을 깔지 않는다", () => {
+        expect(choose(cpu(["stealth-rock"]), human({ ability: "magic-bounce" }))).toBe(null);
+    });
+    test("상대가 매직미러면 도발, 독 같은 변화기도 쓰지 않는다", () => {
+        expect(choose(cpu(["taunt", "toxic"]), human({ ability: "magic-bounce" }))).toBe(null);
+    });
+    test("매직미러여도 자기 자신에게 쓰는 회복기는 그대로 쓴다", () => {
+        const c = cpu(["recover"]);
+        c.hp[0] = 100;
+        expect(choose(c, human({ ability: "magic-bounce" }))).toBe("recover");
+    });
+    test("상대가 매직미러가 아니면 평소처럼 깐다", () => {
+        expect(choose(cpu(["stealth-rock"]), human())).toBe("stealth-rock");
+    });
+});

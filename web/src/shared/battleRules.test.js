@@ -1,7 +1,7 @@
 // 기습(Sucker Punch) 조건, 전투 시작 때 괴짜(Imposter), 둘 다 쓰러졌을 때 마지막에 쓰러진 쪽 기록을 확인한다.
 import fs from "fs";
 import path from "path";
-import { doTurn, enterBattle, getBaseStats, hpCalc } from "shared";
+import { doTurn, enterBattle, getBaseStats, hpCalc, getUsableMoves } from "shared";
 
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
 const MOVES = new Map(read("moves.json").map((m) => [m.name, m]));
@@ -487,5 +487,74 @@ describe("클리어스모그: 맞은 상대의 능력 변화를 지운다", () =
         foe[0].stat_levels[0] = 2;
         doTurn(me, foe, me[0].moveset[0]);
         expect(foe[0].stat_levels[0]).toBe(2);
+    });
+});
+
+describe("역린 계열: 2~3턴 같은 기술로 고정되고 끝나면 혼란", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const setup = (foeSpecies = "snorlax") => {
+        const user = mon("garchomp", ["outrage", "splash"]);
+        user.moveset[0].accuracy = null;
+        const me = [user, mon("blissey", ["splash"])];
+        const foe = [mon(foeSpecies, ["splash"]), mon("blissey", ["splash"])];
+        foe[0].hp = [99999, 99999];
+        return { user, me, foe };
+    };
+
+    test("2턴짜리: 첫 턴에 쓰면 다음 턴은 다른 기술을 골라도 역린이 나가고, 그 턴 끝에 혼란에 걸린다", () => {
+        jest.spyOn(Math, "random").mockReturnValue(0);
+        const { user, me, foe } = setup();
+        doTurn(me, foe, user.moveset[0]);
+        expect(user.rampage).toBeTruthy();
+        expect(user.confusion).toBeFalsy();
+        const text = doTurn(me, foe, user.moveset[1]).join(" ");
+        expect(text).toContain("Garchomp used Outrage");
+        expect(text).not.toContain("Garchomp used Splash");
+        expect(text).toContain("became confused due to fatigue");
+        expect(user.rampage).toBeNull();
+        expect(user.confusion).toBeTruthy();
+    });
+
+    test("3턴짜리는 두 번째 턴에 혼란이 걸리지 않고 세 번째 턴 끝에 걸린다", () => {
+        jest.spyOn(Math, "random").mockReturnValue(0.99);
+        const { user, me, foe } = setup();
+        doTurn(me, foe, user.moveset[0]);
+        doTurn(me, foe, user.moveset[1]);
+        expect(user.rampage).toBeTruthy();
+        expect(user.confusion).toBeFalsy();
+        doTurn(me, foe, user.moveset[1]);
+        expect(user.rampage).toBeNull();
+        expect(user.confusion).toBeTruthy();
+    });
+
+    test("고정된 동안 기술 목록은 그 기술 하나뿐이다 (PP가 없어도)", () => {
+        const { user, me, foe } = setup();
+        user.rampage = { move: "outrage", remaining: 1, moved: false };
+        user.moveset[0].ppLeft = 0;
+        expect(getUsableMoves(user).map((m) => m.name)).toEqual(["outrage"]);
+    });
+
+    test("효과가 없으면 고정이 풀리고 혼란도 걸리지 않는다", () => {
+        const { user, me, foe } = setup("sylveon");
+        doTurn(me, foe, user.moveset[0]);
+        expect(user.rampage).toBeFalsy();
+        expect(user.confusion).toBeFalsy();
+    });
+
+    test("교체하면 고정이 풀린다", () => {
+        jest.spyOn(Math, "random").mockReturnValue(0.99);
+        const { user, me, foe } = setup();
+        doTurn(me, foe, user.moveset[0]);
+        expect(user.rampage).toBeTruthy();
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(user.rampage).toBeNull();
+    });
+
+    test("이미 혼란이면 지쳐서 혼란이라는 글이 또 나오지 않는다", () => {
+        jest.spyOn(Math, "random").mockReturnValue(0);
+        const { user, me, foe } = setup();
+        user.confusion = { counter: 99 };
+        const t = doTurn(me, foe, user.moveset[0]).join(" ") + doTurn(me, foe, user.moveset[1]).join(" ");
+        expect(t).not.toContain("due to fatigue");
     });
 });

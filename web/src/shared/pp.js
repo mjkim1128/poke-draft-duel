@@ -75,6 +75,11 @@ export function choiceLockedMove(pokemon) {
 // out of PP are unusable, and with nothing left it has to Struggle.
 export function getUsableMoves(pokemon, ctx = {}) {
     let moves = pokemon.moveset;
+    // Outrage & co. keep going whether or not PP is left
+    if (pokemon.rampage) {
+        const rampaging = moves.find((m) => m.name === pokemon.rampage.move);
+        if (rampaging) return [rampaging];
+    }
     const lockedName = choiceLockedMove(pokemon);
     if (lockedName) {
         const locked = moves.filter((m) => m.name === lockedName);

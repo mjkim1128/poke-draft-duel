@@ -3,7 +3,7 @@
 // 그 밖의 변화기 안의 순서: 소원, 트릭룸, 트릭, 울부짖기/흑안개, 도발, 앙코르, 상태이상, 벽, 대타출동, 방어 (cpuboardmoves.js)
 import { damageCalc, typeEffectiveness } from "./damagecalc";
 import { getUsableMoves } from "./pp";
-import { isGrounded, weatherHealPercent, weatherBlocksStatus, terrainBlocksStatus } from "./field";
+import { isGrounded, weatherHealPercent, weatherBlocksStatus, terrainBlocksStatus, weatherOf } from "./field";
 import { HAZARD_MOVES, hasHazards } from "./hazards";
 import { LIGHT_CLAY } from "./iteminfo";
 import { activeItem } from "./helditem";
@@ -17,6 +17,7 @@ import {
     resetBoostMove,
     tauntMove,
     encoreMove,
+    disableMove,
     substituteMove,
     protectMove,
     wishMove,
@@ -80,9 +81,9 @@ function hazardMove(s) {
     return null;
 }
 
-// ---- 벽 (리플렉터, 빛의장막) ----
+// ---- 벽 (오로라베일, 리플렉터, 빛의장막) ----
 
-// 상대의 가장 센 물리 / 특수 기술 중 더 아픈 쪽을 줄이는 벽
+// 우박이나 눈이 내릴 때는 오로라베일 (물리와 특수를 한 번에 줄인다). 아니면 상대의 가장 센 물리 / 특수 기술 중 더 아픈 쪽을 줄이는 벽
 function screenMove(s) {
     const { me, foe, field, myTeam, foeHitsBefore } = s;
     if (foeHitsBefore - 1 < 1) return null;
@@ -96,6 +97,8 @@ function screenMove(s) {
     };
     const physical = best("physical");
     const special = best("special");
+    const aurora = usable(me, "aurora-veil");
+    if (aurora && ["hail", "snow"].includes(weatherOf(field)) && (physical > 0 || special > 0)) return aurora;
     const order = physical >= special ? ["reflect", "light-screen"] : ["light-screen", "reflect"];
     for (const name of order) {
         const move = usable(me, name);
@@ -214,6 +217,7 @@ export function chooseSupportMove(playerTeam, opponentTeam) {
         resetBoostMove(s) ||
         tauntMove(s) ||
         encoreMove(s) ||
+        disableMove(s) ||
         statusMove(s) ||
         screenMove(s) ||
         substituteMove(s) ||

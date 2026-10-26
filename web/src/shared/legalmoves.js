@@ -3,12 +3,9 @@
 export const BANNED_MOVES = [
     "dream-eater",
     "uproar",
-    "focus-punch",
     "sky-drop",
     "steel-roller",
-    "dynamic-punch",
     "belch",
-    "zap-cannon",
     "burn-up",
     "last-resort",
     "steel-beam",

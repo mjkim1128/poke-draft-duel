@@ -316,8 +316,8 @@ describe("도발, 앙코르", () => {
     test("도발: 상대 변화기가 2개 이상이고 내가 먼저 움직이면 쓴다", () => {
         expect(choose(cpu(["taunt"], { spe: 150 }), talker())).toBe("taunt");
     });
-    test("도발: 내가 느리면 쓰지 않는다", () => {
-        expect(choose(cpu(["taunt"], { spe: 50 }), talker())).toBe(null);
+    test("도발: 내가 느려도 쓴다 (다음 턴부터 막힌다)", () => {
+        expect(choose(cpu(["taunt"], { spe: 50 }), talker())).toBe("taunt");
     });
     test("도발: 상대 변화기가 1개뿐이면 쓰지 않는다", () => {
         expect(choose(cpu(["taunt"], { spe: 150 }), human({ moves: [hit(), "recover"] }))).toBe(null);
@@ -332,10 +332,73 @@ describe("도발, 앙코르", () => {
         team[0].lastMove = "recover";
         expect(choose(cpu(["encore"], { spe: 150 }), team)).toBe("encore");
     });
-    test("앙코르: 직전에 공격했으면 쓰지 않는다", () => {
+    test("앙코르: 직전 기술이 변화기여도 내가 느리면 쓰지 않는다", () => {
         const team = talker();
+        team[0].lastMove = "recover";
+        expect(choose(cpu(["encore"], { spe: 50 }), team)).toBe(null);
+    });
+    test("앙코르: 직전에 센 공격을 했으면 쓰지 않는다", () => {
+        const team = human({ atk: 150, moves: [hit(), "recover"] });
         team[0].lastMove = "test-hit-physical";
         expect(choose(cpu(["encore"], { spe: 150 }), team)).toBe(null);
+    });
+    test("앙코르: 직전 공격이 최대 체력의 1/4도 못 깎으면 내가 느려도 쓴다", () => {
+        const team = talker();
+        team[0].lastMove = "test-hit-physical";
+        expect(choose(cpu(["encore"], { spe: 150 }), team)).toBe("encore");
+        expect(choose(cpu(["encore"], { spe: 50 }), team)).toBe("encore");
+    });
+    test("앙코르: 약한 공격이어도 3번을 못 버티면 쓰지 않는다", () => {
+        const team = human({ atk: 30, moves: [hit(), "recover"] });
+        team[0].lastMove = "test-hit-physical";
+        const c = cpu(["encore"], { spe: 50 });
+        c.hp = [60, 300];
+        expect(choose(c, team)).toBe(null);
+    });
+    test("앙코르: 상대가 직전에 쓴 기술이 없으면 쓰지 않는다", () => {
+        expect(choose(cpu(["encore"], { spe: 150 }), talker())).toBe(null);
+    });
+});
+
+describe("사슬묶기", () => {
+    test("상대 직전 기술이 가장 센 공격이고 내가 먼저 움직이면 쓴다", () => {
+        const team = human({ atk: 100, moves: [hit()] });
+        team[0].lastMove = "test-hit-physical";
+        expect(choose(cpu(["disable"], { spe: 150, hp: 900 }), team)).toBe("disable");
+    });
+    test("직전 기술이 가장 센 공격이 아니면 쓰지 않는다", () => {
+        const weak = { ...hit(), power: 20, name: "weak-hit" };
+        const team = human({ atk: 100, moves: [hit(), weak] });
+        team[0].lastMove = "weak-hit";
+        expect(choose(cpu(["disable"], { spe: 150, hp: 900 }), team)).toBe(null);
+    });
+    test("직전 기술이 회복기면 쓴다", () => {
+        const team = human({ moves: [hit(), "recover"] });
+        team[0].lastMove = "recover";
+        expect(choose(cpu(["disable"], { spe: 150 }), team)).toBe("disable");
+    });
+    test("내가 느리면 쓰지 않는다 (이번 턴에 무엇을 쓸지 모르므로)", () => {
+        const team = human({ atk: 100, moves: [hit()] });
+        team[0].lastMove = "test-hit-physical";
+        expect(choose(cpu(["disable"], { spe: 50, hp: 900 }), team)).toBe(null);
+    });
+    test("구애 도구로 그 기술에 묶여 있으면 내가 느려도 쓴다", () => {
+        const team = human({ atk: 100, moves: [hit()], item: "choice-band" });
+        team[0].lastMove = "test-hit-physical";
+        team[0].lockedMove = "test-hit-physical";
+        expect(choose(cpu(["disable"], { spe: 50, hp: 900 }), team)).toBe("disable");
+    });
+    test("이미 걸려 있거나 아로마베일이면 쓰지 않는다", () => {
+        const team = human({ atk: 100, moves: [hit()] });
+        team[0].lastMove = "test-hit-physical";
+        team[0].disabled = { move: "test-hit-physical", turns: 3 };
+        expect(choose(cpu(["disable"], { spe: 150, hp: 900 }), team)).toBe(null);
+        const veil = human({ atk: 100, moves: [hit()], ability: "aroma-veil" });
+        veil[0].lastMove = "test-hit-physical";
+        expect(choose(cpu(["disable"], { spe: 150, hp: 900 }), veil)).toBe(null);
+    });
+    test("상대가 아직 기술을 쓴 적이 없으면 쓰지 않는다", () => {
+        expect(choose(cpu(["disable"], { spe: 150, hp: 900 }), human({ atk: 100, moves: [hit()] }))).toBe(null);
     });
 });
 
@@ -439,5 +502,34 @@ describe("매직미러", () => {
     });
     test("상대가 매직미러가 아니면 평소처럼 깐다", () => {
         expect(choose(cpu(["stealth-rock"]), human())).toBe("stealth-rock");
+    });
+});
+
+describe("오로라베일", () => {
+    const snowy = (team) => {
+        team.field = { weather: { name: "snow", turns: 5 } };
+        return team;
+    };
+    test("눈이 내리면 리플렉터, 빛의장막보다 오로라베일을 먼저 친다", () => {
+        const c = cpu(["reflect", "light-screen", "aurora-veil"]);
+        expect(choose(c, snowy(human()))).toBe("aurora-veil");
+    });
+    test("우박이어도 친다", () => {
+        const team = human();
+        team.field = { weather: { name: "hail", turns: 5 } };
+        expect(choose(cpu(["aurora-veil"]), team)).toBe("aurora-veil");
+    });
+    test("눈이나 우박이 아니면 오로라베일은 실패하므로 치지 않는다 (리플렉터는 친다)", () => {
+        expect(choose(cpu(["aurora-veil"]))).toBe(null);
+        expect(choose(cpu(["reflect", "aurora-veil"]))).toBe("reflect");
+    });
+    test("이미 쳐 있으면 다시 치지 않는다", () => {
+        const c = cpu(["aurora-veil"]);
+        const mine = [c];
+        mine.auroraTurns = 4;
+        expect(chooseSupportMove(snowy(human()), mine)).toBe(null);
+    });
+    test("상대에게 공격 기술이 없으면 치지 않는다", () => {
+        expect(choose(cpu(["aurora-veil"]), snowy(human({ moves: ["recover"] })))).toBe(null);
     });
 });

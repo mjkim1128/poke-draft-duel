@@ -1,7 +1,7 @@
 // 기습(Sucker Punch) 조건, 전투 시작 때 괴짜(Imposter), 둘 다 쓰러졌을 때 마지막에 쓰러진 쪽 기록을 확인한다.
 import fs from "fs";
 import path from "path";
-import { doTurn, enterBattle, getBaseStats, hpCalc, getUsableMoves } from "shared";
+import { doTurn, enterBattle, getBaseStats, hpCalc, getUsableMoves, ensureField, setWeather } from "shared";
 
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
 const MOVES = new Map(read("moves.json").map((m) => [m.name, m]));
@@ -634,5 +634,401 @@ describe("메가진화 특성", () => {
     test("관통드릴도 접촉하지 않는 기술은 방어에 막힌다", () => {
         const swift = damageOf("excadrill", "piercing-drill", ["swift"], "snorlax", ["protect"]);
         expect(swift.dealt).toBe(0);
+    });
+});
+
+describe("컴퓨터의 사슬묶기, 앙코르", () => {
+    test("먼저 움직이는 컴퓨터는 상대가 직전에 쓴 가장 센 공격에 사슬묶기를 건다", () => {
+        const me = [mon("garchomp", ["earthquake"])];
+        const cpu = [mon("alakazam", ["disable", "splash"])];
+        cpu[0].hp = [5000, 5000]; // 몇 번을 맞아도 버틴다
+        const first = doTurn(me, cpu, me[0].moveset[0]).join(" ");
+        expect(first).not.toContain("was disabled");
+        const second = doTurn(me, cpu, me[0].moveset[0]).join(" ");
+        expect(second).toContain("was disabled");
+        expect(me[0].disabled && me[0].disabled.move).toBe("earthquake");
+    });
+
+    test("컴퓨터가 느려도 상대의 약한 공격에는 앙코르를 건다", () => {
+        const me = [mon("garchomp", ["tackle"])];
+        me[0].base_stats[1] = 5; // 아주 약한 공격
+        const cpu = [mon("blissey", ["encore", "tackle"])];
+        cpu[0].base_stats[5] = 1; // 내가 먼저 움직인다
+        const first = doTurn(me, cpu, me[0].moveset[0]).join(" ");
+        expect(first).not.toContain("received an encore");
+        const second = doTurn(me, cpu, me[0].moveset[0]).join(" ");
+        expect(second).toContain("received an encore");
+        expect(me[0].encore && me[0].encore.move).toBe("tackle");
+    });
+});
+
+describe("마지막일침(Fell Stinger)", () => {
+    const setup = (foeHp) => {
+        const me = [mon("scizor", ["fell-stinger"])];
+        const foe = [mon("blissey", ["splash"])];
+        me[0].moveset[0].accuracy = null;
+        foe[0].hp[0] = foeHp;
+        return { me, foe };
+    };
+    test("상대를 쓰러뜨리면 공격이 3단계 오른다", () => {
+        const { me, foe } = setup(1);
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        expect(foe[0].hp[0]).toBe(0);
+        expect(me[0].stat_levels[0]).toBe(3);
+        expect(text).toContain("Attack");
+    });
+    test("쓰러뜨리지 못하면 오르지 않는다", () => {
+        const { me, foe } = setup(5000);
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].hp[0]).toBeGreaterThan(0);
+        expect(me[0].stat_levels[0]).toBe(0);
+    });
+    test("대타출동이 맞아 줘서 상대가 쓰러지지 않으면 오르지 않는다", () => {
+        const { me, foe } = setup(1);
+        foe[0].substitute = { hp: 9999 };
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].hp[0]).toBe(1);
+        expect(me[0].stat_levels[0]).toBe(0);
+    });
+    test("다른 공격 기술로 쓰러뜨렸을 때는 오르지 않는다", () => {
+        const me = [mon("scizor", ["tackle"])];
+        const foe = [mon("blissey", ["splash"]), mon("snorlax", ["splash"])];
+        me[0].moveset[0].accuracy = null;
+        foe[0].hp[0] = 1;
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me[0].stat_levels[0]).toBe(0);
+    });
+});
+
+describe("물의파동(Water Pulse)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const hit = (ability = null, random = 0.5) => {
+        jest.spyOn(Math, "random").mockReturnValue(random);
+        const me = [mon("blastoise", ["water-pulse"], ability)];
+        const foe = [mon("snorlax", ["splash"])];
+        me[0].moveset[0].accuracy = null;
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { dealt: foe[0].hp[1] - foe[0].hp[0], text, foe };
+    };
+    test("20% 확률로 상대를 혼란에 빠뜨린다", () => {
+        const lucky = hit(null, 0.1);
+        expect(lucky.foe[0].confusion).toBeTruthy();
+        expect(lucky.text).toContain("became confused");
+        const unlucky = hit(null, 0.5);
+        expect(unlucky.foe[0].confusion).toBeFalsy();
+    });
+    test("메가런처(Mega Launcher)가 파동 기술의 위력을 1.5배로 올린다", () => {
+        const plain = hit(null).dealt;
+        const boosted = hit("mega-launcher").dealt;
+        expect(boosted).toBeGreaterThan(plain * 1.35);
+    });
+});
+
+describe("오로라베일(Aurora Veil)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const withSnow = (me, foe) => {
+        const field = ensureField(me, foe);
+        setWeather(field, "snow", null, []);
+    };
+    test("눈이나 우박이 아니면 실패한다", () => {
+        const me = [mon("snorlax", ["aurora-veil"])];
+        const foe = [mon("snorlax", ["splash"])];
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        expect(text).toContain("But it failed!");
+        expect(me.auroraTurns).toBeFalsy();
+    });
+    test("눈이 내리면 5턴짜리 베일이 쳐진다 (턴이 끝나면 4턴)", () => {
+        const me = [mon("snorlax", ["aurora-veil"])];
+        const foe = [mon("snorlax", ["splash"])];
+        withSnow(me, foe);
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me.auroraTurns).toBe(4);
+    });
+    test("빛의점토를 들면 8턴이다", () => {
+        const me = [mon("snorlax", ["aurora-veil"])];
+        me[0].item = { name: "light-clay" };
+        const foe = [mon("snorlax", ["splash"])];
+        withSnow(me, foe);
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(me.auroraTurns).toBe(7);
+    });
+    test("이미 쳐 있으면 실패한다", () => {
+        const me = [mon("snorlax", ["aurora-veil"])];
+        const foe = [mon("snorlax", ["splash"])];
+        withSnow(me, foe);
+        doTurn(me, foe, me[0].moveset[0]);
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        expect(text).toContain("But it failed!");
+        expect(me.auroraTurns).toBe(3);
+    });
+    test("물리와 특수 피해를 모두 절반으로 줄인다", () => {
+        for (const move of ["tackle", "swift"]) {
+            const taken = (veil) => {
+                jest.spyOn(Math, "random").mockReturnValue(0.5);
+                const me = [mon("snorlax", ["splash"])];
+                if (veil) me.auroraTurns = 5;
+                const foe = [mon("garchomp", [move])];
+                foe[0].moveset[0].accuracy = null;
+                doTurn(me, foe, me[0].moveset[0]);
+                jest.restoreAllMocks();
+                return me[0].hp[1] - me[0].hp[0];
+            };
+            const plain = taken(false);
+            const veiled = taken(true);
+            expect(veiled).toBeLessThanOrEqual(Math.ceil(plain / 2) + 1);
+            expect(veiled).toBeGreaterThanOrEqual(Math.floor(plain / 2) - 1);
+        }
+    });
+});
+
+describe("썬더다이브(Supercell Slam)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const use = (foeSpecies, random = 0.5) => {
+        jest.spyOn(Math, "random").mockReturnValue(random);
+        const me = [mon("raichu", ["supercell-slam"])];
+        const foe = [mon(foeSpecies, ["splash"])];
+        const max = me[0].hp[1];
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { me, foe, max, text };
+    };
+    test("맞으면 일반 공격이고 반동은 없다", () => {
+        const { me, max, foe } = use("snorlax");
+        expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+        expect(me[0].hp[0]).toBe(max);
+    });
+    test("빗나가면 쓴 쪽이 최대 체력의 절반을 잃는다", () => {
+        const { me, max, text } = use("snorlax", 0.99); // 명중 95%에 걸리지 않는다
+        expect(text).toContain("missed");
+        expect(me[0].hp[0]).toBe(max - Math.floor(max / 2));
+    });
+    test("땅 타입처럼 효과가 없는 상대에게도 최대 체력의 절반을 잃는다", () => {
+        const { me, max, foe } = use("garchomp");
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+        expect(me[0].hp[0]).toBe(max - Math.floor(max / 2));
+    });
+});
+
+describe("변덕쟁이(Moody)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const oneTurn = () => {
+        const me = [mon("glalie", ["splash"], "moody")];
+        const foe = [mon("snorlax", ["splash"])];
+        doTurn(me, foe, me[0].moveset[0]);
+        return me[0].stat_levels;
+    };
+    test("턴이 끝날 때 한 능력치가 2단계 오르고, 다른 하나가 1단계 내린다", () => {
+        for (let i = 0; i < 40; i++) {
+            const levels = oneTurn();
+            expect(levels.filter((l) => l === 2)).toHaveLength(1);
+            expect(levels.filter((l) => l === -1)).toHaveLength(1);
+            expect(levels.filter((l) => l === 0)).toHaveLength(5);
+        }
+    });
+    test("명중률과 회피율도 대상에 들어간다", () => {
+        const touched = new Set();
+        for (let i = 0; i < 300; i++) oneTurn().forEach((l, idx) => l !== 0 && touched.add(idx));
+        expect([...touched].sort()).toEqual([0, 1, 2, 3, 4, 5, 6]);
+    });
+    test("이미 최대(+6)인 능력치는 더 오르지 않고, 최저(-6)인 능력치는 더 내리지 않는다", () => {
+        for (let i = 0; i < 60; i++) {
+            const me = [mon("glalie", ["splash"], "moody")];
+            me[0].stat_levels = [6, 6, 6, 6, 6, 6, -6];
+            const foe = [mon("snorlax", ["splash"])];
+            doTurn(me, foe, me[0].moveset[0]);
+            // 오를 수 있는 것은 회피율(-6 -> -4)뿐, 내릴 수 있는 것은 +6인 여섯 개 중 하나
+            expect(me[0].stat_levels[6]).toBe(-4);
+            expect(me[0].stat_levels.slice(0, 6).filter((l) => l === 5)).toHaveLength(1);
+        }
+    });
+});
+
+describe("폭발펀치(Dynamic Punch)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const hit = (random, foeAbility = null) => {
+        jest.spyOn(Math, "random").mockReturnValue(random);
+        const me = [mon("machamp", ["dynamic-punch"])];
+        const foe = [mon("snorlax", ["splash"], foeAbility)];
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { foe, text };
+    };
+    test("맞으면 반드시 혼란에 빠뜨린다", () => {
+        const { foe, text } = hit(0.3); // 명중 50%에 걸린다
+        expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+        expect(foe[0].confusion).toBeTruthy();
+        expect(text).toContain("became confused");
+    });
+    test("빗나가면 피해도 혼란도 없다 (명중 50%)", () => {
+        const { foe, text } = hit(0.9);
+        expect(text).toContain("missed");
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+        expect(foe[0].confusion).toBeFalsy();
+    });
+    test("마이페이스처럼 혼란을 막는 특성에는 혼란에 빠지지 않는다", () => {
+        const { foe } = hit(0.3, "own-tempo");
+        expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+        expect(foe[0].confusion).toBeFalsy();
+    });
+});
+
+describe("볼트태클(Volt Tackle)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const hit = (random, ability = null) => {
+        jest.spyOn(Math, "random").mockReturnValue(random);
+        const me = [mon("raichu", ["volt-tackle"], ability)];
+        const foe = [mon("snorlax", ["splash"])];
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { me, foe, text, dealt: foe[0].hp[1] - foe[0].hp[0], lost: me[0].hp[1] - me[0].hp[0] };
+    };
+    test("준 피해의 33%를 반동으로 받는다", () => {
+        const { dealt, lost, text } = hit(0.5);
+        expect(dealt).toBeGreaterThan(0);
+        expect(text).toContain("recoil");
+        expect(lost).toBeGreaterThanOrEqual(Math.floor(dealt * 0.33) - 1);
+        expect(lost).toBeLessThanOrEqual(Math.floor(dealt * 0.33) + 1);
+    });
+    test("바위머리(Rock Head)는 반동을 받지 않는다", () => {
+        const { lost, dealt } = hit(0.5, "rock-head");
+        expect(dealt).toBeGreaterThan(0);
+        expect(lost).toBe(0);
+    });
+    test("10% 확률로 마비시킨다", () => {
+        expect(hit(0.05).foe[0].status && hit(0.05).foe[0].status.name).toBe("paralysis");
+        expect(hit(0.5).foe[0].status).toBeFalsy();
+    });
+});
+
+describe("전자포(Zap Cannon)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const hit = (random, foeSpecies = "snorlax") => {
+        jest.spyOn(Math, "random").mockReturnValue(random);
+        const me = [mon("magnezone", ["zap-cannon"])];
+        const foe = [mon(foeSpecies, ["splash"])];
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { foe, text };
+    };
+    test("맞으면 반드시 마비시킨다", () => {
+        const { foe } = hit(0.3); // 명중 50%에 걸린다
+        expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+        expect(foe[0].status && foe[0].status.name).toBe("paralysis");
+    });
+    test("빗나가면 피해도 마비도 없다 (명중 50%)", () => {
+        const { foe, text } = hit(0.9);
+        expect(text).toContain("missed");
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+        expect(foe[0].status).toBeFalsy();
+    });
+    test("땅 타입에게는 효과가 없다", () => {
+        const { foe } = hit(0.3, "garchomp");
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+        expect(foe[0].status).toBeFalsy();
+    });
+    test("전기 타입은 마비에 걸리지 않지만 피해는 받는다", () => {
+        const { foe } = hit(0.3, "raichu");
+        expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+        expect(foe[0].status).toBeFalsy();
+    });
+});
+
+describe("노가드(No Guard)와 명중률이 낮은 기술", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const zap = (attackerAbility, foeAbility) => {
+        jest.spyOn(Math, "random").mockReturnValue(0.99); // 평소라면 명중 50%에 걸리지 않는다
+        const me = [mon("magnezone", ["zap-cannon"], attackerAbility)];
+        const foe = [mon("snorlax", ["splash"], foeAbility)];
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { foe, text };
+    };
+    test("노가드가 아니면 빗나간다", () => {
+        const { foe, text } = zap(null, null);
+        expect(text).toContain("missed");
+        expect(foe[0].status).toBeFalsy();
+    });
+    test("쓰는 쪽이 노가드면 반드시 맞고, 그러면 마비도 반드시 걸린다", () => {
+        const { foe, text } = zap("no-guard", null);
+        expect(text).not.toContain("missed");
+        expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+        expect(foe[0].status && foe[0].status.name).toBe("paralysis");
+    });
+    test("맞는 쪽이 노가드여도 반드시 맞는다", () => {
+        const { foe, text } = zap(null, "no-guard");
+        expect(text).not.toContain("missed");
+        expect(foe[0].status && foe[0].status.name).toBe("paralysis");
+    });
+});
+
+describe("파괴광선(Hyper Beam)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const setup = (foeSpecies = "snorlax") => {
+        jest.spyOn(Math, "random").mockReturnValue(0.5);
+        const user = mon("tauros", ["hyper-beam", "splash"]);
+        const me = [user, mon("blissey", ["splash"])];
+        const foe = [mon(foeSpecies, ["splash"])];
+        foe[0].hp = [99999, 99999];
+        return { user, me, foe };
+    };
+    test("맞히면 다음 턴은 반동으로 움직이지 못한다", () => {
+        const { user, me, foe } = setup();
+        doTurn(me, foe, user.moveset[0]);
+        expect(foe[0].hp[0]).toBeLessThan(foe[0].hp[1]);
+        expect(user.mustRecharge).toBe(true);
+        const second = doTurn(me, foe, user.moveset[0]).join(" ");
+        expect(second).toContain("must recharge!");
+        expect(second).not.toContain("used Hyper Beam");
+        expect(user.mustRecharge).toBe(false);
+        const third = doTurn(me, foe, user.moveset[0]).join(" ");
+        expect(third).toContain("used Hyper Beam"); // 그다음 턴에는 다시 쓸 수 있다
+    });
+    test("빗나가면 반동이 없다 (명중 90%)", () => {
+        const { user, me, foe } = setup();
+        jest.spyOn(Math, "random").mockReturnValue(0.97);
+        const text = doTurn(me, foe, user.moveset[0]).join(" ");
+        expect(text).toContain("missed");
+        expect(user.mustRecharge).toBeFalsy();
+    });
+    test("고스트 타입처럼 효과가 없는 상대에게는 반동이 없다", () => {
+        const { user, me, foe } = setup("gengar");
+        doTurn(me, foe, user.moveset[0]);
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+        expect(user.mustRecharge).toBeFalsy();
+    });
+    test("반동 턴에 교체하면 반동이 사라진다", () => {
+        const { user, me, foe } = setup();
+        doTurn(me, foe, user.moveset[0]);
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(user.mustRecharge).toBeFalsy();
+    });
+});
+
+describe("땅가르기(Fissure)", () => {
+    afterEach(() => jest.restoreAllMocks());
+    const use = (random, foeSpecies = "snorlax", { foeAbility = null, attackerAbility = null } = {}) => {
+        jest.spyOn(Math, "random").mockReturnValue(random);
+        const me = [mon("excadrill", ["fissure"], attackerAbility)];
+        const foe = [mon(foeSpecies, ["splash"], foeAbility)];
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { foe, text };
+    };
+    test("명중 30%에 걸리면 상대를 한 번에 쓰러뜨린다", () => {
+        const { foe, text } = use(0.1);
+        expect(foe[0].hp[0]).toBe(0);
+        expect(text).toContain("fainted");
+    });
+    test("명중 30%에 걸리지 않으면 빗나간다", () => {
+        const { foe, text } = use(0.5);
+        expect(text).toContain("missed");
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+    });
+    test("비행 타입처럼 땅 기술이 통하지 않는 상대에게는 효과가 없다", () => {
+        const { foe } = use(0.1, "pidgeot");
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+    });
+    test("옹골찬(Sturdy) 특성에는 일격필살기가 통하지 않는다", () => {
+        const { foe, text } = use(0.1, "snorlax", { foeAbility: "sturdy" });
+        expect(foe[0].hp[0]).toBe(foe[0].hp[1]);
+        expect(text).toContain("doesn't affect");
+    });
+    test("노가드면 반드시 맞는다", () => {
+        const { foe } = use(0.99, "snorlax", { attackerAbility: "no-guard" });
+        expect(foe[0].hp[0]).toBe(0);
     });
 });

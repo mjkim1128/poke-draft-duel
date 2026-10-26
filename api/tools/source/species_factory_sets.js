@@ -138,7 +138,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "tyranitar": /* 마기라스 */ [
+  "tyranitar": /* 마기라스 */ /* 메가진화 가능: 메가마기라스 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "sand-stream" /* 모래날림 */,
@@ -300,26 +300,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "sand-stream" /* 모래날림 */,
-    "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "rock-blast" /* 락블레스트 */ } ],
-      [ { "slug": "foul-play" /* 속임수 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ],
-      [ { "slug": "rest" /* 잠자기 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "sand-stream" /* 모래날림 */,
-    "moves": [
-      [ { "slug": "rock-blast" /* 락블레스트 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "thunder-wave" /* 전기자석파 */ }, { "slug": "toxic" /* 맹독 */ } ]
-    ]
-  },
-  {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "sand-stream" /* 모래날림 */,
     "moves": [
@@ -349,6 +329,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "ice-punch" /* 냉동펀치 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가마기라스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "tyranitarite" /* 마기라스나이트 */,
     "ability": "sand-stream" /* 모래날림 */,
@@ -359,8 +340,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   }
+  ,
+  {
+    "item": "tyranitarite" /* 마기라스나이트 */,
+    "ability": "sand-stream" /* 모래날림 */,
+    "moves": [
+      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "crunch" /* 깨물어부수기 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ],
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
+    ]
+  }
   ],
-  "salamence": /* 보만다 */ [
+  "salamence": /* 보만다 */ /* 메가진화 가능: 메가보만다 */ [
   {
     "item": "choice-scarf" /* 구애스카프 */,
     "ability": "moxie" /* 자기과신 */,
@@ -372,7 +364,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "life-orb" /* 생명의구슬 */,
     "ability": "intimidate" /* 위협 */,
     "moves": [
       [ { "slug": "hurricane" /* 폭풍 */ } ],
@@ -382,17 +374,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "intimidate" /* 위협 */,
-    "moves": [
-      [ { "slug": "hurricane" /* 폭풍 */ }, { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "life-orb" /* 생명의구슬 */,
     "ability": "moxie" /* 자기과신 */,
     "moves": [
       [ { "slug": "dual-wingbeat" /* 더블윙 */ } ],
@@ -402,17 +384,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "intimidate" /* 위협 */,
-    "moves": [
-      [ { "slug": "dual-wingbeat" /* 더블윙 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "life-orb" /* 생명의구슬 */,
     "ability": "moxie" /* 자기과신 */,
     "moves": [
       [ { "slug": "roost" /* 날개쉬기 */ }, { "slug": "temper-flare" /* 열불내기 */ } ],
@@ -422,7 +394,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "life-orb" /* 생명의구슬 */,
     "ability": "intimidate" /* 위협 */,
     "moves": [
       [ { "slug": "roost" /* 날개쉬기 */ } ],
@@ -432,7 +404,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "life-orb" /* 생명의구슬 */,
     "ability": ["intimidate" /* 위협 */, "moxie" /* 자기과신 */],
     "moves": [
       [ { "slug": "dragon-claw" /* 드래곤크루 */ } ],
@@ -442,7 +414,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
+    "item": "life-orb" /* 생명의구슬 */,
     "ability": ["intimidate" /* 위협 */, "moxie" /* 자기과신 */],
     "moves": [
       [ { "slug": "outrage" /* 역린 */ } ],
@@ -451,18 +423,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "dragon-dance" /* 용의춤 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가보만다 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "salamencite" /* 보만다나이트 */,
-    "ability": "moxie" /* 자기과신 */,
+    "ability": "intimidate" /* 위협 */,
     "moves": [
-      [ { "slug": "dual-wingbeat" /* 더블윙 */ } ],
-      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ],
+      [ { "slug": "double-edge" /* 이판사판태클 */ } ],
       [ { "slug": "dragon-dance" /* 용의춤 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   }
   ],
-  "sableye": /* 깜까미 */ [
+  "sableye": /* 깜까미 */ /* 메가진화 가능: 메가깜까미 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "prankster" /* 짓궂은마음 */,
@@ -483,6 +456,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "foul-play" /* 속임수 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가깜까미 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "sablenite" /* 깜까미나이트 */,
     "ability": "prankster" /* 짓궂은마음 */,
@@ -490,11 +464,11 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "recover" /* HP회복 */ } ],
       [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
       [ { "slug": "taunt" /* 도발 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+      [ { "slug": "snarl" /* 바크아웃 */ } ]
     ]
   },
   ],
-  "mawile": /* 입치트 */ [
+  "mawile": /* 입치트 */ /* 메가진화 가능: 메가입치트 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "sheer-force" /* 우격다짐 */,
@@ -506,18 +480,8 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "intimidate" /* 위협 */,
-    "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "play-rough" /* 치근거리기 */ } ],
-      [ { "slug": "super-fang" /* 분노의앞니 */ }, { "slug": "toxic" /* 맹독 */ } ],
-      [ { "slug": "pain-split" /* 아픔나누기 */ }, { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
-    ]
-  },
-  {
     "item": "life-orb" /* 생명의구슬 */,
-    "ability": "sheer-force" /* 우격다짐 */,
+    "ability": "intimidate" /* 위협 */,
     "moves": [
       [ { "slug": "play-rough" /* 치근거리기 */ } ],
       [ { "slug": "iron-head" /* 아이언헤드 */ } ],
@@ -525,18 +489,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "sucker-punch" /* 기습 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가입치트 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "mawilite" /* 입치트나이트 */,
-    "ability": "sheer-force" /* 우격다짐 */,
+    "ability": "intimidate" /* 위협 */,
     "moves": [
       [ { "slug": "play-rough" /* 치근거리기 */ } ],
       [ { "slug": "iron-head" /* 아이언헤드 */ } ],
-      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "sucker-punch" /* 기습 */ } ]
     ]
   }
   ],
-  "lucario": /* 루카리오 */ [
+  "lucario": /* 루카리오 */ /* 메가진화 가능: 메가루카리오, 메가루카리오Z */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "justified" /* 정의의마음 */,
@@ -647,6 +612,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "extreme-speed" /* 신속 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가루카리오 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "lucarionite" /* 루카리오나이트 */,
     "ability": "justified" /* 정의의마음 */,
@@ -654,9 +620,10 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
       [ { "slug": "close-combat" /* 인파이트 */ } ],
-      [ { "slug": "crunch" /* 깨물어부수기 */ } ]
+      [ { "slug": "meteor-mash" /* 코멧펀치 */ } ],
     ]
   },
+  /* 메가진화 세트: 메가루카리오Z (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "lucarionite-z" /* 루카리오나이트Z */,
     "ability": "steadfast" /* 불굴의마음 */,
@@ -668,7 +635,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "latios": /* 라티오스 */ [
+  "latios": /* 라티오스 */ /* 메가진화 가능: 메가라티오스 */ [
   {
     "item": "soul-dew" /* 마음의물방울 */,
     "ability": "levitate" /* 부유 */,
@@ -707,26 +674,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
       [ { "slug": "calm-mind" /* 명상 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "fire" } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "trick" /* 트릭 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ]
     ]
   },
   {
@@ -736,16 +683,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
       [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
       [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "fire" } ],
       [ { "slug": "defog" /* 안개제거 */ } ]
     ]
   },
@@ -766,27 +703,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
       [ { "slug": "psychic" /* 사이코키네시스 */ } ],
       [ { "slug": "recover" /* HP회복 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ }, { "slug": "defog" /* 안개제거 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
-      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "steel" } ],
-      [ { "slug": "defog" /* 안개제거 */ } ]
+      [ { "slug": "calm-mind" /* 명상 */ } ]
     ]
   },
   {
@@ -796,16 +713,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
       [ { "slug": "psychic" /* 사이코키네시스 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "fire" } ],
-      [ { "slug": "trick" /* 트릭 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ],
       [ { "slug": "trick" /* 트릭 */ } ]
     ]
   },
@@ -845,27 +752,7 @@ const SPECIES_FACTORY_SETS = {
     "moves": [
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
       [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "surf" /* 파도타기 */ }, { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
       [ { "slug": "surf" /* 파도타기 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ]
-    ]
-  },
-  {
-    "item": "soul-dew" /* 마음의물방울 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
       [ { "slug": "defog" /* 안개제거 */ } ]
     ]
   },
@@ -949,38 +836,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "recover" /* HP회복 */ } ]
     ]
   },
-  {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "surf" /* 파도타기 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ } ],
-      [ { "slug": "recover" /* HP회복 */ } ]
-    ]
-  },
+  /* 메가진화 세트: 메가라티오스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "latiosite" /* 라티오스나이트 */,
     "ability": "levitate" /* 부유 */,
     "moves": [
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
       [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ]
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ]
     ]
   }
   ],
-  "latias": /* 라티아스 */ [
-  {
-    "item": "soul-dew" /* 마음의물방울 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "recover" /* HP회복 */ }, { "slug": "healing-wish" /* 치유소원 */ } ]
-    ]
-  },
+  "latias": /* 라티아스 */ /* 메가진화 가능: 메가라티아스 */ [
   {
     "item": "soul-dew" /* 마음의물방울 */,
     "ability": "levitate" /* 부유 */,
@@ -989,26 +857,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
       [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
       [ { "slug": "recover" /* HP회복 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "healing-wish" /* 치유소원 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   },
   {
@@ -1018,7 +866,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
       [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
       [ { "slug": "healing-wish" /* 치유소원 */ } ],
-      [ { "slug": "trick" /* 트릭 */ }, { "slug": "defog" /* 안개제거 */ } ]
+      [ { "slug": "trick" /* 트릭 */ } ]
     ]
   },
   {
@@ -1047,18 +895,8 @@ const SPECIES_FACTORY_SETS = {
     "moves": [
       [ { "slug": "psychic" /* 사이코키네시스 */ } ],
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "trick" /* 트릭 */ }, { "slug": "defog" /* 안개제거 */ } ],
+      [ { "slug": "trick" /* 트릭 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "fire" }, { "slug": "healing-wish" /* 치유소원 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "levitate" /* 부유 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "healing-wish" /* 치유소원 */ }, { "slug": "trick" /* 트릭 */ } ]
     ]
   },
   {
@@ -1071,6 +909,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "healing-wish" /* 치유소원 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가라티아스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "latiasite" /* 라티아스나이트 */,
     "ability": "levitate" /* 부유 */,
@@ -1082,7 +921,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "kangaskhan": /* 캥카 */ [
+  "kangaskhan": /* 캥카 */ /* 메가진화 가능: 메가캥카 */ [
   {
     "item": "silk-scarf" /* 실크스카프 */,
     "ability": "scrappy" /* 배짱 */,
@@ -1093,18 +932,29 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가캥카 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "kangaskhanite" /* 캥카나이트 */,
     "ability": "scrappy" /* 배짱 */,
     "moves": [
       [ { "slug": "fake-out" /* 속이기 */ } ],
       [ { "slug": "double-edge" /* 이판사판태클 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ }, { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "fire-punch" /* 불꽃펀치 */ }, { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "kangaskhanite" /* 캥카나이트 */,
+    "ability": "scrappy" /* 배짱 */,
+    "moves": [
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ],
+      [ { "slug": "double-edge" /* 이판사판태클 */ } ],
       [ { "slug": "sucker-punch" /* 기습 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
-  },
+  }
   ],
-  "greninja": /* 개굴닌자 */ [
+  "greninja": /* 개굴닌자 */ /* 메가진화 가능: 메가개굴닌자 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
     "ability": "protean" /* 변환자재 */,
@@ -1262,7 +1112,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "dark-pulse" /* 악의파동 */ } ],
       [ { "slug": "surf" /* 파도타기 */ }, { "slug": "hydro-pump" /* 하이드로펌프 */ } ],
       [ { "slug": "ice-beam" /* 냉동빔 */ } ],
-      [ { "slug": "sludge-wave" /* 오물웨이브 */ }, { "slug": "spikes" /* 압정뿌리기 */ } ]
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ]
     ]
   },
   {
@@ -1275,31 +1125,41 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가개굴닌자 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "greninjite" /* 개굴닌자나이트 */,
     "ability": "protean" /* 변환자재 */,
     "moves": [
       [ { "slug": "ice-beam" /* 냉동빔 */ } ],
-      [ { "slug": "gunk-shot" /* 더스트슈트 */ } ],
-      [ { "slug": "extrasensory" /* 신통력 */ } ],
-      [ { "slug": "hydro-pump" /* 하이드로펌프 */ } ]
-    ]
-  }
-  ],
-  "gengar": /* 팬텀 */ [
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "water-shuriken" /* 물수리검 */ } ]  ]
+  },
   {
-    "item": "black-sludge" /* 검은오물 */,
-    "ability": "levitate" /* 부유 */,
+    "item": "greninjite" /* 개굴닌자나이트 */,
+    "ability": "protean" /* 변환자재 */,
     "moves": [
-      [ { "slug": "hex" /* 병상첨병 */ } ],
-      [ { "slug": "taunt" /* 도발 */ } ],
-      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
-      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ]
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "water-shuriken" /* 물수리검 */ } ],
+      [ { "slug": "hydro-pump" /* 하이드로펌프 */ } ]
     ]
   },
   {
+    "item": "greninjite" /* 개굴닌자나이트 */,
+    "ability": "protean" /* 변환자재 */,
+    "moves": [
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ } ]
+    ]
+  }
+  ],
+  "gengar": /* 팬텀 */ /* 메가진화 가능: 메가팬텀 */ [
+  {
     "item": "life-orb" /* 생명의구슬 */,
-    "ability": "levitate" /* 부유 */,
+    "ability": "cursed-body" /* 저주받은바디 */,
     "moves": [
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
       [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
@@ -1309,7 +1169,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "life-orb" /* 생명의구슬 */,
-    "ability": "levitate" /* 부유 */,
+    "ability": "cursed-body" /* 저주받은바디 */,
     "moves": [
       [ { "slug": "substitute" /* 대타출동 */ } ],
       [ { "slug": "pain-split" /* 아픔나누기 */ } ],
@@ -1407,34 +1267,35 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "toxic-spikes" /* 독압정 */ }, { "slug": "focus-blast" /* 기합구슬 */ } ]
     ]
   },
-  {
-    "item": "air-balloon" /* 풍선 */,
-    "ability": "cursed-body" /* 저주받은바디 */,
-    "moves": [
-      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
-      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ]
-    ]
-  },
-  {
-    "item": "air-balloon" /* 풍선 */,
-    "ability": "cursed-body" /* 저주받은바디 */,
-    "moves": [
-      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
-      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
-      [ { "slug": "encore" /* 앵콜 */ } ]
-    ]
-  },
+  /* 메가진화 세트: 메가팬텀 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "gengarite" /* 팬텀나이트 */,
-    "ability": "levitate" /* 부유 */,
+    "ability": "cursed-body" /* 저주받은바디 */,
     "moves": [
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
       [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "taunt" /* 도발 */ } ]
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
+    ]
+  },
+  {
+    "item": "gengarite" /* 팬텀나이트 */,
+    "ability": "cursed-body" /* 저주받은바디 */,
+    "moves": [
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "protect" /* 방어 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "perish-song" /* 멸망의노래 */ } ]
+    ]
+  },
+  {
+    "item": "gengarite" /* 팬텀나이트 */,
+    "ability": "cursed-body" /* 저주받은바디 */,
+    "moves": [
+      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "destiny-bond" /* 길동무 */ } ]
     ]
   }
   ],
@@ -1552,7 +1413,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "excadrill": /* 몰드류 */ [
+  "excadrill": /* 몰드류 */ /* 메가진화 가능: 메가몰드류 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "sand-rush" /* 모래헤치기 */,
@@ -1683,6 +1544,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "swords-dance" /* 칼춤 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가몰드류 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "excadrite" /* 몰드류나이트 */,
     "ability": "sand-rush" /* 모래헤치기 */,
@@ -1768,7 +1630,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "blaziken": /* 번치코 */ [
+  "blaziken": /* 번치코 */ /* 메가진화 가능: 메가번치코 */ [
   {
     "item": "focus-sash", 
     "ability": "speed-boost" /* 가속 */,
@@ -1809,18 +1671,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "thunder-punch" /* 번개펀치 */ }, { "slug": "earthquake" /* 지진 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가번치코 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "blazikenite" /* 번치코나이트 */,
     "ability": "speed-boost" /* 가속 */,
     "moves": [
-      [ { "slug": "low-kick" /* 안다리걸기 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
-      [ { "slug": "protect" /* 방어 */ } ],
-      [ { "slug": "stone-edge" /* 스톤에지 */ }, { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "thunder-punch" /* 번개펀치 */ }, { "slug": "earthquake" /* 지진 */ } ]
     ]
   }
   ],
-  "scizor": /* 핫삼 */ [
+  "scizor": /* 핫삼 */ /* 메가진화 가능: 메가핫삼 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "technician" /* 테크니션 */,
@@ -1859,46 +1722,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
       [ { "slug": "roost" /* 날개쉬기 */ } ],
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
-    ]
-  },
-  {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "technician" /* 테크니션 */,
-    "moves": [
-      [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
-      [ { "slug": "u-turn" /* 유턴 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "technician" /* 테크니션 */,
-    "moves": [
-      [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
-      [ { "slug": "bug-bite" /* 벌레먹음 */ }, { "slug": "quick-attack" /* 전광석화 */ } ],
-      [ { "slug": "superpower" /* 엄청난힘 */ }, { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "technician" /* 테크니션 */,
-    "moves": [
-      [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "superpower" /* 엄청난힘 */ } ]
-    ]
-  },
-  {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "technician" /* 테크니션 */,
-    "moves": [
-      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
-      [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   },
   {
@@ -1942,16 +1765,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "technician" /* 테크니션 */,
-    "moves": [
-      [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
-      [ { "slug": "close-combat" /* 인파이트 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
-    ]
-  },
-  {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "technician" /* 테크니션 */,
     "moves": [
@@ -1981,6 +1794,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가핫삼 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "scizorite" /* 핫삼나이트 */,
     "ability": "technician" /* 테크니션 */,
@@ -1988,11 +1802,11 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "superpower" /* 엄청난힘 */ } ]
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   }
   ],
-  "diancie": /* 디안시 */ [
+  "diancie": /* 디안시 */ /* 메가진화 가능: 메가디안시 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "clear-body" /* 클리어바디 */,
@@ -2083,14 +1897,25 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earth-power" /* 대지의힘 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가디안시 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "diancite" /* 디안시나이트 */,
     "ability": "clear-body" /* 클리어바디 */,
     "moves": [
-      [ { "slug": "trick-room" /* 트릭룸 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
       [ { "slug": "diamond-storm" /* 다이아스톰 */ } ],
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "explosion" /* 대폭발 */ } ]
+    ]
+  },
+  {
+    "item": "diancite" /* 디안시나이트 */,
+    "ability": "clear-body" /* 클리어바디 */,
+    "moves": [
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "diamond-storm" /* 다이아스톰 */ } ],
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "rock-polish" /* 록커트 */ } ]
     ]
   }
   ],
@@ -2795,7 +2620,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "staraptor": /* 찌르호크 */ [
+  "staraptor": /* 찌르호크 */ /* 메가진화 가능: 메가찌르호크 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "reckless" /* 이판사판 */,
@@ -2817,16 +2642,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "intimidate" /* 위협 */,
-    "moves": [
-      [ { "slug": "brave-bird" /* 브레이브버드 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "u-turn" /* 유턴 */ }, { "slug": "toxic" /* 맹독 */ } ]
-    ]
-  },
-  {
     "item": "rocky-helmet" /* 울퉁불퉁멧 */,
     "ability": "intimidate" /* 위협 */,
     "moves": [
@@ -2836,18 +2651,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "u-turn" /* 유턴 */ }, { "slug": "close-combat" /* 인파이트 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가찌르호크 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "staraptite" /* 찌르호크나이트 */,
     "ability": "intimidate" /* 위협 */,
     "moves": [
       [ { "slug": "brave-bird" /* 브레이브버드 */ } ],
       [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "u-turn" /* 유턴 */ }, { "slug": "close-combat" /* 인파이트 */ } ]
-    ]
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ },  { "slug": "blaze-kick" /* 블레이즈킥 */ }, { "slug": "facade" /* 객기 */ } ]
+    ] 
   }
   ],
-  "scolipede": /* 펜드라 */ [
+  "scolipede": /* 펜드라 */ /* 메가진화 가능: 메가펜드라 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "speed-boost" /* 가속 */,
@@ -2908,6 +2724,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "rock-slide" /* 스톤샤워 */ }, { "slug": "protect" /* 방어 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가펜드라 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "scolipite" /* 펜드라나이트 */,
     "ability": "speed-boost" /* 가속 */,
@@ -2918,8 +2735,18 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "protect" /* 방어 */ } ]
     ]
   },
+  {
+    "item": "scolipite" /* 펜드라나이트 */,
+    "ability": "speed-boost" /* 가속 */,
+    "moves": [
+      [ { "slug": "leech-life" /* 흡혈 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "poison-jab" /* 독찌르기 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  },
   ],
-  "medicham": /* 요가램 */ [
+  "medicham": /* 요가램 */ /* 메가진화 가능: 메가요가램 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "pure-power" /* 순수한힘 */,
@@ -2958,6 +2785,17 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "trick" /* 트릭 */ } ],
       [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ],
       [ { "slug": "high-jump-kick" /* 무릎차기 */ } ]
+    ]
+  },
+  /* 메가진화 세트: 메가요가램 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
+  {
+    "item": "medichamite" /* 요가램나이트 */,
+    "ability": "pure-power" /* 순수한힘 */,
+    "moves": [
+      [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
+      [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ],
+      [ { "slug": "bullet-punch" /* 불릿펀치 */ }, { "slug": "ice-punch" /* 냉동펀치 */ } ],
+      [ { "slug": "fake-out" /* 속이다 */ } ]
     ]
   },
   {
@@ -3053,7 +2891,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "hawlucha": /* 루차불 */ [
+  "hawlucha": /* 루차불 */ /* 메가진화 가능: 메가루차불 */ [
   {
     "item": "sitrus-berry" /* 자뭉열매 */,
     "ability": "unburden" /* 곡예 */,
@@ -3084,14 +2922,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "defog" /* 안개제거 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가루차불 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "hawluchanite" /* 루차불나이트 */,
-    "ability": "unburden" /* 곡예 */,
+    "ability": "mold-breaker" /* 틀깨기 */,
     "moves": [
-      [ { "slug": "sky-attack" /* 불새 */ } ],
+      [ { "slug": "brave-bird" /* 브레이브버드 */ } ],
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "high-jump-kick" /* 무릎차기 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "encore" /* 앙코르 */ } ]
     ]
   },
   ],
@@ -3239,7 +3078,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "alakazam": /* 후딘 */ [
+  "alakazam": /* 후딘 */ /* 메가진화 가능: 메가후딘 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
     "ability": "magic-guard" /* 매직가드 */,
@@ -3310,14 +3149,25 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "counter" /* 카운터 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가후딘 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "alakazite" /* 후디나이트 */,
     "ability": "magic-guard" /* 매직가드 */,
     "moves": [
       [ { "slug": "psychic" /* 사이코키네시스 */ } ],
-      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "encore" /* 앵콜 */ } ]
+    ]
+  },
+  {
+    "item": "alakazite" /* 후디나이트 */,
+    "ability": "magic-guard" /* 매직가드 */,
+    "moves": [
+      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "disable" /* 사슬묶기 */ } ],      
+      [ { "slug": "encore" /* 앵콜 */ } ]
     ]
   },
   ],
@@ -3433,7 +3283,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "venusaur": /* 이상해꽃 */ [
+  "venusaur": /* 이상해꽃 */ /* 메가진화 가능: 메가이상해꽃 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "overgrow" /* 심록 */,
@@ -3494,6 +3344,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "synthesis" /* 광합성 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가이상해꽃 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "venusaurite" /* 이상해꽃나이트 */,
     "ability": "overgrow" /* 심록 */,
@@ -3501,7 +3352,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "leaf-storm" /* 리프스톰 */ } ],
       [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
       [ { "slug": "synthesis" /* 광합성 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
+      [ { "slug": "earth-power" /* 대지의힘 */ } ]
     ]
   }
   ],
@@ -3791,7 +3642,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "slowbro": /* 야도란 */ [
+  "slowbro": /* 야도란 */ /* 메가진화 가능: 메가야도란 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "regenerator" /* 재생력 */,
@@ -3863,15 +3714,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "colbur-berry" /* 마코열매 */,
-    "ability": "regenerator" /* 재생력 */,
-    "moves": [
-      [ { "slug": "body-press" /* 바디프레스 */ } ],
-      [ { "slug": "teleport" /* 순간이동 */ } ],
-      [ { "slug": "slack-off" /* 태만함 */ } ]
-    ]
-  },
-  {
     "item": "rocky-helmet" /* 울퉁불퉁멧 */,
     "ability": "regenerator" /* 재생력 */,
     "moves": [
@@ -3881,18 +3723,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "calm-mind" /* 명상 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가야도란 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "slowbronite" /* 야도란나이트 */,
     "ability": "regenerator" /* 재생력 */,
     "moves": [
-      [ { "slug": "scald" /* 열탕 */ } ],
-      [ { "slug": "fire-blast" /* 불대문자 */ }, { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "ice-beam" /* 냉동빔 */ }, { "slug": "grass-knot" /* 풀묶기 */ } ],
+      [ { "slug": "iron-defense" /* 철벽 */ } ],
+      [ { "slug": "amnesia" /* 망각술 */ } ],
+      [ { "slug": "body-press" /* 바디프레스 */ } ],
       [ { "slug": "slack-off" /* 게으름피우기 */ } ]
     ]
   },
   ],
-  "skarmory": /* 무장조 */ [
+  "skarmory": /* 무장조 */ /* 메가진화 가능: 메가무장조 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "sturdy" /* 옹골참 */,
@@ -4063,18 +3906,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "brave-bird" /* 브레이브버드 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가무장조 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "skarmorite" /* 무장조나이트 */,
-    "ability": "sturdy" /* 옹골참 */,
+    "ability": "weak-armor" /* 깨어진갑옷 */,
     "moves": [
-      [ { "slug": "body-press" /* 바디프레스 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "drill-run" /* 드릴라이너 */ } ],
       [ { "slug": "brave-bird" /* 브레이브버드 */ } ]
     ]
   }
   ],
-  "pinsir": /* 쁘사이저 */ [
+  "pinsir": /* 쁘사이저 */ /* 메가진화 가능: 메가쁘사이저 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "mold-breaker" /* 틀깨기 */,
@@ -4115,16 +3959,27 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "stone-edge" /* 스톤에지 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가쁘사이저 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "pinsirite" /* 쁘사이저나이트 */,
-    "ability": "mold-breaker" /* 틀깨기 */,
+    "ability": "moxie" /* 자기과신 */,
     "moves": [
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "x-scissor" /* 시저크로스 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "stone-edge" /* 스톤에지 */ } ]
+      [ { "slug": "quick-attack" /* 전광석화 */ } ]
     ]
   },
+  {
+    "item": "pinsirite" /* 쁘사이저나이트 */,
+    "ability": "moxie" /* 자기과신 */,
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "x-scissor" /* 시저크로스 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "quick-attack" /* 전광석화 */ } ]
+    ]
+  }
   ],
   "mew": /* 뮤 */ [
   {
@@ -4218,7 +4073,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "metagross": /* 메타그로스 */ [
+  "metagross": /* 메타그로스 */ /* 메가진화 가능: 메가메타그로스 */ [
   {
     "item": "shuca-berry" /* 슈캐열매 */,
     "ability": "clear-body" /* 클리어바디 */,
@@ -4339,18 +4194,39 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "bullet-punch" /* 불릿펀치 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가메타그로스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "metagrossite" /* 메타그로스나이트 */,
     "ability": "clear-body" /* 클리어바디 */,
     "moves": [
-      [ { "slug": "meteor-mash" /* 코멧펀치 */ } ],
-      [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ],
+      [ { "slug": "meteor-mash" /* 코멧펀치 */ }, { "slug": "ice-punch" /* 냉동펀치 */ }, { "slug": "thunder-punch" /* 번개펀치 */ } ],
+      [ { "slug": "psychic-fangs" /* 사이코팽 */ } ],
       [ { "slug": "bullet-punch" /* 불릿펀치 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
+  },
+  {
+    "item": "metagrossite" /* 메타그로스나이트 */,
+    "ability": "clear-body" /* 클리어바디 */,
+    "moves": [
+      [ { "slug": "grass-knot" /* 풀묶기 */ } ],
+      [ { "slug": "psychic-fangs" /* 사이코팽 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "metagrossite" /* 메타그로스나이트 */,
+    "ability": "clear-body" /* 클리어바디 */,
+    "moves": [
+      [ { "slug": "body-press" /* 바디프레스 */ } ],
+      [ { "slug": "iron-defense" /* 철벽 */ } ],
+      [ { "slug": "psychic-fangs" /* 사이코팽 */ } ],
+      [ { "slug": "bullet-punch" /* 불릿펀치 */ } ]
+    ]
   }
   ],
-  "manectric": /* 썬더볼트 */ [
+  "manectric": /* 썬더볼트 */ /* 메가진화 가능: 메가썬더볼트 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "lightning-rod" /* 피뢰침 */,
@@ -4391,6 +4267,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "grass" } ]
     ]
   },
+  /* 메가진화 세트: 메가썬더볼트 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "manectite" /* 썬더볼트나이트 */,
     "ability": "lightning-rod" /* 피뢰침 */,
@@ -4398,7 +4275,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
       [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
       [ { "slug": "flamethrower" /* 화염방사 */ }, { "slug": "overheat" /* 오버히트 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
+      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ice" } ]
     ]
   },
   ],
@@ -4749,7 +4626,7 @@ const SPECIES_FACTORY_SETS = {
   }
   ],
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
-  "lopunny": /* 이어롭 */ [
+  "lopunny": /* 이어롭 */ /* 메가진화 가능: 메가이어롭 */ [
   {
     "item": "life-orb",
     "ability": "limber" /* 유연 */,
@@ -4820,6 +4697,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "encore" /* 앵콜 */ }, { "slug": "substitute" /* 대타출동 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가이어롭 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "lopunnite" /* 이어롭나이트 */,
     "ability": "limber" /* 유연 */,
@@ -4831,17 +4709,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "heracross": /* 헤라크로스 */ [
-  {
-    "item": "toxic-orb" /* 맹독구슬 */,
-    "ability": "guts" /* 근성 */,
-    "moves": [
-      [ { "slug": "close-combat" /* 인파이트 */ } ],
-      [ { "slug": "megahorn" /* 메가폰 */ } ],
-      [ { "slug": "facade" /* 객기 */ } ],
-      [ { "slug": "swords-dance" /* 칼춤 */ } ]
-    ]
-  },
+  "heracross": /* 헤라크로스 */ /* 메가진화 가능: 메가헤라크로스 */ [
   {
     "item": "flame-orb" /* 화염구슬 */,
     "ability": "guts" /* 근성 */,
@@ -4922,13 +4790,14 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가헤라크로스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "heracronite" /* 헤라크로스나이트 */,
     "ability": "moxie" /* 자기과신 */,
     "moves": [
-      [ { "slug": "megahorn" /* 메가혼 */ } ],
+      [ { "slug": "bullet-seed" /* 씨기관총 */ } ],
       [ { "slug": "close-combat" /* 인파이트 */ } ],
-      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "rock-blast" /* 록블라스트 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   }
@@ -5114,7 +4983,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "gyarados": /* 갸라도스 */ [
+  "gyarados": /* 갸라도스 */ /* 메가진화 가능: 메가갸라도스 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "intimidate" /* 위협 */,
@@ -5205,18 +5074,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "rest" /* 잠자기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가갸라도스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "gyaradosite" /* 갸라도스나이트 */,
     "ability": "intimidate" /* 위협 */,
     "moves": [
       [ { "slug": "dragon-dance" /* 용의춤 */ } ],
       [ { "slug": "waterfall" /* 폭포오르기 */ } ],
-      [ { "slug": "bounce" /* 뛰어오르기 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "stone-edge" /* 스톤에지 */ } ]
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "taunt" /* 도발 */ }, { "slug": "ice-fang" /* 얼음엄니 */ }, { "slug": "power-whip" /* 파워휩 */ }]
     ]
   }
   ],
-  "gallade": /* 엘레이드 */ [
+  "gallade": /* 엘레이드 */ /* 메가진화 가능: 메가엘레이드 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "justified" /* 정의의마음 */,
@@ -5277,14 +5147,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "swords-dance" /* 칼춤 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가엘레이드 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "galladite" /* 엘레이드나이트 */,
     "ability": "justified" /* 정의의마음 */,
     "moves": [
-      [ { "slug": "rock-slide" /* 스톤샤워 */ } ],
-      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "shadow-sneak" /* 야습 */ } ]
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
     ]
   }
   ],
@@ -5420,7 +5291,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "gardevoir": /* 가디안 */ [
+  "gardevoir": /* 가디안 */ /* 메가진화 가능: 메가가디안 */ [
   {
     "item": "choice-specs" /* 구애안경 */,
     "ability": "trace" /* 트레이스 */,
@@ -5501,18 +5372,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가가디안 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "gardevoirite" /* 가디안나이트 */,
     "ability": "trace" /* 트레이스 */,
     "moves": [
       [ { "slug": "calm-mind" /* 명상 */ } ],
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "psychic" /* 사이코키네시스 */ } ],
+      [ { "slug": "vacuum-wave" /* 진공파 */ } ]
     ]
   }
   ],
-  "garchomp": /* 한카리아스 */ [
+  "garchomp": /* 한카리아스 */ /* 메가진화 가능: 메가한카리아스, 메가한카리아스Z */ [
   {
     "item": "rocky-helmet" /* 울퉁불퉁멧 */,
     "ability": "rough-skin" /* 까칠한피부 */,
@@ -5563,28 +5435,40 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "scale-shot" /* 스케일샷 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가한카리아스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "garchompite" /* 한카리아스나이트 */,
     "ability": "rough-skin" /* 까칠한피부 */,
     "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "fire-fang" /* 불꽃엄니 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "dragon-tail" /* 드래곤테일 */ } ],
-      [ { "slug": "fire-blast" /* 불대문자 */ } ]
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "scale-shot" /* 스케일샷 */ } ]
+    ]
+  },
+  /* 메가진화 세트: 메가한카리아스Z (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
+  {
+    "item": "garchompite-z" /* 한카리아스나이트Z */,
+    "ability": "rough-skin" /* 까칠한피부 */,
+    "moves": [
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ }, { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "power-gem" /* 파워젬 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ } ]
     ]
   },
   {
     "item": "garchompite-z" /* 한카리아스나이트Z */,
     "ability": "rough-skin" /* 까칠한피부 */,
     "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "dragon-tail" /* 드래곤테일 */ } ],
-      [ { "slug": "fire-blast" /* 불대문자 */ } ]
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ }, { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ } ]
     ]
-  },
+  }
   ],
-  "dragonite": /* 망나뇽 */ [
+  "dragonite": /* 망나뇽 */ /* 메가진화 가능: 메가망나뇽 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "multiscale" /* 멀티스케일 */,
@@ -5641,38 +5525,8 @@ const SPECIES_FACTORY_SETS = {
     "moves": [
       [ { "slug": "ice-punch" /* 냉동펀치 */ }, { "slug": "dual-wingbeat" /* 더블윙 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "dragon-dance" /* 용의춤 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "multiscale" /* 멀티스케일 */,
-    "moves": [
-      [ { "slug": "ice-punch" /* 냉동펀치 */ }, { "slug": "dual-wingbeat" /* 더블윙 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "fire-punch" /* 불꽃펀치 */ } ],
       [ { "slug": "dragon-dance" /* 용의춤 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "multiscale" /* 멀티스케일 */,
-    "moves": [
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
-      [ { "slug": "extreme-speed" /* 신속 */ } ],
-      [ { "slug": "ice-spinner" /* 아이스스피너 */ }, { "slug": "roost" /* 날개쉬기 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "multiscale" /* 멀티스케일 */,
-    "moves": [
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "ice-spinner" /* 아이스스피너 */ } ]
     ]
   },
   {
@@ -5685,12 +5539,33 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "ice-spinner" /* 아이스스피너 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가망나뇽 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "dragoninite" /* 망나뇽나이트 */,
     "ability": "multiscale" /* 멀티스케일 */,
     "moves": [
       [ { "slug": "dragon-dance" /* 용의춤 */ } ],
       [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "extreme-speed" /* 신속 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "dragoninite" /* 망나뇽나이트 */,
+    "ability": "multiscale" /* 멀티스케일 */,
+    "moves": [
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "extreme-speed" /* 신속 */ } ],
+      [ { "slug": "air-slash" /* 에어슬래시 */ } ]
+    ]
+  },
+  {
+    "item": "dragoninite" /* 망나뇽나이트 */,
+    "ability": "multiscale" /* 멀티스케일 */,
+    "moves": [
+      [ { "slug": "ice-spinner" /* 아이스스피너 */ } ],
+      [ { "slug": "scale-shot" /* 스케일샷 */ } ],
       [ { "slug": "extreme-speed" /* 신속 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
@@ -5748,10 +5623,10 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ], // 여기부터
-  "clefable": /* 픽시 */ [
+  "clefable": /* 픽시 */ /* 메가진화 가능: 메가픽시 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "calm-mind" /* 명상 */ } ],
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -5761,7 +5636,7 @@ const SPECIES_FACTORY_SETS = {
   }, // 여기부터
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -5771,7 +5646,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
@@ -5781,7 +5656,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
@@ -5791,7 +5666,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
@@ -5811,7 +5686,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "babiri-berry" /* 바리비열매 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -5821,7 +5696,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "babiri-berry" /* 바리비열매 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
       [ { "slug": "moonblast" /* 문포스 */ } ],
@@ -5831,7 +5706,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
@@ -5841,7 +5716,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
@@ -5851,7 +5726,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
@@ -5861,7 +5736,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
       [ { "slug": "moonlight" /* 달의불빛 */ } ],
@@ -5871,7 +5746,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "calm-mind" /* 명상 */ } ],
       [ { "slug": "moonlight" /* 달의불빛 */ } ],
@@ -5879,28 +5754,29 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flamethrower" /* 화염방사 */ } ]
     ]
   },
-  {
-    "item": "sticky-barb" /* 끈적끈적바늘 */,
-    "ability": "magic-guard" /* 매직가드 */,
-    "moves": [
-      [ { "slug": "calm-mind" /* 명상 */ } ],
-      [ { "slug": "moonlight" /* 달의불빛 */ } ],
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
-    ]
-  },
+  /* 메가진화 세트: 메가픽시 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "clefablite" /* 픽시나이트 */,
-    "ability": "magic-guard" /* 매직가드 */,
+    "ability": "unaware" /* 천진 */,
     "moves": [
       [ { "slug": "calm-mind" /* 명상 */ } ],
       [ { "slug": "moonblast" /* 문포스 */ } ],
       [ { "slug": "soft-boiled" /* 알낳기 */ } ],
       [ { "slug": "flamethrower" /* 화염방사 */ } ]
     ]
+  },
+  {
+    "item": "clefablite" /* 픽시나이트 */,
+    "ability": "unaware" /* 천진 */,
+    "moves": [
+      [ { "slug": "cosmic-power" /* 코스믹파워 */ } ],
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "moonlight" /* 달의불빛 */ } ],
+      [ { "slug": "stored-power" /* 어시스트파워 */ } ]
+    ]
   }
   ],
-  "charizard": /* 리자몽 */ [
+  "charizard": /* 리자몽 */ /* 메가진화 가능: 메가리자몽X, 메가리자몽Y */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "blaze" /* 맹화 */,
@@ -5911,84 +5787,47 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "blaze" /* 맹화 */,
-    "moves": [
-      [ { "slug": "fire-blast" /* 불대문자 */ } ],
-      [ { "slug": "air-slash" /* 에어슬래시 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "grass" } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
-    ]
-  },
-  {
-    "item": "life-orb" /* 생명의구슬 */,
-    "ability": "blaze" /* 맹화 */,
-    "moves": [
-      [ { "slug": "fire-blast" /* 불대문자 */ } ],
-      [ { "slug": "air-slash" /* 에어슬래시 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "blaze" /* 맹화 */,
-    "moves": [
-      [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "hurricane" /* 폭풍 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ }, { "slug": "defog" /* 안개제거 */ }, { "slug": "focus-blast" /* 기합구슬 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "blaze" /* 맹화 */,
-    "moves": [
-      [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ }, { "slug": "defog" /* 안개제거 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "blaze" /* 맹화 */,
-    "moves": [
-      [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "defog" /* 안개제거 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "blaze" /* 맹화 */,
-    "moves": [
-      [ { "slug": "swords-dance" /* 칼춤 */ } ],
-      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ }, { "slug": "thunder-punch" /* 번개펀치 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ]
-    ]
-  },
+  /* 메가진화 세트: 메가리자몽X (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "charizardite-x" /* 리자몽나이트X */,
     "ability": "blaze" /* 맹화 */,
     "moves": [
       [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ }, { "slug": "thunder-punch" /* 번개펀치 */ } ],
+      [ { "slug": "outrage" /* 역린 */ } ],
+      [ { "slug": "flame-charge" /* 니트로차지 */ } ]
+    ]
+  },
+  {
+    "item": "charizardite-x" /* 리자몽나이트X */,
+    "ability": "blaze" /* 맹화 */,
+    "moves": [
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ],      
+      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
+      [ { "slug": "thunder-punch" /* 번개펀치 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  /* 메가진화 세트: 메가리자몽Y (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
+  {
+    "item": "charizardite-y" /* 리자몽나이트Y */,
+    "ability": "blaze" /* 맹화 */,
+    "moves": [
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "air-slash" /* 에어슬래시 */ } ,{ "slug": "dragon-pulse" /* 용의파동 */ }],
+      [ { "slug": "solar-beam" /* 솔라빔 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   },
   {
     "item": "charizardite-y" /* 리자몽나이트Y */,
     "ability": "blaze" /* 맹화 */,
     "moves": [
-      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "dragon-pulse" /* 용의파동 */ } ],
       [ { "slug": "air-slash" /* 에어슬래시 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
+      [ { "slug": "solar-beam" /* 솔라빔 */ } ],
+      [ { "slug": "weather-ball" /* 웨더볼 */ } ]
+
     ]
   }
   ],
@@ -6166,7 +6005,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "altaria": /* 파비코리 */ [
+  "altaria": /* 파비코리 */ /* 메가진화 가능: 메가파비코리 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "natural-cure" /* 자연회복 */,
@@ -6217,13 +6056,24 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "will-o-wisp" /* 도깨비불 */ }, { "slug": "haze" /* 흑안개 */ }, { "slug": "roar" /* 울부짖기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가파비코리 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "altarianite" /* 파비코리나이트 */,
     "ability": "natural-cure" /* 자연회복 */,
     "moves": [
-      [ { "slug": "dragon-dance" /* 용의춤 */ } ],
-      [ { "slug": "dragon-claw" /* 드래곤클로 */ } ],
-      [ { "slug": "substitute" /* 대타출동 */ }, { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "cotton-guard" /* 코튼가드 */ } ],
+      [ { "slug": "roost" /* 날개쉬기 */ } ]
+    ]
+  },
+  {
+    "item": "altarianite" /* 파비코리나이트 */,
+    "ability": "natural-cure" /* 자연회복 */,
+    "moves": [
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "toxic" /* 맹독 */ } ],
       [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   }
@@ -6360,7 +6210,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "feraligatr": /* 장크로다일 */ [
+  "feraligatr": /* 장크로다일 */ /* 메가진화 가능: 메가장크로다일 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "sheer-force" /* 우격다짐 */,
@@ -6431,14 +6281,25 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "crunch" /* 깨물어부수기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가장크로다일 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "feraligite" /* 장크로다일나이트 */,
     "ability": "sheer-force" /* 우격다짐 */,
     "moves": [
-      [ { "slug": "waterfall" /* 폭포오르기 */ } ],
+      [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ],
       [ { "slug": "ice-punch" /* 냉동펀치 */ } ],
       [ { "slug": "superpower" /* 엄청난힘 */ } ],
       [ { "slug": "dragon-dance" /* 용의춤 */ } ]
+    ]
+  },
+  {
+    "item": "feraligite" /* 장크로다일나이트 */,
+    "ability": "sheer-force" /* 우격다짐 */,
+    "moves": [
+      [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ],
+      [ { "slug": "double-edge" /* 이판사판태클 */ } ],
+      [ { "slug": "trailblaze" /* 개척하기 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
     ]
   }
   ],
@@ -6952,7 +6813,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "aerodactyl": /* 프테라 */ [
+  "aerodactyl": /* 프테라 */ /* 메가진화 가능: 메가프테라 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "unnerve" /* 긴장감 */,
@@ -7033,14 +6894,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "dragon-dance" /* 용의춤 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가프테라 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "aerodactylite" /* 프테라나이트 */,
     "ability": "unnerve" /* 긴장감 */,
     "moves": [
       [ { "slug": "stone-edge" /* 스톤에지 */ } ],
-      [ { "slug": "ice-fang" /* 얼음엄니 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "pursuit" /* 따라가때리기 */ } ]
+      [ { "slug": "ice-fang" /* 얼음엄니 */ } ]
     ]
   }
   ],
@@ -7350,7 +7212,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "absol": /* 앱솔 */ [
+  "absol": /* 앱솔 */ /* 메가진화 가능: 메가앱솔, 메가앱솔Z */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "justified" /* 정의의마음 */,
@@ -7391,6 +7253,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "play-rough" /* 치근거리기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가앱솔 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "absolite" /* 앱솔나이트 */,
     "ability": "justified" /* 정의의마음 */,
@@ -7398,21 +7261,52 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
       [ { "slug": "superpower" /* 엄청난힘 */ } ],
       [ { "slug": "sucker-punch" /* 기습 */ } ],
-      [ { "slug": "iron-tail" /* 아이언테일 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ]
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ]
+    ]
+  },
+  {
+    "item": "absolite" /* 앱솔나이트 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "superpower" /* 엄청난힘 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
+    ]
+  },
+  {
+    "item": "absolite" /* 앱솔나이트 */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ]
+    ]
+  },
+  /* 메가진화 세트: 메가앱솔Z (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
+  {
+    "item": "absolite-z" /* 앱솔나이트Z */,
+    "ability": "justified" /* 정의의마음 */,
+    "moves": [
+      [ { "slug": "shadow-claw" /* 섀도클로 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
     ]
   },
   {
     "item": "absolite-z" /* 앱솔나이트Z */,
     "ability": "justified" /* 정의의마음 */,
     "moves": [
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "superpower" /* 엄청난힘 */ } ],
-      [ { "slug": "sucker-punch" /* 기습 */ } ],
-      [ { "slug": "iron-tail" /* 아이언테일 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ]
+      [ { "slug": "shadow-claw" /* 섀도클로 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "night-slash" /* 깜짝베기 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ]
     ]
   }
   ],
-  "aggron": /* 보스로라 */ [
+  "aggron": /* 보스로라 */ /* 메가진화 가능: 메가보스로라 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "rock-head" /* 돌머리 */,
@@ -7463,19 +7357,30 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "protect" /* 방어 */ }, { "slug": "roar" /* 울부짖기 */ }, { "slug": "toxic" /* 맹독 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가보스로라 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "aggronite" /* 보스로라나이트 */,
     "ability": "rock-head" /* 돌머리 */,
     "moves": [
-      [ { "slug": "head-smash" /* 양날박치기 */ } ],
+      [ { "slug": "crunch" /* 깨물어부수기 */ } ],
       [ { "slug": "heavy-slam" /* 헤비봄버 */ } ],
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
-      [ { "slug": "taunt" /* 도발 */ } ]
+      [ { "slug": "iron-defense" /* 철벽 */ } ],
+      [ { "slug": "body-press" /* 바디프레스 */ } ]
+    ]
+  },
+  {
+    "item": "aggronite" /* 보스로라나이트 */,
+    "ability": "rock-head" /* 돌머리 */,
+    "moves": [
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "iron-head" /* 아이언헤드 */ } ],
+      [ { "slug": "iron-defense" /* 철벽 */ } ],
+      [ { "slug": "body-press" /* 바디프레스 */ } ]
     ]
   }
   ],
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
-  "beedrill": /* 독침붕 */ [
+  "beedrill": /* 독침붕 */ /* 메가진화 가능: 메가독침붕 */ [
   {
     "item": "choice-scarf",
     "ability": "swarm" /* 벌레의알림 */,
@@ -7516,18 +7421,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가독침붕 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "beedrillite" /* 독침붕나이트 */,
     "ability": "sniper" /* 스나이퍼 */,
     "moves": [
       [ { "slug": "poison-jab" /* 독찌르기 */ } ],
       [ { "slug": "drill-run" /* 드릴라이너 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ],
+      [ { "slug": "fell-stinger" /* 마지막일침 */ } ],
       [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
   }
   ],
-  "blastoise": /* 거북왕 */ [
+  "blastoise": /* 거북왕 */ /* 메가진화 가능: 메가거북왕 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "torrent" /* 급류 */,
@@ -7548,14 +7454,25 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "toxic" /* 맹독 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가거북왕 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "blastoisinite" /* 거북왕나이트 */,
     "ability": "torrent" /* 급류 */,
     "moves": [
-      [ { "slug": "scald" /* 열탕 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
       [ { "slug": "rapid-spin" /* 고속스핀 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ],
-      [ { "slug": "foresight" /* 꿰뚫어보기 */ } ]
+      [ { "slug": "water-pulse" /* 물의파동 */ } ],
+      [ { "slug": "aura-sphere" /* 파동탄 */ } ]
+    ]
+  },
+  {
+    "item": "blastoisinite" /* 거북왕나이트 */,
+    "ability": "torrent" /* 급류 */,
+    "moves": [
+      [ { "slug": "dark-pulse" /* 악의파동 */ }, { "slug": "dragon-pulse" /* 용의파동 */ } ],
+      [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
+      [ { "slug": "water-pulse" /* 물의파동 */ } ],
+      [ { "slug": "aura-sphere" /* 파동탄 */ } ]
     ]
   }
   ],
@@ -7915,7 +7832,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   ],
-  "swampert": /* 대짱이 */ [
+  "swampert": /* 대짱이 */ /* 메가진화 가능: 메가대짱이 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "torrent" /* 급류 */,
@@ -7976,18 +7893,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flip-turn" /* 퀵턴 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가대짱이 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "swampertite" /* 대짱이나이트 */,
     "ability": "torrent" /* 급류 */,
     "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "wave-crash" /* 웨이브태클 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ }, { "slug": "roar" /* 울부짖기 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ],
       [ { "slug": "flip-turn" /* 퀵턴 */ } ]
     ]
   }
   ],
-  "ampharos": /* 전룡 */ [
+  "ampharos": /* 전룡 */ /* 메가진화 가능: 메가전룡 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "static" /* 정전기 */,
@@ -7998,14 +7916,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ice" } ]
     ]
   },
+  /* 메가진화 세트: 메가전룡 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "ampharosite" /* 전룡나이트 */,
     "ability": "static" /* 정전기 */,
     "moves": [
-      [ { "slug": "agility" /* 고속이동 */ } ],
-      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "dragon-pulse" /* 용의파동 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */ } ]
+      [ { "slug": "thunder-wave" /* 전기자석파 */ }, { "slug": "thunderbolt" /* 10만볼트 */ } ]
     ]
   },
   ],
@@ -8071,7 +7990,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "chandelure": /* 샹델라 */ [
+  "chandelure": /* 샹델라 */ /* 메가진화 가능: 메가샹델라 */ [
   {
     "item": "choice-scarf" /* 구애스카프 */,
     "ability": "flash-fire" /* 타오르는불꽃 */,
@@ -8123,16 +8042,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "flame-body" /* 불꽃몸 */,
-    "moves": [
-      [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "hex" /* 병상첨병 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ }, { "slug": "will-o-wisp" /* 도깨비불 */ } ],
-      [ { "slug": "taunt" /* 도발 */ }, { "slug": "protect" /* 방어 */ } ]
-    ]
-  },
-  {
     "item": "choice-specs" /* 구애안경 */,
     "ability": "flame-body" /* 불꽃몸 */,
     "moves": [
@@ -8140,16 +8049,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
       [ { "slug": "fire-blast" /* 불대문자 */ } ],
       [ { "slug": "trick" /* 트릭 */ }, { "slug": "sleep-talk" /* 잠꼬대 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "flash-fire" /* 타오르는불꽃 */,
-    "moves": [
-      [ { "slug": "fire-blast" /* 불대문자 */ } ],
-      [ { "slug": "hex" /* 병상첨병 */ }, { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ],
-      [ { "slug": "protect" /* 방어 */ }, { "slug": "energy-ball" /* 에너지볼 */ } ]
     ]
   },
   {
@@ -8172,26 +8071,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "trick" /* 트릭 */ } ]
     ]
   },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "flash-fire" /* 타오르는불꽃 */,
-    "moves": [
-      [ { "slug": "fire-blast" /* 불대문자 */ }, { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "energy-ball" /* 에너지볼 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "flame-body" /* 불꽃몸 */,
-    "moves": [
-      [ { "slug": "fire-blast" /* 불대문자 */ }, { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "energy-ball" /* 에너지볼 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ } ]
-    ]
-  },
+  /* 메가진화 세트: 메가샹델라 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "chandelurite" /* 샹델라나이트 */,
     "ability": "flash-fire" /* 타오르는불꽃 */,
@@ -8199,11 +8079,21 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "fire-blast" /* 불대문자 */ }, { "slug": "flamethrower" /* 화염방사 */ } ],
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
       [ { "slug": "energy-ball" /* 에너지볼 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ } ]
+      [ { "slug": "flame-charge" /* 니트로차지 */ } ]
+    ]
+  },
+  {
+    "item": "chandelurite" /* 샹델라나이트 */,
+    "ability": "flash-fire" /* 타오르는불꽃 */,
+    "moves": [
+      [ { "slug": "overheat" /* 오버히트 */ } ],
+      [ { "slug": "hex" /* 병상첨병 */ } ],
+      [ { "slug": "energy-ball" /* 에너지볼 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ]
     ]
   }
   ],
-  "chesnaught": /* 브리가론 */ [
+  "chesnaught": /* 브리가론 */ /* 메가진화 가능: 메가브리가론 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "bulletproof" /* 방탄 */,
@@ -8244,14 +8134,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "body-press" /* 바디프레스 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가브리가론 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "chesnaughtite" /* 브리가론나이트 */,
     "ability": "bulletproof" /* 방탄 */,
     "moves": [
-      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
-      [ { "slug": "wood-hammer" /* 우드해머 */ } ],
+      [ { "slug": "body-press" /* 바디프레스 */ } ],
+      [ { "slug": "iron-defense" /* 철벽 */ } ],
       [ { "slug": "synthesis" /* 광합성 */ } ],
-      [ { "slug": "drain-punch" /* 드레인펀치 */ } ]
+      [ { "slug": "leech-seed" /* 씨뿌리기 */ }, { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
     ]
   }
   ],
@@ -9725,7 +9616,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "scrafty": /* 곤율거니 */ [
+  "scrafty": /* 곤율거니 */ /* 메가진화 가능: 메가곤율거니 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "shed-skin" /* 탈피 */,
@@ -9836,14 +9727,25 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "poison-jab" /* 독찌르기 */ }, { "slug": "ice-punch" /* 냉동펀치 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가곤율거니 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "scraftinite" /* 곤율거니나이트 */,
-    "ability": "moxie" /* 자기과신 */,
+    "ability": "intimidate" /* 위협 */,
     "moves": [
       [ { "slug": "dragon-dance" /* 용의춤 */ } ],
       [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "zen-headbutt" /* 사념의박치기 */ } ]
+      [ { "slug": "zen-headbutt" /* 사념의박치기 */ }, { "slug": "poison-jab" /* 독찌르기 */ } ]
+    ]
+  },
+  {
+    "item": "scraftinite" /* 곤율거니나이트 */,
+    "ability": "intimidate" /* 위협 */,
+    "moves": [
+      [ { "slug": "throat-chop" /* 지옥찌르기 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "bulk-up" /* 벌크업 */ } ],
+      [ { "slug": "thunder-punch" /* 번개펀치 */ } ]
     ]
   }
   ],
@@ -10207,7 +10109,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "froslass": /* 눈여아 */ [
+  "froslass": /* 눈여아 */ /* 메가진화 가능: 메가눈여아 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
     "ability": "cursed-body" /* 저주받은바디 */,
@@ -10298,18 +10200,29 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "spikes" /* 압정뿌리기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가눈여아 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "froslassite" /* 눈여아나이트 */,
     "ability": "cursed-body" /* 저주받은바디 */,
     "moves": [
-      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "aurora-veil" /* 오로라베일 */ } ],
       [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "switcheroo" /* 바꿔치기 */ } ],
-      [ { "slug": "destiny-bond" /* 길동무 */ } ]
+      [ { "slug": "blizzard" /* 눈보라 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ]
+    ]
+  },
+  {
+    "item": "froslassite" /* 눈여아나이트 */,
+    "ability": "cursed-body" /* 저주받은바디 */,
+    "moves": [
+      [ { "slug": "blizzard" /* 눈보라 */ } ],
+      [ { "slug": "aurora-veil" /* 오로라베일 */ } ],
+      [ { "slug": "hex" /* 병상첨병 */ } ],
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ]
     ]
   }
   ],
-  "houndoom": /* 헬가 */ [
+  "houndoom": /* 헬가 */ /* 메가진화 가능: 메가헬가 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "flash-fire" /* 타오르는불꽃 */,
@@ -10330,13 +10243,14 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "pursuit" /* 따라가때리기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가헬가 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "houndoominite" /* 헬가나이트 */,
     "ability": "flash-fire" /* 타오르는불꽃 */,
     "moves": [
       [ { "slug": "fire-blast" /* 불대문자 */ } ],
       [ { "slug": "dark-pulse" /* 악의파동 */ } ],
-      [ { "slug": "sucker-punch" /* 기습 */ } ],
+      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
       [ { "slug": "nasty-plot" /* 나쁜음모 */ } ]
     ]
   },
@@ -10765,7 +10679,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "dragalge": /* 드래캄 */ [
+  "dragalge": /* 드래캄 */ /* 메가진화 가능: 메가드래캄 */ [
   {
     "item": "choice-specs" /* 구애안경 */,
     "ability": "adaptability" /* 적응력 */,
@@ -10794,16 +10708,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "dragon-tail" /* 드래곤테일 */ } ],
       [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
       [ { "slug": "scald" /* 열탕 */ } ]
-    ]
-  },
-  {
-    "item": "dragon-fang" /* 용의이빨 */,
-    "ability": "adaptability" /* 적응력 */,
-    "moves": [
-      [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "dragon-pulse" /* 용의파동 */ } ]
     ]
   },
   {
@@ -10916,14 +10820,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flip-turn" /* 퀵턴 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가드래캄 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "dragalgite" /* 드래캄나이트 */,
     "ability": "adaptability" /* 적응력 */,
     "moves": [
       [ { "slug": "draco-meteor" /* 용성군 */ } ],
-      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "dragon-pulse" /* 용의파동 */ } ]
+      [ { "slug": "thunderbolt" /* 10만볼트 */ }, { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "toxic" /* 맹독 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ]
     ]
   }
   ],
@@ -11140,7 +11045,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "sharpedo": /* 샤크니아 */ [
+  "sharpedo": /* 샤크니아 */ /* 메가진화 가능: 메가샤크니아 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "speed-boost" /* 가속 */,
@@ -11171,18 +11076,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "protect" /* 방어 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가샤크니아 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "sharpedonite" /* 샤크니아나이트 */,
     "ability": "speed-boost" /* 가속 */,
     "moves": [
-      [ { "slug": "waterfall" /* 폭포오르기 */ } ],
+      [ { "slug": "ice-fang" /* 얼음엄니 */ } ],
       [ { "slug": "crunch" /* 깨물어부수기 */ } ],
-      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ],
       [ { "slug": "protect" /* 방어 */ } ]
     ]
   }
   ],
-  "sceptile": /* 나무킹 */ [
+  "sceptile": /* 나무킹 */ /* 메가진화 가능: 메가나무킹 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "overgrow" /* 심록 */,
@@ -11193,14 +11099,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "focus-blast" /* 기합구슬 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가나무킹 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "sceptilite" /* 나무킹나이트 */,
     "ability": "overgrow" /* 심록 */,
     "moves": [
       [ { "slug": "leaf-storm" /* 리프스톰 */ } ],
-      [ { "slug": "giga-drain" /* 기가드레인 */ } ],
-      [ { "slug": "hidden-power" /* 잠재파워 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ]
+      [ { "slug": "dragon-pulse" /* 용의파동 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "shed-tail" /* 꼬리자르기 */ } ]
     ]
   }
   ],
@@ -11542,7 +11449,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "abomasnow": /* 눈설왕 */ [
+  "abomasnow": /* 눈설왕 */ /* 메가진화 가능: 메가눈설왕 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "snow-warning" /* 눈퍼뜨리기 */,
@@ -11623,19 +11530,30 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "rock-slide" /* 스톤샤워 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가눈설왕 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "abomasite" /* 눈설왕나이트 */,
     "ability": "snow-warning" /* 눈퍼뜨리기 */,
     "moves": [
       [ { "slug": "blizzard" /* 눈보라 */ } ],
-      [ { "slug": "wood-hammer" /* 우드해머 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ]
+      [ { "slug": "giga-drain" /* 기가드레인 */ } ],
+      [ { "slug": "leech-seed" /* 씨뿌리기 */ } ],
+      [ { "slug": "protect" /* 방어 */ } ]
+    ]
+  },
+  {
+    "item": "abomasite" /* 눈설왕나이트 */,
+    "ability": "snow-warning" /* 눈퍼뜨리기 */,
+    "moves": [
+      [ { "slug": "blizzard" /* 눈보라 */ } ],
+      [ { "slug": "giga-drain" /* 기가드레인 */ }, { "slug": "energy-ball" /* 에너지볼 */ }, { "slug": "leaf-storm" /* 리프스톰 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "protect" /* 방어 */ }, { "slug": "leech-seed" /* 씨뿌리기 */ }, { "slug": "ice-shard" /* 얼음뭉치 */ }, { "slug": "focus-blast" /* 기합구슬 */ } ]
     ]
   }
   ],
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
-  "banette": /* 다크펫 */ [
+  "banette": /* 다크펫 */ /* 메가진화 가능: 메가다크펫 */ [
   {
     "item": "focus-sash" /* 집중띠 */,
     "ability": "insomnia" /* 불면 */,
@@ -11646,14 +11564,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "will-o-wisp" /* 도깨비불 */ }, { "slug": "taunt" /* 도발 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가다크펫 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "banettite" /* 다크펫나이트 */,
     "ability": "insomnia" /* 불면 */,
     "moves": [
-      [ { "slug": "destiny-bond" /* 길동무 */ }, { "slug": "gunk-shot" /* 더스트슈트 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "sucker-punch" /* 기습 */ } ],
-      [ { "slug": "will-o-wisp" /* 도깨비불 */ }, { "slug": "taunt" /* 도발 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
+      [ { "slug": "destiny-bond" /* 길동무 */ } ],
+      [ { "slug": "encore" /* 앙코르 */ } ],
+      [ { "slug": "shadow-sneak" /* 야습 */ } ],
+      [ { "slug": "poltergeist" /* 폴터가이스트 */ } ]
     ]
   }
   ],
@@ -11761,7 +11680,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "delphox": /* 마폭시 */ [
+  "delphox": /* 마폭시 */ /* 메가진화 가능: 메가마폭시 */ [
   {
     "item": "choice-scarf" /* 구애스카프 */,
     "ability": "blaze" /* 맹화 */,
@@ -11842,14 +11761,25 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "flamethrower" /* 화염방사 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가마폭시 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "delphoxite" /* 마폭시나이트 */,
     "ability": "blaze" /* 맹화 */,
     "moves": [
-      [ { "slug": "calm-mind" /* 명상 */ } ],
-      [ { "slug": "fire-blast" /* 불대문자 */ } ],
+      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
       [ { "slug": "psychic" /* 사이코키네시스 */ } ],
-      [ { "slug": "grass-knot" /* 풀묶기 */ } ]
+      [ { "slug": "will-o-wisp" /* 도깨비불 */ } ]
+    ]
+  },
+  {
+    "item": "delphoxite" /* 마폭시나이트 */,
+    "ability": "blaze" /* 맹화 */,
+    "moves": [
+      [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ],
+      [ { "slug": "flamethrower" /* 화염방사 */ } ],
+      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
+      [ { "slug": "substitute" /* 대타출동 */ } ]
     ]
   }
   ],
@@ -12299,7 +12229,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "eelektross": /* 저리더프 */ [
+  "eelektross": /* 저리더프 */ /* 메가진화 가능: 메가저리더프 */ [
   {
     "item": "assault-vest" /* 돌격조끼 */,
     "ability": "levitate" /* 부유 */,
@@ -12320,14 +12250,25 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "acid-spray" /* 애시드봄 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가저리더프 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "eelektrossite" /* 저리더프나이트 */,
     "ability": "levitate" /* 부유 */,
     "moves": [
-      [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
+      [ { "slug": "coil" /* 똬리틀기 */ } ],
+      [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ],
+      [ { "slug": "supercell-slam" /* 썬더다이브 */ } ]
+    ]
+  },
+  {
+    "item": "eelektrossite" /* 저리더프나이트 */,
+    "ability": "levitate" /* 부유 */,
+    "moves": [
       [ { "slug": "giga-drain" /* 기가드레인 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
       [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+      [ { "slug": "dragon-pulse" /* 용의파동 */ } ]
     ]
   }
   ],
@@ -12509,7 +12450,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "camerupt": /* 폭타 */ [
+  "camerupt": /* 폭타 */ /* 메가진화 가능: 메가폭타 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "solid-rock" /* 하드록 */,
@@ -12540,14 +12481,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "roar" /* 울부짖기 */ }, { "slug": "toxic" /* 맹독 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가폭타 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "cameruptite" /* 폭타나이트 */,
     "ability": "solid-rock" /* 하드록 */,
     "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "ancient-power" /* 원시의힘 */ } ],
       [ { "slug": "lava-plume" /* 분연 */ }, { "slug": "fire-blast" /* 불대문자 */ } ],
       [ { "slug": "earth-power" /* 대지의힘 */ } ],
-      [ { "slug": "roar" /* 울부짖기 */ }, { "slug": "toxic" /* 맹독 */ } ]
+      [ { "slug": "yawn" /* 하품 */ } ]
     ]
   },
   ],
@@ -12583,7 +12525,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "glalie": /* 얼음귀신 */ [
+  "glalie": /* 얼음귀신 */ /* 메가진화 가능: 메가얼음귀신 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
     "ability": "inner-focus" /* 정신력 */,
@@ -12596,7 +12538,7 @@ const SPECIES_FACTORY_SETS = {
   },
   {
     "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "moody" /* 정신력 */,
+    "ability": "moody" /* 변덕쟁이 */,
     "moves": [
       [ { "slug": "protect" /* 방어 */ } ],
       [ { "slug": "substitute" /* 대타출동 */ } ],
@@ -12604,14 +12546,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "sheer-cold" /* 절대영도 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가얼음귀신 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "glalitite" /* 얼음귀신나이트 */,
-    "ability": "moody" /* 변덕쟁이 */,
+    "ability": "inner-focus" /* 정신력 */,
     "moves": [
-      [ { "slug": "protect" /* 방어 */ } ],
-      [ { "slug": "substitute" /* 대타출동 */ } ],
-      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
-      [ { "slug": "sheer-cold" /* 절대영도 */ } ]
+      [ { "slug": "return" /* 은혜갚기 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "explosion" /* 대폭발 */ } ]
     ]
   },
   ],
@@ -12719,7 +12662,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "emboar": /* 염무왕 */ [
+  "emboar": /* 염무왕 */ /* 메가진화 가능: 메가염무왕 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "reckless" /* 이판사판 */,
@@ -12760,14 +12703,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가염무왕 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "emboarite" /* 염무왕나이트 */,
     "ability": "reckless" /* 이판사판 */,
     "moves": [
-      [ { "slug": "flare-blitz" /* 플레어드라이브 */ } ],
-      [ { "slug": "superpower" /* 엄청난힘 */ } ],
-      [ { "slug": "wild-charge" /* 와일드볼트 */ } ],
-      [ { "slug": "sucker-punch" /* 기습 */ } ]
+      [ { "slug": "temper-flare" /* 열불내기 */ } ],
+      [ { "slug": "focus-punch" /* 힘껏펀치 */ }, { "slug": "high-horsepower" /* 10만마력 */ } ],
+      [ { "slug": "head-smash" /* 양날박치기 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ }, { "slug": "trailblaze" /* 개척하기 */ } ]
     ]
   }
   ],
@@ -13377,7 +13321,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "audino": /* 다부니 */ [
+  "audino": /* 다부니 */ /* 메가진화 가능: 메가다부니 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "regenerator" /* 재생력 */,
@@ -13408,14 +13352,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "toxic" /* 맹독 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가다부니 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "audinite" /* 다부니나이트 */,
     "ability": "regenerator" /* 재생력 */,
     "moves": [
-      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ],
       [ { "slug": "wish" /* 희망사항 */ } ],
       [ { "slug": "protect" /* 방어 */ } ],
-      [ { "slug": "double-edge" /* 이판사판태클 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
+      [ { "slug": "toxic" /* 맹독 */ }, { "slug": "calm-mind" /* 명상 */ }, { "slug": "thunder-wave" /* 전기자석파 */ } ]
     ]
   }
   ],
@@ -13573,7 +13518,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "malamar": /* 칼라마네로 */ [
+  "malamar": /* 칼라마네로 */ /* 메가진화 가능: 메가칼라마네로 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "contrary" /* 심술꾸러기 */,
@@ -13594,14 +13539,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "switcheroo" /* 바꿔치기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가칼라마네로 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "malamarite" /* 칼라마네로나이트 */,
     "ability": "contrary" /* 심술꾸러기 */,
     "moves": [
       [ { "slug": "superpower" /* 엄청난힘 */ } ],
       [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
-      [ { "slug": "rest" /* 잠자기 */ } ],
-      [ { "slug": "sleep-talk" /* 잠꼬대 */ } ]
+      [ { "slug": "baton-pass" /* 바톤터치 */ } ],
+      [ { "slug": "throat-chop" /* 지옥찌르기 */ } ]
     ]
   },
   ],
@@ -13795,7 +13741,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "barbaracle": /* 거북손데스 */ [
+  "barbaracle": /* 거북손데스 */ /* 메가진화 가능: 메가거북손데스 */ [
   {
     "item": "shuca-berry" /* 슈캐열매 */,
     "ability": "tough-claws" /* 단단한발톱 */,
@@ -13806,14 +13752,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ }, { "slug": "substitute" /* 대타출동 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가거북손데스 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "barbaracite" /* 거북손데스나이트 */,
     "ability": "tough-claws" /* 단단한발톱 */,
     "moves": [
       [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
-      [ { "slug": "razor-shell" /* 셸블레이드 */ } ],
-      [ { "slug": "return" /* 은혜갚기 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "substitute" /* 대타출동 */ } ]
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ]
     ]
   },
   ],
@@ -14792,7 +14739,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "golurk": /* 골루그 */ [
+  "golurk": /* 골루그 */ /* 메가진화 가능: 메가골루그 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "iron-fist" /* 철주먹 */,
@@ -14890,13 +14837,14 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "close-combat" /* 인파이트 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가골루그 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "golurkite" /* 골루그나이트 */,
     "ability": "iron-fist" /* 철주먹 */,
     "moves": [
-      [ { "slug": "rock-polish" /* 록커트 */ } ],
+      [ { "slug": "poltergeist" /* 폴터가이스트 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
-      [ { "slug": "shadow-punch" /* 섀도펀치 */ } ],
+      [ { "slug": "dynamic-punch" /* 폭발펀치 */ } ],
       [ { "slug": "ice-punch" /* 냉동펀치 */ } ]
     ]
   }
@@ -15932,7 +15880,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "raichu": /* 라이츄 */ [
+  "raichu": /* 라이츄 */ /* 메가진화 가능: 메가라이츄X, 메가라이츄Y */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "lightning-rod" /* 피뢰침 */,
@@ -15993,24 +15941,26 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "focus-blast" /* 기합구슬 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가라이츄X (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "raichunite-x" /* 라이츄나이트X */,
     "ability": "lightning-rod" /* 피뢰침 */,
     "moves": [
-      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "fake-out" /* 속이기 */ } ],
       [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
-      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "signal-beam" /* 시그널빔 */ } ]
+      [ { "slug": "volt-tackle" /* 볼트태클 */ } ],
+      [ { "slug": "play-rough" /* 치근거리기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가라이츄Y (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "raichunite-y" /* 라이츄나이트Y */,
     "ability": "lightning-rod" /* 피뢰침 */,
     "moves": [
-      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "grass-knot" /* 풀묶기 */ } ],
       [ { "slug": "volt-switch" /* 볼트체인지 */ } ],
       [ { "slug": "focus-blast" /* 기합구슬 */ } ],
-      [ { "slug": "signal-beam" /* 시그널빔 */ } ]
+      [ { "slug": "zap-cannon" /* 전자포 */ } ]
     ]
   }
   ],
@@ -18344,7 +18294,7 @@ const SPECIES_FACTORY_SETS = {
   }
   ],
   // $$ 도구가 없는 세트뿐이라 그대로 남김 - 도구를 채워 넣을 것
-  "pidgeot": /* 피죤투 */ [
+  "pidgeot": /* 피죤투 */ /* 메가진화 가능: 메가피죤투 */ [
   {
     "item": "life-orb",
     "ability": "big-pecks" /* 부풀린가슴 */,
@@ -18385,18 +18335,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가피죤투 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "pidgeotite" /* 피죤투나이트 */,
     "ability": "big-pecks" /* 부풀린가슴 */,
     "moves": [
       [ { "slug": "hurricane" /* 폭풍 */ } ],
       [ { "slug": "heat-wave" /* 열풍 */ } ],
-      [ { "slug": "work-up" /* 분발 */ }, { "slug": "hidden-power" /* 잠재파워 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
+      [ { "slug": "substitute" /* 대타출동 */ } ],
+      [ { "slug": "hyper-beam" /* 파괴광선 */ } ]
     ]
   }
   ],
-  "starmie": /* 아쿠스타 */ [
+  "starmie": /* 아쿠스타 */ /* 메가진화 가능: 메가아쿠스타 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "natural-cure" /* 자연회복 */,
@@ -18457,14 +18408,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "recover" /* HP회복 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가아쿠스타 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "starminite" /* 아쿠스타나이트 */,
     "ability": "analytic" /* 애널라이즈 */,
     "moves": [
-      [ { "slug": "hydro-pump" /* 하이드로펌프 */ } ],
-      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
-      [ { "slug": "psyshock" /* 사이코쇼크 */ } ],
-      [ { "slug": "thunderbolt" /* 10만볼트 */ } ]
+      [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "flip-turn" /* 퀵턴 */ } ],
+      [ { "slug": "ice-spinner" /* 아이스스피너 */ }, { "slug": "psycho-cut" /* 사이코커터 */ } ]
     ]
   }
   ],
@@ -18664,7 +18616,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "steelix": /* 강철톤 */ [
+  "steelix": /* 강철톤 */ /* 메가진화 가능: 메가강철톤 */ [
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "sturdy" /* 옹골참 */,
@@ -18685,6 +18637,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "toxic" /* 맹독 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가강철톤 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "steelixite" /* 강철톤나이트 */,
     "ability": "sturdy" /* 옹골참 */,
@@ -18692,7 +18645,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ],
       [ { "slug": "heavy-slam" /* 헤비봄버 */ } ],
-      [ { "slug": "curse" /* 저주 */ } ]
+      [ { "slug": "fissure" /* 땅가르기 */ } ]
     ]
   }
   ],
@@ -19082,25 +19035,36 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "golisopod": /* 갑주무사 */ [
+  "golisopod": /* 갑주무사 */ /* 메가진화 가능: 메가갑주무사 */ [
   {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "emergency-exit" /* 위기회피 */,
     "moves": [
-      [ { "slug": "first-impression" /* 만나자마자 */ } ],
+      [ { "slug": "first-impression" /* 만나자마자 */ },{ "slug": "sucker-punch" /* 기습 */ }, { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
       [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ],
       [ { "slug": "leech-life" /* 흡혈 */ } ],
       [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ]
+    ]
+  },
+  /* 메가진화 세트: 메가갑주무사 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
+  {
+    "item": "golisopite" /* 갑주무사나이트 */,
+    "ability": "emergency-exit" /* 위기회피 */,
+    "moves": [
+      [ { "slug": "first-impression" /* 만나자마자 */ },{ "slug": "sucker-punch" /* 기습 */ }, { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "bulk-up" /* 벌크업 */ } ],
+      [ { "slug": "leech-life" /* 흡혈 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
     ]
   },
   {
     "item": "golisopite" /* 갑주무사나이트 */,
     "ability": "emergency-exit" /* 위기회피 */,
     "moves": [
-      [ { "slug": "first-impression" /* 만나자마자 */ } ],
-      [ { "slug": "liquidation" /* 아쿠아브레이크 */ } ],
+      [ { "slug": "first-impression" /* 만나자마자 */ },{ "slug": "sucker-punch" /* 기습 */ }, { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
       [ { "slug": "leech-life" /* 흡혈 */ } ],
-      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ]
+      [ { "slug": "close-combat" /* 인파이트 */ } ]
     ]
   }
   ],
@@ -19548,7 +19512,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "drampa": /* 할비롱 */ [
+  "drampa": /* 할비롱 */ /* 메가진화 가능: 메가할비롱 */ [
   {
     "item": "choice-specs" /* 구애안경 */,
     "ability": "sap-sipper" /* 초식 */,
@@ -19589,14 +19553,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "roost" /* 날개쉬기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가할비롱 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "drampanite" /* 할비롱나이트 */,
     "ability": ["berserk","sap-sipper"] /* 발끈, 초식 */,
     "moves": [
-      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
-      [ { "slug": "surf" /* 파도타기 */ } ],
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "surf" /* 파도타기 */ }, { "slug": "thunderbolt" /* 10만볼트 */ } ],
       [ { "slug": "flamethrower" /* 화염방사 */ } ],
-      [ { "slug": "roost" /* 날개쉬기 */ } ]
+      [ { "slug": "calm-mind" /* 명상 */ } ]
     ]
   }
   ],
@@ -19722,7 +19687,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "victreebel": /* 우츠보트 */ [
+  "victreebel": /* 우츠보트 */ /* 메가진화 가능: 메가우츠보트 */ [
   {
     "item": "life-orb" /* 생명의구슬 */,
     "ability": "chlorophyll" /* 엽록소 */,
@@ -19733,18 +19698,19 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "weather-ball" /* 웨더볼 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가우츠보트 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "victreebelite" /* 우츠보트나이트 */,
     "ability": "chlorophyll" /* 엽록소 */,
     "moves": [
-      [ { "slug": "sunny-day" /* 쾌청 */ } ],
-      [ { "slug": "solar-beam" /* 솔라빔 */ } ],
-      [ { "slug": "sludge-bomb" /* 오물폭탄 */ } ],
-      [ { "slug": "weather-ball" /* 웨더볼 */ } ]
+      [ { "slug": "giga-drain" /* 기가드레인 */ } ],
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "strength-sap" /* 힘흡수 */ } ],
+      [ { "slug": "sucker-punch" /* 기습 */ } ]
     ]
   }
   ],
-  "crabominable": /* 모단단게 */ [
+  "crabominable": /* 모단단게 */ /* 메가진화 가능: 메가모단단게 */ [
   {
     "item": "assault-vest" /* 돌격조끼 */,
     "ability": "iron-fist" /* 철주먹 */,
@@ -19755,14 +19721,15 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "earthquake" /* 지진 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가모단단게 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "crabominite" /* 모단단게나이트 */,
     "ability": "iron-fist" /* 철주먹 */,
     "moves": [
       [ { "slug": "drain-punch" /* 드레인펀치 */ } ],
       [ { "slug": "ice-hammer" /* 아이스해머 */ } ],
-      [ { "slug": "close-combat" /* 인파이트 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ }, { "slug": "pursuit" /* 따라가때리기 */ } ]
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "mach-punch" /* 마하펀치 */ }, { "slug": "stone-edge" /* 스톤에지 */ } ],
+      [ { "slug": "thunder-punch" /* 번개펀치 */ } ]
     ]
   }
   ],
@@ -20532,24 +20499,45 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "glimmora": /* 킬라플로르 */ [
+  "glimmora": /* 킬라플로르 */ /* 메가진화 가능: 메가킬라플로르 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
     "ability": "toxic-debris" /* 독치장 */,
     "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "spikes" /* 압정뿌리기 */ } ],
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
       [ { "slug": "mortal-spin" /* 킬러스핀 */ } ],
       [ { "slug": "mud-shot" /* 머드숏 */ } ],
-      [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ]
+      [ { "slug": "power-gem" /* 파워젬 */ }, { "slug": "sludge-wave" /* 오물웨이브 */ } ]
     ]
   },
+  {
+    "item": "air-balloon" /* 풍선 */,
+    "ability": "toxic-debris" /* 독치장 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "mortal-spin" /* 킬러스핀 */ } ],
+      [ { "slug": "mud-shot" /* 머드숏 */ } ],
+      [ { "slug": "power-gem" /* 파워젬 */ }, { "slug": "sludge-wave" /* 오물웨이브 */ } ]
+    ]
+  },
+  {
+    "item": "air-balloon" /* 풍선 */,
+    "ability": "corrosion" /* 부식 */,
+    "moves": [
+      [ { "slug": "toxic" /* 맹독 */ } ],
+      [ { "slug": "spiky-shield" /* 니들가드 */ } ],
+      [ { "slug": "power-gem" /* 파워젬 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ }, { "slug": "sludge-wave" /* 오물웨이브 */ }, { "slug": "energy-ball" /* 에너지볼 */ } ]
+    ]
+  },
+  /* 메가진화 세트: 메가킬라플로르 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "glimmoranite" /* 킬라플로르나이트 */,
     "ability": "toxic-debris" /* 독치장 */,
     "moves": [
-      [ { "slug": "stealth-rock" /* 스텔스록 */ }, { "slug": "spikes" /* 압정뿌리기 */ } ],
-      [ { "slug": "mortal-spin" /* 킬러스핀 */ } ],
-      [ { "slug": "mud-shot" /* 머드샷 */ } ],
+      [ { "slug": "power-gem" /* 파워젬 */ } ],
+      [ { "slug": "sludge-wave" /* 오물웨이브 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
       [ { "slug": "dazzling-gleam" /* 매지컬샤인 */ } ]
     ]
   }
@@ -22768,7 +22756,7 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "baxcalibur": /* 드닐레이브 */ [
+  "baxcalibur": /* 드닐레이브 */ /* 메가진화 가능: 메가드닐레이브 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,
     "ability": "thermal-exchange",
@@ -22819,6 +22807,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "icicle-spear" /* 고드름침 */ } ]
     ]
   },
+  /* 메가진화 세트: 메가드닐레이브 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
   {
     "item": "baxcalibrite" /* 드닐레이브나이트 */,
     "ability": "thermal-exchange" /* 열교환 */,
@@ -22827,6 +22816,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
       [ { "slug": "glaive-rush" /* 대검돌격 */ } ],
       [ { "slug": "earthquake" /* 지진 */ } ]
+    ]
+  },
+  {
+    "item": "baxcalibrite" /* 드닐레이브나이트 */,
+    "ability": "thermal-exchange" /* 열교환 */,
+    "moves": [
+      [ { "slug": "icicle-crash" /* 고드름떨구기 */ }, { "slug": "icicle-spear" /* 고드름침 */ } ],
+      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
+      [ { "slug": "glaive-rush" /* 대검돌격 */ } ],
+      [ { "slug": "dragon-dance" /* 용의춤 */ } ]
     ]
   }
   ],

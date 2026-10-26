@@ -12,10 +12,10 @@ export const PIVOT_MOVES = new Set(MECHANICS.pivot);
 export const MULTIHIT_MOVES = MECHANICS.multihit;
 
 // The subsets the battle code actually handles. Sky Drop (carries the target away) is
-// left out and stays banned; Shed Tail needs Substitute and Revival Blessing revives a
-// fainted ally, so those two are not pivots here (Chilly Reception sets snow, then switches).
+// left out and stays banned; Revival Blessing revives a fainted ally, so it is not a pivot here
+// (Chilly Reception sets snow, then switches; Shed Tail leaves a Substitute behind for the newcomer).
 export const CHARGE_MOVES = new Set([...TWO_TURN_MOVES].filter((m) => m !== "sky-drop"));
-const UNSUPPORTED_PIVOTS = new Set(["shed-tail", "revival-blessing"]);
+const UNSUPPORTED_PIVOTS = new Set(["revival-blessing"]);
 export const SUPPORTED_PIVOT_MOVES = new Set([...PIVOT_MOVES].filter((m) => !UNSUPPORTED_PIVOTS.has(m)));
 
 // While a pokemon is on the charge turn of one of these, moves aimed at it miss, except

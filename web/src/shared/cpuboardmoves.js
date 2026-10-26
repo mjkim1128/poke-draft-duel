@@ -1,10 +1,10 @@
-// 컴퓨터가 쓰는 변화기 2묶음: 저승길동무, 트릭룸, 트릭, 울부짖기/흑안개, 도발, 앙코르, 대타출동, 방어, 소원.
+// 컴퓨터가 쓰는 변화기 2묶음: 저승길동무, 트릭룸, 트릭, 울부짖기/흑안개, 도발, 앙코르, 사슬묶기, 대타출동, 방어, 소원.
 // 각 함수는 cpustatus.js의 situation(s)을 받아서 쓸 기술을 돌려주고, 쓸 상황이 아니면 null을 돌려준다.
 // s.foeHitsBefore - 1 은 "버팀": 상대가 나를 잡는 데 필요한 공격 횟수에서 1을 뺀 값이다.
-import { getUsableMoves, hasPP } from "./pp";
+import { getUsableMoves, hasPP, choiceLockedMove } from "./pp";
 import { effectiveSpeed } from "./speed";
 import { CHOICE_ITEMS, UNREMOVABLE_ITEMS } from "./iteminfo";
-import { PROTECT_MOVES, FAIL_ENCORE } from "./movemechanics";
+import { PROTECT_MOVES, FAIL_ENCORE, HEAL_MOVES } from "./movemechanics";
 import { preventsTaunt, preventsDisable, protectsItem } from "./abilities";
 import { bestDamage, hitsToKO, movesFirst, positiveStages } from "./cpusetup";
 
@@ -64,25 +64,46 @@ export function resetBoostMove(s) {
     return usable(me, "roar") || usable(me, "whirlwind");
 }
 
-// 도발: 상대 변화기가 2개 이상이고 내가 먼저 움직일 때
+// 상대가 마지막으로 쓴 기술 (교체하면 지워진다). 없으면 null.
+const lastMoveOf = (foe) => (foe.moveset || []).find((m) => m.name === foe.lastMove) || null;
+// 그 기술 하나가 나에게 주는 피해
+const damageOf = (s, move) => bestDamage({ ...s.foe, moveset: [move] }, s.me, s.field);
+
+// 도발: 상대 변화기가 2개 이상일 때. 내가 느려도 다음 턴부터 막히므로 순서는 따지지 않는다.
 export function tauntMove(s) {
-    const { me, foe, field } = s;
+    const { me, foe } = s;
     const move = usable(me, "taunt");
     if (!move || foe.taunt || preventsTaunt(foe, me) || preventsDisable(foe, me)) return null;
     const statusMoves = (foe.moveset || []).filter((m) => m.damage_class.name === "status").length;
-    if (statusMoves < 2 || !movesFirst(me, foe, field) || !survives(s, 1)) return null;
+    if (statusMoves < 2 || !survives(s, 1)) return null;
     return move;
 }
 
-// 앙코르: 상대가 직전에 쓴 기술이 변화기일 때 (그 기술에 묶어 버린다). 내가 먼저 움직일 때만.
+// 앙코르: 상대가 직전에 쓴 기술에 묶어 버린다.
+//  - 직전 기술이 변화기: 내가 먼저 움직일 때만 (늦으면 이번 턴에 상대가 무엇을 쓸지 몰라서 엉뚱한 기술에 묶을 수 있다)
+//  - 직전 기술이 약한 공격(내 최대 체력의 1/4 미만): 먼저든 늦든. 상대가 이번 턴에 더 센 기술을 써도 3번은 버틴다.
 export function encoreMove(s) {
     const { me, foe, field } = s;
     const move = usable(me, "encore");
     if (!move || foe.encore || preventsDisable(foe, me)) return null;
-    const last = (foe.moveset || []).find((m) => m.name === foe.lastMove);
-    if (!last || last.damage_class.name !== "status" || FAIL_ENCORE.has(last.name) || !hasPP(last)) return null;
-    if (!movesFirst(me, foe, field) || !survives(s, 1)) return null;
-    return move;
+    const last = lastMoveOf(foe);
+    if (!last || FAIL_ENCORE.has(last.name) || !hasPP(last)) return null;
+    if (last.damage_class.name === "status") return movesFirst(me, foe, field) && survives(s, 1) ? move : null;
+    return damageOf(s, last) * 4 < me.hp[1] && survives(s, 3) ? move : null;
+}
+
+// 사슬묶기: 상대가 직전에 쓴 기술을 막는다. 막을 만한 기술일 때만.
+//  - 구애 도구로 그 기술에 묶여 있으면: 이번 턴에도 그 기술이 나가므로 먼저든 늦든 쓴다 (선택할 기술이 없어져 발버둥만 나간다)
+//  - 그 밖에는 내가 먼저 움직일 때, 직전 기술이 상대의 가장 센 공격이거나 회복기일 때
+export function disableMove(s) {
+    const { me, foe, field } = s;
+    const move = usable(me, "disable");
+    const last = lastMoveOf(foe);
+    if (!move || foe.disabled || preventsDisable(foe, me) || !last || last.name === "struggle" || !hasPP(last) || !survives(s, 1)) return null;
+    if (choiceLockedMove(foe) === last.name) return move;
+    if (!movesFirst(me, foe, field)) return null;
+    const strongest = last.damage_class.name !== "status" && damageOf(s, last) > 0 && damageOf(s, last) >= bestDamage(foe, me, field);
+    return strongest || HEAL_MOVES.has(last.name) ? move : null;
 }
 
 // 대타출동: 체력이 50%를 넘고, 최대 체력의 1/4를 내고도 상대 공격을 3회 이상 버티고,

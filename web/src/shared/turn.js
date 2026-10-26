@@ -468,6 +468,13 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     const cpuMove = forcedMove(opponentPokemon[0], makeMove(playerPokemon, opponentPokemon, !isTrapped(opponentPokemon, playerPokemon)));
     if (cpuMove.priority !== 6 && canMegaEvolve(opponentPokemon)) megaEvolve(opponentPokemon, playerPokemon, megaText);
     entryText.push(...megaText);
+    // Focus Punch: it tightens its focus before anyone moves; getting hit by a damaging move before it acts breaks the focus
+    for (const [team, mv] of [[playerPokemon, move], [opponentPokemon, cpuMove]]) {
+        if (mv.priority !== 6 && mv.name === "focus-punch") {
+            team[0].focusPunch = { lost: false };
+            entryText.push(pokemonNameToString(team[0]) + " is tightening its focus!");
+        }
+    }
     recordCpuMove(opponentPokemon[0], cpuMove);
     const priorityOf = (mv, mon) => movePriority(mv, mon, field) + (hasCustapBoost(mon) ? 1 : 0);
     let playerPriority = priorityOf(move, playerPokemon[0]);
@@ -620,7 +627,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             const swapperActsLater = swapper === foeTeam && step === 0;
             if (swapperIsPlayer) {
                 if (swapperActsLater) plan.skipSide = "player";
-                playerPokemon.pendingSwitch = { plan, nextStep: step + 1, baton: pivot.baton };
+                playerPokemon.pendingSwitch = { plan, nextStep: step + 1, baton: pivot.baton, shedTail: pivot.shedTail };
                 pushFrame();
                 return Object.assign(text, { frames });
             }
@@ -628,7 +635,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             const index = switchPokemon(playerPokemon, opponentPokemon, { freeHit: swapper === team && step === 0 });
             if (index !== -1) {
                 if (swapperActsLater) plan.skipSide = "cpu";
-                text.push(doSwitchRaw(opponentPokemon, index, { baton: pivot.baton, foeTeam: playerPokemon }));
+                text.push(doSwitchRaw(opponentPokemon, index, { baton: pivot.baton, shedTail: pivot.shedTail, foeTeam: playerPokemon }));
             }
         }
         pushFrame(); // this mover's whole beat: its move, any drag, any pivot switch-in
@@ -679,6 +686,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             if (team[0].rampage.moved && team[0].hp[0] > 0) team[0].rampage.moved = false;
             else team[0].rampage = null;
         }
+        team[0].focusPunch = null; // Focus Punch's focus only lasts the turn
         team[0].movedThisTurn = false;
         team[0].itemUsedThisTurn = false;
         // Protect & co. only last the turn; a stall move that wasn't used again this turn starts
@@ -716,7 +724,7 @@ function resumeTurnRaw(playerPokemon, opponentPokemon, index) {
     const pending = playerPokemon.pendingSwitch;
     playerPokemon.pendingSwitch = null;
     if (!pending) return Object.assign([], { frames: [] });
-    const switchText = [doSwitchRaw(playerPokemon, index, { baton: pending.baton, foeTeam: opponentPokemon })];
+    const switchText = [doSwitchRaw(playerPokemon, index, { baton: pending.baton, shedTail: pending.shedTail, foeTeam: opponentPokemon })];
     const frames = [{ text: [...switchText], ...snapshotTeams(playerPokemon, opponentPokemon) }];
     const rest = runTurn(playerPokemon, opponentPokemon, pending.plan, pending.nextStep);
     frames.push(...rest.frames);
@@ -1415,6 +1423,7 @@ function protectionPunishesContact(foe, attacker, move, text, field) {
 // What Counter, Mirror Coat and Metal Burst look at: the last damage the pokemon took this turn
 function trackDamageTaken(pokemon, move, amount) {
     if (!(amount > 0)) return;
+    if (pokemon.focusPunch && move.damage_class.name !== "status") pokemon.focusPunch.lost = true; // Focus Punch loses its focus
     pokemon.lastDamageTaken = amount;
     if (move.damage_class.name === "physical") pokemon.lastPhysicalDamage = amount;
     if (move.damage_class.name === "special") pokemon.lastSpecialDamage = amount;
@@ -1629,6 +1638,19 @@ function tryRequestPivot(team, foe, move, text, foeTeam) {
     // A damaging pivot that KOs its target still swaps the user out, unless that was the foe's
     // last pokemon (the battle is over)
     if (!isStatus && foe.hp[0] <= 0 && !foeTeam.slice(1).some((p) => p.hp[0] > 0)) return;
+    // Shed Tail: the user pays half of its max HP and the pokemon that comes in takes over a Substitute with
+    // a quarter of the user's max HP. It fails with half HP or less, or when the user already has a Substitute.
+    if (move.name === "shed-tail") {
+        const user = team[0];
+        if (user.substitute || user.hp[0] <= Math.ceil(user.hp[1] / 2)) {
+            text.push("But it failed!");
+            return;
+        }
+        user.hp[0] -= Math.ceil(user.hp[1] / 2);
+        team.pivotRequest = { baton: false, shedTail: { hp: Math.floor(user.hp[1] / 4) } };
+        text.push(pokemonNameToString(user) + " shed its tail to create a decoy!");
+        return;
+    }
     team.pivotRequest = { baton: move.name === "baton-pass" };
     text.push(pokemonNameToString(team[0]) + " went back to its trainer!");
 }
@@ -1672,6 +1694,10 @@ function canAct(attacker, text, move) {
         attacker.flinched = false;
         text.push(pokemonNameToString(attacker) + " flinched and couldn't move!");
         runHook(attacker, "onFlinch", { text, ...abilityApi(null) }); // Steadfast
+        return false;
+    }
+    if (move && move.name === "focus-punch" && attacker.focusPunch && attacker.focusPunch.lost) {
+        text.push(pokemonNameToString(attacker) + " lost its focus and couldn't move!");
         return false;
     }
     if (attacker.confusion) {
@@ -3068,7 +3094,9 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
             } else {
                 text.push("The substitute took damage for " + pokemonNameToString(defender) + "!");
             }
+            const keptFocus = defender.focusPunch && defender.focusPunch.lost;
             trackDamageTaken(defender, move, dealt);
+            if (defender.focusPunch) defender.focusPunch.lost = keptFocus; // a Substitute taking the hit doesn't break Focus Punch
             if (gambit) attacker.hp[0] = 0;
             totalDamage += dealt;
             hitsLanded += 1;
@@ -3367,6 +3395,10 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
     if (defender.hp[0] === 0 && attacker.hp[0] > 0 && totalDamage > 0) {
         runHook(attacker, "onKO", { defender, text, ...abilityApi(field) });
     }
+    // Fell Stinger: knocking the target out raises the user's Attack by 3 stages
+    if (move.name === "fell-stinger" && defender.hp[0] === 0 && attacker.hp[0] > 0 && totalDamage > 0) {
+        addArrayToArray(text, doStatChanges(attacker, { stat_changes: [{ stat: { name: "attack" }, change: 3 }] }));
+    }
     // Dragon Tail / Circle Throw throw the target out if it is still standing
     if (FORCE_SWITCH_MOVES.has(move.name) && totalDamage > 0 && defender.hp[0] > 0) {
         requestDrag(attacker, defender, defenderTeam, text, false);
@@ -3556,6 +3588,8 @@ function doSwitchRaw(pokemon, index, options = {}) {
         pokemon[0].confusion = passed.confusion;
         pokemon[0].focusEnergy = passed.focusEnergy;
     }
+    // Shed Tail leaves its Substitute behind for the pokemon that comes in
+    if (options.shedTail) pokemon[0].substitute = { hp: options.shedTail.hp };
     // Abilities that trigger on entering (Intimidate, Illusion, Imposter...); the on-entry
     // text is tacked onto the switch line since callers expect a single string back
     text = text + "Switch in " + pokemonNameToString(pokemon[0]) + "!";

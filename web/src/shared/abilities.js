@@ -1108,7 +1108,8 @@ export const ABILITIES = {
     moody: {
         onResidual({ self, text, boost }) {
             if (self.hp[0] <= 0) return;
-            const names = ["attack", "defense", "special-attack", "special-defense", "speed"];
+            // 능력치 다섯 가지에 명중률과 회피율까지 일곱 가지 중에서 고른다 (stat_levels의 순서와 같다)
+            const names = ["attack", "defense", "special-attack", "special-defense", "speed", "accuracy", "evasion"];
             const ups = names.filter((n, i) => (self.stat_levels[i] || 0) < 6);
             const up = ups.length > 0 ? ups[Math.floor(Math.random() * ups.length)] : null;
             const downs = names.filter((n, i) => (self.stat_levels[i] || 0) > -6 && n !== up);

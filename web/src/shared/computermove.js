@@ -18,6 +18,9 @@ function perceived(pokemon) {
 // a move that can miss is worth its chance to connect.
 function moveValue(damage, move, attacker, defender, field) {
     let value = damage;
+    // Focus Punch fails when it is hit first, so it is only worth using against a foe that can't attack this turn
+    if (move.name === "focus-punch" && !(defender.status && defender.status.name === "sleep") &&
+        getUsableMoves(defender).some((m) => m.damage_class.name !== "status")) value = damage * 0.1;
     if (CHARGE_MOVES.has(move.name) || RECHARGE_MOVES.has(move.name)) value = damage / 2;
     const range = MULTIHIT_MOVES[move.name];
     if (range) value = damage * (range[0] === range[1] ? range[0] : 3.1);

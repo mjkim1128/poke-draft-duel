@@ -75,6 +75,8 @@ export const TRANSLATIONS = [
     ["{} is paralyzed! It can't move!", "{1:은} 몸이 저려서 움직일 수 없다!"],
     ["{} is immobilized by love!", "{1:은} 헤롱헤롱해서 움직일 수 없다!"],
     ["{} fell in love!", "{1:은} 헤롱헤롱해졌다!"],
+    ["{} is tightening its focus!", "{1:은} 정신을 집중하고 있다!"],
+    ["{} lost its focus and couldn't move!", "{1:은} 집중이 흐트러져 움직일 수 없었다!"],
     ["{}'s {} is reacting!", "{1}의 {2:이} 반응하고 있다!"],
     ["{} Mega Evolved into {}!", "{1:은} {2:로} 메가진화했다!"],
     ["{} became confused due to fatigue!", "{1:은} 지쳐서 혼란에 빠졌다!"],

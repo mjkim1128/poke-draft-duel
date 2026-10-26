@@ -201,3 +201,39 @@ describe("교체 금지", () => {
         expect(isTrapped(victim({ item: "shed-shell" }), foe)).toBe(false);
     });
 });
+
+describe("7. 랭크업이 지워지면 50% 확률로 교체를 고민한다", () => {
+    const setup = () => {
+        const foe = foeTeam({ atk: 100, hp: 300 });
+        const cpu = cpuTeam({ atk: 120, hp: 300 }, { atk: 300, def: 300, hp: 300 });
+        return [foe, cpu];
+    };
+    afterEach(() => jest.restoreAllMocks());
+
+    test("지워지지 않았다면 이기고 있는 대결에서는 교체하지 않는다", () => {
+        const [foe, cpu] = setup();
+        expect(chooseSwitch(foe, cpu)).toBe(-1);
+    });
+    test("지워졌고 확률(50%)에 걸리면 더 나은 후보로 교체한다", () => {
+        const [foe, cpu] = setup();
+        cpu[0].boostsWiped = true;
+        jest.spyOn(Math, "random").mockReturnValue(0.3);
+        expect(chooseSwitch(foe, cpu)).toBe(1);
+        expect(cpu[0].boostsWiped).toBe(false);
+    });
+    test("지워졌어도 확률에 안 걸리면 하던 대로 하고, 다음 턴에는 다시 따지지 않는다", () => {
+        const [foe, cpu] = setup();
+        cpu[0].boostsWiped = true;
+        jest.spyOn(Math, "random").mockReturnValue(0.7);
+        expect(chooseSwitch(foe, cpu)).toBe(-1);
+        Math.random.mockReturnValue(0.3);
+        expect(chooseSwitch(foe, cpu)).toBe(-1);
+    });
+    test("나은 후보가 없으면 교체하지 않는다", () => {
+        const foe = foeTeam({ atk: 100, hp: 300 });
+        const cpu = cpuTeam({ atk: 120, hp: 300 }, { atk: 50, def: 50, hp: 100 });
+        cpu[0].boostsWiped = true;
+        jest.spyOn(Math, "random").mockReturnValue(0.3);
+        expect(chooseSwitch(foe, cpu)).toBe(-1);
+    });
+});

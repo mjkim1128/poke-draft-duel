@@ -428,3 +428,64 @@ test("리플렉터가 끝나는 턴에 사라졌다는 글이 나온다", () => 
     expect(me.reflectTurns).toBe(0);
     expect(all).toContain("Your team's Reflect wore off!");
 });
+
+test.each([
+    ["reflect", "reflectTurns"],
+    ["light-screen", "lightScreenTurns"],
+])("이미 깔려 있는 %s를 또 쓰면 실패하고 남은 턴이 그대로다", (name, key) => {
+    const me = [mon("blissey", [name])];
+    const foe = [mon("snorlax", ["splash"])];
+    doTurn(me, foe, me[0].moveset[0]);
+    expect(me[key]).toBe(4);
+    const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+    expect(text).toContain("But it failed!");
+    expect(me[key]).toBe(3);
+});
+
+test("흑안개(Haze)로 랭크업이 지워진 쪽에만 표시가 남고, 랭크업이 없었다면 남지 않는다", () => {
+    const me = [mon("blissey", ["haze"])];
+    const foe = [mon("snorlax", ["splash"])];
+    foe[0].stat_levels[0] = 2;
+    doTurn(me, foe, me[0].moveset[0]);
+    expect(foe[0].stat_levels[0]).toBe(0);
+    expect(foe[0].boostsWiped).toBe(true);
+    foe[0].boostsWiped = false;
+    doTurn(me, foe, me[0].moveset[0]);
+    expect(foe[0].boostsWiped).toBe(false);
+});
+
+describe("클리어스모그: 맞은 상대의 능력 변화를 지운다", () => {
+    test("올라간 랭크업과 내려간 랭크업이 모두 사라지고, 컴퓨터는 교체를 고민할 표시가 남는다", () => {
+        const me = [mon("amoonguss", ["clear-smog"])];
+        const foe = [mon("snorlax", ["splash"])];
+        foe[0].stat_levels[0] = 2;
+        foe[0].stat_levels[1] = -1;
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        expect(foe[0].stat_levels.every((l) => l === 0)).toBe(true);
+        expect(text).toContain("stat changes were removed");
+        expect(foe[0].boostsWiped).toBe(true);
+    });
+    test("내려간 능력만 있었다면 표시는 남기지 않는다", () => {
+        const me = [mon("amoonguss", ["clear-smog"])];
+        const foe = [mon("snorlax", ["splash"])];
+        foe[0].stat_levels[1] = -1;
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].stat_levels[1]).toBe(0);
+        expect(foe[0].boostsWiped).toBe(false);
+    });
+    test("대타출동 뒤에 있으면 지워지지 않고, 빗나간 기술도 지우지 않는다", () => {
+        const me = [mon("amoonguss", ["clear-smog"])];
+        const foe = [mon("snorlax", ["splash"])];
+        foe[0].stat_levels[0] = 2;
+        foe[0].substitute = { hp: 9999 };
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].stat_levels[0]).toBe(2);
+    });
+    test("먼지막(Shield Dust)은 막는다", () => {
+        const me = [mon("amoonguss", ["clear-smog"])];
+        const foe = [mon("snorlax", ["splash"], "shield-dust")];
+        foe[0].stat_levels[0] = 2;
+        doTurn(me, foe, me[0].moveset[0]);
+        expect(foe[0].stat_levels[0]).toBe(2);
+    });
+});

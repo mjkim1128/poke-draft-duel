@@ -116,6 +116,7 @@ export const TRANSLATIONS = [
     ["{}'s {} prevents its Attack from being lowered!", "{1}의 {2}로 공격이 떨어지지 않는다!"],
     ["{}'s {} prevents its stats from being lowered!", "{1}의 {2}로 능력이 떨어지지 않는다!"],
     ["{}'s stat changes were all reversed!", "{1}의 능력 변화가 모두 뒤집혔다!"],
+    ["{}'s stat changes were removed!", "{1}의 능력 변화가 원래대로 돌아왔다!"],
     ["All stat changes were eliminated!", "모든 능력 변화가 원래대로 돌아왔다!"],
     ["{} copied {}'s stat changes!", "{1:은} {2}의 능력 변화를 복사했다!"],
     ["{} switched stat changes with {}!", "{1:은} {2}와(과) 능력 변화를 바꿨다!"],

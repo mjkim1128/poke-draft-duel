@@ -1631,6 +1631,12 @@ function trySetupScreen(attackingTeam, move, text, field) {
         text.push("An Aurora Veil made " + pokemonNameToString(attackingTeam[0]) + "'s team stronger!");
         return true;
     }
+    const alreadyUp = move.name === "reflect" ? attackingTeam.reflectTurns > 0 : attackingTeam.lightScreenTurns > 0;
+    if (alreadyUp) {
+        text.push(pokemonNameToString(attackingTeam[0]) + " used " + moveNameToString(move) + "!");
+        text.push("But it failed!");
+        return true;
+    }
     if (move.name === "reflect") attackingTeam.reflectTurns = turns;
     else attackingTeam.lightScreenTurns = turns;
     text.push(
@@ -2010,11 +2016,14 @@ function trySpecialStatusMove(attacker, defender, move, text, field, defenderTea
     };
     const api = abilityApi(field);
     switch (move.name) {
-        case "haze":
+        case "haze": {
+            const lostBoosts = defender.stat_levels.some((level) => level > 0);
             resetStatChanges(attacker);
             resetStatChanges(defender);
+            defender.boostsWiped = lostBoosts; // 컴퓨터는 랭크업이 지워지면 교체를 고민한다 (cpuswitch.js)
             text.push("All stat changes were eliminated!");
             return true;
+        }
         case "curse":
             if (!attacker.types.some((t) => t.type.name === "ghost")) {
                 // anyone else: Attack and Defense up, Speed down
@@ -3506,6 +3515,13 @@ export function doMoveEffects(attacker, defender, move, opts = {}) {
             text.push(pokemonNameToString(defender) + " got covered in sticky candy syrup!");
         }
     }
+    // Clear Smog: every stat change the target had is wiped (a Substitute or Shield Dust stops it)
+    if (defender.hp[0] > 0 && move.name === "clear-smog" && !opts.shieldDust && defender.stat_levels.some((level) => level !== 0)) {
+        const lostBoosts = defender.stat_levels.some((level) => level > 0);
+        resetStatChanges(defender);
+        defender.boostsWiped = lostBoosts; // 컴퓨터는 랭크업이 지워지면 교체를 고민한다 (cpuswitch.js)
+        text.push(pokemonNameToString(defender) + "'s stat changes were removed!");
+    }
     tryConsumeWhiteHerb(attacker, text);
     tryConsumeWhiteHerb(defender, text);
     return text;
@@ -3599,6 +3615,7 @@ export function resetStatChanges(pokemon) {
     // (This used to write a stray stat_changes field, so stat stages were never
     // actually cleared when a pokemon switched.)
     pokemon.stat_levels = Array(STAT_NAMES.length).fill(0);
+    pokemon.boostsWiped = false;
 }
 
 // `field` is the shared weather/terrain, `foe` the pokemon out on the other side (a trap

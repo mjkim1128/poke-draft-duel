@@ -93,12 +93,14 @@ function bestCategory(me, foe, field) {
 // 스스로 교체해야 할 이유가 있는지. 이유가 없으면 null, 있으면 이유의 이름.
 //   1 지는 대결  2 공격이 거의 안 통함(상대 최대 체력의 25% 미만)  3 한 방에 쓰러지는데 먼저 못 잡음
 //   4 공격 능력치 -2 이하  5 상대 랭업 +3 이상인데 확실히 이기지 못함  6 잠 / 맹독
-function switchReason(me, foe, field, stay) {
+//   7 랭크업이 지워졌고(wiped) 50% 확률에 걸림 (그대로 랭업을 다시 쌓을 수도 있으니)
+function switchReason(me, foe, field, stay, wiped = false) {
     const hasAttack = getUsableMoves(me).some((m) => m.damage_class.name !== "status" && m.name !== "struggle");
     const stalemate = stay.hits === Infinity && stay.attacks === Infinity;
     if (stay.hits === 1 && !(stay.first && stay.attacks === 1)) return 3;
     if (stay.attacks === 1) return null; // 한 방에 잡을 수 있으면 공격한다
     if (me.status && (me.status.name === "sleep" || me.status.name === "toxic")) return 6;
+    if (wiped) return 7;
     if (!hasAttack) return null;
     if (!wins(stay) && !stalemate) return 1;
     const damage = bestDamage(me, foe, field);
@@ -126,7 +128,10 @@ export function chooseSwitch(playerTeam, opponentTeam) {
     if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.mustRecharge) return -1;
     const field = playerTeam.field || opponentTeam.field || null;
     const stay = stayEvaluation(me, foe, field);
-    if (!switchReason(me, foe, field, stay)) return -1;
+    // 랭크업이 지워진 직후 한 번만 따진다: 50%는 교체를 고민하고, 50%는 하던 대로 한다
+    const wiped = !!me.boostsWiped && Math.random() < 0.5;
+    me.boostsWiped = false;
+    if (!switchReason(me, foe, field, stay, wiped)) return -1;
     const list = candidates(playerTeam, opponentTeam, true);
     const winners = list.filter((e) => e.wins);
     if (winners.length > 0) {

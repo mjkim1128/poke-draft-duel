@@ -299,6 +299,21 @@ describe("가속(Speed Boost): 나온 턴의 끝부터", () => {
         doTurn(me, foe, me[0].moveset[0]);
         expect(fast.stat_levels[4]).toBe(1);
     });
+    test("가속 포켓몬이 선봉으로 나왔다가 첫 턴에 교체되면, 가속이 아닌 포켓몬의 스피드는 오르지 않는다", () => {
+        const booster = mon("blaziken", ["splash"], "speed-boost");
+        const plain = mon("snorlax", ["splash"]);
+        const me = [booster, plain];
+        const foe = [mon("blissey", ["splash"]), mon("blissey", ["splash"])];
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(me[0]).toBe(plain);
+        expect(plain.stat_levels[4]).toBe(0);
+        expect(booster.stat_levels[4]).toBe(0);
+        // 가속 포켓몬이 다시 나오면 그 턴 끝에 처음부터 +1
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(me[0]).toBe(booster);
+        expect(booster.stat_levels[4]).toBe(1);
+        expect(plain.stat_levels[4]).toBe(0);
+    });
     test("상대 쪽 가속도 같다", () => {
         const me = [mon("snorlax", ["splash"])];
         const foe = [mon("snorlax", ["splash"]), mon("blaziken", ["splash"], "speed-boost")];

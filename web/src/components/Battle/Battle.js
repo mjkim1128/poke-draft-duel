@@ -374,6 +374,12 @@ export function Battle(props) {
         liveState.opponentPokemon.tailwindTurns > 0 && `상대 쪽 순풍 (${liveState.opponentPokemon.tailwindTurns}턴)`,
         liveState.playerPokemon.safeguardTurns > 0 && `내 쪽 신비의부적 (${liveState.playerPokemon.safeguardTurns}턴)`,
         liveState.opponentPokemon.safeguardTurns > 0 && `상대 쪽 신비의부적 (${liveState.opponentPokemon.safeguardTurns}턴)`,
+        liveState.playerPokemon.reflectTurns > 0 && `내 쪽 리플렉터 (${liveState.playerPokemon.reflectTurns}턴)`,
+        liveState.opponentPokemon.reflectTurns > 0 && `상대 쪽 리플렉터 (${liveState.opponentPokemon.reflectTurns}턴)`,
+        liveState.playerPokemon.lightScreenTurns > 0 && `내 쪽 빛의장막 (${liveState.playerPokemon.lightScreenTurns}턴)`,
+        liveState.opponentPokemon.lightScreenTurns > 0 && `상대 쪽 빛의장막 (${liveState.opponentPokemon.lightScreenTurns}턴)`,
+        liveState.playerPokemon.auroraTurns > 0 && `내 쪽 오로라베일 (${liveState.playerPokemon.auroraTurns}턴)`,
+        liveState.opponentPokemon.auroraTurns > 0 && `상대 쪽 오로라베일 (${liveState.opponentPokemon.auroraTurns}턴)`,
         myHazards && `내 쪽 함정: ${myHazards}`,
         theirHazards && `상대 쪽 함정: ${theirHazards}`,
     ]

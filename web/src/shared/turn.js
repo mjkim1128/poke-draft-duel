@@ -638,9 +638,10 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
         team[0].lastPhysicalDamage = team[0].lastSpecialDamage = team[0].lastDamageTaken = 0; // Counter & co. only look at this turn
         if (!team[0].stalledThisTurn) team[0].stallDivisor = 1;
         team[0].stalledThisTurn = false;
-        if (team.reflectTurns > 0) team.reflectTurns -= 1;
-        if (team.lightScreenTurns > 0) team.lightScreenTurns -= 1;
-        if (team.auroraTurns > 0) team.auroraTurns -= 1;
+        const sideName = team.isPlayerSide ? "Your team's" : "The opposing team's";
+        if (team.reflectTurns > 0 && --team.reflectTurns === 0) text.push(sideName + " Reflect wore off!");
+        if (team.lightScreenTurns > 0 && --team.lightScreenTurns === 0) text.push(sideName + " Light Screen wore off!");
+        if (team.auroraTurns > 0 && --team.auroraTurns === 0) text.push(sideName + " Aurora Veil wore off!");
         if (team.tailwindTurns > 0 && --team.tailwindTurns === 0) text.push("The tailwind petered out!");
         if (team.safeguardTurns > 0 && --team.safeguardTurns === 0) text.push("The team is no longer protected by Safeguard!");
         if (team.luckyChantTurns > 0 && --team.luckyChantTurns === 0) text.push("The team is no longer shielded from critical hits!");

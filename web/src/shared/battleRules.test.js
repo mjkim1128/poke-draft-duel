@@ -418,3 +418,13 @@ test("같은 턴에 상대의 앙코르가 먼저 걸리면, 그 턴에 쓰는 �
     expect(text).toContain("Venusaur used Leaf Storm");
     expect(text).not.toContain("Venusaur used Synthesis");
 });
+
+test("리플렉터가 끝나는 턴에 사라졌다는 글이 나온다", () => {
+    const me = [mon("blissey", ["reflect", "splash"])];
+    const foe = [mon("snorlax", ["splash"])];
+    let all = doTurn(me, foe, me[0].moveset[0]).join(" ");
+    expect(me.reflectTurns).toBe(4);
+    for (let i = 0; i < 4; i++) all += " " + doTurn(me, foe, me[0].moveset[1]).join(" ");
+    expect(me.reflectTurns).toBe(0);
+    expect(all).toContain("Your team's Reflect wore off!");
+});

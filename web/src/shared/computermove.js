@@ -1,5 +1,6 @@
 import { damageCalc, MIN_ROLL } from "./damagecalc";
-import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES } from "./movemechanics";
+import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES, PROTECT_MOVES } from "./movemechanics";
+import { healAmountOf } from "./cpuresidual";
 import { hitChance } from "./accuracy";
 import { getUsableMoves } from "./pp";
 import { chooseSupportMove } from "./cpustatus";
@@ -117,6 +118,26 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     return strongestMove(playerTeam, opponentTeam);
 }
 
+// 쓸 만한 공격이 없어서 변화기 중에서 골라야 할 때, 시간을 버는 기술을 먼저 고른다: 회복기(잃은 체력이 있을 때) > 방어(직전에 쓰지 않았을 때) > 대타출동.
+// (독 같은 것으로 상대가 서서히 쓰러지는 동안 버티는 상황에서 엉뚱한 변화기를 누르지 않도록)
+function timeBuyingMove(me, moves, field) {
+    const status = moves.filter((m) => m.damage_class.name === "status");
+    if (!me.healBlock && me.hp[0] < me.hp[1]) {
+        let heal = null;
+        for (const m of status) if (healAmountOf(me, m, field) > (heal ? healAmountOf(me, heal, field) : 0)) heal = m;
+        if (heal) return heal;
+    }
+    if ((me.stallDivisor || 1) <= 1) {
+        const protect = status.find((m) => PROTECT_MOVES[m.name]);
+        if (protect) return protect;
+    }
+    if (!me.substitute && me.hp[0] > Math.floor(me.hp[1] / 4)) {
+        const substitute = status.find((m) => m.name === "substitute");
+        if (substitute) return substitute;
+    }
+    return null;
+}
+
 // 자폭 계열(쓰면 스스로 쓰러진다)은 상대를 쓰러뜨리거나, 어차피 상대의 다음 공격에 쓰러질 때만 고른다
 const SELF_KO_MOVES = new Set(["explosion", "self-destruct", "misty-explosion"]);
 function selfKoAllowed(move, me, foe, field, moves) {
@@ -154,7 +175,7 @@ export function strongestMove(playerTeam, opponentTeam, { estimate = false } = {
         const working = moves.filter((m) => !certainlyFails(m, opponentTeam[0], playerTeam[0], field, playerTeam));
         const careful = estimate ? working : working.filter((m) => selfKoAllowed(m, opponentTeam[0], playerTeam[0], field, moves));
         const pool = careful.length > 0 ? careful : working.length > 0 ? working : moves;
-        choice = pool[Math.floor(Math.random() * pool.length)];
+        choice = (!estimate && timeBuyingMove(opponentTeam[0], pool, field)) || pool[Math.floor(Math.random() * pool.length)];
     }
     return choice;
 }

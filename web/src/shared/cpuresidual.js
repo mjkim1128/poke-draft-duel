@@ -1,5 +1,16 @@
 // 컴퓨터가 "버티기 / 회복이 의미가 있는지" 따질 때 쓰는 계산: 매 턴 끝에 상태 때문에 깎이는 체력.
 import { indirectDamageBlocked } from "./abilities";
+import { weatherHealPercent } from "./field";
+
+const SELF_TARGETS = new Set(["user", "user-and-allies", "user-or-ally"]);
+
+// 이 회복기를 한 번 쓸 때 회복하는 체력 (최대 체력 기준. 날씨로 바뀌는 기술은 날씨 반영. 잠자기와 꿀꺽, 회복하지 않는 기술은 0)
+export function healAmountOf(pokemon, move, field) {
+    if (move.name === "rest" || move.name === "swallow") return 0;
+    const heals = move.meta && move.meta.category && move.meta.category.name === "heal" && move.meta.healing > 0;
+    if (!heals || !move.target || !SELF_TARGETS.has(move.target.name)) return 0;
+    return Math.floor((pokemon.hp[1] * (weatherHealPercent(move, field) || move.meta.healing)) / 100);
+}
 
 // turnsAhead번째 턴 끝에 독, 맹독, 화상, 씨뿌리기, 저주로 깎이는 체력 (매직가드 같은 특성이면 0)
 export function residualDamage(pokemon, turnsAhead = 1) {

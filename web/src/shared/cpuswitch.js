@@ -5,11 +5,13 @@
 //   - 먼저 움직이는지(first)
 // 로 이기는 대결인지 본다. 이기는 대결 = attacks < hits, 같으면 먼저 움직이는 쪽.
 import { typeEffectiveness, MIN_ROLL } from "./damagecalc";
-import { getUsableMoves } from "./pp";
+import { getUsableMoves, ppLeft } from "./pp";
 import { isGrounded, terrainBlocksStatus } from "./field";
 import { HEAVY_DUTY_BOOTS } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { indirectDamageBlocked, abilityBlocksStatus } from "./abilities";
+import { STATUS_IMMUNE_TYPES, TOXIC_MOVES } from "./movemechanics";
+import { turnsUntilResidualKO, residualDamage, healAmountOf } from "./cpuresidual";
 import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, positiveStages } from "./cpusetup";
 
 const ROCK_MOVE = { type: { name: "rock" }, damage_class: { name: "physical" } };
@@ -105,6 +107,10 @@ function bestCategory(me, foe, field) {
 //   1 지는 대결  2 공격이 거의 안 통함(상대 최대 체력의 25% 미만)  3 한 방에 쓰러지는데 먼저 못 잡음
 //   4 공격 능력치 -2 이하  5 상대 랭업 +3 이상인데 확실히 이기지 못함  6 잠 / 맹독 / 하품을 맞아 졸린 상태 (교체하면 졸음이 풀린다)
 //   7 랭크업이 지워졌고(wiped) 50% 확률에 걸림 (그대로 랭업을 다시 쌓을 수도 있으니)
+//   8 쓸 수 있는 공격기도 없고 독, 화상, 씨뿌리기로 상대를 쓰러뜨릴 수단도 없는데 상대가 나에게 피해를 줄 수 있음 (잡을 수단이 없으면 버틸수록 내 체력만 줄어든다)
+//     상대도 나에게 피해를 못 주는 교착 상태이면 교체하지 않는다
+//     공격기는 없어도 그런 수단이 있으면(이미 상대에게 걸려 있거나 걸 수 있는 기술이 있으면) 그 수단으로 잡는 데 걸리는 턴 수를 공격 횟수로 쳐서 이유 1처럼 견준다
+//     (공격 횟수를 비교하는 이유 2, 4, 5는 공격기가 있어야 따질 수 있다)
 function switchReason(me, foe, field, stay, wiped = false, drowsy = false) {
     const hasAttack = getUsableMoves(me).some((m) => m.damage_class.name !== "status" && m.name !== "struggle");
     const stalemate = stay.hits === Infinity && stay.attacks === Infinity;
@@ -113,7 +119,10 @@ function switchReason(me, foe, field, stay, wiped = false, drowsy = false) {
     if (me.status && (me.status.name === "sleep" || me.status.name === "toxic")) return 6;
     if (drowsy) return 6;
     if (wiped) return 7;
-    if (!hasAttack) return null;
+    if (!hasAttack) {
+        if (stay.wear === Infinity) return stay.hits !== Infinity ? 8 : null; // 잡을 수단이 전혀 없다: 상대가 나를 때릴 수 있으면 버틸수록 손해
+        return !wins(stay) && !stalemate ? 1 : null; // 서서히 잡는 수단이 있으면 그 속도로 견준다 (이미 stay.attacks에 들어 있다)
+    }
     if (!wins(stay) && !stalemate) return 1;
     const damage = bestDamage(me, foe, field);
     if (stay.attacks >= 3 && (damage * 100) / foe.hp[1] < 25) return 2;
@@ -123,6 +132,40 @@ function switchReason(me, foe, field, stay, wiped = false, drowsy = false) {
     return null;
 }
 
+// 공격 말고 독, 화상, 씨뿌리기로 상대를 서서히 쓰러뜨리는 데 걸리는 턴 수. 이미 걸려 있거나, 걸 수 있는 기술이 있을 때만 (없으면 무한).
+// 기술을 쓰는 턴의 끝부터 피해가 들어가므로 쓰는 턴도 센다. 잠들어 있으면 새로 걸 수 없다.
+export function wearDownTurns(me, foe, field) {
+    let turns = turnsUntilResidualKO(foe);
+    if (foe.substitute || (me.status && me.status.name === "sleep")) return turns;
+    for (const move of getUsableMoves(me)) {
+        if (move.damage_class.name !== "status") continue;
+        let afflicted = null;
+        if (move.name === "leech-seed") {
+            if (foe.leechSeed || foe.types.some((t) => t.type.name === "grass")) continue;
+            afflicted = { ...foe, leechSeed: true };
+        } else {
+            const ailment = move.meta && move.meta.ailment && move.meta.ailment.name;
+            const status = ailment === "poison" ? (TOXIC_MOVES.has(move.name) ? "toxic" : "poison") : ailment === "burn" ? "burn" : null;
+            if (!status || foe.status) continue;
+            if ((STATUS_IMMUNE_TYPES[status] || []).some((t) => foe.types.some((ft) => ft.type.name === t))) continue;
+            if (terrainBlocksStatus(foe, status, field) || abilityBlocksStatus(foe, status, me, field)) continue;
+            afflicted = { ...foe, status: { name: status, counter: 1 } };
+        }
+        turns = Math.min(turns, turnsUntilResidualKO(afflicted));
+    }
+    return turns;
+}
+
+// 회복기로 버틸 수 있는가: 한 번에 회복하는 양이 매 턴 잃는 체력(상대의 가장 센 공격 + 내게 걸린 독, 화상)보다 크고,
+// 회복기 PP가 turns턴 동안 두 턴에 한 번씩 쓸 만큼 남아 있을 때. turns는 내가 상대를 쓰러뜨리는 데 걸리는 턴 수라서 무한이면 버텨도 소용없다.
+export function canOutheal(me, foe, field, turns) {
+    if (me.healBlock || !Number.isFinite(turns)) return false;
+    const loss = bestDamage(foe, me, field) + residualDamage(me);
+    let pp = 0;
+    for (const move of getUsableMoves(me)) if (healAmountOf(me, move, field) > loss) pp += ppLeft(move);
+    return pp >= Math.ceil(turns / 2);
+}
+
 // 지금 나와 있는 포켓몬이 계속 싸우면 어떻게 되는지 (잠이나 맹독이면 그만큼 불리하게 센다)
 function stayEvaluation(me, foe, field, drowsy = false) {
     const hits = hitsToDie(me, bestDamage(foe, me, field) + (me.status && me.status.name === "toxic" ? Math.floor(me.hp[1] / 10) : 0), foe);
@@ -130,8 +173,12 @@ function stayEvaluation(me, foe, field, drowsy = false) {
     if (me.status && me.status.name === "sleep") attacks += 2;
     if (drowsy) attacks += 2; // 다음 턴 끝에 잠들어서 그만큼 못 움직인다
     const first = movesFirst(me, foe, field);
-    const e = { hits, attacks, first };
-    return { ...e, wins: wins(e), score: scoreOf(e) };
+    // 독 같은 것은 턴 끝에 들어가므로, 내가 먼저 움직이는 경우에는 같은 턴 수면 상대가 먼저 나를 쓰러뜨린 셈이라 반 턴 늦게 센다
+    const wear = wearDownTurns(me, foe, field);
+    if (wear < attacks) attacks = first ? wear + 0.5 : wear;
+    // 회복기로 버틸 수 있으면 상대에게 쓰러지지 않는다 (hits를 무한으로)
+    const e = { hits: canOutheal(me, foe, field, attacks) ? Infinity : hits, attacks, first };
+    return { ...e, wins: wins(e), score: scoreOf(e), wear };
 }
 
 // 스스로 교체할 포켓몬의 번호. 교체할 이유가 없거나 나을 포켓몬이 없으면 -1.

@@ -264,3 +264,105 @@ describe("7. 랭크업이 지워지면 50% 확률로 교체를 고민한다", ()
         expect(chooseSwitch(foe, cpu)).toBe(-1);
     });
 });
+
+describe("8. 공격기가 없을 때의 교체", () => {
+    const status = (name, ailment = "none") => ({
+        name,
+        power: null,
+        accuracy: null,
+        priority: 0,
+        pp: 20,
+        damage_class: { name: "status" },
+        type: { name: "normal" },
+        target: { name: "selected-pokemon" },
+        meta: { ailment: { name: ailment } },
+    });
+    const SPLASH = status("test-status");
+    const TOXIC = status("toxic", "poison");
+    const bench = { atk: 200, def: 400 };
+    test("잡을 수단이 전혀 없고 상대가 두 번에 잡으면 더 나은 후보로 교체한다", () => {
+        const foe = foeTeam({ atk: 300 }); // 한 번에 183: 체력 300을 두 번에 잡는다
+        expect(chooseSwitch(foe, cpuTeam({ moves: [SPLASH] }, bench))).toBe(1);
+    });
+    test("상대가 오래 걸려서 잡아도, 잡을 수단이 없으면 버틸수록 손해라 교체한다", () => {
+        const foe = foeTeam({ atk: 100 }); // 한 번에 69: 5번 걸린다
+        expect(chooseSwitch(foe, cpuTeam({ moves: [SPLASH] }, bench))).toBe(1);
+    });
+    test("상대도 나에게 피해를 줄 수 없는 교착 상태이면 교체하지 않는다", () => {
+        const foe = foeTeam({ moves: [SPLASH] });
+        expect(chooseSwitch(foe, cpuTeam({ moves: [SPLASH] }, bench))).toBe(-1);
+    });
+    test("공격기가 있으면 이 이유는 따지지 않는다 (기존 규칙대로)", () => {
+        const foe = foeTeam({ atk: 100 });
+        expect(chooseSwitch(foe, cpuTeam({}, {}))).toBe(-1); // 나을 후보가 없다
+    });
+    test("공격기는 없어도 독으로 상대가 먼저 쓰러지면 눌러앉는다", () => {
+        const foe = foeTeam({ atk: 300 });
+        foe[0].hp = [15, 300]; // 맹독 첫 턴 끝에 쓰러진다 (300/16 = 18)
+        expect(chooseSwitch(foe, cpuTeam({ moves: [TOXIC] }, bench))).toBe(-1);
+        expect(chooseSwitch(foe, cpuTeam({ moves: [SPLASH] }, bench))).toBe(1); // 독이 없으면 교체
+    });
+    test("이미 상대가 독에 걸려 있고 곧 쓰러지면 독 기술이 없어도 눌러앉는다", () => {
+        const foe = foeTeam({ atk: 300 });
+        foe[0].hp = [15, 300];
+        foe[0].status = { name: "toxic", counter: 1 };
+        expect(chooseSwitch(foe, cpuTeam({ moves: [SPLASH] }, bench))).toBe(-1);
+    });
+    test("독이 안 통하는 상대(독 타입)에게는 독 기술이 있어도 수단이 아니다", () => {
+        const foe = foeTeam({ atk: 300, types: ["poison"] });
+        foe[0].hp = [15, 300];
+        expect(chooseSwitch(foe, cpuTeam({ moves: [TOXIC] }, bench))).toBe(1);
+    });
+    test("독이 너무 느려서 내가 먼저 쓰러지면 독 기술이 있어도 교체한다", () => {
+        const foe = foeTeam({ atk: 300 }); // 체력이 가득 차서 독으로는 한참 걸린다
+        expect(chooseSwitch(foe, cpuTeam({ moves: [TOXIC] }, bench))).toBe(1);
+    });
+});
+
+describe("회복기로 버틸 수 있으면 눌러앉는다", () => {
+    const status = (name, extra = {}) => ({
+        name,
+        power: null,
+        accuracy: null,
+        priority: 0,
+        pp: 20,
+        damage_class: { name: "status" },
+        type: { name: "normal" },
+        target: { name: "user" },
+        meta: { ailment: { name: "none" }, category: { name: "net-good-stats" } },
+        stat_changes: [],
+        ...extra,
+    });
+    const heal = (extra = {}) => status("recover", { meta: { ailment: { name: "none" }, category: { name: "heal" }, healing: 50 }, ...extra });
+    const bench = { atk: 200, def: 400 };
+    // 상대(사람)는 맹독에 걸려 있고 체력이 가득 차 있어서 독으로는 6턴이 걸린다. 나는 공격기가 없다.
+    const poisonedFoe = (extra = {}) => {
+        const foe = foeTeam(extra);
+        foe[0].status = { name: "toxic", counter: 1 };
+        return foe;
+    };
+    test("회복량이 상대 피해보다 크면 독이 느려도 교체하지 않는다", () => {
+        // 상대 피해는 69, 회복량은 150
+        expect(chooseSwitch(poisonedFoe({ atk: 100 }), cpuTeam({ moves: [status("test-filler"), heal()] }, bench))).toBe(-1);
+    });
+    test("회복기가 없으면 같은 상황에서 교체한다", () => {
+        expect(chooseSwitch(poisonedFoe({ atk: 100 }), cpuTeam({ moves: [status("test-filler")] }, bench))).toBe(1);
+    });
+    test("상대 피해가 회복량보다 크면 회복해도 따라잡히니 교체한다", () => {
+        // 상대 피해는 183, 회복량은 150
+        expect(chooseSwitch(poisonedFoe({ atk: 300 }), cpuTeam({ moves: [status("test-filler"), heal()] }, bench))).toBe(1);
+    });
+    test("회복기 PP가 모자라면 교체한다", () => {
+        expect(chooseSwitch(poisonedFoe({ atk: 100 }), cpuTeam({ moves: [status("test-filler"), heal({ ppLeft: 1 })] }, bench))).toBe(1);
+    });
+    test("눌러앉기로 했는데 쓸 만한 공격이 없으면 시간을 버는 기술을 고른다 (회복 > 방어)", () => {
+        const protect = status("protect");
+        for (let i = 0; i < 10; i++) {
+            const damaged = cpuTeam({ moves: [status("test-filler"), protect, heal()] });
+            damaged[0].hp = [210, 300]; // 70%: 회복 규칙(60% 이하)에는 걸리지 않지만 잃은 체력이 있다
+            expect(makeMove(foeTeam({ atk: 100 }), damaged, true).name).toBe("recover");
+            const full = cpuTeam({ moves: [status("test-filler"), protect, heal()] });
+            expect(makeMove(foeTeam({ atk: 100 }), full, true).name).toBe("protect");
+        }
+    });
+});

@@ -109,7 +109,7 @@ export const TRAPPING_MOVES = new Set(["mean-look", "block", "spider-web", "anch
 // Only usable on the first turn after switching in (Showdown: activeMoveActions > 1 fails).
 export const FIRST_TURN_ONLY_MOVES = new Set(["fake-out", "first-impression", "mat-block"]);
 // 연속으로 쓸 수 없는 기술: 직전 행동에서 쓴 기술이면 고를 수 없다 (교체하면 직전 기술이 지워진다)
-export const NO_CONSECUTIVE_MOVES = new Set(["blood-moon"]);
+export const NO_CONSECUTIVE_MOVES = new Set(["blood-moon", "gigaton-hammer"]);
 // 상대가 이번 턴에 공격 기술을 쓰려고 할 때만 성공하는 기술 (방어 같은 변화 기술을 고르거나 이미 움직였으면 실패)
 export const NEEDS_FOE_ATTACK_MOVES = new Set(["sucker-punch", "thunderclap"]);
 
@@ -130,6 +130,7 @@ export function keepsRawPower(moveName, accuracy) {
     return (
         CHARGE_MOVES.has(moveName) ||
         RECHARGE_MOVES.has(moveName) ||
+        NO_CONSECUTIVE_MOVES.has(moveName) ||
         MULTIHIT_MOVES[moveName] !== undefined ||
         (typeof accuracy === "number" && accuracy < 100)
     );

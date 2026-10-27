@@ -366,3 +366,22 @@ describe("회복기로 버틸 수 있으면 눌러앉는다", () => {
         }
     });
 });
+
+describe("아무것도 못 하고 한 방에 쓰러질 때", () => {
+    // 상대 공격 300이면 방어 100에게 183. 앞 포켓몬(체력 150)은 한 방에 쓰러지고 상대가 더 빨라서 먼저 잡지 못한다.
+    // 후보(체력 250)는 첫 공격을 맞고 67이 남아 다음 공격에 쓰러지지만, 그래도 그냥 쓰러지는 것보다 낫다.
+    const foe = () => foeTeam({ atk: 300, spe: 150, hp: 300 });
+    test("후보도 한 방은 버티는 데 그다음엔 쓰러져도, 그냥 쓰러지는 것보다 교체한다", () => {
+        const cpu = cpuTeam({ atk: 20, hp: 150, spe: 50 }, { atk: 20, hp: 250, spe: 50 });
+        expect(chooseSwitch(foe(), cpu)).toBe(1);
+    });
+    test("후보가 들어오자마자 쓰러지면 교체하지 않는다 (같은 결과라 의미가 없다)", () => {
+        const cpu = cpuTeam({ atk: 20, hp: 150, spe: 50 }, { atk: 20, hp: 150, spe: 50 });
+        expect(chooseSwitch(foe(), cpu)).toBe(-1);
+    });
+    test("먼저 움직여서 한 방에 잡을 수 있으면 교체하지 않고 공격한다", () => {
+        const cpu = cpuTeam({ atk: 300, hp: 150, spe: 200 }, { atk: 20, hp: 250, spe: 50 });
+        expect(chooseSwitch(foeTeam({ atk: 300, spe: 150, hp: 150 }), cpu)).toBe(-1);
+    });
+});
+

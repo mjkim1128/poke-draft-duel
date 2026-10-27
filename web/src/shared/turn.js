@@ -441,6 +441,7 @@ export function megaEvolve(team, foeTeam, text) {
     mon.types = form.types.map((t) => ({ ...t, type: { ...t.type } }));
     mon.ability = getAbility(form.abilities[0].ability.name);
     mon.baseAbility = mon.ability; // what it goes back to after Trace / Transform
+    mon.proteanUsed = false; // a Protean it just gained (Mega Greninja) works from its first move after evolving, even if the base form already used one
     mon.sprites = { ...mon.sprites, front_default: form.sprites.front_default, back_default: form.sprites.back_default };
     mon.korean_name = form.korean_name;
     mon.english_name = megaEnglishName(form);

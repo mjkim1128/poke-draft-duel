@@ -254,9 +254,16 @@ export function Home() {
     function startBattle(picked) {
         /// a named trainer with a lineup always brings a weather setter and a weather-reactive pokemon
         const boss = endless ? null : bossForFloor(winStreak);
-        const opponentTeam = boss && boss.counter ? pickCounterTeam(opponentPokemon, picked) : boss && boss.lineup ? pickBossTeam(opponentPokemon, boss.lineup) : shuffle([...opponentPokemon]).slice(0, 3);
         /// The stat mode (settings) is applied as the fight starts, so a change made on the title screen counts
-        for (const poke of [...picked, ...opponentPokemon]) refreshStats(poke);
+        for (const poke of [...playerPokemon, ...picked, ...opponentPokemon]) refreshStats(poke);
+        /// The final boss picks its 3 against the 3 I picked; an ordinary trainer picks its 3 against my whole party of 6
+        const opponentTeam = boss
+            ? boss.counter
+                ? pickCounterTeam(opponentPokemon, picked)
+                : boss.lineup
+                ? pickBossTeam(opponentPokemon, boss.lineup)
+                : shuffle([...opponentPokemon]).slice(0, 3)
+            : pickCounterTeam(opponentPokemon, playerPokemon);
         for (const poke of opponentPokemon) poke.revealed = false;
         opponentTeam[0].revealed = true;
         setBattleTeams({ player: [...picked], opponent: opponentTeam });

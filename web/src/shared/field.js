@@ -135,19 +135,21 @@ const TERRAIN_PULSE_TYPE = { electric: "electric", grassy: "grass", misty: "fair
 
 // Moves whose type/power/priority depend on the field. Returns a changed copy (or the same
 // move when nothing applies), so the original move object is never touched.
+// (한 번 바꾼 기술에는 fieldAdapted를 달아서, 데미지 계산과 턴 진행에서 두 번 바꾸지 않는다)
 export function adaptMoveToField(move, attacker, field) {
+    if (move.fieldAdapted) return move;
     const weather = weatherOf(field);
     const terrain = terrainOf(field);
     if (move.name === "weather-ball" && weather) {
-        return { ...move, type: { name: WEATHER_BALL_TYPE[weather] }, power: move.power * 2 };
+        return { ...move, type: { name: WEATHER_BALL_TYPE[weather] }, power: move.power * 2, fieldAdapted: true };
     }
     if (move.name === "terrain-pulse" && terrain && isGrounded(attacker)) {
-        return { ...move, type: { name: TERRAIN_PULSE_TYPE[terrain] }, power: move.power * 2 };
+        return { ...move, type: { name: TERRAIN_PULSE_TYPE[terrain] }, power: move.power * 2, fieldAdapted: true };
     }
     // Morpeko's Aura Wheel is Dark while it is hangry, Electric while it is full
-    if (move.name === "aura-wheel") return { ...move, type: { name: attacker.hangry ? "dark" : "electric" } };
+    if (move.name === "aura-wheel") return { ...move, type: { name: attacker.hangry ? "dark" : "electric" }, fieldAdapted: true };
     if (move.name === "grassy-glide" && terrain === "grassy" && isGrounded(attacker)) {
-        return { ...move, priority: move.priority + 1 };
+        return { ...move, priority: move.priority + 1, fieldAdapted: true };
     }
     return move;
 }

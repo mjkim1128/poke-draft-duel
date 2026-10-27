@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { getBaseStats, hpCalc } from "shared";
 import { BOSSES } from "shared/bosspokemon";
-import { pickCounterTeam, matchupScore } from "shared/bosscounter";
+import { pickCounterTeam, matchupScore, overlapPenalty, ohkoPenalty } from "shared/bosscounter";
 
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
 const MOVES = new Map(read("moves.json").map((m) => [m.name, m]));
@@ -76,3 +76,77 @@ describe("상성 선출", () => {
         expect(names(pickCounterTeam(roster(), foes)).sort()).toEqual(names(pickCounterTeam(roster(), foes)).sort());
     });
 });
+
+describe("약점 겹침과 한 방 감점", () => {
+    test("같은 타입 기술에 약한 포켓몬이 둘이면 감점하고, 하나뿐이면 감점하지 않는다", () => {
+        const foes = [mon("arcanine", ["flare-blitz"])];
+        expect(overlapPenalty([mon("venusaur", ["giga-drain"]), mon("sceptile", ["giga-drain"]), mon("blastoise", ["surf"])], foes)).toBeGreaterThan(0);
+        expect(overlapPenalty([mon("venusaur", ["giga-drain"]), mon("blastoise", ["surf"]), mon("golem", ["earthquake"])], foes)).toBe(0);
+    });
+    test("약한 포켓몬이 셋이면 둘일 때보다 더 감점한다", () => {
+        const foes = [mon("arcanine", ["flare-blitz"])];
+        const two = overlapPenalty([mon("venusaur", ["giga-drain"]), mon("sceptile", ["giga-drain"]), mon("blastoise", ["surf"])], foes);
+        const three = overlapPenalty([mon("venusaur", ["giga-drain"]), mon("sceptile", ["giga-drain"]), mon("leafeon", ["leaf-blade"])], foes);
+        expect(three).toBeGreaterThan(two);
+    });
+    test("위력이 낮은 기술은 약점 겹침으로 세지 않는다", () => {
+        const foes = [mon("arcanine", ["ember"])];
+        expect(overlapPenalty([mon("venusaur", ["giga-drain"]), mon("sceptile", ["giga-drain"])], foes)).toBe(0);
+    });
+    test("상대의 가장 센 공격 한 방에 쓰러지고 먼저 잡지도 못하면 감점한다", () => {
+        const foes = [mon("arcanine", ["flare-blitz"])];
+        const frail = mon("venusaur", ["giga-drain"]);
+        frail.hp = [5, frail.hp[1]];
+        expect(ohkoPenalty([frail], foes)).toBeGreaterThan(0);
+        expect(ohkoPenalty([mon("blastoise", ["surf"])], foes)).toBe(0);
+    });
+});
+
+describe("일대일 카운터", () => {
+    test("상대 세 마리가 서로 다른 타입이면, 각각을 잡는 서로 다른 포켓몬을 고른다", () => {
+        const foes = [mon("vaporeon", ["surf"]), mon("arcanine", ["flare-blitz"]), mon("venusaur", ["giga-drain"])];
+        const sturdy = mon("venusaur", ["giga-drain"]); // 물을 잡는다 (불꽃 한 방에 쓰러지지 않게 체력을 늘려 둔다)
+        sturdy.hp = [sturdy.hp[0] * 3, sturdy.hp[1] * 3];
+        const roster = [
+            sturdy,
+            mon("blastoise", ["surf"]), // 불꽃을 잡는다
+            mon("charizard", ["flamethrower"]), // 풀을 잡는다
+            mon("snorlax", ["return"]),
+            mon("blissey", ["seismic-toss"]),
+            mon("ditto", ["transform"]),
+        ];
+        const picked = pickCounterTeam(roster, foes).map((p) => p.name).sort();
+        expect(picked).toEqual(["blastoise", "charizard", "venusaur"]);
+    });
+});
+
+describe("상대 파티 6마리 전체를 보고 고르기 (일반 트레이너)", () => {
+    const foes6 = () => [
+        mon("vaporeon", ["surf"]),
+        mon("blastoise", ["surf"]),
+        mon("golem", ["earthquake"]),
+        mon("snorlax", ["return"]),
+        mon("gengar", ["shadow-ball"]),
+        mon("raichu", ["thunderbolt"]),
+    ];
+    const roster6 = () => {
+        const sturdy = mon("venusaur", ["giga-drain"]);
+        sturdy.hp = [sturdy.hp[0] * 3, sturdy.hp[1] * 3];
+        return [sturdy, mon("charizard", ["flamethrower"]), mon("garchomp", ["earthquake"]), mon("ditto", ["transform"]), mon("blissey", ["seismic-toss"]), mon("snorlax", ["return"])];
+    };
+    test("6마리를 보고도 서로 다른 3마리를 로스터에서 고른다", () => {
+        const team = pickCounterTeam(roster6(), foes6());
+        expect(team).toHaveLength(3);
+        expect(new Set(team.map((p) => p.name)).size).toBe(3);
+    });
+    test("상대 파티에 물 타입이 둘 이상 있으면 풀 타입 카운터를 데려온다", () => {
+        const names = pickCounterTeam(roster6(), foes6()).map((p) => p.name);
+        expect(names).toContain("venusaur");
+    });
+    test("같은 입력이면 같은 선출이 나온다 (무작위는 점수가 같을 때만)", () => {
+        const a = pickCounterTeam(roster6(), foes6()).map((p) => p.name).sort();
+        const b = pickCounterTeam(roster6(), foes6()).map((p) => p.name).sort();
+        expect(a).toEqual(b);
+    });
+});
+

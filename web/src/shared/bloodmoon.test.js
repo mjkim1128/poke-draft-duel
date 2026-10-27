@@ -9,6 +9,7 @@ import { moveConditionBlock } from "shared/movecondition";
 import { makeMove } from "shared/computermove";
 import { certainlyFails } from "shared/cpufail";
 import { getAbility } from "shared/abilities";
+import { keepsRawPower } from "shared/movemechanics";
 
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
 const MOVES = new Map(read("moves.json").map((m) => [m.name, m]));
@@ -132,5 +133,34 @@ describe("블러드문", () => {
         const moves = JSON.parse(fs.readFileSync(path.join(__dirname, "../../public/pbanim/moves.json"), "utf8"));
         expect(moves["blood-moon"]).toEqual({ a: "m_bloodmoon" });
         expect(fs.existsSync(path.join(__dirname, "../../public/pbanim/a/m_bloodmoon.json"))).toBe(true);
+    });
+});
+
+describe("연속으로 쓸 수 없는 기술은 원래 위력을 지킨다", () => {
+    test("블러드문(140)과 기가톤해머(160)는 위력이 75~95로 눌리지 않는다", () => {
+        expect(keepsRawPower("blood-moon", 100)).toBe(true);
+        expect(keepsRawPower("gigaton-hammer", 100)).toBe(true);
+        expect(keepsRawPower("tackle", 100)).toBe(false);
+    });
+    test("기가톤해머도 연속으로 쓸 수 없다", () => {
+        const me = mon("ursaluna-bloodmoon", ["gigaton-hammer", "earth-power"], "minds-eye");
+        expect(getUsableMoves(me).map((m) => m.name)).toEqual(["gigaton-hammer", "earth-power"]);
+        me.lastMove = "gigaton-hammer";
+        expect(getUsableMoves(me).map((m) => m.name)).toEqual(["earth-power"]);
+    });
+});
+
+describe("메가진화로 얻은 변환자재", () => {
+    test("진화 전에 변환자재로 타입을 바꿨어도 진화한 뒤 첫 기술에 다시 바뀐다", () => {
+        const greninja = mon("greninja", ["ice-beam", "gunk-shot"], "protean");
+        greninja.item = { name: "greninjite", category: { name: "mega-stones" } };
+        const me = [greninja];
+        const foe = [mon("snorlax", ["splash"])];
+        doTurn(me, foe, greninja.moveset[0]);
+        expect(greninja.proteanUsed).toBe(true);
+        expect(greninja.types.map((t) => t.type.name)).toEqual(["ice"]);
+        doTurn(me, foe, greninja.moveset[1], { mega: true });
+        expect(greninja.ability.name).toBe("protean");
+        expect(greninja.types.map((t) => t.type.name)).toEqual(["poison"]);
     });
 });

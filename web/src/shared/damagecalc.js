@@ -14,8 +14,9 @@ import {
     getFlingPower,
 } from "./iteminfo";
 import { STATUS_TYPE_BLOCKED_MOVES } from "./movemechanics";
-import { weatherOf, weatherDamageMod, powerFieldMod } from "./field";
+import { weatherOf, weatherDamageMod, powerFieldMod, adaptMoveToField } from "./field";
 import {
+    abilityAdaptMove,
     abilityAttackMod,
     abilityBasePowerMod,
     abilityDamageMod,
@@ -190,6 +191,8 @@ export const rollDamage = () => rollSource();
 export function damageCalc(attacker, defender, move, ctx = {}) {
     if (move.damage_class.name === "status") return 0; // status moves never deal damage
     const { crit = false, field = null, roll = 100 } = ctx;
+    // 날씨에 따라 타입과 위력이 바뀌는 기술(웨더볼, 테라장판...)은 바뀐 모습으로 계산한다. 컴퓨터가 예상 피해를 어림할 때도 같은 값이어야 한다.
+    move = abilityAdaptMove(attacker, adaptMoveToField(move, attacker, field)); // (피부스킨, 노말스킨 같은 특성도 마찬가지)
     let type = typeEffectiveness(move, defender, attacker);
     if (absorbsMove(defender, attacker, move)) return 0; // Water Absorb & co. take it instead
     // Fixed-damage moves (Seismic Toss, Super Fang, Final Gambit, Counter...): a type immunity

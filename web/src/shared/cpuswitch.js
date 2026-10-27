@@ -207,6 +207,9 @@ export function chooseSwitch(playerTeam, opponentTeam) {
         return best.score > stay.score ? best.index : -1;
     }
     // 모두 불리하면, 공격을 받고 쓰러질 때까지 가장 오래 버티는 쪽. 지금 남는 것보다 오래 버틸 때만.
+    // 다만 지금 포켓몬이 아무것도 못 하고 한 방에 쓰러질 상황(이유 3)이면, 첫 공격을 받고도 살아 있는 후보는 그냥 쓰러지는 것보다 낫다
+    // (예: 대로트가 +2 메가마폭시의 화염방사에 한 방인데, 스이쿤도 한 방은 버티지만 그다음엔 쓰러지는 경우)
     const best = list.reduce((a, b) => (a === null ? b : better(b, a, "hits")), null);
-    return best && best.hits > stay.hits ? best.index : -1;
+    const dyingForNothing = stay.hits === 1 && !(stay.first && stay.attacks === 1);
+    return best && (best.hits > stay.hits || dyingForNothing) ? best.index : -1;
 }

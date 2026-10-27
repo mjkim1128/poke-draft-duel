@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { doTurn, ensureField, setTerrain, getBaseStats, hpCalc } from "shared";
 import { certainlyFails } from "shared/cpufail";
-import { strongestMove } from "shared/computermove";
+import { strongestMove, makeMove } from "shared/computermove";
 import { chooseSupportMove } from "shared/cpustatus";
 
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
@@ -139,5 +139,33 @@ describe("사이코필드: 선제 기술과 순서", () => {
         const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
         expect(text).toContain("protected by the Psychic Terrain");
         expect(me[0].status).toBeFalsy();
+    });
+});
+
+describe("선공기를 고르는 단계", () => {
+    test("사이코필드에서는 상대를 쓰러뜨릴 수 있어도 막히는 선공기를 고르지 않는다", () => {
+        const cpu = [mon("garchomp", ["accelerock", "tackle"])];
+        const human = [mon("snorlax", ["splash"])];
+        human[0].hp = [1, human[0].hp[1]]; // 어떤 공격이든 한 방
+        withTerrain("psychic", human, cpu);
+        expect(makeMove(human, cpu).name).toBe("tackle");
+    });
+    test("선공기가 통하는 상황이면 한 방에 쓰러뜨리는 선공기를 쓴다", () => {
+        const cpu = [mon("garchomp", ["aqua-jet", "tackle"])];
+        const human = [mon("snorlax", ["splash"])];
+        human[0].hp = [1, human[0].hp[1]];
+        expect(makeMove(human, cpu).name).toBe("aqua-jet");
+    });
+    test("죽기 전 마지막 한 방으로 방어 같은 선공 변화기를 고르지 않는다", () => {
+        const cpu = [mon("ferrothorn", ["protect", "tackle"])];
+        cpu[0].hp = [1, cpu[0].hp[1]];
+        const human = [mon("garchomp", ["earthquake"])]; // 더 빠르고 한 방에 쓰러뜨린다
+        expect(makeMove(human, cpu).name).toBe("tackle");
+    });
+    test("죽기 전 마지막 한 방은 피해를 주는 선공기를 쓴다", () => {
+        const cpu = [mon("ferrothorn", ["aqua-jet", "tackle"])];
+        cpu[0].hp = [1, cpu[0].hp[1]];
+        const human = [mon("garchomp", ["earthquake"])];
+        expect(makeMove(human, cpu).name).toBe("aqua-jet");
     });
 });

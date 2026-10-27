@@ -5,7 +5,8 @@ import { getUsableMoves } from "./pp";
 import { chooseSupportMove } from "./cpustatus";
 import { sleepTalkMove } from "./cpuboardmoves";
 import { chooseSwitch, pickReplacement } from "./cpuswitch";
-import { certainlyFails } from "./cpufail";
+import { certainlyFails, effectivePriority } from "./cpufail";
+import { movesFirst } from "./cpusetup";
 import { megaDelay } from "./cpumega";
 import { shedTailInsteadOfSwitch } from "./cpupass";
 import { hasLiquidOoze } from "./abilities";
@@ -82,28 +83,21 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     if (sleepTalk) return sleepTalk;
     const opening = openingMove(opponentTeam[0]);
     if (opening) return opening;
-    for (const move of usableMoveset(opponentTeam[0], playerTeam[0])) {
-        // attempt for priority
-        if (
-            playerTeam[0].hp[0] -
-                damageCalc(opponentTeam[0], playerTeam[0], move) <=
-                0 &&
-            move.priority > 0
-        )
-            return move;
-        // above works, attempt 2 for last hit before dying
-        if (
-            opponentTeam[0].hp[0] -
-                damageCalc(
-                    playerTeam[0],
-                    opponentTeam[0],
-                    strongestMove(opponentTeam, playerTeam)
-                ) <=
-                0 &&
-            move.priority > 0 &&
-            playerTeam[0].base_stats[5] > opponentTeam[0].base_stats[5]
-        )
-            return move;
+    // 선공기: (1) 선공기로 상대를 쓰러뜨릴 수 있으면 마무리, (2) 상대가 나보다 빠르고 가장 센 공격으로 나를 쓰러뜨릴 것이면 죽기 전 마지막 한 방.
+    // 반드시 실패하는 기술(사이코필드의 선공기 등)은 고르지 않고, (2)는 실제로 피해를 주는 기술만 쓴다 (방어 같은 선공 변화기는 안 됨).
+    const me = opponentTeam[0];
+    const foe = playerTeam[0];
+    const field = playerTeam.field || opponentTeam.field || null;
+    let dyingToFoe = null; // 한 번만 계산한다 (선공기가 하나도 없으면 계산하지 않는다)
+    for (const move of usableMoveset(me, foe)) {
+        if (effectivePriority(move, me) <= 0 || certainlyFails(move, me, foe, field, playerTeam)) continue;
+        const damage = damageCalc(me, foe, move, { field });
+        if (foe.hp[0] - damage <= 0) return move;
+        if (damage <= 0) continue;
+        if (dyingToFoe === null) {
+            dyingToFoe = me.hp[0] - damageCalc(foe, me, strongestMove(opponentTeam, playerTeam), { field }) <= 0;
+        }
+        if (dyingToFoe && !movesFirst(me, foe, field)) return move;
     }
     // 선공기로 마무리할 수 없으면, 함정 / 회복 / 상태이상 / 랭업기를 써도 되는 상황인지 본다 (한 방에 잡을 수 있으면 건너뛴다)
     const support = chooseSupportMove(playerTeam, opponentTeam);

@@ -1,7 +1,7 @@
 // 기습(Sucker Punch) 조건, 전투 시작 때 괴짜(Imposter), 둘 다 쓰러졌을 때 마지막에 쓰러진 쪽 기록을 확인한다.
 import fs from "fs";
 import path from "path";
-import { doTurn, enterBattle, getBaseStats, hpCalc, getUsableMoves, ensureField, setWeather } from "shared";
+import { doTurn, enterBattle, getBaseStats, hpCalc, getUsableMoves, ensureField, setWeather, setTerrain } from "shared";
 
 const read = (file) => JSON.parse(fs.readFileSync(path.join(__dirname, "../../../api/src/main/resources/data/" + file), "utf8"));
 const MOVES = new Map(read("moves.json").map((m) => [m.name, m]));
@@ -1030,5 +1030,49 @@ describe("땅가르기(Fissure)", () => {
     test("노가드면 반드시 맞는다", () => {
         const { foe } = use(0.99, "snorlax", { attackerAbility: "no-guard" });
         expect(foe[0].hp[0]).toBe(0);
+    });
+});
+
+describe("사이코필드는 땅에 닿아 있는 포켓몬에게 선제 기술을 막는다", () => {
+    const use = (move, foeSpecies, foeAbility = null) => {
+        const me = [mon("garchomp", [move])];
+        const foe = [mon(foeSpecies, ["splash"], foeAbility)];
+        setTerrain(ensureField(me, foe), "psychic", null, []);
+        const text = doTurn(me, foe, me[0].moveset[0]).join(" ");
+        return { text, hurt: foe[0].hp[0] < foe[0].hp[1] };
+    };
+    test.each([["accelerock"], ["first-impression"], ["quick-attack"]])("%s: 땅에 닿은 상대에게는 막힌다", (move) => {
+        const { text, hurt } = use(move, "snorlax");
+        expect(text).toContain("protected by the Psychic Terrain");
+        expect(hurt).toBe(false);
+    });
+    test("비행 타입이나 부유 특성처럼 떠 있는 상대에게는 막히지 않는다", () => {
+        expect(use("accelerock", "pidgeot").hurt).toBe(true);
+        expect(use("accelerock", "snorlax", "levitate").hurt).toBe(true);
+    });
+    test("선제 기술이 아니면 막히지 않는다", () => {
+        expect(use("earthquake", "snorlax").hurt).toBe(true);
+    });
+});
+
+describe("하품(Yawn): 졸음은 교체하면 풀린다", () => {
+    test("하품을 맞은 포켓몬이 교체해서 빠지면 졸음이 사라지고, 다시 나와도 잠들지 않는다", () => {
+        const sleepy = mon("snorlax", ["splash"]);
+        sleepy.yawn = 1; // 하품을 맞고 한 턴이 지났다 (이번 턴 끝에 잠든다)
+        const me = [sleepy, mon("blissey", ["splash"])];
+        const foe = [mon("garchomp", ["splash"])];
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(sleepy.yawn).toBeFalsy();
+        doTurn(me, foe, { priority: 6, index: 1 });
+        doTurn(me, foe, sleepy.moveset[0]);
+        expect(sleepy.status).toBeFalsy();
+    });
+    test("교체하지 않으면 다음 턴 끝에 잠든다", () => {
+        const sleepy = mon("snorlax", ["splash"]);
+        sleepy.yawn = 1;
+        const me = [sleepy];
+        const foe = [mon("garchomp", ["splash"])];
+        doTurn(me, foe, sleepy.moveset[0]);
+        expect(sleepy.status && sleepy.status.name).toBe("sleep");
     });
 });

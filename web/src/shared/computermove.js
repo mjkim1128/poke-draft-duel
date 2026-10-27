@@ -5,6 +5,7 @@ import { getUsableMoves } from "./pp";
 import { chooseSupportMove } from "./cpustatus";
 import { sleepTalkMove } from "./cpuboardmoves";
 import { chooseSwitch, pickReplacement } from "./cpuswitch";
+import { certainlyFails } from "./cpufail";
 
 // How the CPU sees my pokemon: one under Illusion looks like the pokemon it copies (its types and
 // stats), until the disguise breaks. The real battle math still uses the real pokemon.
@@ -99,6 +100,8 @@ export function strongestMove(playerTeam, opponentTeam) {
     const moves = usableMoveset(opponentTeam[0], playerTeam[0]);
     for (const move of moves) {
         const field = playerTeam.field || opponentTeam.field || null;
+        // 쓰면 반드시 실패하는 기술은 가장 센 공격이라도 고르지 않는다
+        if (certainlyFails(move, opponentTeam[0], playerTeam[0], field, playerTeam)) continue;
         const value = moveValue(
             damageCalc(opponentTeam[0], playerTeam[0], move, { field }),
             move,
@@ -109,8 +112,13 @@ export function strongestMove(playerTeam, opponentTeam) {
         [damage, choice] = value > damage ? [value, move] : [damage, choice];
     }
     // Nothing deals damage (all status moves, or all immune): still return a real move,
-    // callers assume this never returns null.
-    if (choice === null) choice = moves[Math.floor(Math.random() * moves.length)];
+    // callers assume this never returns null. 실패할 기술은 다른 기술이 있으면 피한다.
+    if (choice === null) {
+        const field = playerTeam.field || opponentTeam.field || null;
+        const working = moves.filter((m) => !certainlyFails(m, opponentTeam[0], playerTeam[0], field, playerTeam));
+        const pool = working.length > 0 ? working : moves;
+        choice = pool[Math.floor(Math.random() * pool.length)];
+    }
     return choice;
 }
 

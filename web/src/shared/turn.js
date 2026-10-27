@@ -982,7 +982,8 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
         return;
     }
     // Psychic Terrain shields grounded pokemon from priority moves
-    if (foe.hp[0] > 0 && aimsAtFoe(move) && terrainBlocksPriority(move, foe, field)) {
+    // (짓궂은마음이 붙은 변화기처럼 특성으로 선제가 된 기술도 막힌다)
+    if (foe.hp[0] > 0 && aimsAtFoe(move) && terrainBlocksPriority({ priority: movePriority(chosenMove, attacker, field) }, foe, field)) {
         text.push(pokemonNameToString(attacker) + " used " + moveNameToString(move) + "!");
         text.push(pokemonNameToString(foe) + " is protected by the Psychic Terrain!");
         return;
@@ -3563,6 +3564,7 @@ function doSwitchRaw(pokemon, index, options = {}) {
     // Confusion is a volatile status: it doesn't survive a switch. (Major statuses do,
     // except that a badly-poisoned mon's toxic counter restarts.)
     oldCurrent.confusion = null;
+    oldCurrent.yawn = null; // 하품의 졸음도 교체하면 풀린다
     if (oldCurrent.status && oldCurrent.status.name === "toxic") oldCurrent.status.counter = 1;
     let text = "";
     if (oldCurrent.hp[0] > 0)

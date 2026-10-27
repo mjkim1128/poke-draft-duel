@@ -7,6 +7,7 @@ import { CHOICE_ITEMS, UNREMOVABLE_ITEMS } from "./iteminfo";
 import { PROTECT_MOVES, FAIL_ENCORE, HEAL_MOVES } from "./movemechanics";
 import { preventsTaunt, preventsDisable, protectsItem } from "./abilities";
 import { bestDamage, hitsToKO, movesFirst, positiveStages } from "./cpusetup";
+import { residualDamage, turnsUntilResidualKO } from "./cpuresidual";
 
 // 상대 포켓몬을 향하는 기술의 대상 (대타출동이 막아 주는 쪽)
 const AIMED_AT_FOE = new Set(["selected-pokemon", "all-opponents", "all-other-pokemon", "random-opponent"]);
@@ -112,6 +113,8 @@ export function substituteMove(s) {
     const { me, foe, field } = s;
     const move = usable(me, "substitute");
     if (!move || me.substitute || me.hp[0] / me.hp[1] <= 0.5) return null;
+    // 독, 화상으로 매 턴 체력이 깎이는 중이면 대타를 세우고 회복하기를 되풀이하게 되므로 쓰지 않는다
+    if (me.status && ["poison", "toxic", "burn"].includes(me.status.name)) return null;
     const after = hitsToKO(me.hp[0] - Math.floor(me.hp[1] / 4), bestDamage(foe, me, field));
     if (after < 3) return null;
     const threatened = (foe.moveset || []).some((m) => m.damage_class.name === "status" && m.target && AIMED_AT_FOE.has(m.target.name));
@@ -125,8 +128,9 @@ export function protectMove(s) {
     if ((me.stallDivisor || 1) > 1 || !survives(s, 1)) return null;
     const moves = getUsableMoves(me).filter((m) => PROTECT_MOVES[m.name]);
     if (moves.length === 0) return null;
-    const bleeding = foe.status && ["poison", "toxic", "burn"].includes(foe.status.name);
-    if (!(foe.charging || bleeding || foe.leechSeed || foe.cursed || myTeam.wish)) return null;
+    // 독, 화상, 씨뿌리기, 저주로 상대가 내가 버틸 수 있는 동안(방어와 공격을 번갈아 쓰므로 2배) 안에 쓰러질 때만 의미가 있다
+    const bleedsOut = residualDamage(foe) > 0 && turnsUntilResidualKO(foe) <= 2 * s.foeHitsBefore;
+    if (!(foe.charging || bleedsOut || myTeam.wish)) return null;
     // 닿으면 벌을 주는 방어(가시방패 등)가 있으면 그쪽을 먼저
     return moves.find((m) => PROTECT_MOVES[m.name].contact) || moves[0];
 }

@@ -505,6 +505,87 @@ describe("매직미러", () => {
     });
 });
 
+describe("방어 기술만 되풀이하지 않는다", () => {
+    const talker = () => human({ moves: [hit(), "toxic", "recover"] }); // 상대에게 나를 노리는 변화기가 있다
+    test("독 상태에서는 대타출동을 세우지 않는다", () => {
+        const c = cpu(["substitute"]);
+        c.status = { name: "toxic", counter: 1 };
+        expect(choose(c, talker())).toBe(null);
+        const clean = cpu(["substitute"]);
+        expect(choose(clean, talker())).toBe("substitute");
+    });
+    test("회복, 대타출동, 방어를 세 번 이어서 골랐으면 이번에는 거른다", () => {
+        const c = cpu(["recover", "substitute", "protect"]);
+        c.hp[0] = 150; // 회복할 만한 체력 (50%)
+        const team = talker();
+        team[0].status = { name: "toxic", counter: 1 }; // 방어가 쓰일 만한 상황
+        expect(["recover", "protect"]).toContain(choose(c, team));
+        for (const name of ["recover", "substitute", "recover"]) recordCpuMove(c, c.moveset.find((m) => m.name === name));
+        expect(c.cpuDefensive).toBe(3);
+        expect(choose(c, team)).toBe(null);
+    });
+    test("체력이 아주 낮을 때의 회복은 거르지 않는다", () => {
+        const c = cpu(["recover"]);
+        c.hp[0] = 60; // 20%
+        c.cpuDefensive = 5;
+        expect(choose(c, talker())).toBe("recover");
+    });
+    test("공격이나 다른 기술을 쓰면 세기가 처음으로 돌아간다", () => {
+        const c = cpu(["recover"]);
+        recordCpuMove(c, c.moveset.find((m) => m.name === "recover"));
+        recordCpuMove(c, c.moveset.find((m) => m.name === "recover"));
+        recordCpuMove(c, c.moveset[0]); // 공격
+        expect(c.cpuDefensive).toBe(0);
+    });
+    test("흡수 공격은 방어 기술로 세지 않는다", () => {
+        const c = cpu(["giga-drain"]);
+        for (let i = 0; i < 5; i++) recordCpuMove(c, c.moveset.find((m) => m.name === "giga-drain"));
+        expect(c.cpuDefensive).toBe(0);
+    });
+});
+
+describe("어차피 쓰러질 때는 시간을 끌지 않고 가장 센 공격을 한다", () => {
+    const attacker = (atk) => human({ atk, moves: [hit()] });
+    test("독이 많이 쌓여 회복해도 못 따라가면 회복하지 않는다", () => {
+        const c = cpu(["recover"]);
+        c.hp[0] = 120; // 달빛, 회복은 체력의 절반(150)
+        c.status = { name: "toxic", counter: 12 }; // 한 턴에 216씩 깎인다
+        expect(choose(c, human())).toBe(null);
+    });
+    test("독이 막 걸렸다면 회복한다", () => {
+        const c = cpu(["recover"]);
+        c.hp[0] = 120;
+        c.status = { name: "toxic", counter: 1 };
+        expect(choose(c, human())).toBe("recover");
+    });
+    test("상대가 한 방에 나를 잡고 회복도 소용없으면 변화기를 쓰지 않고 공격한다", () => {
+        const c = cpu(["recover", "substitute", "protect", "taunt", "toxic"]);
+        c.hp[0] = 300;
+        const team = attacker(600); // 한 방에 쓰러진다
+        team[0].moveset.push(...[move("toxic"), move("recover")]);
+        expect(choose(c, team)).toBe(null);
+    });
+    test("회복하면 살아남는 상황이라면 그래도 회복한다", () => {
+        const c = cpu(["recover"]);
+        c.hp[0] = 60; // 회복하면 210이 되어 상대 공격(약 180)을 한 번 더 버틴다
+        const team = attacker(60);
+        expect(choose(c, team)).toBe("recover");
+    });
+    test("방어: 상대의 독이 내가 버티는 동안 상대를 쓰러뜨리지 못하면 쓰지 않는다", () => {
+        const team = human({ atk: 100 });
+        team[0].hp = [300, 300];
+        team[0].status = { name: "toxic", counter: 1 };
+        const c = cpu(["protect"], { hp: 130 }); // 상대에게 두 번 맞으면 쓰러지는데, 독으로 상대가 쓰러지려면 6턴 걸린다
+        expect(choose(c, team)).toBe(null);
+    });
+    test("방어: 상대가 독으로 곧 쓰러질 정도로 약해졌으면 쓴다", () => {
+        const team = human();
+        team[0].hp = [120, 300]; // 독으로 4턴이면 쓰러진다
+        team[0].status = { name: "toxic", counter: 1 };
+        expect(choose(cpu(["protect"]), team)).toBe("protect");
+    });
+});
+
 describe("오로라베일", () => {
     const snowy = (team) => {
         team.field = { weather: { name: "snow", turns: 5 } };

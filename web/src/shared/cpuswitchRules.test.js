@@ -77,6 +77,33 @@ describe("스스로 교체하는 이유", () => {
         team[0].status = { name: "toxic", counter: 3 };
         expect(chooseSwitch(foeTeam({ atk: 30 }), team)).toBe(1);
     });
+    test("6. 하품을 맞아 졸린 상태면(다음 턴 끝에 잠듦) 더 나은 후보로 교체한다", () => {
+        const team = cpuTeam({ atk: 200 }, { atk: 400 });
+        team[0].yawn = 1;
+        expect(chooseSwitch(foeTeam({ atk: 30 }), team)).toBe(1);
+    });
+    test("6. 졸리지 않으면 같은 상황에서 교체하지 않는다", () => {
+        const team = cpuTeam({ atk: 200 }, { atk: 400 });
+        expect(chooseSwitch(foeTeam({ atk: 30 }), team)).toBe(-1);
+    });
+    test("6. 불면 같은 특성이 있거나 이미 상태이상이거나 안전지대가 있으면 졸려도 교체하지 않는다", () => {
+        const insomnia = cpuTeam({ atk: 200, ability: "insomnia" }, { atk: 400 });
+        insomnia[0].yawn = 1;
+        expect(chooseSwitch(foeTeam({ atk: 30 }), insomnia)).toBe(-1);
+        const poisoned = cpuTeam({ atk: 200 }, { atk: 400 });
+        poisoned[0].yawn = 1;
+        poisoned[0].status = { name: "poison" };
+        expect(chooseSwitch(foeTeam({ atk: 30 }), poisoned)).toBe(-1);
+        const guarded = cpuTeam({ atk: 200 }, { atk: 400 });
+        guarded[0].yawn = 1;
+        guarded.safeguardTurns = 3;
+        expect(chooseSwitch(foeTeam({ atk: 30 }), guarded)).toBe(-1);
+    });
+    test("6. 졸려도 나은 후보가 없으면 교체하지 않는다", () => {
+        const team = cpuTeam({ atk: 200 }, { atk: 50, def: 50 });
+        team[0].yawn = 1;
+        expect(chooseSwitch(foeTeam({ atk: 30 }), team)).toBe(-1);
+    });
     test("변화 기술만 가진 포켓몬은 상성만으로는 교체하지 않는다", () => {
         const team = cpuTeam({ moves: [] }, { atk: 400 });
         expect(chooseSwitch(foeTeam({ atk: 200 }), team)).toBe(-1);

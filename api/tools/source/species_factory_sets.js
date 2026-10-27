@@ -7435,23 +7435,13 @@ const SPECIES_FACTORY_SETS = {
   ],
   "blastoise": /* 거북왕 */ /* 메가진화 가능: 메가거북왕 */ [
   {
-    "item": "leftovers" /* 먹다남은음식 */,
+    "item": [ "white-herb" /* 하양허브 */, "focus-sash" /* 기합의띠 */ ],
     "ability": "torrent" /* 급류 */,
     "moves": [
-      [ { "slug": "scald" /* 열탕 */ } ],
-      [ { "slug": "rapid-spin" /* 고속스핀 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ],
-      [ { "slug": "foresight" /* 꿰뚫어보기 */ } ]
-    ]
-  },
-  {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "torrent" /* 급류 */,
-    "moves": [
-      [ { "slug": "scald" /* 열탕 */ } ],
-      [ { "slug": "rapid-spin" /* 고속스핀 */ } ],
-      [ { "slug": "refresh" /* 리프레쉬 */ } ],
-      [ { "slug": "toxic" /* 맹독 */ } ]
+      [ { "slug": "dark-pulse" /* 악의파동 */ }, { "slug": "dragon-pulse" /* 용의파동 */ } ],
+      [ { "slug": "shell-smash" /* 껍질깨기 */ } ],
+      [ { "slug": "water-pulse" /* 물의파동 */ } ],
+      [ { "slug": "aura-sphere" /* 파동탄 */ } ]
     ]
   },
   /* 메가진화 세트: 메가거북왕 (도구는 메가스톤, 특성은 진화 전 모습의 특성) */
@@ -15578,6 +15568,7 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "protect" /* 방어 */ } ]
     ]
   }
+  
   ],
   "ninetales": /* 나인테일 */ [
   {
@@ -15608,6 +15599,18 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "fire-blast" /* 불대문자 */ } ],
       [ { "slug": "energy-ball" /* 에너지볼 */ } ],
       [ { "slug": "hidden-power" /* 잠재파워 */, "hpType": "ground" } ]
+    ]
+  }
+  ],
+  "ninetales-alola": /* 나인테일 (알로라) */ [
+  {
+    "item": "light-clay" /* 빛의점토 */,
+    "ability": "snow-warning" /* 눈퍼뜨리기 */,
+    "moves": [
+      [ { "slug": "aurora-veil" /* 오로라베일 */ } ],
+      [ { "slug": "blizzard" /* 눈보라 */ } ],
+      [ { "slug": "moonblast" /* 문포스 */ } ],
+      [ { "slug": "freeze-dry" /* 프리즈드라이 */ }, { "slug": "encore" /* 앙코르 */ } ]
     ]
   },
   ],
@@ -22850,16 +22853,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "assault-vest" /* 돌격조끼 */,
-    "ability": "thermal-exchange",
-    "moves": [
-      [ { "slug": "icicle-spear" /* 고드름침 */ } ],
-      [ { "slug": "ice-shard" /* 얼음뭉치 */ } ],
-      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ]
-    ]
-  },
-  {
     "item": "choice-band" /* 구애머리띠 */,
     "ability": "thermal-exchange",
     "moves": [
@@ -22974,6 +22967,16 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "thunderbolt" /* 10만볼트 */ }, { "slug": "dark-pulse" /* 악의파동 */ } ]
     ]
   },
+  {
+    "item": "sitrus-berry" /* 자뭉열매 */,
+    "ability": "stamina" /* 지구력 */,
+    "moves": [
+      [ { "slug": "electro-shot" /* 일렉트로빔 */ } ],
+      [ { "slug": "draco-meteor" /* 용성군 */ } ],
+      [ { "slug": "flash-cannon" /* 러스터캐논 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ]
+    ]
+  },     
   {
     "item": "leftovers" /* 먹다남은음식 */,
     "ability": "stamina" /* 지구력 */,

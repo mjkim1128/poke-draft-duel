@@ -83,4 +83,41 @@ describe("서버에 세트를 요청할 때", () => {
     test("stone 값이 없으면 붙이지 않는다", async () => {
         expect(await ask({})).not.toContain("stone");
     });
+    test("item 값이 있으면 주소에 붙이고, 없으면 붙이지 않는다 (목록이면 쉼표로 잇는다)", async () => {
+        expect(await ask({ item: "sitrus-berry" })).toContain("&item=sitrus-berry");
+        expect(await ask({ item: ["white-herb", "focus-sash"] })).toContain("&item=white-herb%2Cfocus-sash");
+        expect(await ask({})).not.toContain("item");
+    });
+});
+
+describe("이미 정해진 stone(네임드 트레이너)은 그대로 두고 센다", () => {
+    test("정해진 값은 바뀌지 않는다", () => {
+        const p = assignMegaStones([{ name: "charizard", want: { stone: true } }, { name: "venusaur", want: { stone: false } }], () => 0);
+        expect(p[0].want.stone).toBe(true);
+        expect(p[1].want.stone).toBe(false);
+    });
+    test("정해진 메가스톤 2마리가 있으면 나머지는 모두 메가스톤이 아닌 세트다", () => {
+        const six = assignMegaStones(
+            [
+                { name: "salamence", want: { stone: true } },
+                { name: "metagross", want: { stone: true } },
+                { name: "dragonite" },
+                { name: "latios" },
+                { name: "hydreigon" },
+                { name: "heatran" },
+            ],
+            () => 0
+        );
+        expect(stoneCount(six)).toBe(2);
+        expect(six.find((x) => x.name === "dragonite").want.stone).toBe(false);
+        expect(six.find((x) => x.name === "latios").want.stone).toBe(false);
+        expect(six.find((x) => x.name === "hydreigon").want).toBeUndefined(); // 메가진화할 수 없는 종
+    });
+    test("정해진 메가스톤이 1마리면 나머지에서 최대 한 마리만 더 받는다", () => {
+        for (let i = 0; i < 100; i++) {
+            const six = assignMegaStones([{ name: "swampert", want: { stone: true } }, { name: "blastoise" }, { name: "pelipper" }, { name: "kingdra" }, { name: "ludicolo" }, { name: "politoed" }]);
+            expect(stoneCount(six)).toBeLessThanOrEqual(2);
+            expect(six[0].want.stone).toBe(true);
+        }
+    });
 });

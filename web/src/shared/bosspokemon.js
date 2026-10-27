@@ -1,10 +1,22 @@
 // 네임드 트레이너(보스). floor는 그 보스를 만나는 때의 연승 수다 (7연승째마다 한 명, 마지막은 50연승째).
 // pokemon은 보스가 반드시 데려오는 포켓몬이다 (6마리를 다 적으면 파티가 통째로 정해지고, 모자라면 나머지는 일반 배틀처럼 무작위).
 // lineup이 있는 보스는 상대가 6마리 중 3마리를 낼 때 칸마다 "이 특성을 가진 포켓몬 하나"를 먼저 뽑고(날씨를 거는 특성, 날씨에 반응하는 특성),
+// 칸은 { mega: true }(메가스톤을 들어서 메가진화할 수 있는 포켓몬) 또는 { mega: false }(메가진화하지 않는 포켓몬)일 수도 있고,
+// { name: "froslass" }처럼 이름으로 그 포켓몬을 정할 수도 있다. { name, mega: true }는 그 포켓몬이 메가스톤을 들고 있을 때다.
+// lineup은 칸 목록이거나, { options: [칸 목록, 칸 목록...] }이다. options이면 그 중 하나를 같은 확률로 골라서 쓴다 (예: 프로스트).
+// 칸 목록이 3칸보다 짧으면 나머지 칸은 남은 포켓몬 중에서 무작위로 채운다.
+// { mega: true }가 있으면 날씨를 거는 첫 칸은 메가진화하지 않는 포켓몬을 먼저 고른다 (메가스톤을 든 포켓몬은 메가 칸에서 나오도록).
+// 첫 번째 칸(날씨를 거는 포켓몬)은 지금 가진 특성만 보고, 두 번째 칸부터는 메가스톤을 들고 있으면 메가진화한 뒤의 특성도 친다
+// (예: 마리나의 쓱쓱 칸에는 쓱쓱인 킹드라와, 메가진화하면 쓱쓱이 되는 대짱이가 모두 후보다).
 // 남은 자리는 나머지에서 무작위로 채운다. 해당하는 포켓몬이 없으면 그 칸은 무작위로 채운다.
-// 한 칸은 이름 글자이거나 { name, ability, move }다. ability나 move를 적으면 세트 목록에서 그 특성/기술이 있는 세트로 뽑는다.
+// 한 칸은 이름 글자이거나 { name, ability, move, item, stone }다. ability, move, item을 적으면 세트 목록에서 그 특성/기술/도구가 있는 세트로 뽑는다.
+// item은 도구 하나이거나 [도구, 도구] 목록(그 중 하나를 든 세트)이다. stone: false는 메가스톤을 들지 않는 세트로 고정한다(메가진화 가능한 종이어도).
+// stone: true를 적으면 그 포켓몬은 반드시 메가스톤을 든 세트로 나온다 (그 보스의 대표 메가진화). 한 보스에 최대 2마리까지.
+// stone을 적지 않은 메가진화 가능 종은 일반 파티와 같은 규칙(1/2 확률, 한 파티에 메가스톤 최대 2마리 - 적어 둔 stone도 센다)을 따른다.
 // 포켓몬 세트(도구, 특성, 기술)는 일반 포켓몬처럼 세트 목록에서 무작위로 뽑힌다.
 // img는 public 폴더 안의 그림 경로다. 아직 전용 그림이 없는 보스는 임시로 몬스터볼 그림을 쓴다.
+import { megaFormOf } from "./mega";
+
 export const TRAINER_ALAZAR = {
     floor: 7,
     pokemon: ["grimer", "kadabra", "golem"],
@@ -38,9 +50,9 @@ export const TRAINER_MARINA = {
         { name: "pelipper", ability: "drizzle" },
         { name: "politoed", ability: "drizzle" },
         { name: "kingdra", ability: "swift-swim" },
-        { name: "ludicolo", ability: "swift-swim" },
-        "swampert",
-        "gyarados",
+        { name: "archaludon", ability: "stamina", move: "electro-shot", item: "sitrus-berry" },
+        { name: "swampert", stone: true },
+        { name: "blastoise", stone: false, item: ["white-herb", "focus-sash"] },
     ],
     name: "Marina",
     nameKo: "마리나",
@@ -52,23 +64,36 @@ export const TRAINER_MARINA = {
 
 export const TRAINER_DUNE = {
     floor: 28,
-    pokemon: ["tyranitar", { name: "excadrill", ability: "sand-rush" }, "hippowdon", "garchomp", "rhyperior", "gliscor"],
+    pokemon: ["tyranitar", "excadrill", "hippowdon", "garchomp", "rhyperior", "steelix"],
     name: "Dune",
     nameKo: "듄",
     text: ["A storm is rolling in, and you're standing right in it.", "Grain by grain, I'll wear you down."],
     textKo: ["모래폭풍이 몰려오고 있어. 네가 서 있는 바로 그곳으로.", "한 알 한 알, 너를 닳게 해 주지."],
-    lineup: [{ abilities: ["sand-stream"] }, { abilities: ["sand-rush"] }],
+    lineup: [{ abilities: ["sand-stream"] }, { mega: true }, { mega: false }],
     img: "assets/trainer_skater.png",
 };
 
 export const TRAINER_FROST = {
     floor: 35,
-    pokemon: ["abomasnow", "weavile", "mamoswine", "froslass", "beartic", "cloyster"],
+    pokemon: [
+        { name: "ninetales-alola", ability: "snow-warning" },
+        "weavile",
+        "mamoswine",
+        { name: "froslass", stone: true },
+        "beartic",
+        { name: "baxcalibur", stone: true },
+    ],
     name: "Frost",
     nameKo: "프로스트",
     text: ["Cold enough for you? It's only getting colder.", "Nothing survives the long winter."],
     textKo: ["춥지? 앞으로 더 추워질 거야.", "긴 겨울을 이겨내는 건 없어."],
-    lineup: [{ abilities: ["snow-warning"] }, { abilities: ["slush-rush", "snow-cloak"] }],
+    // A형: 알로라 나인테일(눈을 깔며 선두) + 메가 드닐레이브 + 무작위 1마리 / B형: 메가 눈여아(메가진화하며 눈을 깔고 선두) + 무작위 2마리
+    lineup: {
+        options: [
+            [{ name: "ninetales-alola" }, { name: "baxcalibur", mega: true }],
+            [{ name: "froslass", mega: true }],
+        ],
+    },
     img: "assets/trainer_icelady.png",
 };
 
@@ -79,8 +104,8 @@ export const TRAINER_SOL = {
         { name: "ninetales", ability: "drought" },
         { name: "venusaur", ability: "chlorophyll" },
         { name: "leafeon", ability: "chlorophyll" },
-        "heatran",
-        "charizard",
+        "houndoom",
+        { name: "charizard", stone: true },
     ],
     name: "Sol",
     nameKo: "솔",
@@ -92,7 +117,7 @@ export const TRAINER_SOL = {
 
 export const TRAINER_BASTION = {
     floor: 49,
-    pokemon: ["blissey", "skarmory", "corviknight", "toxapex", "clefable", "ferrothorn"],
+    pokemon: ["blissey", "skarmory", "corviknight", "toxapex", { name: "clefable", stone: true }, "ferrothorn"],
     name: "Bastion",
     nameKo: "바스티온",
     text: ["You'll break before I do.", "Patience is the strongest attack."],
@@ -104,7 +129,7 @@ export const TRAINER_BASTION = {
 export const FINAL_FLOOR = 50;
 export const TRAINER_ORION = {
     floor: FINAL_FLOOR,
-    pokemon: ["dragonite", "salamence", "metagross", "hydreigon", "heatran", "latios"],
+    pokemon: ["dragonite", { name: "salamence", stone: true }, { name: "metagross", stone: true }, "hydreigon", "heatran", "latios"],
     name: "Captain.P",
     nameKo: "캡틴 포",
     text: ["You made it to the end. Few ever do.", "Now show me everything you've got!"],
@@ -132,20 +157,42 @@ export function bossForFloor(floor) {
 //   roster: 상대 포켓몬 6마리 (각자 .ability.name이 정해져 있다)
 export function pickBossTeam(roster, lineup, random = Math.random) {
     const pickOne = (list) => list[Math.floor(random() * list.length)];
+    // lineup이 { options }이면 그 중 하나를 같은 확률로 고른다
+    const rules = lineup && !Array.isArray(lineup) && lineup.options ? pickOne(lineup.options) : lineup || [];
     const chosen = [];
-    for (const rule of lineup || []) {
-        const candidates = roster.filter(
-            (p) => !chosen.includes(p) && p.ability && rule.abilities.includes(p.ability.name)
-        );
-        if (candidates.length > 0 && chosen.length < 3) chosen.push(pickOne(candidates));
+    // 메가스톤을 들고 있으면 메가진화한 뒤의 특성도 후보로 친다 (첫 칸, 날씨를 거는 포켓몬은 처음부터 날씨를 깔아야 하니 지금 특성만)
+    const abilityNames = (p, withMega) => {
+        const names = p.ability ? [p.ability.name] : [];
+        const form = withMega ? megaFormOf(p) : null;
+        if (form) names.push(form.abilities[0].ability.name);
+        return names;
+    };
+    const wantsMega = rules.some((rule) => rule.mega === true && rule.name === undefined);
+    let leadPicked = false; // 첫 칸에서 포켓몬을 뽑았는가 (그 포켓몬이 맨 앞에 나온다)
+    for (const [index, rule] of rules.entries()) {
+        let candidates = roster.filter((p) => {
+            if (chosen.includes(p)) return false;
+            if (rule.name !== undefined && p.name !== rule.name) return false;
+            if (rule.mega !== undefined) return !!megaFormOf(p) === rule.mega;
+            if (rule.abilities) return abilityNames(p, index > 0).some((name) => rule.abilities.includes(name));
+            return rule.name !== undefined; // 이름만 적은 칸
+        });
+        if (index === 0 && wantsMega) {
+            const plain = candidates.filter((p) => !megaFormOf(p));
+            if (plain.length > 0) candidates = plain;
+        }
+        if (candidates.length > 0 && chosen.length < 3) {
+            chosen.push(pickOne(candidates));
+            if (index === 0) leadPicked = true;
+        }
     }
     while (chosen.length < 3) {
         const rest = roster.filter((p) => !chosen.includes(p));
         if (rest.length === 0) break;
         chosen.push(pickOne(rest));
     }
-    // 날씨를 거는 포켓몬(첫 번째 규칙)이 먼저 나와야 날씨가 바로 깔린다. 나머지 순서는 무작위다.
-    const first = lineup && lineup.length > 0 && chosen[0] && chosen[0].ability && lineup[0].abilities.includes(chosen[0].ability.name) ? 1 : 0;
+    // 첫 번째 규칙에서 뽑은 포켓몬(날씨를 거는 포켓몬이나 메가진화하며 날씨를 거는 포켓몬)이 먼저 나와야 날씨가 바로 깔린다. 나머지 순서는 무작위다.
+    const first = leadPicked ? 1 : 0;
     for (let i = chosen.length - 1; i > first; i--) {
         const j = first + Math.floor(random() * (i - first + 1));
         [chosen[i], chosen[j]] = [chosen[j], chosen[i]];

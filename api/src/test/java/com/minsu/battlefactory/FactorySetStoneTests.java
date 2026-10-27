@@ -86,4 +86,67 @@ class FactorySetStoneTests {
         assertTrue(factorySetService.findRandomPayload("klefki", null, null, true).isPresent());
         assertTrue(factorySetService.findRandomPayload("klefki", null, null, false).isPresent());
     }
+
+    @Test
+    void itemOptionPicksOnlySetsWithThatItem() {
+        for (int i = 0; i < 60; i++) {
+            String item = itemOf(factorySetService.findRandomPayload("archaludon", "stamina", "electro-shot", null, "sitrus-berry"));
+            assertTrue("sitrus-berry".equals(item), "자뭉열매가 아님: " + item);
+        }
+    }
+
+    @Test
+    void itemOptionFallsBackWhenNoSetHasThatItem() {
+        assertTrue(factorySetService.findRandomPayload("klefki", null, null, null, "no-such-item").isPresent());
+    }
+
+    @Test
+    void arrayItemsAreResolvedToOneItem() {
+        // 거북왕의 한 세트는 도구가 [하양허브, 기합의띠] 중 하나다. 돌려줄 때는 글자 하나로 정해서 준다.
+        Set<String> seen = new java.util.HashSet<>();
+        for (int i = 0; i < 200; i++) {
+            Optional<String> payload = factorySetService.findRandomPayload("blastoise", null, null, false, "white-herb,focus-sash");
+            JsonNode item = objectMapper.readTree(payload.get()).get("item");
+            assertTrue(item.isString(), "도구가 글자 하나여야 함: " + item);
+            assertTrue(item.asString().equals("white-herb") || item.asString().equals("focus-sash"));
+            seen.add(item.asString());
+        }
+        assertTrue(seen.contains("white-herb") && seen.contains("focus-sash"), "두 도구가 모두 나와야 함: " + seen);
+    }
+
+    @Test
+    void noPayloadEverContainsAnItemArray() {
+        for (String species : new String[] {"blastoise", "archaludon", "scolipede", "klefki"}) {
+            for (int i = 0; i < 40; i++) {
+                JsonNode item = objectMapper.readTree(factorySetService.findRandomPayload(species).get()).get("item");
+                assertTrue(item == null || item.isNull() || item.isString(), species + " 도구가 배열로 나옴: " + item);
+            }
+        }
+    }
+
+    @Test
+    void stoneFalseNeverReturnsAMegaStone() {
+        for (int i = 0; i < 60; i++) {
+            String item = itemOf(factorySetService.findRandomPayload("blastoise", null, null, false));
+            assertFalse(item != null && stones().contains(item), "메가스톤이 나옴: " + item);
+        }
+    }
+
+    @Test
+    void abilityIsStrongerThanStone() {
+        // 이상해꽃의 메가스톤 세트에는 엽록소가 없다. stone=true여도 엽록소 조건을 먼저 지킨다.
+        for (int i = 0; i < 40; i++) {
+            JsonNode set = objectMapper.readTree(factorySetService.findRandomPayload("venusaur", "chlorophyll", null, true).get());
+            boolean hasChlorophyll = false;
+            JsonNode ability = set.get("ability");
+            if (ability.isArray()) {
+                for (JsonNode n : ability) {
+                    hasChlorophyll |= "chlorophyll".equals(n.asString());
+                }
+            } else {
+                hasChlorophyll = "chlorophyll".equals(ability.asString());
+            }
+            assertTrue(hasChlorophyll, "엽록소가 아님: " + ability);
+        }
+    }
 }

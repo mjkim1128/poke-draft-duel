@@ -78,10 +78,12 @@ export async function getRandomPokemon(excludeIds = []) {
 // 세트가 없는 포켓몬이면 서버가 204(내용 없음)로 답하고, 그때는 null을 돌려준다.
 // want: { ability, move }를 주면 그 특성/기술을 가진 세트 중에서 고른다 (네임드 트레이너용)
 // want.stone: true면 메가스톤을 든 세트 중에서, false면 메가스톤이 아닌 세트 중에서 고른다 (메가진화 가능한 포켓몬)
+// want.item: 그 도구(또는 도구 목록 중 하나)를 들 수 있는 세트 중에서 고른다 (네임드 트레이너가 세트를 고정할 때)
 export async function getRandomFactorySet(species, want = {}) {
     let url = `${API_BASE}/factory-sets/random?species=${encodeURIComponent(species)}`;
     if (want.ability) url += `&ability=${encodeURIComponent(want.ability)}`;
     if (want.move) url += `&move=${encodeURIComponent(want.move)}`;
+    if (want.item) url += `&item=${encodeURIComponent([].concat(want.item).join(","))}`;
     if (want.stone !== undefined) url += `&stone=${want.stone ? "true" : "false"}`;
     const res = await fetchWithRetry(url);
     if (res.status === 204) {

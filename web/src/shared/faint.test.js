@@ -18,7 +18,7 @@ function build({ species, set }) {
     mon.base_stats = getBaseStats(mon);
     mon.hp = [hpCalc(mon.base_stats[0]), hpCalc(mon.base_stats[0])];
     mon.stat_levels = Array(7).fill(0);
-    mon.item = clone(ITEMS.get(set.item || "leftovers"));
+    mon.item = clone(ITEMS.get([].concat(set.item || "leftovers")[0]));
     mon.originalItem = mon.item;
     mon.ability = set.ability ? { name: set.ability } : null;
     mon.baseAbility = mon.ability;

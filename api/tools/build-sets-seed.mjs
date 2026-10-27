@@ -47,12 +47,15 @@ const POOL = ELIGIBLE.filter((id) => {
     return p && SETS[p.name] && SETS[p.name].length > 0;
 });
 
+// 세트의 도구는 하나이거나, 여러 개 중 하나를 뽑는 배열이다 (특성처럼). 없으면 빈 배열.
+const itemsOf = (set) => (set.item === undefined || set.item === null ? [] : [].concat(set.item));
+
 const rows = [];
 const problems = [];
 for (const [species, sets] of Object.entries(SETS)) {
     if (!pokemonNames.has(species)) problems.push(`세트의 포켓몬이 pokemon.json에 없음: ${species}`);
     for (const set of sets) {
-        if (set.item && !itemNames.has(set.item)) problems.push(`${species}: 도구 없음 ${set.item}`);
+        for (const item of itemsOf(set)) if (!itemNames.has(item)) problems.push(`${species}: 도구 없음 ${item}`);
         for (const slot of set.moves) {
             for (const option of slot) {
                 if (!moveNames.has(option.slug)) problems.push(`${species}: 기술 없음 ${option.slug}`);
@@ -68,12 +71,15 @@ for (const [species, sets] of Object.entries(SETS)) {
 const stoneOwner = new Map(MEGAS.map((m) => [m.stone, m.base]));
 let megaSetCount = 0;
 for (const { species, set } of rows) {
-    if (!stoneOwner.has(set.item)) continue;
+    const stones = itemsOf(set).filter((item) => stoneOwner.has(item));
+    if (stones.length === 0) continue;
     megaSetCount++;
-    if (stoneOwner.get(set.item) !== species) problems.push(`${species}: 다른 포켓몬의 메가스톤을 들고 있음 ${set.item}`);
+    for (const stone of stones) {
+        if (stoneOwner.get(stone) !== species) problems.push(`${species}: 다른 포켓몬의 메가스톤을 들고 있음 ${stone}`);
+    }
 }
 for (const m of MEGAS) {
-    if (!rows.some((r) => r.species === m.base && r.set.item === m.stone)) problems.push(`메가 폼에 세트가 없음: ${m.name} (${m.stone})`);
+    if (!rows.some((r) => r.species === m.base && itemsOf(r.set).includes(m.stone))) problems.push(`메가 폼에 세트가 없음: ${m.name} (${m.stone})`);
 }
 for (const id of ELIGIBLE) if (!pokemonIds.has(id)) problems.push(`풀의 번호가 pokemon.json에 없음: ${id}`);
 if (new Set(ELIGIBLE).size !== ELIGIBLE.length) problems.push("풀에 중복된 번호가 있음");
@@ -94,7 +100,7 @@ console.log(JSON.stringify({
     species: Object.keys(SETS).length,
     sets: rows.length,
     megaSets: megaSetCount,
-    setsWithoutItem: rows.filter((r) => !r.set.item).length,
+    setsWithoutItem: rows.filter((r) => itemsOf(r.set).length === 0).length,
     leftOutForNoSet: ELIGIBLE.length - POOL.length,
     files: { pool: kb("pool.json"), factory_sets: kb("factory_sets.json") },
 }, null, 2));

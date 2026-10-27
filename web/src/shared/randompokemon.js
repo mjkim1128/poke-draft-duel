@@ -55,13 +55,15 @@ export const MEGA_STONE_CHANCE = 0.5;
 // 파티(포켓몬 이름이 정해진 뒤)에서 메가진화할 수 있는 종마다 1/2 확률로 메가스톤을 든 세트, 아니면 메가스톤이 아닌 세트를 받게 정한다.
 // 이미 메가스톤 세트를 받기로 한 포켓몬이 MAX_MEGA_STONES마리면 나머지는 메가스톤이 아닌 세트다. 정한 결과는 pokemon.want.stone에 적는다
 // (세트는 이름이 아니라 이 값을 기준으로 서버에서 고른다). 메가진화할 수 없는 종은 건드리지 않는다.
+// 네임드 트레이너처럼 want.stone이 이미 정해진 포켓몬은 그대로 두고, 그 중 true인 것은 최대 수에 센다.
 // 앞쪽 포켓몬이 유리하지 않게 순서를 섞어서 정한다.
 export function assignMegaStones(party, random = Math.random) {
-    let stones = 0;
+    let stones = party.filter((p) => p && p.want && p.want.stone === true).length;
     const order = shuffle(party.map((_, i) => i));
     for (const i of order) {
         const pokemon = party[i];
         if (!pokemon || !hasMegaForm(pokemon.name)) continue;
+        if (pokemon.want && pokemon.want.stone !== undefined) continue; // 이미 정해져 있다
         const stone = stones < MAX_MEGA_STONES && random() < MEGA_STONE_CHANCE;
         if (stone) stones++;
         pokemon.want = { ...(pokemon.want || {}), stone };

@@ -90,8 +90,8 @@ describe("함정", () => {
         expect(chooseSupportMove(human(), mine).name).toBe("defog");
     });
     test("한 방에 잡을 수 있으면 함정 대신 공격한다", () => {
-        expect(choose(cpu(["stealth-rock"]), human({ hp: 60 }))).toBe(null);
-        expect(makeMove(human({ hp: 60 }), [cpu(["stealth-rock"])]).name).toBe("test-hit-physical");
+        expect(choose(cpu(["stealth-rock"]), human({ hp: 50 }))).toBe(null);
+        expect(makeMove(human({ hp: 50 }), [cpu(["stealth-rock"])]).name).toBe("test-hit-physical");
     });
 });
 
@@ -189,7 +189,7 @@ describe("상태이상", () => {
         expect(choose(cpu(["leech-seed"]), human({ types: ["grass"] }))).toBe(null);
     });
     test("한 방에 잡을 수 있으면 상태이상 대신 공격한다", () => {
-        expect(choose(cpu(["spore"]), human({ hp: 60 }))).toBe(null);
+        expect(choose(cpu(["spore"]), human({ hp: 50 }))).toBe(null);
     });
 });
 

@@ -2,7 +2,7 @@
 // 우선순위: 한 방에 잡을 수 있으면 공격 > 함정 > (빛의점토를 든) 벽 > 회복 > 그 밖의 변화기 > 랭업기 > 공격
 // 배턴터치, 꼬리자르기, 날씨 기술은 함정보다 앞 (cpupass.js, cpuweather.js). 순풍은 트릭룸 다음.
 // 그 밖의 변화기 안의 순서: 소원, 트릭룸, 순풍, 트릭, 울부짖기/흑안개, 도발, 앙코르, 상태이상, 벽, 대타출동, 방어 (cpuboardmoves.js)
-import { damageCalc, typeEffectiveness } from "./damagecalc";
+import { damageCalc, typeEffectiveness, MIN_ROLL } from "./damagecalc";
 import { getUsableMoves } from "./pp";
 import { isGrounded, weatherHealPercent, weatherBlocksStatus, terrainBlocksStatus, weatherOf } from "./field";
 import { HAZARD_MOVES, hasHazards } from "./hazards";
@@ -13,7 +13,7 @@ import { POWDER_MOVES, REFLECTABLE_MOVES, HEAL_MOVES, PROTECT_MOVES, STATUS_IMMU
 import { bestDamage, hitsToKO, hitsToDown, hitsToDie, chooseSetupMove } from "./cpusetup";
 import { residualDamage } from "./cpuresidual";
 import { passMove, tailwindMove } from "./cpupass";
-import { weatherMove } from "./cpuweather";
+import { weatherMove, terrainMove } from "./cpuweather";
 import { certainlyFails } from "./cpufail";
 import {
     destinyBondMove,
@@ -58,7 +58,7 @@ function situation(playerTeam, opponentTeam) {
         field,
         myTeam: opponentTeam,
         foeTeam: playerTeam,
-        attacksBefore: hitsToDown(foe, bestDamage(me, foe, field), me),
+        attacksBefore: hitsToDown(foe, bestDamage(me, foe, field, MIN_ROLL), me),
         foeHitsBefore: hitsToDie(me, bestDamage(foe, me, field), foe),
     };
 }
@@ -233,6 +233,7 @@ export function chooseSupportMove(playerTeam, opponentTeam) {
         destinyBondMove(s) || // (한 방에 쓰러질 상황에서만 나오므로 함정, 회복과는 겹치지 않는다)
         passMove(s) || // 배턴터치, 꼬리자르기: 쓰러지기 직전에도 쓴다
         weatherMove(s) || // 날씨를 까는 기술 (파티가 이득을 볼 때. cpuweather.js)
+        terrainMove(s) || // 미스트필드, 사이코필드 (cpuweather.js)
         hazardMove(s) ||
         (holdingClay && screenMove(s)) ||
         ((!stalling || dying) && healMove(s));

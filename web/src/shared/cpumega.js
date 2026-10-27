@@ -5,7 +5,7 @@
 //   픽시 (진화 전 특성 천진): 상대의 랭크업 때문에 상대의 가장 센 공격이 내 체력의 절반 이상을 깎을 것 같으면 진화를 미룬다 (천진이 랭크업을 무시한다).
 //   갸라도스 (진화 전에는 비행 타입): 상대의 땅 기술이 예상되면 이번 턴은 진화하지 않고 다음 턴에 진화한다.
 // 한 방에 상대를 잡을 수 있으면 미루지 않고 바로 진화해서 공격한다.
-import { damageCalc, typeEffectiveness } from "./damagecalc";
+import { damageCalc, typeEffectiveness, MIN_ROLL } from "./damagecalc";
 import { getUsableMoves, choiceLockedMove } from "./pp";
 import { PROTECT_MOVES } from "./movemechanics";
 import { abilityName, getAbility } from "./abilities";
@@ -106,6 +106,6 @@ export function megaDelay(playerTeam, opponentTeam) {
     if (!rule || !canMegaEvolve(opponentTeam) || me.hp[0] <= 0 || foe.hp[0] <= 0) return null;
     const field = playerTeam.field || opponentTeam.field || null;
     // 한 방에 상대를 잡을 수 있으면 미루지 않는다
-    if (hitsToDown(foe, bestDamage(me, foe, field), me) === 1) return null;
+    if (hitsToDown(foe, bestDamage(me, foe, field, MIN_ROLL), me) === 1) return null;
     return rule({ me, foe, field, playerTeam, opponentTeam });
 }

@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import {
     damageClassToString,
     damageCalc,
+    MIN_ROLL,
     isFixedDamageMove,
     moveNameToString,
     pokemonNameToString,
@@ -49,18 +50,20 @@ export function Move(props) {
             pokemonNameToString(defend) +
             " " +
             defStat;
-        let damage = damageCalc(attack, defend, props.move);
-        let percent = Math.ceil((damage / defend.hp[1]) * 100);
+        // 데미지 난수가 있으므로 가장 약한 값부터 가장 센 값까지 보여 준다 (고정 데미지 기술은 하나)
+        const highest = damageCalc(attack, defend, props.move);
+        const lowest = damageCalc(attack, defend, props.move, { roll: MIN_ROLL });
+        const percentOf = (n) => Math.ceil((n / defend.hp[1]) * 100);
         move_text =
             moveNameToString(props.move) +
             " (" +
             props.move.power +
             "bp): " +
-            damage +
+            (lowest === highest ? highest : lowest + "-" + highest) +
             "/" +
             defend.hp[1] +
             "hp";
-        percent_text = "(" + percent + "%)";
+        percent_text = "(" + (lowest === highest ? percentOf(highest) : percentOf(lowest) + "-" + percentOf(highest)) + "%)";
     }
 
     let moveClassName =

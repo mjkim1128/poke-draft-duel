@@ -58,7 +58,7 @@ describe("스스로 교체하는 이유", () => {
         expect(chooseSwitch(foe, cpuTeam({ hp: 100, spe: 50 }, { def: 400 }))).toBe(1);
     });
     test("3. 한 방에 쓰러져도 내가 먼저 한 방에 잡으면 공격한다", () => {
-        const foe = foeTeam({ atk: 300, hp: 60 });
+        const foe = foeTeam({ atk: 300, hp: 50 });
         expect(chooseSwitch(foe, cpuTeam({ hp: 100, spe: 150 }, { def: 400 }))).toBe(-1);
     });
     test("4. 공격 능력치가 -2 이하이면 교체한다", () => {
@@ -143,7 +143,7 @@ describe("후보 평가", () => {
         const team = cpuTeam({}, { atk: 200, def: 200 });
         team.hazards = { stealthRock: true, spikes: 0, toxicSpikes: 0, stickyWeb: false };
         expect(entryDamage(team[1], team)).toBe(37);
-        expect(chooseSwitch(foeTeam({ atk: 200, hp: 250 }), team)).toBe(1);
+        expect(chooseSwitch(foeTeam({ atk: 200, hp: 210 }), team)).toBe(1);
     });
     test("입장 피해: 압정뿌리기는 땅에 닿는 포켓몬에게만, 도착 부츠는 모두 막는다", () => {
         const team = cpuTeam({}, { types: ["flying"] }, { types: ["water"], item: "heavy-duty-boots" });
@@ -231,7 +231,7 @@ describe("교체 금지", () => {
 
 describe("7. 랭크업이 지워지면 50% 확률로 교체를 고민한다", () => {
     const setup = () => {
-        const foe = foeTeam({ atk: 100, hp: 300 });
+        const foe = foeTeam({ atk: 100, hp: 260 });
         const cpu = cpuTeam({ atk: 120, hp: 300 }, { atk: 300, def: 300, hp: 300 });
         return [foe, cpu];
     };

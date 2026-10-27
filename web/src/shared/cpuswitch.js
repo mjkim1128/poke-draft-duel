@@ -4,7 +4,7 @@
 //   - 상대가 후보를 잡는 데 필요한 공격 횟수(hits)
 //   - 먼저 움직이는지(first)
 // 로 이기는 대결인지 본다. 이기는 대결 = attacks < hits, 같으면 먼저 움직이는 쪽.
-import { typeEffectiveness } from "./damagecalc";
+import { typeEffectiveness, MIN_ROLL } from "./damagecalc";
 import { getUsableMoves } from "./pp";
 import { isGrounded, terrainBlocksStatus } from "./field";
 import { HEAVY_DUTY_BOOTS } from "./iteminfo";
@@ -43,7 +43,7 @@ function evaluate(candidate, foe, myTeam, field, freeHit) {
     }
     const e = {
         hits: hitsToDie(entered, foeDamage, foe),
-        attacks: hitsToDown(foe, bestDamage(entered, foe, field), entered),
+        attacks: hitsToDown(foe, bestDamage(entered, foe, field, MIN_ROLL), entered),
         first: movesFirst(entered, foe, field),
     };
     return { ...e, wins: wins(e), score: scoreOf(e), hp };
@@ -126,7 +126,7 @@ function switchReason(me, foe, field, stay, wiped = false, drowsy = false) {
 // 지금 나와 있는 포켓몬이 계속 싸우면 어떻게 되는지 (잠이나 맹독이면 그만큼 불리하게 센다)
 function stayEvaluation(me, foe, field, drowsy = false) {
     const hits = hitsToDie(me, bestDamage(foe, me, field) + (me.status && me.status.name === "toxic" ? Math.floor(me.hp[1] / 10) : 0), foe);
-    let attacks = hitsToDown(foe, bestDamage(me, foe, field), me);
+    let attacks = hitsToDown(foe, bestDamage(me, foe, field, MIN_ROLL), me);
     if (me.status && me.status.name === "sleep") attacks += 2;
     if (drowsy) attacks += 2; // 다음 턴 끝에 잠들어서 그만큼 못 움직인다
     const first = movesFirst(me, foe, field);

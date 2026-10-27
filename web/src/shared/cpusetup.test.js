@@ -176,7 +176,7 @@ test("makeMove도 같은 상황에서 칼춤을 고른다", () => {
 test("랭업기가 둘이면 공격 횟수가 더 줄어드는 쪽, 같으면 오르는 능력치가 많은 쪽을 고른다", () => {
     // 칼춤(+2)과 용춤(+1, 스피드 +1)은 둘 다 5타 → 3타. 올라가는 능력치가 많은 용춤이 먼저
     const c = mon({ name: "CPU", moves: [HIT, "swords-dance", "dragon-dance"] });
-    expect(choose(c, human()).name).toBe("dragon-dance");
+    expect(choose(c, human({ hp: 250 })).name).toBe("dragon-dance");
     // 상대 체력 200이면 칼춤은 3타 → 2타, 용춤은 3타 → 2타... 체력 140: 칼춤 1타(136? 아님) 대신 횟수가 더 주는 쪽을 확인
     const strong = mon({ name: "CPU", atk: 200, moves: [HIT, "swords-dance", "dragon-dance"] });
     // 공격 200: 한 번에 136 → 상대 체력 300에서 3타, 칼춤 후 (공격 +2) 271 → 2타, 용춤 후 (+1) 204 → 2타. 같으니 용춤
@@ -184,14 +184,15 @@ test("랭업기가 둘이면 공격 횟수가 더 줄어드는 쪽, 같으면 �
 });
 
 test("한 방에 잡을 수 있으면 랭업기 대신 공격한다", () => {
-    expect(choose(cpu(), human({ hp: 60 }))).toBe(null);
-    expect(makeMove([human({ hp: 60 })], [cpu()]).name).toBe("test-hit");
+    // (가장 약한 난수로 한 번 때려도 쓰러지는 체력: 69의 85% = 58 이상이 되면 한 방이 아니다)
+    expect(choose(cpu(), human({ hp: 50 }))).toBe(null);
+    expect(makeMove([human({ hp: 50 })], [cpu()]).name).toBe("test-hit");
 });
 
 test("공격 횟수가 안 줄면 쓰지 않는다 (+1짜리 기술로 2타 그대로)", () => {
-    // 상대 체력 130: 69로 2타, 공격 +1 후 102로도 2타
+    // 상대 체력 110: 가장 약한 난수로 58씩 2타, 공격 +1 후 86씩으로도 2타
     const c = mon({ name: "CPU", moves: [HIT, "hone-claws"] });
-    expect(choose(c, human({ hp: 130 }))).toBe(null);
+    expect(choose(c, human({ hp: 110 }))).toBe(null);
 });
 
 test("천진 상대에게는 칼춤을 추지 않는다", () => {
@@ -208,9 +209,9 @@ test("공격 기술이 속임수뿐이면 칼춤을 춰도 횟수가 안 줄어 
 });
 
 test("느린데 용춤으로 역전되고 한 방에 잡을 수 있게 되면 춘다", () => {
-    // 용춤 후 공격 +1 (1.5배) = 102, 상대 체력 100 → 한 방. 스피드 80 → 294 > 236
+    // 용춤 후 공격 +1 (1.5배) = 102, 가장 약한 난수로 86 → 상대 체력 80이면 한 방 (용춤 전에는 58이라 두 방). 스피드 80 → 294 > 236
     const c = mon({ name: "CPU", spe: 80, moves: [HIT, "dragon-dance"] });
-    const h = human({ hp: 100, atk: 60, spe: 100 });
+    const h = human({ hp: 80, atk: 60, spe: 100 });
     expect(choose(c, h).name).toBe("dragon-dance");
 });
 

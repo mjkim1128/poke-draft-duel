@@ -10,14 +10,20 @@
 //               또 상대에게 한 방에 쓰러지지만 두 방에 잡을 수 있는 포켓몬도 대타로 한 번 막아 주려고 내보낸다.
 //               교체해야 할 상황이고 내가 상대보다 빠르면, 그냥 교체하지 않고 꼬리자르기를 쓴다 (나오는 포켓몬이 그 턴의 공격을 대타로 막는다).
 //               내가 느리면 대타가 맞는 만큼 상대가 나를 잡는 턴 수가 늘어나므로, 랭업기는 평소 규칙대로 쓴다 (cpusetup.js의 hitsToDie).
+//   유턴 계열  (유턴, 퀵턴, 볼트체인지, 막말내뱉기, 썰렁개그, 텔레포트) 교체해야 할 상황에서 이 기술이 있으면, 내가 빠를 때는 그냥 교체하지 않고 이 기술을 쓴다.
+//               내가 느릴 때는 상대에게 한 방에 쓰러지지 않을 때만 쓴다 (쓰러지면 쓰기 전에 끝나므로 평소처럼 교체).
 // 나가는 포켓몬은 me.passTarget(이름)에 적어 둔다. 실제 교체는 cpuswitch.js의 pickReplacement가 그 이름을 읽는다.
 import { getUsableMoves } from "./pp";
+import { damageCalc, MIN_ROLL } from "./damagecalc";
+import { SUPPORTED_PIVOT_MOVES } from "./movemechanics";
+import { certainlyFails } from "./cpufail";
+import { weatherOf } from "./field";
 import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, setupEffect } from "./cpusetup";
 import { entryDamage } from "./cpuswitch";
 
-// 한 방에 잡았다고 칠 여유: 데미지가 상대 현재 체력의 이만큼 이상이어야 한다 (이 게임은 데미지 난수가 없다)
+// 한 방에 잡았다고 칠 여유: 가장 약한 난수(85%)로 때려도 데미지가 상대 현재 체력의 이만큼 이상이어야 한다
 const SAFE_KO = 1.1;
-// 더 올릴 수 없을 때 받아 주는 두 방 조건: 한 번 때려서 상대 체력의 이만큼 이상
+// 더 올릴 수 없을 때 받아 주는 두 방 조건: 가장 약한 난수로 한 번 때려서 상대 체력의 이만큼 이상
 const TWO_HIT = 0.7;
 // 랭크업의 종류와 올라가는 능력치 번호
 const STAT_OF = { physical: 0, special: 2, speed: 4 };
@@ -48,10 +54,10 @@ function raisesCategory(effect, category) {
     return effect.changes.some(([i, d]) => i === STAT_OF[category] && d > 0);
 }
 
-// 가장 센 공격이 상대 체력의 몇 배인가 (명중은 따지지 않는다). 상대에게 한 방 방지가 있으면 한 방(1배)은 넘지 못한다.
+// 가장 센 공격이 상대 체력의 몇 배인가 (가장 약한 난수 기준, 명중은 따지지 않는다). 상대에게 한 방 방지가 있으면 한 방(1배)은 넘지 못한다.
 const damageRatio = (attacker, foe, field) => {
     if (foe.hp[0] <= 0) return 0;
-    const ratio = bestDamage(attacker, foe, field) / foe.hp[0];
+    const ratio = bestDamage(attacker, foe, field, MIN_ROLL) / foe.hp[0];
     return survivesOneHit(foe, attacker) ? Math.min(ratio, 0.99) : ratio;
 };
 
@@ -113,7 +119,7 @@ function soloSweep(s, category) {
         if (!effect || !raisesCategory(effect, category)) continue;
         const after = { ...me, stat_levels: effect.levels, hp: [me.hp[0] - effect.hpCost, me.hp[1]] };
         const survives = hitsToDie(after, bestDamage(foe, after, field), foe) >= 2;
-        if (survives && hitsToDown(foe, bestDamage(after, foe, field), after) === 1) return true;
+        if (survives && hitsToDown(foe, bestDamage(after, foe, field, MIN_ROLL), after) === 1) return true;
     }
     return false;
 }
@@ -184,7 +190,7 @@ function shedTailMove(s) {
         if (entered.hp[0] <= 0) continue;
         const foeDamage = bestDamage(foe, entered, field);
         // 한 방에 쓰러지지만 두 방에 잡을 수 있으면, 대타로 한 번 막아 주면서 내보낸다
-        if (hitsToDie(entered, foeDamage, foe) === 1 && hitsToDown(foe, bestDamage(entered, foe, field), entered) === 2) {
+        if (hitsToDie(entered, foeDamage, foe) === 1 && hitsToDown(foe, bestDamage(entered, foe, field, MIN_ROLL), entered) === 2) {
             (s.real || me).passTarget = p.name;
             return move;
         }
@@ -195,7 +201,7 @@ function shedTailMove(s) {
             const effect = setupEffect(m, entered);
             if (!effect) continue;
             const after = { ...entered, stat_levels: effect.levels, hp: [entered.hp[0] - effect.hpCost, entered.hp[1]] };
-            if (movesFirst(after, foe, field) && hitsToDown(foe, bestDamage(after, foe, field), after) === 1) {
+            if (movesFirst(after, foe, field) && hitsToDown(foe, bestDamage(after, foe, field, MIN_ROLL), after) === 1) {
                 (s.real || me).passTarget = p.name;
                 return move;
             }
@@ -213,6 +219,34 @@ export function shedTailInsteadOfSwitch(playerTeam, opponentTeam, index) {
     if (!movesFirst(me, playerTeam[0], field)) return null;
     me.passTarget = opponentTeam[index].name;
     return move;
+}
+
+// 교체하려던 참에 유턴 계열 기술이 있으면 교체 대신 그 기술 (배턴터치와 꼬리자르기는 따로 다룬다).
+//  - 내가 상대보다 빠르면 쓴다
+//  - 내가 느리면 상대에게 한 방에 쓰러지지 않을 때만 쓴다
+// 피해를 주는 기술(유턴, 퀵턴, 볼트체인지)이 있으면 가장 센 것, 없으면 변화기(막말내뱉기, 썰렁개그, 텔레포트). 상대에게 통하지 않는 기술(전기 무효 등)은 고르지 않는다.
+export function pivotInsteadOfSwitch(playerTeam, opponentTeam) {
+    const me = opponentTeam[0];
+    const foe = playerTeam[0];
+    const field = playerTeam.field || opponentTeam.field || null;
+    const pivots = getUsableMoves(me).filter(
+        (m) =>
+            SUPPORTED_PIVOT_MOVES.has(m.name) &&
+            m.name !== "baton-pass" &&
+            m.name !== "shed-tail" &&
+            !(m.name === "chilly-reception" && weatherOf(field) === "snow") && // 이미 눈이 오면 교체되지 않는다
+            !certainlyFails(m, me, foe, field, playerTeam)
+    );
+    if (pivots.length === 0) return null;
+    if (!movesFirst(me, foe, field) && hitsToDie(me, bestDamage(foe, me, field), foe) <= 1) return null;
+    let best = null;
+    let topDamage = 0;
+    for (const m of pivots) {
+        if (m.damage_class.name === "status") continue;
+        const damage = damageCalc(me, foe, m, { field, roll: MIN_ROLL });
+        if (damage > topDamage) [best, topDamage] = [m, damage];
+    }
+    return best || pivots.find((m) => m.damage_class.name === "status") || null;
 }
 
 // 순서: 배턴터치 > 꼬리자르기. (순풍은 다른 변화기들 사이에서 고른다)

@@ -3,7 +3,7 @@
 //   버팀        랭업을 한 상태에서 상대가 나를 잡는 데 필요한 공격 횟수 - 1
 //   공격 횟수   내가 상대를 잡는 데 필요한 공격 횟수 (랭업하는 턴은 세지 않는다)
 //   역전        랭업 전에는 상대보다 느렸는데 랭업 후에는 내가 먼저 움직임 (트릭룸이 깔려 있으면 반대로 계산)
-import { damageCalc } from "./damagecalc";
+import { damageCalc, MIN_ROLL } from "./damagecalc";
 import { effectiveSpeed } from "./speed";
 import { getUsableMoves } from "./pp";
 import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES } from "./movemechanics";
@@ -98,11 +98,12 @@ export function setupVerdict(kind, n) {
 }
 
 // 한 번 쓸 때 줄 수 있는 가장 큰 피해 (명중은 따지지 않는다): 충전, 반동 기술은 두 턴이 걸리니 반으로, 연속기는 여러 번 맞는 것으로 센다
-export function bestDamage(attacker, defender, field) {
+// roll: 데미지 난수 (퍼센트). 기본은 가장 센 값(100)이라 "상대가 나를 때리는" 계산에 맞고, 내가 "확실히 쓰러뜨리는가"를 볼 때는 MIN_ROLL을 넘긴다.
+export function bestDamage(attacker, defender, field, roll = 100) {
     let best = 0;
     for (const move of getUsableMoves(attacker, { foe: defender })) {
         if (move.damage_class.name === "status") continue;
-        let damage = damageCalc(attacker, defender, move, { field });
+        let damage = damageCalc(attacker, defender, move, { field, roll });
         if (CHARGE_MOVES.has(move.name) || RECHARGE_MOVES.has(move.name)) damage /= 2;
         const range = MULTIHIT_MOVES[move.name];
         if (range) damage *= range[0] === range[1] ? range[0] : 3.1;
@@ -145,7 +146,7 @@ export function chooseSetupMove(playerTeam, opponentTeam) {
     const foe = playerTeam[0];
     if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.mustRecharge) return null;
     const field = playerTeam.field || opponentTeam.field || null;
-    const attacksBefore = hitsToDown(foe, bestDamage(me, foe, field), me);
+    const attacksBefore = hitsToDown(foe, bestDamage(me, foe, field, MIN_ROLL), me);
     if (attacksBefore === 1) return null; // 한 방에 잡을 수 있으면 그냥 공격한다
     const foeHitsBefore = hitsToDie(me, bestDamage(foe, me, field), foe);
     const firstBefore = movesFirst(me, foe, field);
@@ -159,7 +160,7 @@ export function chooseSetupMove(playerTeam, opponentTeam) {
         if (!kind) continue;
         const after = { ...me, stat_levels: effect.levels, hp: [me.hp[0] - effect.hpCost, me.hp[1]] };
         const foeHitsAfter = hitsToDie(after, bestDamage(foe, after, field), foe);
-        const attacksAfter = hitsToDown(foe, bestDamage(after, foe, field), after);
+        const attacksAfter = hitsToDown(foe, bestDamage(after, foe, field, MIN_ROLL), after);
         const fasterAfter = movesFirst(after, foe, field);
         const allowed = setupVerdict(kind, {
             foeHitsBefore,

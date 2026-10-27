@@ -2,7 +2,7 @@ import { localName } from "./lang";
 import { localizeTurnText, localizeLine } from "./logTranslate";
 import { makeMove, switchPokemon } from "./computermove";
 import { recordCpuMove } from "./cpustatus";
-import { damageCalc, statCalc, typeEffectiveness, isFixedDamageMove } from "./damagecalc";
+import { damageCalc, statCalc, typeEffectiveness, isFixedDamageMove, rollDamage } from "./damagecalc";
 import {
     moveNameToString,
     pokemonNameToString,
@@ -1485,7 +1485,7 @@ function processFutureAttack(team, text, field) {
         text.push("It doesn't affect " + pokemonNameToString(target) + "!");
         return;
     }
-    const damage = Math.max(0, damageCalc(pending.attacker, target, pending.move, { field }));
+    const damage = Math.max(0, damageCalc(pending.attacker, target, pending.move, { field, roll: rollDamage() }));
     const dealt = Math.min(damage, target.hp[0]);
     target.hp[0] -= dealt;
     text.push(pokemonNameToString(target) + " lost " + Math.ceil((dealt / target.hp[1]) * 100) + "% HP!");
@@ -3061,7 +3061,7 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         const fixed = isFixedDamageMove(move); // Seismic Toss, Super Fang...: no crit, no screens, no berries
         const gambit = move.name === "final-gambit";
         const isCrit = !ohko && !fixed && !(defenderTeam && defenderTeam.luckyChantTurns > 0) && rollCrit(attacker, defender, move);
-        let damage = ohko ? defender.hp[0] : damageCalc(attacker, defender, hitMove, { crit: isCrit, field });
+        let damage = ohko ? defender.hp[0] : damageCalc(attacker, defender, hitMove, { crit: isCrit, field, roll: rollDamage() });
         // Parental Bond's second strike has a quarter of the power
         if (hit > 0 && !beatUpAllies && parentalBondApplies(attacker, move)) damage = Math.floor(damage / 4);
         // Piercing Drill through a protection: a quarter of the damage

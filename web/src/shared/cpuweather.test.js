@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { getBaseStats, hpCalc } from "shared";
-import { damageCalc } from "shared/damagecalc";
+import { damageCalc, MIN_ROLL } from "shared/damagecalc";
 import { chooseSupportMove } from "shared/cpustatus";
 import { makeMove } from "shared/computermove";
 import { bestDamage, hitsToDown, hitsToDie, survivesOneHit } from "shared/cpusetup";
@@ -158,7 +158,8 @@ describe("자폭 계열", () => {
     test("다른 기술로도 쓰러뜨릴 수 있으면 자폭하지 않는다", () => {
         const cpu = [mon("garchomp", ["explosion", "tackle"])];
         const human = [mon("snorlax", ["splash"])];
-        human[0].hp = [damageOf(cpu[0], human[0], "tackle"), human[0].hp[1]];
+        const tackle = cpu[0].moveset.find((m) => m.name === "tackle");
+        human[0].hp = [damageCalc(cpu[0], human[0], tackle, { roll: MIN_ROLL }), human[0].hp[1]]; // 가장 약한 난수로도 쓰러진다
         expect(makeMove(human, cpu).name).toBe("tackle");
     });
     test("어차피 상대의 다음 공격에 쓰러지면 자폭한다", () => {

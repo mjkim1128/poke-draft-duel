@@ -1,4 +1,4 @@
-import { damageCalc } from "./damagecalc";
+import { damageCalc, MIN_ROLL } from "./damagecalc";
 import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES } from "./movemechanics";
 import { hitChance } from "./accuracy";
 import { getUsableMoves } from "./pp";
@@ -8,7 +8,7 @@ import { chooseSwitch, pickReplacement } from "./cpuswitch";
 import { certainlyFails, effectivePriority } from "./cpufail";
 import { movesFirst, bestDamage, hitsToDie, survivesOneHit } from "./cpusetup";
 import { megaDelay } from "./cpumega";
-import { shedTailInsteadOfSwitch } from "./cpupass";
+import { shedTailInsteadOfSwitch, pivotInsteadOfSwitch } from "./cpupass";
 import { hasLiquidOoze } from "./abilities";
 
 // How the CPU sees my pokemon: one under Illusion looks like the pokemon it copies (its types and
@@ -91,7 +91,7 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     let dyingToFoe = null; // 한 번만 계산한다 (선공기가 하나도 없으면 계산하지 않는다)
     for (const move of usableMoveset(me, foe)) {
         if (effectivePriority(move, me) <= 0 || certainlyFails(move, me, foe, field, playerTeam)) continue;
-        const damage = damageCalc(me, foe, move, { field });
+        const damage = damageCalc(me, foe, move, { field, roll: MIN_ROLL }); // 가장 약한 난수로도 쓰러뜨릴 때만 마무리로 친다
         if (foe.hp[0] - damage <= 0 && !survivesOneHit(foe, me)) return move;
         if (damage <= 0) continue;
         if (dyingToFoe === null) {
@@ -107,7 +107,12 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     if (canSwitch) {
         const index = chooseSwitch(playerTeam, opponentTeam);
         // 내가 상대보다 빠르고 꼬리자르기가 있으면, 교체 대신 꼬리자르기 (나오는 포켓몬이 이번 턴 공격을 대타로 막는다)
-        if (index !== -1) return shedTailInsteadOfSwitch(playerTeam, opponentTeam, index) || { priority: 6, index };
+        // 유턴 계열 기술이 있으면 그것도 교체 대신 쓴다 (빠르거나, 느려도 한 방에 쓰러지지 않을 때)
+        if (index !== -1) return shedTailInsteadOfSwitch(playerTeam, opponentTeam, index) || pivotInsteadOfSwitch(playerTeam, opponentTeam) || { priority: 6, index };
+    } else if (chooseSwitch(playerTeam, opponentTeam) !== -1) {
+        // 속박되어 교체할 수 없어도 유턴 계열 기술로는 빠져나갈 수 있다 (교체해야 할 상황일 때)
+        const pivot = pivotInsteadOfSwitch(playerTeam, opponentTeam);
+        if (pivot) return pivot;
     }
     return strongestMove(playerTeam, opponentTeam);
 }
@@ -116,7 +121,7 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
 const SELF_KO_MOVES = new Set(["explosion", "self-destruct", "misty-explosion"]);
 function selfKoAllowed(move, me, foe, field, moves) {
     if (!SELF_KO_MOVES.has(move.name)) return true;
-    const knocksOut = (m) => foe.hp[0] - damageCalc(me, foe, m, { field }) <= 0 && !survivesOneHit(foe, me);
+    const knocksOut = (m) => foe.hp[0] - damageCalc(me, foe, m, { field, roll: MIN_ROLL }) <= 0 && !survivesOneHit(foe, me);
     // 다른 기술로도 쓰러뜨릴 수 있으면 굳이 자폭하지 않는다
     const other = moves.some((m) => m !== move && !SELF_KO_MOVES.has(m.name) && !certainlyFails(m, me, foe, field) && knocksOut(m));
     return (knocksOut(move) && !other) || hitsToDie(me, bestDamage(foe, me, field), foe) <= 1;

@@ -174,10 +174,22 @@ export function typeEffectiveness(move, defender, attacker = null) {
     return TE;
 }
 
+// 데미지 난수: 실제 공격은 85~100% 중 한 값을 곱한다 (원작과 같다). damageCalc의 기본값(roll = 100)은 가장 센 값이고,
+// 컴퓨터는 "확실히 쓰러뜨리는가"를 볼 때 가장 약한 값(MIN_ROLL)으로 계산한다.
+// 테스트는 setDamageRoll(() => 100) 같이 값을 고정할 수 있다 (setupTests.js).
+export const MIN_ROLL = 85;
+export const defaultDamageRoll = () => MIN_ROLL + Math.floor(Math.random() * (100 - MIN_ROLL + 1));
+let rollSource = defaultDamageRoll;
+export function setDamageRoll(source) {
+    rollSource = source || defaultDamageRoll;
+}
+export const rollDamage = () => rollSource();
+
 // ctx.crit: this hit is a critical hit. ctx.field: the battle's weather/terrain, if any.
+// ctx.roll: damage roll in percent (85-100, default 100). Fixed-damage moves ignore it.
 export function damageCalc(attacker, defender, move, ctx = {}) {
     if (move.damage_class.name === "status") return 0; // status moves never deal damage
-    const { crit = false, field = null } = ctx;
+    const { crit = false, field = null, roll = 100 } = ctx;
     let type = typeEffectiveness(move, defender, attacker);
     if (absorbsMove(defender, attacker, move)) return 0; // Water Absorb & co. take it instead
     // Fixed-damage moves (Seismic Toss, Super Fang, Final Gambit, Counter...): a type immunity
@@ -267,6 +279,7 @@ export function damageCalc(attacker, defender, move, ctx = {}) {
     damage = Math.floor(damage * weatherDamageMod(move, field));
     damage = Math.floor(damage * abilityDamageMod(attacker, defender, move, type, field));
     if (crit) damage = Math.floor(damage * abilityCritMultiplier(attacker));
+    if (roll < 100) damage = Math.floor((damage * roll) / 100); // 난수는 자속 보정과 상성 배율 앞에 곱한다 (원작과 같은 순서)
     damage = Math.floor(damage * STAB * type);
     return damage;
 }

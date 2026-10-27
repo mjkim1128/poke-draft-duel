@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { doTurn, getBaseStats, hpCalc } from "shared";
-import { damageCalc } from "shared/damagecalc";
+import { damageCalc, MIN_ROLL } from "shared/damagecalc";
 import { chooseSupportMove } from "shared/cpustatus";
 import { bestDamage, chooseSetupMove } from "shared/cpusetup";
 import { makeMove } from "shared/computermove";
@@ -139,7 +139,7 @@ describe("꼬리자르기", () => {
         const cpu = [passer, mon("blissey", ["soft-boiled"]), striker];
         // 상대의 한 방에 쓰러지는 체력, 두 방에 잡히는 상대 체력
         setHp(striker, bestDamage(human[0], striker, null));
-        human[0].hp = [bestDamage(striker, human[0], null) * 2 - 1, human[0].hp[1]];
+        human[0].hp = [bestDamage(striker, human[0], null, MIN_ROLL) * 2 - 1, human[0].hp[1]];
         expect(choose(human, cpu)).toBe("shed-tail");
         expect(cpu[0].passTarget).toBe("garchomp");
     });

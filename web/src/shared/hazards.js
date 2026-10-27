@@ -23,7 +23,7 @@ export const HAZARD_ON_HIT = { "stone-axe": "stealthRock", "ceaseless-edge": "sp
 export const CLEAR_OWN_SIDE_MOVES = new Set(["rapid-spin", "mortal-spin"]);
 export const CLEAR_BOTH_SIDES_MOVES = new Set(["defog", "tidy-up"]);
 
-const MAX_LAYERS = { stealthRock: 1, spikes: 3, toxicSpikes: 2, stickyWeb: 1 };
+export const MAX_LAYERS = { stealthRock: 1, spikes: 3, toxicSpikes: 2, stickyWeb: 1 };
 export const HAZARD_LABEL = { stealthRock: "스텔스록", spikes: "압정뿌리기", toxicSpikes: "독압정", stickyWeb: "끈적끈적네트" };
 
 export function getHazards(team) {

@@ -24,7 +24,7 @@ function delayMove(s) {
     const support = chooseSupportMove(playerTeam, opponentTeam);
     if (support) return support;
     const moves = getUsableMoves(me).filter(
-        (m) => m.damage_class.name === "status" && !PROTECT_MOVES[m.name] && !NO_EFFECT.has(m.name) && !certainlyFails(m, me, foe, field, playerTeam)
+        (m) => m.damage_class.name === "status" && !PROTECT_MOVES[m.name] && !NO_EFFECT.has(m.name) && !certainlyFails(m, me, foe, field, playerTeam, opponentTeam)
     );
     return moves.find((m) => setupEffect(m, me)) || moves[0] || null;
 }

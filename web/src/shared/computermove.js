@@ -91,7 +91,7 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     const field = playerTeam.field || opponentTeam.field || null;
     let dyingToFoe = null; // 한 번만 계산한다 (선공기가 하나도 없으면 계산하지 않는다)
     for (const move of usableMoveset(me, foe)) {
-        if (effectivePriority(move, me) <= 0 || certainlyFails(move, me, foe, field, playerTeam)) continue;
+        if (effectivePriority(move, me) <= 0 || certainlyFails(move, me, foe, field, playerTeam, opponentTeam)) continue;
         const damage = damageCalc(me, foe, move, { field, roll: MIN_ROLL }); // 가장 약한 난수로도 쓰러뜨릴 때만 마무리로 친다
         if (foe.hp[0] - damage <= 0 && !survivesOneHit(foe, me)) return move;
         if (damage <= 0) continue;
@@ -144,7 +144,7 @@ function selfKoAllowed(move, me, foe, field, moves) {
     if (!SELF_KO_MOVES.has(move.name)) return true;
     const knocksOut = (m) => foe.hp[0] - damageCalc(me, foe, m, { field, roll: MIN_ROLL }) <= 0 && !survivesOneHit(foe, me);
     // 다른 기술로도 쓰러뜨릴 수 있으면 굳이 자폭하지 않는다
-    const other = moves.some((m) => m !== move && !SELF_KO_MOVES.has(m.name) && !certainlyFails(m, me, foe, field) && knocksOut(m));
+    const other = moves.some((m) => m !== move && !SELF_KO_MOVES.has(m.name) && !certainlyFails(m, me, foe, field, null, null) && knocksOut(m));
     return (knocksOut(move) && !other) || hitsToDie(me, bestDamage(foe, me, field), foe) <= 1;
 }
 
@@ -157,7 +157,7 @@ export function strongestMove(playerTeam, opponentTeam, { estimate = false } = {
     for (const move of moves) {
         const field = playerTeam.field || opponentTeam.field || null;
         // 쓰면 반드시 실패하는 기술은 가장 센 공격이라도 고르지 않는다
-        if (certainlyFails(move, opponentTeam[0], playerTeam[0], field, playerTeam)) continue;
+        if (certainlyFails(move, opponentTeam[0], playerTeam[0], field, playerTeam, opponentTeam)) continue;
         if (!estimate && !selfKoAllowed(move, opponentTeam[0], playerTeam[0], field, moves)) continue;
         const value = moveValue(
             damageCalc(opponentTeam[0], playerTeam[0], move, { field }),
@@ -172,7 +172,7 @@ export function strongestMove(playerTeam, opponentTeam, { estimate = false } = {
     // callers assume this never returns null. 실패할 기술은 다른 기술이 있으면 피한다.
     if (choice === null) {
         const field = playerTeam.field || opponentTeam.field || null;
-        const working = moves.filter((m) => !certainlyFails(m, opponentTeam[0], playerTeam[0], field, playerTeam));
+        const working = moves.filter((m) => !certainlyFails(m, opponentTeam[0], playerTeam[0], field, playerTeam, opponentTeam));
         const careful = estimate ? working : working.filter((m) => selfKoAllowed(m, opponentTeam[0], playerTeam[0], field, moves));
         const pool = careful.length > 0 ? careful : working.length > 0 ? working : moves;
         choice = (!estimate && timeBuyingMove(opponentTeam[0], pool, field)) || pool[Math.floor(Math.random() * pool.length)];

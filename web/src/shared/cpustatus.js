@@ -222,7 +222,7 @@ export function chooseSupportMove(playerTeam, opponentTeam) {
     s.real = me; // (변화기 후보를 거른 복사본 말고 진짜 포켓몬: 배턴터치로 내보낼 포켓몬을 적어 둔다)
     s.me = {
         ...me,
-        moveset: me.moveset.filter((m) => !(bounced && REFLECTABLE_MOVES.has(m.name)) && !certainlyFails(m, me, foe, field, playerTeam)),
+        moveset: me.moveset.filter((m) => !(bounced && REFLECTABLE_MOVES.has(m.name)) && !certainlyFails(m, me, foe, field, playerTeam, opponentTeam)),
     };
     if (s.attacksBefore === 1) return null; // 1순위: 한 방에 잡을 수 있으면 공격
     const holdingClay = activeItem(me) && me.item.name === LIGHT_CLAY;

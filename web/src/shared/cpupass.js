@@ -235,7 +235,7 @@ export function pivotInsteadOfSwitch(playerTeam, opponentTeam) {
             m.name !== "baton-pass" &&
             m.name !== "shed-tail" &&
             !(m.name === "chilly-reception" && weatherOf(field) === "snow") && // 이미 눈이 오면 교체되지 않는다
-            !certainlyFails(m, me, foe, field, playerTeam)
+            !certainlyFails(m, me, foe, field, playerTeam, opponentTeam)
     );
     if (pivots.length === 0) return null;
     if (!movesFirst(me, foe, field) && hitsToDie(me, bestDamage(foe, me, field), foe) <= 1) return null;

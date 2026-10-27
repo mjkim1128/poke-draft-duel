@@ -5,7 +5,7 @@
 // (반격류가 맞았는지, 기습이 통하는지, 체력이 가득 찼을 때의 회복기 등)은 확실하지 않으므로 넣지 않는다.
 import { FOE_TARGETS } from "./accuracy";
 import { terrainOf, weatherOf, terrainBlocksStatus, isGrounded, WEATHER_MOVES, TERRAIN_MOVES } from "./field";
-import { EXPLOSIVE_MOVES, SUBSTITUTE_BYPASS, FIRST_TURN_ONLY_MOVES, SUPPORTED_PIVOT_MOVES } from "./movemechanics";
+import { EXPLOSIVE_MOVES, SUBSTITUTE_BYPASS, FIRST_TURN_ONLY_MOVES, NO_CONSECUTIVE_MOVES, SUPPORTED_PIVOT_MOVES } from "./movemechanics";
 import { abilityName, abilityPriorityBonus, blocksStatusMoves, boostsStatusPriority } from "./abilities";
 import { HAZARD_MOVES, MAX_LAYERS } from "./hazards";
 import { activeItem } from "./helditem";
@@ -41,6 +41,8 @@ export function certainlyFails(move, attacker, foe, field, foeTeam = null, ownTe
     const aimed = aimsAtFoe(move);
     // 만나자마자, 속이기, 앞서가는 방어는 나온 뒤 첫 행동에서만 쓸 수 있다 (이미 한 번 행동했으면 실패한다. 결정할 때 actionsSinceSwitch는 지금까지 한 행동 수)
     if (FIRST_TURN_ONLY_MOVES.has(move.name) && (attacker.actionsSinceSwitch || 0) >= 1) return true;
+    // 블러드문은 직전에 썼으면 연속으로 쓸 수 없다
+    if (NO_CONSECUTIVE_MOVES.has(move.name) && attacker.lastMove === move.name) return true;
     // 폴터가이스트는 상대에게 도구가 없으면, 던지기는 던질 도구가 없으면 실패한다
     if (move.name === "poltergeist" && !foe.item) return true;
     if (move.name === "fling" && (!activeItem(attacker) || UNREMOVABLE_ITEMS.has(attacker.item.name))) return true;

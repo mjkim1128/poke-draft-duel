@@ -2209,5 +2209,8 @@
 {"species":"doduo","set":{"item":"eviolite","ability":"early-bird","moves":[[{"slug":"brave-bird"}],[{"slug":"double-edge"}],[{"slug":"knock-off"}],[{"slug":"swords-dance"}]]}},
 {"species":"doduo","set":{"item":"eviolite","ability":"tangled-feet","moves":[[{"slug":"brave-bird"}],[{"slug":"return"}],[{"slug":"quick-attack"}],[{"slug":"roost"}]]}},
 {"species":"grimer","set":{"item":"eviolite","ability":"poison-touch","moves":[[{"slug":"poison-jab"}],[{"slug":"gunk-shot"}],[{"slug":"knock-off"}],[{"slug":"shadow-sneak"}]]}},
-{"species":"grimer","set":{"item":"eviolite","ability":"sticky-hold","moves":[[{"slug":"poison-jab"}],[{"slug":"drain-punch"}],[{"slug":"toxic"}],[{"slug":"knock-off"}]]}}
+{"species":"grimer","set":{"item":"eviolite","ability":"sticky-hold","moves":[[{"slug":"poison-jab"}],[{"slug":"drain-punch"}],[{"slug":"toxic"}],[{"slug":"knock-off"}]]}},
+{"species":"ursaluna-bloodmoon","set":{"item":["assault-vest","focus-sash"],"ability":"minds-eye","moves":[[{"slug":"blood-moon"}],[{"slug":"earth-power"}],[{"slug":"hyper-voice"}],[{"slug":"vacuum-wave"}]]}},
+{"species":"ursaluna-bloodmoon","set":{"item":"covert-cloak","ability":"minds-eye","moves":[[{"slug":"blood-moon"}],[{"slug":"hyper-voice"}],[{"slug":"taunt"}],[{"slug":"vacuum-wave"}]]}},
+{"species":"ursaluna-bloodmoon","set":{"item":["leftovers","sitrus-berry"],"ability":"minds-eye","moves":[[{"slug":"blood-moon"}],[{"slug":"vacuum-wave"}],[{"slug":"yawn"}],[{"slug":"calm-mind"},{"slug":"moonlight"},{"slug":"earth-power"},{"slug":"hyper-voice"}]]}}
 ]

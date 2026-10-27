@@ -1008,6 +1008,7 @@ export const ABILITIES = {
     corrosion: { poisonsAnything: true },
     "hyper-cutter": { breakable: true, blocksDrop: (stat) => (stat === "attack" ? "Hyper Cutter" : null) },
     "big-pecks": { breakable: true, blocksDrop: (stat) => (stat === "defense" ? "Big Pecks" : null) },
+    "minds-eye": { scrappy: true, ignoresEvasion: true, blocksDrop: (stat) => (stat === "accuracy" ? "Mind's Eye" : null) }, // (틀깨기도 뚫지 못한다)
     "keen-eye": { breakable: true, ignoresEvasion: true, blocksDrop: (stat) => (stat === "accuracy" ? "Keen Eye" : null) },
     illuminate: { breakable: true, ignoresEvasion: true, blocksDrop: (stat) => (stat === "accuracy" ? "Illuminate" : null) },
     "tangled-feet": {

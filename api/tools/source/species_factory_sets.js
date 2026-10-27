@@ -23055,7 +23055,39 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "knock-off" } ]
     ]
   }
-  ]
+  ],
+    "ursaluna-bloodmoon": /* 다투곰 (붉은달) */ [
+  {
+    "item": [ "assault-vest" /* 돌격조끼 */, "focus-sash" /* 기합의띠 */ ],
+    "ability": "minds-eye" /* 심안 */,
+    "moves": [
+      [ { "slug": "blood-moon" /* 블러드문 */ } ],
+      [ { "slug": "earth-power" /* 대지의힘 */ } ],
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "vacuum-wave" /* 진공파 */ } ]
+    ]
+  },
+  {
+    "item": "covert-cloak" /* 은밀망토 */,
+    "ability": "minds-eye" /* 심안 */,
+    "moves": [
+      [ { "slug": "blood-moon" /* 블러드문 */ } ],
+      [ { "slug": "hyper-voice" /* 하이퍼보이스 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ],
+      [ { "slug": "vacuum-wave" /* 진공파 */ } ]
+    ]
+  },
+  {
+    "item": [ "leftovers" /* 먹다남은음식 */, "sitrus-berry" /* 자뭉열매 */ ], 
+    "ability": "minds-eye" /* 심안 */,
+    "moves": [
+      [ { "slug": "blood-moon" /* 블러드문 */ } ],
+      [ { "slug": "vacuum-wave" /* 진공파 */ } ],
+      [ { "slug": "yawn" /* 하품 */ } ],
+      [ { "slug": "calm-mind" /* 명상 */ }, { "slug": "moonlight" /* 달빛 */ }, { "slug": "earth-power" /* 대지의힘 */ }, { "slug": "hyper-voice" /* 하이퍼보이스 */ } ]
+    ]
+  },
+  ],
 };
 
 export default SPECIES_FACTORY_SETS;

@@ -14,6 +14,7 @@ import {
     shuffle,
     bossForFloor,
     pickBossTeam,
+    pickCounterTeam,
     FINAL_FLOOR,
     hpCalc,
     BANNED_MOVES,
@@ -211,7 +212,7 @@ export function Home() {
     function startBattle(picked) {
         /// a named trainer with a lineup always brings a weather setter and a weather-reactive pokemon
         const boss = endless ? null : bossForFloor(winStreak);
-        const opponentTeam = boss && boss.lineup ? pickBossTeam(opponentPokemon, boss.lineup) : shuffle([...opponentPokemon]).slice(0, 3);
+        const opponentTeam = boss && boss.counter ? pickCounterTeam(opponentPokemon, picked) : boss && boss.lineup ? pickBossTeam(opponentPokemon, boss.lineup) : shuffle([...opponentPokemon]).slice(0, 3);
         /// The stat mode (settings) is applied as the fight starts, so a change made on the title screen counts
         for (const poke of [...picked, ...opponentPokemon]) refreshStats(poke);
         for (const poke of opponentPokemon) poke.revealed = false;

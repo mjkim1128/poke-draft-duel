@@ -279,6 +279,7 @@ export const TRANSLATIONS = [
     ["{} can't use {} because of Heal Block!", "{1:은} 힐블록 때문에 {2:을} 쓸 수 없다!"],
     ["{} can't use {}! It's imprisoned!", "{1:은} {2:을} 쓸 수 없다! 봉인당했다!"],
     ["{} can't use the same move twice in a row because of the torment!", "{1:은} 트집 때문에 같은 기술을 연속으로 쓸 수 없다!"],
+    ["{} can't use {} twice in a row!", "{1:은} {2:을} 연속으로 쓸 수 없다!"],
     ["{}'s {} is disabled!", "{1}의 {2:은} 사용할 수 없다!"],
     ["{}'s Aroma Veil protected it from Disable!", "{1}의 아로마베일이 사용 불가에서 지켜 주었다!"],
     ["{} is hurt by being trapped!", "{1:은} 조이는 데미지를 입었다!"],

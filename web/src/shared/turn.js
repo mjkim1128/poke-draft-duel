@@ -119,6 +119,7 @@ import {
     BINDING_MOVES,
     TRAPPING_MOVES,
     FIRST_TURN_ONLY_MOVES,
+    NO_CONSECUTIVE_MOVES,
     NEEDS_FOE_ATTACK_MOVES,
     REFLECTABLE_MOVES,
     DANCE_MOVES,
@@ -784,6 +785,11 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
     // Torment: can't use the same move twice in a row
     if (attacker.torment && chosenMove.name === attacker.lastMove && chosenMove.name !== "struggle" && attacker.charging !== chosenMove.name) {
         text.push(pokemonNameToString(attacker) + " can't use the same move twice in a row because of the torment!");
+        return text;
+    }
+    // Blood Moon: can't be used twice in a row (the move list already hides it; this also stops it when it was forced, e.g. by Encore)
+    if (NO_CONSECUTIVE_MOVES.has(chosenMove.name) && attacker.lastMove === chosenMove.name && attacker.charging !== chosenMove.name) {
+        text.push(pokemonNameToString(attacker) + " can't use " + moveNameToString(chosenMove) + " twice in a row!");
         return text;
     }
     // Gravity: some moves can't be used while grounded

@@ -1,8 +1,9 @@
-// 네임드 트레이너(보스). floor는 그 보스를 만나는 때의 연승 수다 (7연승째마다 한 명, 마지막은 50연승째).
+// 네임드 트레이너(보스). floor는 그 보스를 만나는 때의 연승 수다 (5연승째마다 한 명, 마지막은 30연승째).
 // pokemon은 보스가 반드시 데려오는 포켓몬이다 (6마리를 다 적으면 파티가 통째로 정해지고, 모자라면 나머지는 일반 배틀처럼 무작위).
 // lineup이 있는 보스는 상대가 6마리 중 3마리를 낼 때 칸마다 "이 특성을 가진 포켓몬 하나"를 먼저 뽑고(날씨를 거는 특성, 날씨에 반응하는 특성),
 // 칸은 { mega: true }(메가스톤을 들어서 메가진화할 수 있는 포켓몬) 또는 { mega: false }(메가진화하지 않는 포켓몬)일 수도 있고,
-// { name: "froslass" }처럼 이름으로 그 포켓몬을 정할 수도 있다. { name, mega: true }는 그 포켓몬이 메가스톤을 들고 있을 때다.
+// { name: "froslass" }처럼 이름으로 그 포켓몬을 정할 수도 있고, { names: ["skarmory", "ferrothorn"] }처럼 이름 목록 중 하나를 뽑을 수도 있다.
+// { name, mega: true }는 그 포켓몬이 메가스톤을 들고 있을 때다.
 // lineup은 칸 목록이거나, { options: [칸 목록, 칸 목록...] }이다. options이면 그 중 하나를 같은 확률로 골라서 쓴다 (예: 프로스트).
 // 칸 목록이 3칸보다 짧으면 나머지 칸은 남은 포켓몬 중에서 무작위로 채운다.
 // { mega: true }가 있으면 날씨를 거는 첫 칸은 메가진화하지 않는 포켓몬을 먼저 고른다 (메가스톤을 든 포켓몬은 메가 칸에서 나오도록).
@@ -13,39 +14,14 @@
 // item은 도구 하나이거나 [도구, 도구] 목록(그 중 하나를 든 세트)이다. stone: false는 메가스톤을 들지 않는 세트로 고정한다(메가진화 가능한 종이어도).
 // stone: true를 적으면 그 포켓몬은 반드시 메가스톤을 든 세트로 나온다 (그 보스의 대표 메가진화). 한 보스에 최대 2마리까지.
 // stone을 적지 않은 메가진화 가능 종은 일반 파티와 같은 규칙(1/2 확률, 한 파티에 메가스톤 최대 2마리 - 적어 둔 stone도 센다)을 따른다.
+// counter: true인 보스(캡틴 포)는 6마리 중 3마리를 무작위로 내지 않고, 내가 고른 3마리를 보고 가장 상성이 좋은 3마리를 낸다 (bosscounter.js).
 // 포켓몬 세트(도구, 특성, 기술)는 일반 포켓몬처럼 세트 목록에서 무작위로 뽑힌다.
 // img는 public 폴더 안의 그림 경로다. 아직 전용 그림이 없는 보스는 임시로 몬스터볼 그림을 쓴다.
 import { megaFormOf } from "./mega";
 
-export const TRAINER_ALAZAR = {
-    floor: 7,
-    pokemon: ["grimer", "kadabra", "golem"],
-    name: "Alazar",
-    nameKo: "알라자르",
-    text: [
-        "You think your poor puny Pokemon can take on my chad squad?",
-        "*humpf* I'd like to see you try!",
-    ],
-    textKo: ["너의 보잘것없는 포켓몬으로 내 최강 군단을 이길 수 있을 것 같아?", "흥! 어디 한번 해 보시지!"],
-    img: "assets/alazarsprite.png",
-};
-
-export const TRAINER_BLAKE = {
-    floor: 14,
-    pokemon: ["hitmonlee", "electrode", "doduo"],
-    name: "Blake",
-    nameKo: "블레이크",
-    text: [
-        "Pokemon? More like Slowkemon!",
-        "My team's speed dwarfs anything you could throw at me!",
-    ],
-    textKo: ["포켓몬? 느림보켓몬이라고 해야지!", "내 팀의 스피드는 네가 무엇을 내보내도 압도한다!"],
-    img: "assets/blakesprite.png",
-};
-
-// 아래 네 명과 최종 보스의 이름, 대사는 처음 짜 본 초안이다. 팀은 콘셉트에 맞춰 6마리를 모두 정했다.
+// 아래 다섯 명과 최종 보스의 이름, 대사는 처음 짜 본 초안이다. 팀은 콘셉트에 맞춰 6마리를 모두 정했다.
 export const TRAINER_MARINA = {
-    floor: 21,
+    floor: 5,
     pokemon: [
         { name: "pelipper", ability: "drizzle" },
         { name: "politoed", ability: "drizzle" },
@@ -63,7 +39,7 @@ export const TRAINER_MARINA = {
 };
 
 export const TRAINER_DUNE = {
-    floor: 28,
+    floor: 10,
     pokemon: ["tyranitar", "excadrill", "hippowdon", "garchomp", "rhyperior", "steelix"],
     name: "Dune",
     nameKo: "듄",
@@ -74,7 +50,7 @@ export const TRAINER_DUNE = {
 };
 
 export const TRAINER_FROST = {
-    floor: 35,
+    floor: 15,
     pokemon: [
         { name: "ninetales-alola", ability: "snow-warning" },
         "weavile",
@@ -98,38 +74,60 @@ export const TRAINER_FROST = {
 };
 
 export const TRAINER_SOL = {
-    floor: 42,
+    floor: 20,
     pokemon: [
         { name: "torkoal", ability: "drought" },
         { name: "ninetales", ability: "drought" },
-        { name: "venusaur", ability: "chlorophyll" },
+        { name: "venusaur", ability: "chlorophyll", stone: false }, // 엽록소 세트에는 메가스톤이 없다
         { name: "leafeon", ability: "chlorophyll" },
         "houndoom",
-        { name: "charizard", stone: true },
+        { name: "charizard", stone: true, item: "charizardite-y" }, // 메가진화하면 가뭄이 되는 Y로 고정
     ],
     name: "Sol",
     nameKo: "솔",
     text: ["Feel that heat? The sun is on my side today.", "Let's see how long you can stand the light."],
     textKo: ["이 열기 느껴져? 오늘은 태양이 내 편이야.", "네가 이 빛을 얼마나 버티는지 보자."],
-    lineup: [{ abilities: ["drought"] }, { abilities: ["chlorophyll"] }],
+    // A형: 가뭄 담당(선두) + 엽록소 + 메가 1마리(메가 리자몽 Y 또는 메가 헬가) / B형: 메가 리자몽 Y(메가진화하며 쾌청을 깔고 선두) + 엽록소 + 무작위 1마리
+    lineup: {
+        options: [
+            [{ abilities: ["drought"] }, { abilities: ["chlorophyll"] }, { mega: true }],
+            [{ name: "charizard", mega: true }, { abilities: ["chlorophyll"] }],
+        ],
+    },
     img: "assets/trainer_witch.png",
 };
 
 export const TRAINER_BASTION = {
-    floor: 49,
-    pokemon: ["blissey", "skarmory", "corviknight", "toxapex", { name: "clefable", stone: true }, "ferrothorn"],
+    floor: 25,
+    pokemon: [
+        "blissey",
+        { name: "skarmory", stone: false }, // 무장조의 메가 세트는 칼춤 어태커라서 방어 팀에는 쓰지 않는다
+        "toxapex",
+        { name: "clefable", stone: true },
+        { name: "slowbro", stone: true },
+        "ferrothorn",
+    ],
     name: "Bastion",
     nameKo: "바스티온",
     text: ["You'll break before I do.", "Patience is the strongest attack."],
     textKo: ["먼저 무너지는 건 네가 될 거야.", "인내가 가장 강한 공격이지."],
+    // A형: 메가 픽시(선두, 매직바운스) + 함정/독 담당(무장조, 너트령, 더시마사리 중 1마리) + 무작위 1마리 / B형: 메가 야도란(선두) + 같은 담당 + 무작위 1마리
+    lineup: {
+        options: [
+            [{ name: "clefable", mega: true }, { names: ["skarmory", "ferrothorn", "toxapex"] }],
+            [{ name: "slowbro", mega: true }, { names: ["skarmory", "ferrothorn", "toxapex"] }],
+        ],
+    },
     img: "assets/trainer_pinkcat.png",
 };
 
 // 최종 보스: 이 사람을 이기면 엔드리스 모드가 열린다
-export const FINAL_FLOOR = 50;
+export const FINAL_FLOOR = 30;
 export const TRAINER_ORION = {
     floor: FINAL_FLOOR,
-    pokemon: ["dragonite", { name: "salamence", stone: true }, { name: "metagross", stone: true }, "hydreigon", "heatran", "latios"],
+    // 메가진화 없이 만들 수 있는 가장 강한 파티. 플레이어가 고른 3마리를 보고 상성이 가장 좋은 3마리를 내보낸다 (counter).
+    pokemon: ["flutter-mane", "chien-pao", "ursaluna-bloodmoon", "urshifu-rapid-strike", "gholdengo", "ting-lu"],
+    counter: true,
     name: "Captain.P",
     nameKo: "캡틴 포",
     text: ["You made it to the end. Few ever do.", "Now show me everything you've got!"],
@@ -138,8 +136,6 @@ export const TRAINER_ORION = {
 };
 
 export const BOSSES = [
-    TRAINER_ALAZAR,
-    TRAINER_BLAKE,
     TRAINER_MARINA,
     TRAINER_DUNE,
     TRAINER_FROST,
@@ -173,9 +169,10 @@ export function pickBossTeam(roster, lineup, random = Math.random) {
         let candidates = roster.filter((p) => {
             if (chosen.includes(p)) return false;
             if (rule.name !== undefined && p.name !== rule.name) return false;
+            if (rule.names !== undefined && !rule.names.includes(p.name)) return false;
             if (rule.mega !== undefined) return !!megaFormOf(p) === rule.mega;
             if (rule.abilities) return abilityNames(p, index > 0).some((name) => rule.abilities.includes(name));
-            return rule.name !== undefined; // 이름만 적은 칸
+            return rule.name !== undefined || rule.names !== undefined; // 이름(목록)만 적은 칸
         });
         if (index === 0 && wantsMega) {
             const plain = candidates.filter((p) => !megaFormOf(p));

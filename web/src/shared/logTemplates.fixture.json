@@ -105,6 +105,11 @@
   "f": "turn.js"
  },
  {
+  "t": "{} can't use {} twice in a row!",
+  "n": 1,
+  "f": "turn.js"
+ },
+ {
   "t": "{} changed to Blade Forme!",
   "n": 1,
   "f": "abilities.js"

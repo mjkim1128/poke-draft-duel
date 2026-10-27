@@ -214,8 +214,10 @@ export function Battle(props) {
     const surrenderRef = useRef(surrender);
     surrenderRef.current = surrender;
     useEffect(() => {
+        if (props.easy) return; /// Easy Mode: Home handles Surrender (it resets the floor)
         setSurrenderHandler(() => surrenderRef.current());
         return () => setSurrenderHandler(null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function nextTurn(move) {
@@ -599,6 +601,7 @@ export function Battle(props) {
                     <GameOverDisplay
                         win={isVictory}
                         onClick={props.setBattleFactoryState}
+                        easy={props.easy}
                         winStreak={props.winStreak}
                     />
                 )}
@@ -615,6 +618,7 @@ export function Battle(props) {
                             <GameOverDisplay
                                 win={isVictory}
                                 onClick={props.setBattleFactoryState}
+                                easy={props.easy}
                                 winStreak={props.winStreak}
                             />
                         </div>

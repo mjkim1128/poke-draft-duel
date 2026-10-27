@@ -32,6 +32,8 @@ import { isKorean } from "shared/lang";
 import { playSong } from "audio/bgm";
 import { keepsRawPower } from "shared/movemechanics";
 import { isNormalizedStats, setNormalizedStats } from "shared/statMode";
+import { clearEasy, loadEasy, saveEasy, toSavedSet } from "shared/easymode";
+import { setSurrenderHandler } from "shared/surrender";
 
 /// Beating the final boss unlocks Endless Mode (no named trainers) on this browser
 const ENDLESS_KEY = "battlefactory-endless";
@@ -64,6 +66,11 @@ export function Home() {
     /// "Total 600" stat mode: picked on the title screen, before a run starts
     const [stats600, setStats600] = useState(isNormalizedStats());
     const [endlessUnlocked, setEndlessUnlocked] = useState(isEndlessUnlocked());
+    /// Easy Mode (picked on the title screen): the run is saved in this browser, a loss goes back to the same
+    /// floor's picking screen, and beating the final boss doesn't unlock Endless Mode
+    const [easy, setEasy] = useState(false);
+    const [easySave, setEasySave] = useState(loadEasy());
+    const [resumeEasyRun, setResumeEasyRun] = useState(false);
     /// True while the options on screen were just loaded and nobody has started a game with them
     /// yet, so "Start!" doesn't have to load them a second time.
     const optionsFresh = React.useRef(false);
@@ -143,9 +150,44 @@ export function Home() {
             setPlayerPokemon([]);
             setWinStreak(0);
             setEndless(false);
+            setEasy(false);
+            setEasySave(loadEasy());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [battleFactoryState]);
+
+    /// Easy Mode: every time a floor's picking screen opens, the floor and my party are saved in this browser
+    useEffect(() => {
+        if (easy && battleFactoryState === "select" && !isApiLoading && playerPokemon.length === 6) saveEasy(winStreak, playerPokemon);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [easy, battleFactoryState, isApiLoading, playerPokemon, winStreak]);
+
+    /// Easy Mode: Surrender in the settings window works on every screen of the run and resets the floor (back to the title)
+    useEffect(() => {
+        if (!easy || battleFactoryState === "home" || battleFactoryState === "clear") return;
+        setSurrenderHandler(() => {
+            if (!window.confirm(isKorean() ? "항복하시겠습니까? 층 수가 초기화되고 처음 화면으로 돌아갑니다." : "Surrender? Your floor resets and you go back to the title.")) return;
+            clearEasy();
+            setBattleFactoryState("home");
+        });
+        return () => setSurrenderHandler(null);
+    }, [easy, battleFactoryState]);
+
+    /// Easy Mode: the saved floor and party are back in place, so carry on from where nextBattle would
+    useEffect(() => {
+        if (!resumeEasyRun) return;
+        setResumeEasyRun(false);
+        (async () => {
+            if (bossForFloor(winStreak)) {
+                setBattleFactoryState("boss");
+            } else {
+                await loadNewPokemon(false, playerPokemon);
+                setBattleFactoryState("select");
+            }
+            setApiLoading(false);
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resumeEasyRun]);
 
     /// Music follows the screen: title, picking, battle (a boss battle has its own), swapping
     useEffect(() => {
@@ -239,7 +281,8 @@ export function Home() {
         pokemonData[i].stat_levels = Array(7).fill(0); // atk, def, spa, spd, spe, accuracy, evasion
         /// Try a real Showdown "Battle Factory" set first, so item + moveset come
         /// from the same coherent competitive set instead of two unrelated random picks.
-        const factorySet = await pickFactorySet(pokemonData[i].name, pokemonData[i].want || {});
+        /// (a pokemon restored from an Easy Mode save already has its set)
+        const factorySet = pokemonData[i].savedSet || (await pickFactorySet(pokemonData[i].name, pokemonData[i].want || {}));
         pokemonData[i].factorySet = factorySet;
         /// The item comes from the set only: a set without an item means no item. (A random item is just
         /// a safety net for a species with no set at all, which the pool and the bosses no longer have.)
@@ -383,8 +426,10 @@ export function Home() {
     }
 
     /// Starts a run from the title screen (the pokemon may already be loaded in the background)
-    async function startGame(isEndless) {
+    async function startGame(isEndless, easyMode = false) {
         setEndless(isEndless);
+        setEasy(easyMode);
+        if (easyMode) clearEasy(); /// a new Easy Mode run replaces the old save
         if (!optionsFresh.current) {
             setApiLoading(true);
             await loadNewPokemon();
@@ -394,16 +439,57 @@ export function Home() {
         setApiLoading(false);
     }
 
+    /// Easy Mode from the title screen: carries on from the saved floor and party, or starts a new run when there is no save
+    async function startEasy() {
+        const saved = loadEasy();
+        if (!saved) {
+            await startGame(false, true);
+            return;
+        }
+        setApiLoading(true);
+        try {
+            const party = [];
+            for (const entry of saved.party) {
+                const poke = await getPokemonByName(entry.name);
+                poke.savedSet = toSavedSet(entry);
+                party.push(poke);
+            }
+            await Promise.all(
+                party.map(async (_, i) => {
+                    await getPokemonData(party, i, () => {});
+                    await createRandomMoveset(party, i, () => {});
+                })
+            );
+            for (const poke of party) delete poke.savedSet;
+            optionsFresh.current = false;
+            setEndless(false);
+            setEasy(true);
+            setWinStreak(saved.winStreak);
+            setPlayerPokemon(party);
+            setResumeEasyRun(true);
+        } catch (e) {
+            /// a save that can't be loaded (a pokemon that no longer exists...) is dropped and the run starts over
+            clearEasy();
+            setEasySave(null);
+            await startGame(false, true);
+        }
+    }
+
     /// A battle just ended and its result card was clicked. Beating the final boss ends the run
     /// with the clear screen; everything else goes where the card said.
     function afterBattle(next) {
         if (next === "swap" && !endless && winStreak > FINAL_FLOOR) {
-            unlockEndless();
-            setEndlessUnlocked(true);
+            if (easy) {
+                clearEasy(); /// Easy Mode doesn't unlock Endless Mode, and the finished run is no longer saved
+            } else {
+                unlockEndless();
+                setEndlessUnlocked(true);
+            }
             setBattleFactoryState("clear");
             return;
         }
-        setBattleFactoryState(next);
+        /// Easy Mode: a loss goes back to the picking screen of the same floor
+        setBattleFactoryState(easy && next === "home" ? "select" : next);
     }
 
     /// `roster`: my party after a swap (the state hasn't updated yet when the swap screen calls this)
@@ -444,6 +530,14 @@ export function Home() {
                         <button className="start-button" onClick={() => startGame(false)}>
                             {isKorean() ? "시작하기" : "Start!"}
                         </button>
+                        <button className="start-button start-button-endless" onClick={startEasy}>
+                            {isKorean() ? (easySave ? "이지 모드 · " + easySave.winStreak + "연승째 이어하기" : "이지 모드") : easySave ? "Easy Mode · continue from " + easySave.winStreak + " wins" : "Easy Mode"}
+                        </button>
+                        <p className="start-mode-label">
+                            {isKorean()
+                                ? "이지 모드: 진행이 저장되고, 져도 같은 층을 다시 도전해요. 엔드리스 모드는 열리지 않아요."
+                                : "Easy Mode: your run is saved, a loss retries the same floor, and Endless Mode isn't unlocked."}
+                        </p>
                         {endlessUnlocked && (
                             <button className="start-button start-button-endless" onClick={() => startGame(true)}>
                                 {isKorean() ? "엔드리스 모드" : "Endless Mode"}
@@ -490,6 +584,7 @@ export function Home() {
                         playerPokemon={battleTeams.player}
                         opponentPokemon={battleTeams.opponent}
                         setBattleFactoryState={afterBattle}
+                        easy={easy}
                         winStreak={winStreak}
                         setWinStreak={setWinStreak}
                     />
@@ -517,6 +612,7 @@ export function Home() {
             )}
             {battleFactoryState === "clear" && (
                 <ClearDisplay
+                    easy={easy}
                     winStreak={winStreak}
                     onContinue={() => {
                         setEndless(true);

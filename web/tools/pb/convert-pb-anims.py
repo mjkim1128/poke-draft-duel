@@ -212,6 +212,11 @@ for key, name in COMMON.items():
     index[key] = emit("Common", key)
 
 json.dump(index, open(OUT + "index.json", "w", encoding="utf-8"), separators=(",", ":"))
+# 손으로 고친 연출(tools/pb/overrides, 예: 기습)은 변환 결과 위에 덮어쓴다
+overrides = os.path.join(os.path.dirname(os.path.abspath(__file__)), "overrides")
+if os.path.isdir(overrides):
+    for f in os.listdir(overrides):
+        shutil.copyfile(os.path.join(overrides, f), OUT + "a/" + f)
 total = sum(os.path.getsize(OUT + "a/" + f) for f in os.listdir(OUT + "a"))
 sheets = sum(os.path.getsize(OUT + "g/" + f) for f in os.listdir(OUT + "g"))
 print(f"weather, terrain, status and stat animations: {len(index)} ({total // 1024} KB), picture files: {len(os.listdir(OUT + 'g'))} ({sheets // 1024} KB)")

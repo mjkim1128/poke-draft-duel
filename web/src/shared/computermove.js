@@ -7,6 +7,7 @@ import { sleepTalkMove } from "./cpuboardmoves";
 import { chooseSwitch, pickReplacement } from "./cpuswitch";
 import { certainlyFails } from "./cpufail";
 import { megaDelay } from "./cpumega";
+import { shedTailInsteadOfSwitch } from "./cpupass";
 import { hasLiquidOoze } from "./abilities";
 
 // How the CPU sees my pokemon: one under Illusion looks like the pokemon it copies (its types and
@@ -69,6 +70,7 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     // 메가진화를 미루는 포켓몬이면 이번 턴은 진화하지 않는다 (cpumega.js). 미루면서 쓸 기술이 정해져 있으면 그 기술을 쓴다.
     const holder = opponentTeam[0];
     holder.megaHold = false;
+    holder.passTarget = null; // 배턴터치, 꼬리자르기로 내보낼 포켓몬은 이번 턴에 새로 정한다
     const delay = megaDelay(playerTeam, opponentTeam);
     if (delay) {
         holder.megaHold = true;
@@ -109,7 +111,8 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     // 그럴 상황이 아니면, 지금 포켓몬으로 계속 싸워도 되는지 본다 (cpuswitch.js의 교체 이유와 후보 평가)
     if (canSwitch) {
         const index = chooseSwitch(playerTeam, opponentTeam);
-        if (index !== -1) return { priority: 6, index };
+        // 내가 상대보다 빠르고 꼬리자르기가 있으면, 교체 대신 꼬리자르기 (나오는 포켓몬이 이번 턴 공격을 대타로 막는다)
+        if (index !== -1) return shedTailInsteadOfSwitch(playerTeam, opponentTeam, index) || { priority: 6, index };
     }
     return strongestMove(playerTeam, opponentTeam);
 }

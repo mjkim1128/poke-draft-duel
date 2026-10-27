@@ -632,7 +632,10 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
                 return Object.assign(text, { frames });
             }
             // 먼저 움직인 쪽의 U턴이면 나오는 포켓몬이 이번 턴에 상대 공격을 한 번 맞는다
-            const index = switchPokemon(playerPokemon, opponentPokemon, { freeHit: swapper === team && step === 0 });
+            const index = switchPokemon(playerPokemon, opponentPokemon, {
+                freeHit: swapper === team && step === 0,
+                pass: !!(pivot.baton || pivot.shedTail), // 배턴터치, 꼬리자르기는 미리 정한 포켓몬이 나온다
+            });
             if (index !== -1) {
                 if (swapperActsLater) plan.skipSide = "cpu";
                 text.push(doSwitchRaw(opponentPokemon, index, { baton: pivot.baton, shedTail: pivot.shedTail, foeTeam: playerPokemon }));

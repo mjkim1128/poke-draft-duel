@@ -63,9 +63,20 @@ function candidates(playerTeam, opponentTeam, freeHit) {
 
 const better = (a, b, key) => (b === null || a[key] > b[key] ? a : b);
 
+// 배턴터치, 꼬리자르기로 빠질 때 미리 정해 둔 포켓몬(cpupass.js)의 번호. 없으면 -1. 한 번 읽으면 지운다.
+function takePassTarget(team) {
+    const name = team[0].passTarget;
+    team[0].passTarget = null;
+    return name ? team.findIndex((p, i) => i > 0 && p.hp[0] > 0 && p.name === name) : -1;
+}
+
 // 쓰러지거나 U턴으로 빠진 뒤 나올 포켓몬의 번호. 없으면 -1.
 // 먼저 움직여서 한 방에 잡는 포켓몬 > 이기는 대결(여유가 큰 순) > 가장 오래 버티는 포켓몬
-export function pickReplacement(playerTeam, opponentTeam, { freeHit = false } = {}) {
+export function pickReplacement(playerTeam, opponentTeam, { freeHit = false, pass = false } = {}) {
+    if (pass) {
+        const target = takePassTarget(opponentTeam);
+        if (target !== -1) return target;
+    }
     const foe = playerTeam[0];
     if (foe.hp[0] <= 0) return opponentTeam.findIndex((p, i) => i > 0 && p.hp[0] > 0);
     const list = candidates(playerTeam, opponentTeam, freeHit);

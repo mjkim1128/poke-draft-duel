@@ -110,6 +110,10 @@ export function bestDamage(attacker, defender, field) {
 
 export const hitsToKO = (hp, damage) => (damage > 0 ? Math.ceil(hp / damage) : Infinity);
 
+// 이 포켓몬이 쓰러지기까지 맞는 횟수: 대타가 있으면 대타가 맞아 주는 횟수만큼 늘어난다
+export const hitsToDie = (pokemon, damage) =>
+    hitsToKO(pokemon.hp[0], damage) + (pokemon.substitute && damage > 0 ? hitsToKO(pokemon.substitute.hp, damage) : 0);
+
 // 트릭룸이 깔려 있을 때만 느린 쪽이 먼저 움직인다
 export function movesFirst(a, b, field) {
     const mine = effectiveSpeed(a, field);
@@ -126,7 +130,7 @@ export function chooseSetupMove(playerTeam, opponentTeam) {
     const field = playerTeam.field || opponentTeam.field || null;
     const attacksBefore = hitsToKO(foe.hp[0], bestDamage(me, foe, field));
     if (attacksBefore === 1) return null; // 한 방에 잡을 수 있으면 그냥 공격한다
-    const foeHitsBefore = hitsToKO(me.hp[0], bestDamage(foe, me, field));
+    const foeHitsBefore = hitsToDie(me, bestDamage(foe, me, field));
     const firstBefore = movesFirst(me, foe, field);
 
     let best = [];
@@ -137,7 +141,7 @@ export function chooseSetupMove(playerTeam, opponentTeam) {
         const kind = setupKind(effect.changes);
         if (!kind) continue;
         const after = { ...me, stat_levels: effect.levels, hp: [me.hp[0] - effect.hpCost, me.hp[1]] };
-        const foeHitsAfter = hitsToKO(after.hp[0], bestDamage(foe, after, field));
+        const foeHitsAfter = hitsToDie(after, bestDamage(foe, after, field));
         const attacksAfter = hitsToKO(foe.hp[0], bestDamage(after, foe, field));
         const fasterAfter = movesFirst(after, foe, field);
         const allowed = setupVerdict(kind, {

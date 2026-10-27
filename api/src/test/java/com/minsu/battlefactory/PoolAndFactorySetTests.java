@@ -44,9 +44,9 @@ class PoolAndFactorySetTests {
     ObjectMapper objectMapper;
 
     @Test
-    void poolHas426PokemonAndNoneAtOrAbove660() {
+    void poolHas427PokemonAndNoneAtOrAbove660() {
         List<Long> poolIds = pokemonRepository.findPoolIds();
-        assertEquals(426, poolIds.size());
+        assertEquals(427, poolIds.size());
 
         for (Pokemon p : pokemonRepository.findAll()) {
             if (p.isInPool()) {

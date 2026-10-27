@@ -1,6 +1,7 @@
 // 컴퓨터가 변화기(함정, 회복, 상태이상, 벽)를 쓸지 정하는 규칙과, 그 모든 것의 우선순위.
 // 우선순위: 한 방에 잡을 수 있으면 공격 > 함정 > (빛의점토를 든) 벽 > 회복 > 그 밖의 변화기 > 랭업기 > 공격
-// 그 밖의 변화기 안의 순서: 소원, 트릭룸, 트릭, 울부짖기/흑안개, 도발, 앙코르, 상태이상, 벽, 대타출동, 방어 (cpuboardmoves.js)
+// 배턴터치와 꼬리자르기는 함정보다 앞 (cpupass.js). 순풍은 트릭룸 다음.
+// 그 밖의 변화기 안의 순서: 소원, 트릭룸, 순풍, 트릭, 울부짖기/흑안개, 도발, 앙코르, 상태이상, 벽, 대타출동, 방어 (cpuboardmoves.js)
 import { damageCalc, typeEffectiveness } from "./damagecalc";
 import { getUsableMoves } from "./pp";
 import { isGrounded, weatherHealPercent, weatherBlocksStatus, terrainBlocksStatus, weatherOf } from "./field";
@@ -9,8 +10,9 @@ import { LIGHT_CLAY } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { abilityBlocksStatus, bouncesMoves, bypassesScreens, canPoisonAnything, isPowderImmune } from "./abilities";
 import { POWDER_MOVES, REFLECTABLE_MOVES, HEAL_MOVES, PROTECT_MOVES, STATUS_IMMUNE_TYPES, STATUS_TYPE_BLOCKED_MOVES, TOXIC_MOVES } from "./movemechanics";
-import { bestDamage, hitsToKO, chooseSetupMove } from "./cpusetup";
+import { bestDamage, hitsToKO, hitsToDie, chooseSetupMove } from "./cpusetup";
 import { residualDamage } from "./cpuresidual";
+import { passMove, tailwindMove } from "./cpupass";
 import { certainlyFails } from "./cpufail";
 import {
     destinyBondMove,
@@ -56,7 +58,7 @@ function situation(playerTeam, opponentTeam) {
         myTeam: opponentTeam,
         foeTeam: playerTeam,
         attacksBefore: hitsToKO(foe.hp[0], bestDamage(me, foe, field)),
-        foeHitsBefore: hitsToKO(me.hp[0], bestDamage(foe, me, field)),
+        foeHitsBefore: hitsToDie(me, bestDamage(foe, me, field)),
     };
 }
 
@@ -191,7 +193,7 @@ function statusMove(s) {
             // 상대의 주력 공격이 물리이고, 화상 후 상대가 나를 잡는 횟수가 늘어날 때
             if (foeHitsBefore - 1 < 1 || !canInflict(s, "burn", move)) continue;
             const burned = { ...foe, status: { name: "burn" } };
-            if (hitsToKO(me.hp[0], bestDamage(burned, me, field)) > foeHitsBefore) found.burn = found.burn || move;
+            if (hitsToDie(me, bestDamage(burned, me, field)) > foeHitsBefore) found.burn = found.burn || move;
         } else if (move.name === "yawn") {
             if (!foe.yawn && canInflict(s, "sleep", move)) found.yawn = found.yawn || move;
         } else if (move.name === "leech-seed") {
@@ -216,6 +218,7 @@ export function chooseSupportMove(playerTeam, opponentTeam) {
     const field = playerTeam.field || opponentTeam.field || null;
     // 쓰면 반드시 실패하는 기술(사이코필드의 선제 기술, 미스트필드의 상태이상 기술 등)도 후보에서 뺀다
     const bounced = bouncesMoves(foe, me);
+    s.real = me; // (변화기 후보를 거른 복사본 말고 진짜 포켓몬: 배턴터치로 내보낼 포켓몬을 적어 둔다)
     s.me = {
         ...me,
         moveset: me.moveset.filter((m) => !(bounced && REFLECTABLE_MOVES.has(m.name)) && !certainlyFails(m, me, foe, field, playerTeam)),
@@ -227,6 +230,7 @@ export function chooseSupportMove(playerTeam, opponentTeam) {
     const dying = me.hp[0] / me.hp[1] <= 0.35;
     const first =
         destinyBondMove(s) || // (한 방에 쓰러질 상황에서만 나오므로 함정, 회복과는 겹치지 않는다)
+        passMove(s) || // 배턴터치, 꼬리자르기: 쓰러지기 직전에도 쓴다
         hazardMove(s) ||
         (holdingClay && screenMove(s)) ||
         ((!stalling || dying) && healMove(s));
@@ -237,6 +241,7 @@ export function chooseSupportMove(playerTeam, opponentTeam) {
     return (
         (!stalling && wishMove(s)) ||
         trickRoomMove(s) ||
+        tailwindMove(s) ||
         trickMove(s) ||
         resetBoostMove(s) ||
         tauntMove(s) ||

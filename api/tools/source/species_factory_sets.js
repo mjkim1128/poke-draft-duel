@@ -22298,6 +22298,68 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  "urshifu-rapid-strike": /* 우라오스 연격의 태세 */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "surging-strikes" /* 수류연타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ]
+    ]
+  },
+  {
+    "item": "mystic-water" /* 신비의물방울 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "surging-strikes" /* 수류연타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ]
+    ]
+  },
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "counter" /* 카운터 */ } ],
+      [ { "slug": "surging-strikes" /* 수류연타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ]
+    ]
+  },
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "surging-strikes" /* 수류연타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ }, { "slug": "drain-punch" /* 드레인펀치 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  },
+  {
+    "item": "choice-band" /* 구애머리띠 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "surging-strikes" /* 수류연타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "ice-punch" /* 냉동펀치 */ } ]
+    ]
+  },
+  {
+    "item": "choice-scarf" /* 구애스카프 */,
+    "ability": "unseen-fist",
+    "moves": [
+      [ { "slug": "surging-strikes" /* 수류연타 */ } ],
+      [ { "slug": "close-combat" /* 인파이트 */ } ],
+      [ { "slug": "aqua-jet" /* 아쿠아제트 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  }
+  ],
   "regieleki": /* 레지에레키 */ [
   {
     "item": "focus-sash" /* 기합의띠 */,

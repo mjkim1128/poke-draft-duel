@@ -4,6 +4,7 @@ import { shuffle } from "shared";
 import { DEFAULT_MOVES } from "./legalmoves";
 import { isNormalizedStats } from "./statMode";
 import { ITEM_POOL, SPECIES_EXCLUSIVE_ITEMS, REAL_SET_ONLY_ITEMS } from "./iteminfo";
+import { hasMegaForm } from "./mega";
 
 export async function generateRandomItem(pokemonName) {
     const choices = shuffle(ITEM_POOL.filter((name) => !REAL_SET_ONLY_ITEMS.has(name)));
@@ -47,6 +48,27 @@ export function resolveFactoryMoveSlugs(factorySet) {
 // legendary/mythical (regardless of their own evolution stage) are drafted,
 // minus anything with a base stat total of 660 or more. That pool lives on the
 // server (battlefactory-api); it picks one at random, skipping the ones already on the team.
+// 한 파티에서 메가스톤을 들 수 있는 포켓몬의 최대 수와, 메가진화할 수 있는 종이 메가스톤 세트를 받을 확률.
+export const MAX_MEGA_STONES = 2;
+export const MEGA_STONE_CHANCE = 0.5;
+
+// 파티(포켓몬 이름이 정해진 뒤)에서 메가진화할 수 있는 종마다 1/2 확률로 메가스톤을 든 세트, 아니면 메가스톤이 아닌 세트를 받게 정한다.
+// 이미 메가스톤 세트를 받기로 한 포켓몬이 MAX_MEGA_STONES마리면 나머지는 메가스톤이 아닌 세트다. 정한 결과는 pokemon.want.stone에 적는다
+// (세트는 이름이 아니라 이 값을 기준으로 서버에서 고른다). 메가진화할 수 없는 종은 건드리지 않는다.
+// 앞쪽 포켓몬이 유리하지 않게 순서를 섞어서 정한다.
+export function assignMegaStones(party, random = Math.random) {
+    let stones = 0;
+    const order = shuffle(party.map((_, i) => i));
+    for (const i of order) {
+        const pokemon = party[i];
+        if (!pokemon || !hasMegaForm(pokemon.name)) continue;
+        const stone = stones < MAX_MEGA_STONES && random() < MEGA_STONE_CHANCE;
+        if (stone) stones++;
+        pokemon.want = { ...(pokemon.want || {}), stone };
+    }
+    return party;
+}
+
 export async function generateRandomPokemon(pokemonTeam) {
     const usedIds = pokemonTeam.filter((mon) => mon).map((mon) => mon.id);
     return await getRandomPokemon(usedIds);

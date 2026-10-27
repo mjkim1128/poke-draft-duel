@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
     getBaseStats,
     generateRandomPokemon,
+    assignMegaStones,
     generateRandomItem,
     getGoodRandomMoveset,
     getMoveByName,
@@ -161,6 +162,7 @@ export function Home() {
         for (let i = 0; i < 6; i++) {
             fresh[i] = await generateRandomPokemon(fresh);
         }
+        assignMegaStones(fresh); /// 메가진화할 수 있는 종은 1/2 확률로 메가스톤 세트 (파티에 최대 2마리)
         await Promise.all(
             fresh.map(async (_, i) => {
                 await getPokemonData(fresh, i, () => {});
@@ -188,6 +190,7 @@ export function Home() {
                 fresh[i] = await generateRandomPokemon([...mine, ...fresh]);
             }
         }
+        assignMegaStones(fresh);
         await Promise.all(
             fresh.map(async (_, i) => {
                 await getPokemonData(fresh, i, () => {});

@@ -2,7 +2,9 @@ package com.minsu.battlefactory.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -11,15 +13,21 @@ import tools.jackson.databind.ObjectMapper;
 
 import com.minsu.battlefactory.domain.FactorySet;
 import com.minsu.battlefactory.repository.FactorySetRepository;
+import com.minsu.battlefactory.repository.ItemRepository;
 
 @Service
 public class FactorySetService {
 
     private final FactorySetRepository factorySetRepository;
+    private final ItemRepository itemRepository;
     private final ObjectMapper objectMapper;
 
-    public FactorySetService(FactorySetRepository factorySetRepository, ObjectMapper objectMapper) {
+    // 메가스톤의 이름들 (도구 분류가 mega-stones인 것). 처음 쓸 때 한 번 읽어 둔다.
+    private volatile Set<String> megaStones;
+
+    public FactorySetService(FactorySetRepository factorySetRepository, ItemRepository itemRepository, ObjectMapper objectMapper) {
         this.factorySetRepository = factorySetRepository;
+        this.itemRepository = itemRepository;
         this.objectMapper = objectMapper;
     }
 
@@ -32,14 +40,40 @@ public class FactorySetService {
     // 특성(ability)이나 기술(move)을 주면 그것을 가진 세트 중에서 고른다. 네임드 트레이너의 팀 콘셉트
     // (비 팀의 잔비, 트릭룸 팀의 트릭룸 등)를 맞추려고 쓴다. 조건에 맞는 세트가 없으면 아무 세트나 고른다.
     public Optional<String> findRandomPayload(String species, String ability, String move) {
+        return findRandomPayload(species, ability, move, null);
+    }
+
+    // stone이 true이면 메가스톤을 든 세트 중에서, false이면 메가스톤이 아닌 도구(또는 도구 없음)를 든 세트 중에서 고른다.
+    // null이면 가리지 않는다. 조건에 맞는 세트가 하나도 없으면 아무 세트나 고른다.
+    public Optional<String> findRandomPayload(String species, String ability, String move, Boolean stone) {
         List<FactorySet> sets = factorySetRepository.findBySpecies(species);
         if (sets.isEmpty()) {
             return Optional.empty();
+        }
+        if (stone != null) {
+            List<FactorySet> byStone = sets.stream().filter(s -> holdsMegaStone(s.getPayload()) == stone).toList();
+            if (!byStone.isEmpty()) {
+                sets = byStone;
+            }
         }
         List<FactorySet> matching = sets.stream().filter(s -> matches(s.getPayload(), ability, move)).toList();
         List<FactorySet> from = matching.isEmpty() ? sets : matching;
         FactorySet picked = from.get(ThreadLocalRandom.current().nextInt(from.size()));
         return Optional.of(picked.getPayload());
+    }
+
+    private boolean holdsMegaStone(String payload) {
+        JsonNode item = objectMapper.readTree(payload).get("item");
+        return item != null && !item.isNull() && megaStoneNames().contains(item.asString());
+    }
+
+    private Set<String> megaStoneNames() {
+        Set<String> names = megaStones;
+        if (names == null) {
+            names = itemRepository.findByCategory("mega-stones").stream().map(i -> i.getName()).collect(Collectors.toSet());
+            megaStones = names;
+        }
+        return names;
     }
 
     private boolean matches(String payload, String ability, String move) {

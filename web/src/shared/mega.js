@@ -30,4 +30,6 @@ export function revertMega(pokemon) {
     if (!original) return;
     Object.assign(pokemon, original);
     pokemon.megaOriginal = null;
+    pokemon.megaDelayed = null;
+    pokemon.megaHold = false;
 }

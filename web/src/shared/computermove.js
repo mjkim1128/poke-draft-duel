@@ -6,6 +6,8 @@ import { chooseSupportMove } from "./cpustatus";
 import { sleepTalkMove } from "./cpuboardmoves";
 import { chooseSwitch, pickReplacement } from "./cpuswitch";
 import { certainlyFails } from "./cpufail";
+import { megaDelay } from "./cpumega";
+import { hasLiquidOoze } from "./abilities";
 
 // How the CPU sees my pokemon: one under Illusion looks like the pokemon it copies (its types and
 // stats), until the disguise breaks. The real battle math still uses the real pokemon.
@@ -25,6 +27,16 @@ function moveValue(damage, move, attacker, defender, field) {
     if (CHARGE_MOVES.has(move.name) || RECHARGE_MOVES.has(move.name)) value = damage / 2;
     const range = MULTIHIT_MOVES[move.name];
     if (range) value = damage * (range[0] === range[1] ? range[0] : 3.1);
+    // 체력을 회복하는 공격(기가드레인, 흡혈, 드레인키스...)은 체력이 적을수록 회복하는 만큼을 더 쳐 준다
+    // (체력 50% 이하에서는 회복량만큼, 25% 이하에서는 두 배로 더한다)
+    const drain = move.meta && move.meta.drain > 0 && !attacker.healBlock && !hasLiquidOoze(defender, attacker) ? move.meta.drain : 0;
+    if (drain > 0 && damage > 0) {
+        const ratio = attacker.hp[0] / attacker.hp[1];
+        if (ratio <= 0.5) {
+            const heal = Math.min((damage * drain) / 100, attacker.hp[1] - attacker.hp[0]);
+            value += heal * (ratio <= 0.25 ? 2 : 1);
+        }
+    }
     const chance = hitChance(attacker, defender, move, field);
     return chance === null ? value : value * (Math.min(chance, 100) / 100);
 }
@@ -54,6 +66,15 @@ function asSeen(playerTeam) {
 // canSwitch가 true이면 교체를 고를 수 있다 (교체는 priority 6인 가짜 기술이다)
 export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     playerTeam = asSeen(playerTeam);
+    // 메가진화를 미루는 포켓몬이면 이번 턴은 진화하지 않는다 (cpumega.js). 미루면서 쓸 기술이 정해져 있으면 그 기술을 쓴다.
+    const holder = opponentTeam[0];
+    holder.megaHold = false;
+    const delay = megaDelay(playerTeam, opponentTeam);
+    if (delay) {
+        holder.megaHold = true;
+        if (delay.once) holder.megaDelayed = true; // 다음 턴에는 진화한다
+        if (delay.move) return delay.move;
+    }
     // 자고 있으면 다른 기술은 나가지 않으니 잠꼬대로 아무 기술이나 쓴다
     const sleepTalk = sleepTalkMove(opponentTeam[0]);
     if (sleepTalk) return sleepTalk;

@@ -466,7 +466,7 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     const megaText = [];
     if (options.mega && chosenMove.priority !== 6 && canMegaEvolve(playerPokemon)) megaEvolve(playerPokemon, opponentPokemon, megaText);
     const cpuMove = forcedMove(opponentPokemon[0], makeMove(playerPokemon, opponentPokemon, !isTrapped(opponentPokemon, playerPokemon)));
-    if (cpuMove.priority !== 6 && canMegaEvolve(opponentPokemon)) megaEvolve(opponentPokemon, playerPokemon, megaText);
+    if (cpuMove.priority !== 6 && canMegaEvolve(opponentPokemon) && !opponentPokemon[0].megaHold) megaEvolve(opponentPokemon, playerPokemon, megaText);
     entryText.push(...megaText);
     // Focus Punch: it tightens its focus before anyone moves; getting hit by a damaging move before it acts breaks the focus
     for (const [team, mv] of [[playerPokemon, move], [opponentPokemon, cpuMove]]) {
@@ -3565,6 +3565,8 @@ function doSwitchRaw(pokemon, index, options = {}) {
     // except that a badly-poisoned mon's toxic counter restarts.)
     oldCurrent.confusion = null;
     oldCurrent.yawn = null; // 하품의 졸음도 교체하면 풀린다
+    oldCurrent.megaDelayed = null; // 메가진화를 한 번 미뤘다는 기록도 지운다 (cpumega.js)
+    oldCurrent.megaHold = false;
     if (oldCurrent.status && oldCurrent.status.name === "toxic") oldCurrent.status.counter = 1;
     let text = "";
     if (oldCurrent.hp[0] > 0)

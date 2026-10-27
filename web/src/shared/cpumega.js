@@ -9,7 +9,7 @@ import { damageCalc, typeEffectiveness } from "./damagecalc";
 import { getUsableMoves, choiceLockedMove } from "./pp";
 import { PROTECT_MOVES } from "./movemechanics";
 import { abilityName, getAbility } from "./abilities";
-import { bestDamage, hitsToKO, movesFirst, positiveStages, setupEffect } from "./cpusetup";
+import { bestDamage, hitsToDown, hitsToDie, movesFirst, positiveStages, setupEffect } from "./cpusetup";
 import { chooseSupportMove } from "./cpustatus";
 import { certainlyFails } from "./cpufail";
 import { megaFormOf, canMegaEvolve } from "./mega";
@@ -50,12 +50,12 @@ function speedBoostRule(s) {
     if (abilityName(me) !== "speed-boost") return null;
     const needed = turnsToOutspeed(me, foe, field);
     if (!needed) return null; // 이미 앞서 있거나 앞지를 수 없으면 기다릴 이유가 없다
-    const hitsToDie = hitsToKO(me.hp[0], bestDamage(foe, me, field));
+    const hitsLeft = hitsToDie(me, bestDamage(foe, me, field), foe);
     // 기다리는 동안 맞는 횟수: 방어는 연속으로 못 쓰므로 방어가 있으면 절반쯤 막는다. 쓰러지기 전에 끝나야 한다.
     const protect = (me.stallDivisor || 1) > 1 ? null : getUsableMoves(me).find((m) => PROTECT_MOVES[m.name]);
     const hasProtect = getUsableMoves(me).some((m) => PROTECT_MOVES[m.name]);
     const hits = hasProtect ? Math.floor(needed / 2) : needed;
-    if (hits > hitsToDie - 1) return null;
+    if (hits > hitsLeft - 1) return null;
     if (protect) return { move: protect };
     const move = delayMove(s);
     return move ? { move } : null;
@@ -106,6 +106,6 @@ export function megaDelay(playerTeam, opponentTeam) {
     if (!rule || !canMegaEvolve(opponentTeam) || me.hp[0] <= 0 || foe.hp[0] <= 0) return null;
     const field = playerTeam.field || opponentTeam.field || null;
     // 한 방에 상대를 잡을 수 있으면 미루지 않는다
-    if (hitsToKO(foe.hp[0], bestDamage(me, foe, field)) === 1) return null;
+    if (hitsToDown(foe, bestDamage(me, foe, field), me) === 1) return null;
     return rule({ me, foe, field, playerTeam, opponentTeam });
 }

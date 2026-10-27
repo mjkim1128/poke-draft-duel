@@ -7,6 +7,9 @@ import { damageCalc } from "./damagecalc";
 import { effectiveSpeed } from "./speed";
 import { getUsableMoves } from "./pp";
 import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES } from "./movemechanics";
+import { blocksOhko } from "./abilities";
+import { activeItem } from "./helditem";
+import { FOCUS_SASH } from "./iteminfo";
 
 // stat_levels 안에서 각 능력치의 번호 (명중, 회피는 세지 않는다)
 const STAT_INDEX = { attack: 0, defense: 1, "special-attack": 2, "special-defense": 3, speed: 4 };
@@ -110,9 +113,23 @@ export function bestDamage(attacker, defender, field) {
 
 export const hitsToKO = (hp, damage) => (damage > 0 ? Math.ceil(hp / damage) : Infinity);
 
-// 이 포켓몬이 쓰러지기까지 맞는 횟수: 대타가 있으면 대타가 맞아 주는 횟수만큼 늘어난다
-export const hitsToDie = (pokemon, damage) =>
-    hitsToKO(pokemon.hp[0], damage) + (pokemon.substitute && damage > 0 ? hitsToKO(pokemon.substitute.hp, damage) : 0);
+// 한 방 방지: 체력이 가득 찬 포켓몬이 기합의띠를 들었거나 옹골참이면 첫 공격은 반드시 버틴다 (attacker가 틀깨기 계열이면 옹골참은 무시된다).
+// 멀티스케일은 데미지 계산(damageCalc)에 이미 들어 있어서 따로 다루지 않는다.
+export function survivesOneHit(pokemon, attacker = null) {
+    if (pokemon.hp[0] !== pokemon.hp[1]) return false;
+    if (activeItem(pokemon) && pokemon.item.name === FOCUS_SASH) return true;
+    return blocksOhko(pokemon, attacker);
+}
+
+// target을 쓰러뜨리는 데 필요한 공격 횟수. 한 방 방지가 있으면 한 번은 버티므로 최소 두 번.
+export function hitsToDown(target, damage, attacker = null) {
+    const hits = hitsToKO(target.hp[0], damage);
+    return damage > 0 && hits < 2 && survivesOneHit(target, attacker) ? 2 : hits;
+}
+
+// 이 포켓몬이 쓰러지기까지 맞는 횟수: 한 방 방지를 반영하고, 대타가 있으면 대타가 맞아 주는 횟수만큼 늘어난다
+export const hitsToDie = (pokemon, damage, attacker = null) =>
+    hitsToDown(pokemon, damage, attacker) + (pokemon.substitute && damage > 0 ? hitsToKO(pokemon.substitute.hp, damage) : 0);
 
 // 트릭룸이 깔려 있을 때만 느린 쪽이 먼저 움직인다
 export function movesFirst(a, b, field) {
@@ -128,9 +145,9 @@ export function chooseSetupMove(playerTeam, opponentTeam) {
     const foe = playerTeam[0];
     if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.mustRecharge) return null;
     const field = playerTeam.field || opponentTeam.field || null;
-    const attacksBefore = hitsToKO(foe.hp[0], bestDamage(me, foe, field));
+    const attacksBefore = hitsToDown(foe, bestDamage(me, foe, field), me);
     if (attacksBefore === 1) return null; // 한 방에 잡을 수 있으면 그냥 공격한다
-    const foeHitsBefore = hitsToDie(me, bestDamage(foe, me, field));
+    const foeHitsBefore = hitsToDie(me, bestDamage(foe, me, field), foe);
     const firstBefore = movesFirst(me, foe, field);
 
     let best = [];
@@ -141,8 +158,8 @@ export function chooseSetupMove(playerTeam, opponentTeam) {
         const kind = setupKind(effect.changes);
         if (!kind) continue;
         const after = { ...me, stat_levels: effect.levels, hp: [me.hp[0] - effect.hpCost, me.hp[1]] };
-        const foeHitsAfter = hitsToDie(after, bestDamage(foe, after, field));
-        const attacksAfter = hitsToKO(foe.hp[0], bestDamage(after, foe, field));
+        const foeHitsAfter = hitsToDie(after, bestDamage(foe, after, field), foe);
+        const attacksAfter = hitsToDown(foe, bestDamage(after, foe, field), after);
         const fasterAfter = movesFirst(after, foe, field);
         const allowed = setupVerdict(kind, {
             foeHitsBefore,

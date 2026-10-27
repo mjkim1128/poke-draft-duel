@@ -6,7 +6,7 @@ import { chooseSupportMove } from "./cpustatus";
 import { sleepTalkMove } from "./cpuboardmoves";
 import { chooseSwitch, pickReplacement } from "./cpuswitch";
 import { certainlyFails, effectivePriority } from "./cpufail";
-import { movesFirst } from "./cpusetup";
+import { movesFirst, bestDamage, hitsToDie, survivesOneHit } from "./cpusetup";
 import { megaDelay } from "./cpumega";
 import { shedTailInsteadOfSwitch } from "./cpupass";
 import { hasLiquidOoze } from "./abilities";
@@ -92,10 +92,11 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     for (const move of usableMoveset(me, foe)) {
         if (effectivePriority(move, me) <= 0 || certainlyFails(move, me, foe, field, playerTeam)) continue;
         const damage = damageCalc(me, foe, move, { field });
-        if (foe.hp[0] - damage <= 0) return move;
+        if (foe.hp[0] - damage <= 0 && !survivesOneHit(foe, me)) return move;
         if (damage <= 0) continue;
         if (dyingToFoe === null) {
-            dyingToFoe = me.hp[0] - damageCalc(foe, me, strongestMove(opponentTeam, playerTeam), { field }) <= 0;
+            const foeBest = strongestMove(opponentTeam, playerTeam, { estimate: true });
+            dyingToFoe = me.hp[0] - damageCalc(foe, me, foeBest, { field }) <= 0 && !survivesOneHit(me, foe);
         }
         if (dyingToFoe && !movesFirst(me, foe, field)) return move;
     }
@@ -111,7 +112,18 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     return strongestMove(playerTeam, opponentTeam);
 }
 
-export function strongestMove(playerTeam, opponentTeam) {
+// 자폭 계열(쓰면 스스로 쓰러진다)은 상대를 쓰러뜨리거나, 어차피 상대의 다음 공격에 쓰러질 때만 고른다
+const SELF_KO_MOVES = new Set(["explosion", "self-destruct", "misty-explosion"]);
+function selfKoAllowed(move, me, foe, field, moves) {
+    if (!SELF_KO_MOVES.has(move.name)) return true;
+    const knocksOut = (m) => foe.hp[0] - damageCalc(me, foe, m, { field }) <= 0 && !survivesOneHit(foe, me);
+    // 다른 기술로도 쓰러뜨릴 수 있으면 굳이 자폭하지 않는다
+    const other = moves.some((m) => m !== move && !SELF_KO_MOVES.has(m.name) && !certainlyFails(m, me, foe, field) && knocksOut(m));
+    return (knocksOut(move) && !other) || hitsToDie(me, bestDamage(foe, me, field), foe) <= 1;
+}
+
+// estimate: 상대(플레이어)의 가장 센 기술을 어림할 때. 이때는 자폭 계열도 위협으로 센다.
+export function strongestMove(playerTeam, opponentTeam, { estimate = false } = {}) {
     playerTeam = asSeen(playerTeam);
     let damage = 0;
     let choice = null;
@@ -120,6 +132,7 @@ export function strongestMove(playerTeam, opponentTeam) {
         const field = playerTeam.field || opponentTeam.field || null;
         // 쓰면 반드시 실패하는 기술은 가장 센 공격이라도 고르지 않는다
         if (certainlyFails(move, opponentTeam[0], playerTeam[0], field, playerTeam)) continue;
+        if (!estimate && !selfKoAllowed(move, opponentTeam[0], playerTeam[0], field, moves)) continue;
         const value = moveValue(
             damageCalc(opponentTeam[0], playerTeam[0], move, { field }),
             move,
@@ -134,7 +147,8 @@ export function strongestMove(playerTeam, opponentTeam) {
     if (choice === null) {
         const field = playerTeam.field || opponentTeam.field || null;
         const working = moves.filter((m) => !certainlyFails(m, opponentTeam[0], playerTeam[0], field, playerTeam));
-        const pool = working.length > 0 ? working : moves;
+        const careful = estimate ? working : working.filter((m) => selfKoAllowed(m, opponentTeam[0], playerTeam[0], field, moves));
+        const pool = careful.length > 0 ? careful : working.length > 0 ? working : moves;
         choice = pool[Math.floor(Math.random() * pool.length)];
     }
     return choice;

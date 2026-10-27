@@ -12,7 +12,7 @@
 //               내가 느리면 대타가 맞는 만큼 상대가 나를 잡는 턴 수가 늘어나므로, 랭업기는 평소 규칙대로 쓴다 (cpusetup.js의 hitsToDie).
 // 나가는 포켓몬은 me.passTarget(이름)에 적어 둔다. 실제 교체는 cpuswitch.js의 pickReplacement가 그 이름을 읽는다.
 import { getUsableMoves } from "./pp";
-import { bestDamage, hitsToKO, movesFirst, setupEffect } from "./cpusetup";
+import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, setupEffect } from "./cpusetup";
 import { entryDamage } from "./cpuswitch";
 
 // 한 방에 잡았다고 칠 여유: 데미지가 상대 현재 체력의 이만큼 이상이어야 한다 (이 게임은 데미지 난수가 없다)
@@ -48,8 +48,12 @@ function raisesCategory(effect, category) {
     return effect.changes.some(([i, d]) => i === STAT_OF[category] && d > 0);
 }
 
-// 가장 센 공격이 상대 체력의 몇 배인가 (명중은 따지지 않는다)
-const damageRatio = (attacker, foe, field) => (foe.hp[0] > 0 ? bestDamage(attacker, foe, field) / foe.hp[0] : 0);
+// 가장 센 공격이 상대 체력의 몇 배인가 (명중은 따지지 않는다). 상대에게 한 방 방지가 있으면 한 방(1배)은 넘지 못한다.
+const damageRatio = (attacker, foe, field) => {
+    if (foe.hp[0] <= 0) return 0;
+    const ratio = bestDamage(attacker, foe, field) / foe.hp[0];
+    return survivesOneHit(foe, attacker) ? Math.min(ratio, 0.99) : ratio;
+};
 
 // ---- 순풍 ----
 
@@ -85,7 +89,8 @@ function receivesWell(candidate, s, need = SAFE_KO) {
     let entered = receive(candidate, s);
     if (entered.hp[0] <= 0) return false;
     if (movesFirst(me, foe, field)) {
-        const hp = entered.hp[0] - bestDamage(foe, entered, field);
+        const hit = bestDamage(foe, entered, field);
+        const hp = hit >= entered.hp[0] && survivesOneHit(entered, foe) ? 1 : entered.hp[0] - hit;
         if (hp <= 0) return false;
         entered = { ...entered, hp: [hp, entered.hp[1]] };
     }
@@ -107,15 +112,15 @@ function soloSweep(s, category) {
         const effect = setupEffect(m, me);
         if (!effect || !raisesCategory(effect, category)) continue;
         const after = { ...me, stat_levels: effect.levels, hp: [me.hp[0] - effect.hpCost, me.hp[1]] };
-        const survives = hitsToKO(after.hp[0], bestDamage(foe, after, field)) >= 2;
-        if (survives && hitsToKO(foe.hp[0], bestDamage(after, foe, field)) === 1) return true;
+        const survives = hitsToDie(after, bestDamage(foe, after, field), foe) >= 2;
+        if (survives && hitsToDown(foe, bestDamage(after, foe, field), after) === 1) return true;
     }
     return false;
 }
 
 // 내가 앞으로 몇 번 움직일 수 있는가 (먼저 움직이면 쓰러지기 전에 그만큼, 늦으면 한 번 덜)
 function actionsLeft(s) {
-    const hits = hitsToKO(s.me.hp[0], bestDamage(s.foe, s.me, s.field));
+    const hits = hitsToDie(s.me, bestDamage(s.foe, s.me, s.field), s.foe);
     return movesFirst(s.me, s.foe, s.field) ? hits : hits - 1;
 }
 
@@ -179,18 +184,18 @@ function shedTailMove(s) {
         if (entered.hp[0] <= 0) continue;
         const foeDamage = bestDamage(foe, entered, field);
         // 한 방에 쓰러지지만 두 방에 잡을 수 있으면, 대타로 한 번 막아 주면서 내보낸다
-        if (hitsToKO(entered.hp[0], foeDamage) === 1 && hitsToKO(foe.hp[0], bestDamage(entered, foe, field)) === 2) {
+        if (hitsToDie(entered, foeDamage, foe) === 1 && hitsToDown(foe, bestDamage(entered, foe, field), entered) === 2) {
             (s.real || me).passTarget = p.name;
             return move;
         }
         // 대타 뒤에서 랭업을 하면 상대를 앞지르고 한 방에 잡을 수 있다
-        const safe = substituteHp > foeDamage || hitsToKO(entered.hp[0], foeDamage) >= 2;
+        const safe = substituteHp > foeDamage || hitsToDie(entered, foeDamage, foe) >= 2;
         if (!safe) continue;
         for (const m of getUsableMoves(entered)) {
             const effect = setupEffect(m, entered);
             if (!effect) continue;
             const after = { ...entered, stat_levels: effect.levels, hp: [entered.hp[0] - effect.hpCost, entered.hp[1]] };
-            if (movesFirst(after, foe, field) && hitsToKO(foe.hp[0], bestDamage(after, foe, field)) === 1) {
+            if (movesFirst(after, foe, field) && hitsToDown(foe, bestDamage(after, foe, field), after) === 1) {
                 (s.real || me).passTarget = p.name;
                 return move;
             }

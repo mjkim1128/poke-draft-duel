@@ -10,7 +10,7 @@ import { isGrounded, terrainBlocksStatus } from "./field";
 import { HEAVY_DUTY_BOOTS } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { indirectDamageBlocked, abilityBlocksStatus } from "./abilities";
-import { bestDamage, hitsToKO, movesFirst, positiveStages } from "./cpusetup";
+import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, positiveStages } from "./cpusetup";
 
 const ROCK_MOVE = { type: { name: "rock" }, damage_class: { name: "physical" } };
 
@@ -37,13 +37,13 @@ function evaluate(candidate, foe, myTeam, field, freeHit) {
     let entered = { ...candidate, hp: [hp, candidate.hp[1]] };
     const foeDamage = bestDamage(foe, entered, field);
     if (freeHit) {
-        hp -= foeDamage;
+        hp = foeDamage >= hp && survivesOneHit(entered, foe) ? 1 : hp - foeDamage; // 기합의띠, 옹골참은 이 한 방을 버틴다
         if (hp <= 0) return null; // 들어오자마자 쓰러진다
         entered = { ...candidate, hp: [hp, candidate.hp[1]] };
     }
     const e = {
-        hits: hitsToKO(hp, foeDamage),
-        attacks: hitsToKO(foe.hp[0], bestDamage(entered, foe, field)),
+        hits: hitsToDie(entered, foeDamage, foe),
+        attacks: hitsToDown(foe, bestDamage(entered, foe, field), entered),
         first: movesFirst(entered, foe, field),
     };
     return { ...e, wins: wins(e), score: scoreOf(e), hp };
@@ -125,8 +125,8 @@ function switchReason(me, foe, field, stay, wiped = false, drowsy = false) {
 
 // 지금 나와 있는 포켓몬이 계속 싸우면 어떻게 되는지 (잠이나 맹독이면 그만큼 불리하게 센다)
 function stayEvaluation(me, foe, field, drowsy = false) {
-    const hits = hitsToKO(me.hp[0], bestDamage(foe, me, field) + (me.status && me.status.name === "toxic" ? Math.floor(me.hp[1] / 10) : 0));
-    let attacks = hitsToKO(foe.hp[0], bestDamage(me, foe, field));
+    const hits = hitsToDie(me, bestDamage(foe, me, field) + (me.status && me.status.name === "toxic" ? Math.floor(me.hp[1] / 10) : 0), foe);
+    let attacks = hitsToDown(foe, bestDamage(me, foe, field), me);
     if (me.status && me.status.name === "sleep") attacks += 2;
     if (drowsy) attacks += 2; // 다음 턴 끝에 잠들어서 그만큼 못 움직인다
     const first = movesFirst(me, foe, field);

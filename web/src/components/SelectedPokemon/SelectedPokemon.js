@@ -1,7 +1,8 @@
 import { localName } from "shared/lang";
 import { Move } from "components";
-import { StatsDisplay } from "components/StatsDisplay";
-import { pokemonNameToString, pokemonTypeToString, abilityLabel } from "shared";
+import { BaseStats } from "components/BaseStats";
+import { AbilityInfo } from "components/AbilityInfo";
+import { pokemonNameToString, pokemonTypeToString } from "shared";
 import React from "react";
 import "./SelectedPokemon.css";
 
@@ -38,11 +39,6 @@ export function SelectedPokemon(props) {
                     <p>
                         {pokemonNameToString(props.pokemon)} - {pokemonTypeToString(props.pokemon)}
                     </p>
-                    {props.pokemon.ability && (
-                        <p className="selected-pokemon-ability" title={props.pokemon.ability.english_name}>
-                            특성: {abilityLabel(props.pokemon)}
-                        </p>
-                    )}
                     {props.pokemon.item && (
                         <p className="selected-pokemon-item">
                             {props.pokemon.item.sprites && props.pokemon.item.sprites.default && (
@@ -57,8 +53,9 @@ export function SelectedPokemon(props) {
                     )}
                 </div>
             </div>
-            <div className="selected-pokemon-row">
-                <StatsDisplay pokemon={props.pokemon} compact={props.compact} />
+            <div className="selected-pokemon-row selected-pokemon-info">
+                <BaseStats pokemon={props.pokemon} />
+                <AbilityInfo pokemon={props.pokemon} />
             </div>
             <div>
                 {moves !== null && (

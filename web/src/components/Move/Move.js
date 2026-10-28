@@ -1,5 +1,5 @@
 import { FloatingPopup } from "components/FloatingPopup";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     damageClassToString,
     damageCalc,
@@ -12,11 +12,49 @@ import {
     maxPP,
 } from "shared";
 import { moveConditionBlock } from "shared/movecondition";
+import { moveDescription } from "shared/movedescription";
 import "./Move.css";
+
+/// 터치 화면에서 이만큼(밀리초) 누르고 있으면 "길게 누름"이다: 기술 정보를 보여 주고, 손을 떼도 기술은 나가지 않는다.
+/// 짧게 누르면 그대로 기술이 나간다.
+export const LONG_PRESS_MS = 450;
 
 export function Move(props) {
     const [hover, setHover] = useState(false);
     const buttonRef = useRef(null);
+    /// 마지막으로 누른 입력 장치 ("mouse" | "touch" | "pen"). 터치 뒤에 브라우저가 흉내 내서 보내는 마우스 이벤트는 무시한다.
+    const pointerType = useRef("mouse");
+    const pressTimer = useRef(null);
+    /// 길게 눌러서 정보창을 띄웠다 (손을 뗄 때 따라오는 클릭은 기술을 쓰지 않는다)
+    const longPressed = useRef(false);
+    const [pinned, setPinned] = useState(false);
+
+    /// 길게 눌러 띄운 정보창은 손을 뗀 뒤에도 남아 있다가, 화면의 다른 곳을 누르면 닫힌다
+    useEffect(() => {
+        if (!pinned) return undefined;
+        const close = () => {
+            setPinned(false);
+            setHover(false);
+        };
+        document.addEventListener("pointerdown", close, true);
+        return () => document.removeEventListener("pointerdown", close, true);
+    }, [pinned]);
+    useEffect(() => () => clearTimeout(pressTimer.current), []);
+
+    function startPress(e) {
+        pointerType.current = e.pointerType || "mouse";
+        if (pointerType.current === "mouse") return;
+        longPressed.current = false;
+        clearTimeout(pressTimer.current);
+        pressTimer.current = setTimeout(() => {
+            longPressed.current = true;
+            setHover(true);
+            setPinned(true);
+        }, LONG_PRESS_MS);
+    }
+    function endPress() {
+        clearTimeout(pressTimer.current);
+    }
 
     let [attack, defend] = [null, null];
     let [atkStat, defStat] = [null, null];
@@ -69,17 +107,7 @@ export function Move(props) {
     let moveClassName =
         props.moveOwner === "party" ? "party-move" : "move-button";
 
-    let effect_text = (
-        props.move.flavor_text_entries.find(
-            (entry) => entry.language && entry.language.name === "ko"
-        ) ||
-        props.move.flavor_text_entries.find(
-            (entry) =>
-                entry.language === undefined ||
-                entry.language.name === undefined ||
-                entry.language.name === "en"
-        )
-    ).flavor_text;
+    const effect_text = moveDescription(props.move);
 
     if (props.move.meta === undefined) {
         /// temporary error fix
@@ -100,7 +128,19 @@ export function Move(props) {
 
     return (
         <div>
-            <div className="move-div">
+            {/* 눌러 보는 입력은 감싼 칸에서 받는다 (쓸 수 없는 기술의 버튼은 이벤트를 받지 못하므로 아래에서 pointer-events를 끈다) */}
+            <div
+                className="move-div"
+                onPointerDown={startPress}
+                onPointerUp={endPress}
+                onPointerCancel={endPress}
+                onPointerLeave={endPress}
+                onContextMenu={(e) => {
+                    if (pointerType.current !== "mouse") e.preventDefault(); /// 길게 누르면 뜨는 기본 메뉴를 막는다
+                }}
+                onMouseEnter={() => pointerType.current === "mouse" && setHover(true)}
+                onMouseLeave={() => pointerType.current === "mouse" && setHover(false)}
+            >
                 <button
                     ref={buttonRef}
                     className={moveClassName}
@@ -125,9 +165,14 @@ export function Move(props) {
                                 props.move.damage_class.name === "status"
                             ))
                     }
-                    onClick={() => props.onClick(props.move)}
-                    onMouseOver={() => setHover(true)}
-                    onMouseOut={() => setHover(false)}
+                    onClick={() => {
+                        /// 길게 눌러서 정보를 본 손가락이 떨어질 때의 클릭은 기술을 쓰지 않는다
+                        if (longPressed.current) {
+                            longPressed.current = false;
+                            return;
+                        }
+                        props.onClick(props.move);
+                    }}
                 >
                     <p>{moveNameToString(props.move)}</p>
                     <p>{typeNameToString(props.move.type.name)}</p>
@@ -151,13 +196,7 @@ export function Move(props) {
                     </p>
                     <p>Priority: {props.move.priority}</p>
 
-                    {((props.move.meta &&
-                        (props.move.meta.stat_chance === 100 ||
-                            props.move.meta.drain !== 0)) ||
-                        props.move.name === "explosion" ||
-                        props.move.name === "self-destruct") && (
-                        <p>Description: {effect_text}</p>
-                    )}
+                    {effect_text && <p className="move-description">Description: {effect_text}</p>}
                     {/* <p>Accuracy: {props.move.accuracy}</p> */}
                     {/* <p>PP: {props.move.pp}</p>
                     <p>

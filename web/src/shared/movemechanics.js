@@ -87,6 +87,9 @@ export const STALL_MOVES = new Set([...Object.keys(PROTECT_MOVES), "endure"]);
 export const PROTECT_BLOCKED = new Set(MECHANICS.protect);
 // Roar / Whirlwind / Dragon Tail / Circle Throw drag the target out, a random pokemon coming in
 export const FORCE_SWITCH_MOVES = new Set(["roar", "whirlwind", "dragon-tail", "circle-throw"]);
+// 랭업 무효기: 상대의 랭크업을 없애는 기술. 흑안개, 클리어스모그는 능력 변화를 지우고, 울부짖기, 날려버리기, 드래곤테일, 용오름(서클스로우)은
+// 상대를 강제로 교체시켜서 나가는 포켓몬의 랭크업이 사라진다 (스스로 교체하는 것이 아니어도 랭크업이 무효가 되는 경우).
+export const BOOST_NULLIFYING_MOVES = new Set(["haze", "clear-smog", ...FORCE_SWITCH_MOVES]);
 // Moves that pass through a Substitute (Showdown's `bypasssub`), Sleep Talk can't call
 // (`nosleeptalk`) and Encore can't lock into (`failencore`)
 export const SUBSTITUTE_BYPASS = new Set(MECHANICS.bypasssub);

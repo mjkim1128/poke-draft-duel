@@ -50,6 +50,8 @@ export function hitChance(attacker, defender, move, field = null) {
 
     // No Guard on either side, or the target is hanging in the air from Telekinesis: every move connects
     if (hasNoGuard(attacker) || hasNoGuard(defender) || defender.telekinesis) return null;
+    // Glaive Rush: until the user's next move, nothing it is hit by can miss
+    if (defender.glaiveRush) return null;
 
     // One-hit KO moves ignore every accuracy modifier
     if (isOhkoMove(move)) {

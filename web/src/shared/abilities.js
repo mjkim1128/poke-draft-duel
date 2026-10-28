@@ -1666,6 +1666,7 @@ export function resetAbilityState(pokemon) {
     pokemon.cudChew = null;
     pokemon.flashFire = false;
     pokemon.proteanUsed = false;
+    pokemon.glaiveRush = false;
     pokemon.boosterStat = null; // Protosynthesis / Quark Drive
     pokemon.boosterFromItem = false;
     pokemon.perish = null;

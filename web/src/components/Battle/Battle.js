@@ -585,6 +585,7 @@ export function Battle(props) {
                             <>
                                 {megaButton}
                                 <div className="pokemon-moves bp-moves">{moves}</div>
+                                <p className="move-hint">{isKorean() ? "기술을 꾹 누르면 정보를 볼 수 있어요" : "Press and hold a move to see its info"}</p>
                             </>
                         )}
                         {panelTab === "switch" && <div className="bp-party">{partyRows}</div>}
@@ -674,6 +675,7 @@ export function Battle(props) {
                     />
                     {megaButton}
                     <div className="pokemon-moves">{moves}</div>
+                    <p className="move-hint">{isKorean() ? "기술을 꾹 누르면 정보를 볼 수 있어요" : "Press and hold a move to see its info"}</p>
                     <PokemonParty
                         pokemon={
                             isCurrent

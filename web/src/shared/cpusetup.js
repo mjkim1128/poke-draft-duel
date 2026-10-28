@@ -3,11 +3,11 @@
 //   버팀        랭업을 한 상태에서 상대가 나를 잡는 데 필요한 공격 횟수 - 1
 //   공격 횟수   내가 상대를 잡는 데 필요한 공격 횟수 (랭업하는 턴은 세지 않는다)
 //   역전        랭업 전에는 상대보다 느렸는데 랭업 후에는 내가 먼저 움직임 (트릭룸이 깔려 있으면 반대로 계산)
-import { damageCalc, MIN_ROLL } from "./damagecalc";
+import { damageCalc, MIN_ROLL, typeEffectiveness } from "./damagecalc";
 import { effectiveSpeed } from "./speed";
 import { getUsableMoves } from "./pp";
-import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES } from "./movemechanics";
-import { blocksOhko } from "./abilities";
+import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES, BOOST_NULLIFYING_MOVES, FORCE_SWITCH_MOVES } from "./movemechanics";
+import { blocksOhko, preventsDrag } from "./abilities";
 import { activeItem } from "./helditem";
 import { FOCUS_SASH } from "./iteminfo";
 
@@ -139,12 +139,28 @@ export function movesFirst(a, b, field) {
     return field && field.trickRoom ? mine < theirs : mine > theirs;
 }
 
+// 상대(foe)가 지금 나와 있는 내 포켓몬(me)의 랭크업을 없앨 수 있는가: 상대의 기술에 랭업 무효기가 있을 때 (PP가 남아 있고, 구애 도구로 다른 기술에 묶여 있지 않을 때).
+//  - 흑안개: 언제나 통한다
+//  - 클리어스모그: 피해를 줄 수 있을 때 (타입 상성으로 무효가 아니고, 내가 대타로 막고 있지 않을 때)
+//  - 울부짖기, 날려버리기, 드래곤테일, 용오름: 내 뒤에 낼 포켓몬이 있고 흡반, 가드독 같은 특성으로 버티지 않을 때
+export function foeNullifiesBoosts(foe, me, myTeam) {
+    const hasBench = myTeam.slice(1).some((p) => p.hp[0] > 0);
+    return getUsableMoves(foe, { foe: me }).some((move) => {
+        if (!BOOST_NULLIFYING_MOVES.has(move.name)) return false;
+        if (FORCE_SWITCH_MOVES.has(move.name)) return hasBench && !preventsDrag(me, foe);
+        if (move.name === "clear-smog") return !me.substitute && typeEffectiveness(move, me, foe) !== 0;
+        return true;
+    });
+}
+
 // 컴퓨터(opponentTeam[0])가 지금 쓸 랭업기. 쓸 만한 게 없으면 null.
+// 상대가 랭업 무효기를 갖고 있으면 랭업기를 쓰지 않는다 (올려도 지워지거나 강제로 교체되어 헛수고이므로)
 // 후보가 여럿이면 공격 횟수가 더 많이 줄어드는 쪽, 같으면 오르는 능력치가 더 많은 쪽, 그래도 같으면 무작위.
 export function chooseSetupMove(playerTeam, opponentTeam) {
     const me = opponentTeam[0];
     const foe = playerTeam[0];
     if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.mustRecharge) return null;
+    if (foeNullifiesBoosts(foe, me, opponentTeam)) return null;
     const field = playerTeam.field || opponentTeam.field || null;
     const attacksBefore = hitsToDown(foe, bestDamage(me, foe, field, MIN_ROLL), me);
     if (attacksBefore === 1) return null; // 한 방에 잡을 수 있으면 그냥 공격한다

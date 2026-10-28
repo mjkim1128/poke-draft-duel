@@ -266,6 +266,7 @@ export function Home() {
             : pickCounterTeam(opponentPokemon, playerPokemon);
         for (const poke of opponentPokemon) poke.revealed = false;
         opponentTeam[0].revealed = true;
+        opponentTeam.readsPlayer = !!(boss && boss.counter); /// the final boss picks its action knowing what I do this turn (cpuread.js)
         setBattleTeams({ player: [...picked], opponent: opponentTeam });
         setBattleFactoryState("battle");
     }

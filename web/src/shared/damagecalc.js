@@ -284,6 +284,7 @@ export function damageCalc(attacker, defender, move, ctx = {}) {
     if (crit) damage = Math.floor(damage * abilityCritMultiplier(attacker));
     if (roll < 100) damage = Math.floor((damage * roll) / 100); // 난수는 자속 보정과 상성 배율 앞에 곱한다 (원작과 같은 순서)
     damage = Math.floor(damage * STAB * type);
+    if (defender.glaiveRush) damage *= 2; // 대검돌격을 쓴 뒤 다음 행동까지 받는 피해가 두 배
     return damage;
 }
 

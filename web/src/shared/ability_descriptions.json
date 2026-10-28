@@ -1,0 +1,976 @@
+{
+ "adaptability": {
+  "ko": "자신과 같은 타입의 기술 위력이 올라간다.",
+  "en": "Powers up moves of the same type as the Pokémon."
+ },
+ "aerilate": {
+  "ko": "노말타입의 기술이 비행타입이 된다. 위력이 조금 올라간다.",
+  "en": "Normal-type moves become Flying-type moves. The power of those moves is boosted a little."
+ },
+ "aftermath": {
+  "ko": "기절했을 때 접촉한 상대에게 데미지를 준다.",
+  "en": "Damages the attacker if it knocks out the Pokémon with a move that makes direct contact."
+ },
+ "analytic": {
+  "ko": "제일 마지막에 기술을 쓰면 기술의 위력이 올라간다.",
+  "en": "Boosts the power of the Pokémon's move if it is the last to act that turn."
+ },
+ "anger-shell": {
+  "en": "When an attack causes its HP to drop to half or less, the Pokémon gets angry. This lowers its Defense and Sp. Def stats but boosts its Attack, Sp. Atk, and Speed stats."
+ },
+ "anticipation": {
+  "ko": "상대가 지닌 위험한 기술을 감지할 수 있다.",
+  "en": "The Pokémon can sense an opposing Pokémon's dangerous moves."
+ },
+ "arena-trap": {
+  "ko": "배틀에서 상대를 도망칠 수 없게 한다.",
+  "en": "Prevents opposing Pokémon from fleeing from battle."
+ },
+ "armor-tail": {
+  "en": "The mysterious tail covering the Pokémon's head makes opponents unable to use priority moves against the Pokémon or its allies."
+ },
+ "aroma-veil": {
+  "ko": "자신과 같은 편으로 향하는 멘탈 공격을 막을 수 있다.",
+  "en": "Protects the Pokémon and its allies from effects that prevent the use of moves."
+ },
+ "aura-break": {
+  "ko": "오라의 효과를 역전시켜 위력을 떨어뜨린다.",
+  "en": "The effects of “Aura” Abilities are reversed to lower the power of affected moves."
+ },
+ "aura-guard": {
+  "en": "A Pokémon with Aura Guard takes half damage from moves that make contact. Moves affected by Long Reach which make contact will deal regular damage."
+ },
+ "bad-dreams": {
+  "ko": "잠듦 상태의 상대에게 데미지를 준다.",
+  "en": "Damages opposing Pokémon that are asleep."
+ },
+ "battle-armor": {
+  "ko": "단단한 껍질에 보호받아 상대의 공격이 급소에 맞지 않는다.",
+  "en": "Hard armor protects the Pokémon from critical hits."
+ },
+ "beads-of-ruin": {
+  "en": "The power of the Pokémon's ruinous beads lowers the Sp. Def stats of all Pokémon except itself."
+ },
+ "beast-boost": {
+  "ko": "상대를 기절시켰을 때 자신의 가장 높은 능력이 올라간다.",
+  "en": "The Pokémon boosts its most proficient stat each time it knocks out a Pokémon."
+ },
+ "berserk": {
+  "ko": "상대의 공격으로 HP가 절반이 되면 특수공격이 올라간다.",
+  "en": "Boosts the Pokémon's Sp. Atk stat when it takes a hit that causes its HP to drop to half or less."
+ },
+ "big-pecks": {
+  "ko": "방어를 떨어뜨리는 효과를 받지 않는다.",
+  "en": "Prevents the Pokémon from having its Defense stat lowered."
+ },
+ "blaze": {
+  "ko": "HP가 줄었을 때 불꽃타입 기술의 위력이 올라간다.",
+  "en": "Powers up Fire-type moves when the Pokémon's HP is low."
+ },
+ "bulletproof": {
+  "ko": "상대 구슬이나 폭탄 등 기술을 막을 수 있다.",
+  "en": "Protects the Pokémon from ball and bomb moves."
+ },
+ "cheek-pouch": {
+  "ko": "어떤 나무열매라도 먹으면 HP도 회복한다.",
+  "en": "The Pokémon's HP is restored when it eats any Berry, in addition to the Berry's usual effect."
+ },
+ "chilling-neigh": {
+  "ko": "상대를 쓰러뜨리면 차가운 울음소리를 내면서 공격이 올라간다.",
+  "en": "When the Pokémon knocks out a target, it utters a chilling neigh, which boosts its Attack stat."
+ },
+ "chlorophyll": {
+  "ko": "날씨가 맑을 때 스피드가 올라간다.",
+  "en": "Boosts the Pokémon's Speed stat in harsh sunlight."
+ },
+ "clear-body": {
+  "ko": "상대 기술이나 특성으로 능력을 떨어뜨릴 수 없다.",
+  "en": "Prevents other Pokémon's moves or Abilities from lowering the Pokémon's stats."
+ },
+ "cloud-nine": {
+  "ko": "모든 날씨의 영향이 없어진다.",
+  "en": "Eliminates the effects of weather."
+ },
+ "comatose": {
+  "ko": "항상 비몽사몽 상태로 절대 깨지 않는다. 잠든 상태로 공격할 수 있다.",
+  "en": "The Pokémon is always drowsing and will never wake up. It can attack while in its sleeping state."
+ },
+ "commander": {
+  "en": "When the Pokémon enters a battle, it goes inside the mouth of an ally Dondozo if one is on the field. The Pokémon then issues commands from there."
+ },
+ "competitive": {
+  "ko": "능력이 떨어지면 특수공격이 크게 올라간다.",
+  "en": "Boosts the Pokémon's Sp. Atk stat sharply when its stats are lowered by an opposing Pokémon."
+ },
+ "compound-eyes": {
+  "ko": "복안을 가지고 있어 기술의 명중률이 올라간다.",
+  "en": "The Pokémon's compound eyes boost its accuracy."
+ },
+ "contrary": {
+  "ko": "능력의 변화가 역전해서 올라갈 때 떨어지고 떨어질 때 올라간다.",
+  "en": "Reverses any stat changes affecting the Pokémon so that attempts to boost its stats instead lower them—and attempts to lower its stats will boost them."
+ },
+ "corrosion": {
+  "ko": "강철타입이나 독타입도 독 상태로 만들 수 있다.",
+  "en": "The Pokémon can poison the target even if it's a Steel or Poison type."
+ },
+ "costar": {
+  "en": "When the Pokémon enters a battle, it copies an ally's stat changes."
+ },
+ "cud-chew": {
+  "en": "When the Pokémon eats a Berry, it will regurgitate that Berry at the end of the next turn and eat it one more time."
+ },
+ "cursed-body": {
+  "ko": "공격을 받으면 상대의 기술을 사슬묶기 상태로 만들 때가 있다.",
+  "en": "May disable a move that has dealt damage to the Pokémon."
+ },
+ "cute-charm": {
+  "ko": "자신과 접촉한 상대를 헤롱헤롱 상태로 만들 때가 있다.",
+  "en": "The Pokémon may infatuate attackers that make direct contact with it."
+ },
+ "damp": {
+  "ko": "주변을 습하게 함으로써 자폭 등 폭발하는 기술을 아무도 못 쓰게 한다.",
+  "en": "The Pokémon dampens its surroundings, preventing all Pokémon from using explosive moves such as Self-Destruct."
+ },
+ "dancer": {
+  "ko": "누군가 춤 기술을 쓰면 자신도 이어서 춤 기술을 쓸 수 있다.",
+  "en": "Whenever a dance move is used in battle, the Pokémon will copy the user to immediately perform that dance move itself."
+ },
+ "dazzling": {
+  "ko": "상대를 놀라게 해서 이쪽을 향한 선제 기술을 사용할 수 없게 한다.",
+  "en": "The Pokémon dazzles its opponents, making them unable to use priority moves against the Pokémon or its allies."
+ },
+ "defeatist": {
+  "ko": "HP가 절반이 되면 무기력해져서 공격과 특수공격이 반감된다.",
+  "en": "Halves the Pokémon’s Attack and Sp. Atk stats when its HP becomes half or less."
+ },
+ "defiant": {
+  "ko": "능력이 떨어지면 공격이 크게 올라간다.",
+  "en": "If the Pokémon has any stat lowered by an opposing Pokémon, its Attack stat will be boosted sharply."
+ },
+ "disguise": {
+  "ko": "몸을 덮는 탈로 1번 공격을 막을 수 있다.",
+  "en": "Once per battle, the shroud that covers the Pokémon can protect it from an attack."
+ },
+ "download": {
+  "ko": "상대의 방어와 특수방어를 비교해서 낮은 쪽 능력에 맞춰서 자신의 공격이나 특수공격을 올린다.",
+  "en": "The Pokémon compares an opposing Pokémon's Defense and Sp. Def stats before raising its own Attack or Sp. Atk stat—whichever will be more effective."
+ },
+ "dragonize": {
+  "en": "The Pokémon's Normal-type moves become Dragon-type moves and their power is boosted by 20%."
+ },
+ "dragons-maw": {
+  "ko": "드래곤타입 기술의 위력이 올라간다.",
+  "en": "Powers up Dragon-type moves."
+ },
+ "drizzle": {
+  "ko": "등장했을 때 날씨를 비로 만든다.",
+  "en": "The Pokémon makes it rain when it enters a battle."
+ },
+ "drought": {
+  "ko": "등장했을 때 날씨를 맑음으로 만든다.",
+  "en": "Turns the sunlight harsh when the Pokémon enters a battle."
+ },
+ "dry-skin": {
+  "ko": "비가 오는 날씨나 물타입의 기술로 HP가 회복되고 맑을 때나 불꽃타입의 기술로는 줄어든다.",
+  "en": "Restores the Pokémon's HP in rain or when it is hit by Water-type moves. Reduces HP in harsh sunlight, and increases the damage received from Fire-type moves."
+ },
+ "early-bird": {
+  "ko": "잠듦 상태가 되어도 2배 스피드로 깨어날 수 있다.",
+  "en": "The Pokémon awakens from sleep twice as fast as other Pokémon."
+ },
+ "earth-eater": {
+  "en": "If hit by a Ground-type move, the Pokémon has its HP restored instead of taking damage."
+ },
+ "eelevate": {
+  "en": "The Pokémon floats off the ground, making it immune to Ground-type moves, as well as the Spikes, Toxic Spikes, and Sticky Web statuses. When the Pokémon knocks out a target with an attack, its highest stat is boosted by 1 stage."
+ },
+ "effect-spore": {
+  "ko": "공격으로 자신에게 접촉한 상대를 독이나 마비, 잠듦 상태로 만들 때가 있다.",
+  "en": "Contact with the Pokémon may inflict poison, sleep, or paralysis on the attacker."
+ },
+ "electric-surge": {
+  "ko": "등장했을 때 일렉트릭필드를 사용한다.",
+  "en": "Turns the ground into Electric Terrain when the Pokémon enters a battle."
+ },
+ "emergency-exit": {
+  "ko": "HP가 절반이 되면 위험을 회피하기 위해 지닌 포켓몬으로 돌아간다.",
+  "en": "The Pokémon, sensing danger, switches out when its HP becomes half or less."
+ },
+ "filter": {
+  "ko": "효과가 굉장한 공격의 위력을 약하게 만든다.",
+  "en": "Reduces the power of supereffective attacks that hit the Pokémon."
+ },
+ "flame-body": {
+  "ko": "자신과 접촉한 상대를 화상 상태로 만들 때가 있다.",
+  "en": "Contact with the Pokémon may burn the attacker."
+ },
+ "flash-fire": {
+  "ko": "불꽃타입의 기술을 받으면 불꽃을 받아서 자신이 사용하는 불꽃타입의 기술이 강해진다.",
+  "en": "If hit by a Fire-type move, the Pokémon absorbs the flames and uses them to power up its own Fire-type moves."
+ },
+ "flower-gift": {
+  "ko": "날씨가 맑을 때 자신과 같은 편의 공격과 특수방어의 능력이 올라간다.",
+  "en": "Boosts the Attack and Sp. Def stats of itself and allies in harsh sunlight."
+ },
+ "flower-veil": {
+  "ko": "같은 편의 풀타입 포켓몬은 능력이 떨어지지 않고 상태 이상도 되지 않는다.",
+  "en": "Ally Grass-type Pokémon are protected from status conditions and the lowering of their stats."
+ },
+ "fluffy": {
+  "ko": "상대로부터 받은 접촉하는 기술의 데미지를 반감시키지만 불꽃타입 기술의 데미지는 2배가 된다.",
+  "en": "Halves the damage taken from moves that make direct contact, but doubles that of Fire-type moves."
+ },
+ "forecast": {
+  "ko": "날씨의 영향을 받아 물타입, 불꽃타입, 얼음타입 중 하나로 변화한다.",
+  "en": "The Pokémon transforms with the weather to change its type to Water, Fire, or Ice."
+ },
+ "forewarn": {
+  "ko": "등장했을 때 상대가 지닌 기술을 하나만 꿰뚫어본다.",
+  "en": "When it enters a battle, the Pokémon can tell one of the moves an opposing Pokémon has."
+ },
+ "friend-guard": {
+  "ko": "같은 편의 데미지를 줄일 수 있다.",
+  "en": "Reduces damage dealt to allies."
+ },
+ "frisk": {
+  "ko": "등장했을 때 상대의 지닌 물건을 통찰할 수 있다.",
+  "en": "When it enters a battle, the Pokémon can check an opposing Pokémon's held item."
+ },
+ "fur-coat": {
+  "ko": "상대로부터 받는 물리 기술의 데미지가 절반이 된다.",
+  "en": "Halves the damage from physical moves."
+ },
+ "gale-wings": {
+  "ko": "HP가 꽉 찼을 때 비행타입의 기술을 먼저 쓸 수 있다.",
+  "en": "Gives priority to the Pokémon's Flying-type moves while its HP is full."
+ },
+ "gluttony": {
+  "ko": "HP가 줄어들면 먹을 나무열매를 HP가 절반일 때 먹어버린다.",
+  "en": "If the Pokémon is holding a Berry to be eaten when its HP is low, it will instead eat the Berry when its HP drops to half or less."
+ },
+ "good-as-gold": {
+  "en": "A body of pure, solid gold gives the Pokémon full immunity to other Pokémon's status moves."
+ },
+ "gooey": {
+  "ko": "공격으로 자신과 접촉한 상대의 스피드를 떨어뜨린다.",
+  "en": "Contact with the Pokémon lowers the attacker's Speed stat."
+ },
+ "grass-pelt": {
+  "ko": "그래스필드일 때 방어가 올라간다.",
+  "en": "Boosts the Pokémon's Defense stat on Grassy Terrain."
+ },
+ "grassy-surge": {
+  "ko": "등장했을 때 그래스필드를 사용한다.",
+  "en": "Turns the ground into Grassy Terrain when the Pokémon enters a battle."
+ },
+ "grim-neigh": {
+  "ko": "상대를 쓰러뜨리면 무서운 울음소리를 내면서 특수공격이 올라간다.",
+  "en": "When the Pokémon knocks out a target, it utters a terrifying neigh, which boosts its Sp. Atk stat."
+ },
+ "guard-dog": {
+  "en": "Boosts the Pokémon’s Attack stat if intimidated. Moves and items that would force the Pokémon to switch out also fail to work."
+ },
+ "gulp-missile": {
+  "ko": "파도타기나 다이빙을 쓰면 먹이를 물어온다. 데미지를 받으면 먹이를 토해내서 공격한다.",
+  "en": "When the Pokémon uses Surf or Dive, it will come back with prey. When it takes damage, it will spit out the prey to attack."
+ },
+ "guts": {
+  "ko": "상태 이상이 되면 근성을 보여서 공격이 올라간다.",
+  "en": "It's so gutsy that having a status condition boosts the Pokémon's Attack stat."
+ },
+ "harvest": {
+  "ko": "사용한 나무열매를 몇 번이고 만들어 낸다.",
+  "en": "May create another Berry after one is used."
+ },
+ "healer": {
+  "ko": "같은 편의 상태 이상을 가끔 회복시킨다.",
+  "en": "Sometimes cures the status conditions of the Pokémon's allies."
+ },
+ "heatproof": {
+  "ko": "내열인 몸으로 인해 불꽃타입 공격의 데미지를 반감한다.",
+  "en": "The Pokémon's heatproof body halves the damage taken from Fire-type moves."
+ },
+ "heavy-metal": {
+  "ko": "자신의 무게가 2배가 된다.",
+  "en": "Doubles the Pokémon's weight."
+ },
+ "huge-power": {
+  "ko": "물리공격의 위력이 2배가 된다.",
+  "en": "Doubles the Pokémon's Attack stat."
+ },
+ "hunger-switch": {
+  "ko": "턴이 끝날 때마다 배부른 모양, 배고픈 모양, 배부른 모양...으로 번갈아서 모습을 바꾼다.",
+  "en": "The Pokémon changes its form, alternating between its Full Belly Mode and Hangry Mode after the end of every turn."
+ },
+ "hustle": {
+  "ko": "자신의 공격이 높아지지만 명중률이 떨어진다.",
+  "en": "Boosts the Pokémon's Attack stat but lowers its accuracy."
+ },
+ "hydration": {
+  "ko": "비가 오는 날씨일 때 상태 이상이 회복된다.",
+  "en": "Cures the Pokémon's status conditions in rain."
+ },
+ "hyper-cutter": {
+  "ko": "힘이 자랑인 집게를 가지고 있어 상대가 공격을 떨어뜨리지 못한다.",
+  "en": "The Pokémon's prized, mighty pincers prevent other Pokémon from lowering its Attack stat."
+ },
+ "ice-body": {
+  "ko": "날씨가 싸라기눈일 때 HP를 조금씩 회복한다.",
+  "en": "The Pokémon gradually regains HP in snow."
+ },
+ "ice-face": {
+  "ko": "물리공격을 머리의 얼음이 대신 맞아주지만 모습도 바뀐다. 얼음은 싸라기눈이 내리면 원래대로 돌아온다.",
+  "en": "The Pokémon's ice head can take a physical attack as a substitute, but the attack also changes the Pokémon's appearance. The ice will be restored when it snows."
+ },
+ "ice-scales": {
+  "ko": "얼음인분의 보호를 받아 특수공격으로 받는 데미지가 절반이 된다.",
+  "en": "The Pokémon is protected by ice scales, which halve the damage taken from special moves."
+ },
+ "illuminate": {
+  "ko": "주변을 밝게 하는 것으로 야생 포켓몬과 만나기 쉬워진다.",
+  "en": "By illuminating its surroundings, the Pokémon prevents its accuracy from being lowered."
+ },
+ "illusion": {
+  "ko": "지닌 포켓몬 중 제일 뒤에 있는 포켓몬으로 둔갑하여 나와서 상대를 속인다.",
+  "en": "The Pokémon fools opponents by entering battle disguised as the last Pokémon in its Trainer's party."
+ },
+ "imposter": {
+  "ko": "눈앞의 포켓몬으로 변신해버린다.",
+  "en": "The Pokémon transforms itself into the Pokémon it's facing."
+ },
+ "infiltrator": {
+  "ko": "상대의 벽이나 대타출동을 뚫고 공격할 수 있다.",
+  "en": "The Pokémon's moves are unaffected by the target's barriers, substitutes, and the like."
+ },
+ "innards-out": {
+  "ko": "상대가 쓰러뜨렸을 때 HP의 남은 양만큼 상대에게 데미지를 준다.",
+  "en": "Damages the attacker landing the finishing hit by the amount equal to its last HP."
+ },
+ "inner-focus": {
+  "ko": "단련한 정신으로 인하여 상대의 공격에 풀죽지 않는다.",
+  "en": "The Pokémon's intense focus prevents it from flinching or being affected by Intimidate."
+ },
+ "insomnia": {
+  "ko": "잠들지 못하는 체질이라 잠듦 상태가 되지 않는다.",
+  "en": "The Pokémon's insomnia prevents it from falling asleep."
+ },
+ "intimidate": {
+  "ko": "등장했을 때 위협해서 상대를 위축시켜 상대의 공격을 떨어뜨린다.",
+  "en": "When the Pokémon enters a battle, it intimidates opposing Pokémon and makes them cower, lowering their Attack stats."
+ },
+ "iron-barbs": {
+  "ko": "자신과 접촉한 상대에게 철가시로 데미지를 준다.",
+  "en": "Inflicts damage on the attacker upon contact with iron barbs."
+ },
+ "iron-fist": {
+  "ko": "펀치를 사용하는 기술의 위력이 올라간다.",
+  "en": "Powers up punching moves."
+ },
+ "justified": {
+  "ko": "악타입 공격을 받으면 정의감으로 공격이 올라간다.",
+  "en": "When the Pokémon is hit by a Dark-type attack, its Attack stat is boosted by its sense of justice."
+ },
+ "keen-eye": {
+  "ko": "날카로운 눈 덕분에 명중률이 떨어지지 않는다.",
+  "en": "The Pokémon's keen eyes prevent its accuracy from being lowered."
+ },
+ "klutz": {
+  "ko": "지니고 있는 도구를 쓸 수 없다.",
+  "en": "The Pokémon can't use any held items."
+ },
+ "leaf-guard": {
+  "ko": "날씨가 맑을 때는 상태 이상이 되지 않는다.",
+  "en": "Prevents status conditions in harsh sunlight."
+ },
+ "levitate": {
+  "ko": "땅에서 뜨는 것으로 땅타입의 기술을 받지 않는다.",
+  "en": "By floating in the air, the Pokémon receives full immunity to all Ground-type moves."
+ },
+ "libero": {
+  "ko": "자신이 사용한 기술과 같은 타입으로 변화한다.",
+  "en": "Changes the Pokémon's type to the type of the move it's about to use. This works only once each time the Pokémon enters battle."
+ },
+ "light-metal": {
+  "ko": "자신의 무게가 절반이 된다.",
+  "en": "Halves the Pokémon's weight."
+ },
+ "lightning-rod": {
+  "ko": "전기타입의 기술을 자신에게 끌어모아 데미지를 받지 않고 특수공격을 올린다.",
+  "en": "The Pokémon draws in all Electric-type moves. Instead of taking damage from them, its Sp. Atk stat is boosted."
+ },
+ "limber": {
+  "ko": "유연한 몸으로 인해 마비 상태가 되지 않는다.",
+  "en": "The Pokémon's limber body prevents it from being paralyzed."
+ },
+ "lingering-aroma": {
+  "en": "Contact with the Pokémon changes the attacker's Ability to Lingering Aroma."
+ },
+ "liquid-ooze": {
+  "ko": "해감액을 흡수한 상대는 강렬한 악취로 데미지를 받아 HP가 줄어든다.",
+  "en": "The strong stench of the Pokémon's oozed liquid damages attackers that use HP-draining moves."
+ },
+ "liquid-voice": {
+  "ko": "모든 소리 기술이 물타입이 된다.",
+  "en": "Sound-based moves become Water-type moves."
+ },
+ "long-reach": {
+  "ko": "모든 기술을 상대에게 접촉하지 않고 사용할 수 있다.",
+  "en": "The Pokémon uses its moves without making contact with the target."
+ },
+ "magic-bounce": {
+  "ko": "상대가 쓴 변화 기술을 받지 않고 그대로 되받아칠 수 있다.",
+  "en": "The Pokémon reflects status moves instead of getting hit by them."
+ },
+ "magic-guard": {
+  "ko": "공격 이외에는 데미지를 입지 않는다.",
+  "en": "The Pokémon only takes damage from attacks."
+ },
+ "magician": {
+  "ko": "기술을 맞은 상대의 도구를 빼앗아 버린다.",
+  "en": "The Pokémon steals the held item from any target it hits with a move."
+ },
+ "magma-armor": {
+  "ko": "뜨거운 마그마를 몸에 둘러서 얼음 상태가 되지 않는다.",
+  "en": "The Pokémon’s hot magma coating prevents it from being frozen."
+ },
+ "magnet-pull": {
+  "ko": "강철타입의 포켓몬을 자력으로 끌어모아 도망칠 수 없게 한다.",
+  "en": "Prevents Steel-type Pokémon from fleeing by pulling them in with magnetism."
+ },
+ "marvel-scale": {
+  "ko": "상태 이상이 되면 이상한 비늘이 반응해서 방어가 올라간다.",
+  "en": "The Pokémon's marvelous scales boost its Defense stat if it has a status condition."
+ },
+ "mega-launcher": {
+  "ko": "파동 기술의 위력이 올라간다.",
+  "en": "Powers up pulse moves."
+ },
+ "minds-eye": {
+  "en": "The Pokémon ignores changes to opponents' evasiveness, its accuracy can't be lowered, and it can hit Ghost types with Normal-type and Fighting-type moves"
+ },
+ "minus": {
+  "ko": "플러스나 마이너스의 특성을 가진 포켓몬이 동료에 있으면 자신의 특수공격이 올라간다.",
+  "en": "Boosts the Sp. Atk stat of the Pokémon if an ally with the Plus or Minus Ability is also in battle."
+ },
+ "misty-surge": {
+  "ko": "등장했을 때 미스트필드를 사용한다.",
+  "en": "Turns the ground into Misty Terrain when the Pokémon enters a battle."
+ },
+ "mold-breaker": {
+  "ko": "상대 특성에 방해받지 않고 상대에게 기술을 쓸 수 있다.",
+  "en": "The Pokémon's moves are unimpeded by the Ability of the target."
+ },
+ "moody": {
+  "ko": "매 턴 능력 중 하나가 크게 오르고 하나가 떨어진다.",
+  "en": "Every turn, one of the Pokémon's stats will be boosted sharply but another stat will be lowered."
+ },
+ "motor-drive": {
+  "ko": "전기타입의 기술을 받으면 데미지를 받지 않고 스피드가 올라간다.",
+  "en": "The Pokémon takes no damage when hit by Electric-type moves. Instead, its Speed stat is boosted."
+ },
+ "moxie": {
+  "ko": "상대를 쓰러뜨리면 자신감이 붙어서 공격이 올라간다.",
+  "en": "When the Pokémon knocks out a target, it shows moxie, which boosts its Attack stat."
+ },
+ "multiscale": {
+  "ko": "HP가 꽉 찼을 때 받는 데미지가 줄어든다.",
+  "en": "Reduces the amount of damage the Pokémon takes while its HP is full."
+ },
+ "mummy": {
+  "ko": "상대가 접촉하면 상대를 미라로 만들어버린다.",
+  "en": "Contact with the Pokémon changes the attacker’s Ability to Mummy."
+ },
+ "mycelium-might": {
+  "en": "The Pokémon will always act more slowly when using status moves, but these moves will be unimpeded by the Ability of the target."
+ },
+ "natural-cure": {
+  "ko": "지닌 포켓몬으로 돌아오면 상태 이상이 회복된다.",
+  "en": "The Pokémon's status conditions are cured when it switches out."
+ },
+ "no-guard": {
+  "ko": "노가드전법에 따라 서로가 사용하는 기술이 반드시 맞게 된다.",
+  "en": "The Pokémon employs no-guard tactics to ensure incoming and outgoing attacks always land."
+ },
+ "normalize": {
+  "ko": "어떤 타입의 기술도 모두 노말타입이 된다. 위력이 조금 올라간다.",
+  "en": "All the Pokémon’s moves become Normal type. The power of those moves is boosted a little."
+ },
+ "oblivious": {
+  "ko": "둔감해서 헤롱헤롱이나 도발 상태가 되지 않는다.",
+  "en": "The Pokémon is oblivious, keeping it from being infatuated, falling for taunts, or being affected by Intimidate."
+ },
+ "opportunist": {
+  "en": "If an opponent's stat is boosted, the Pokémon seizes the opportunity to boost the same stat for itself."
+ },
+ "overcoat": {
+  "ko": "모래바람이나 싸라기눈 등의 데미지를 입지 않는다. 가루의 기술을 받지 않는다.",
+  "en": "The Pokémon takes no damage from sandstorms. It is also protected from the effects of powders and spores."
+ },
+ "overgrow": {
+  "ko": "HP가 줄었을 때 풀타입 기술의 위력이 올라간다.",
+  "en": "Powers up Grass-type moves when the Pokémon's HP is low."
+ },
+ "own-tempo": {
+  "ko": "마이페이스라서 혼란 상태가 되지 않는다.",
+  "en": "The Pokémon sticks to its own tempo, preventing it from becoming confused or being affected by Intimidate."
+ },
+ "parental-bond": {
+  "ko": "부모와 자식 2마리로 2번 공격할 수 있다.",
+  "en": "Parent and child each attacks."
+ },
+ "perish-body": {
+  "ko": "접촉하는 기술을 받으면 3턴 후에 양쪽 모두 기절한다. 교체되면 효과가 없어진다.",
+  "en": "When hit by a move that makes direct contact, the Pokémon and the attacker will faint after three turns unless they switch out of battle."
+ },
+ "pickpocket": {
+  "ko": "접촉한 상대의 도구를 훔친다.",
+  "en": "The Pokémon steals the held item from attackers that made direct contact with it."
+ },
+ "pickup": {
+  "ko": "상대가 사용한 도구를 주워올 때가 있다. 모험 중에도 주워온다.",
+  "en": "The Pokémon may pick up an item another Pokémon used during a battle. It may pick up items outside of battle, too."
+ },
+ "piercing-drill": {
+  "en": "When the Pokémon uses contact moves, it can hit even targets that are protecting themselves, dealing 1/4 of the damage that the move would otherwise deal. Everything aside from the target's protective effects is still triggered."
+ },
+ "pixilate": {
+  "ko": "노말타입의 기술이 페어리타입이 된다. 위력이 조금 올라간다.",
+  "en": "Normal-type moves become Fairy-type moves. The power of those moves is boosted a little."
+ },
+ "plus": {
+  "ko": "플러스나 마이너스의 특성을 가진 포켓몬이 동료에 있으면 자신의 특수공격이 올라간다.",
+  "en": "Boosts the Sp. Atk stat of the Pokémon if an ally with the Plus or Minus Ability is also in battle."
+ },
+ "poison-heal": {
+  "ko": "독 상태가 되면 HP가 줄지 않고 증가한다.",
+  "en": "If poisoned, the Pokémon has its HP restored instead of taking damage."
+ },
+ "poison-puppeteer": {
+  "en": "Pokémon poisoned by Pecharunt's moves will also become confused."
+ },
+ "poison-touch": {
+  "ko": "접촉하기만 해도 상대를 독 상태로 만들 때가 있다.",
+  "en": "May poison a target when the Pokémon makes contact."
+ },
+ "power-spot": {
+  "ko": "옆에 있기만 해도 기술의 위력이 올라간다.",
+  "en": "Just being next to the Pokémon powers up moves."
+ },
+ "prankster": {
+  "ko": "변화 기술을 먼저 쓸 수 있다.",
+  "en": "Gives priority to the Pokémon's status moves."
+ },
+ "pressure": {
+  "ko": "프레셔를 줘서 상대가 쓰는 기술의 PP를 많이 줄인다.",
+  "en": "Puts other Pokémon under pressure, causing them to expend more PP to use their moves."
+ },
+ "prism-armor": {
+  "ko": "효과가 굉장한 공격의 위력을 약하게 만든다.",
+  "en": "Reduces the power of supereffective attacks taken."
+ },
+ "propeller-tail": {
+  "ko": "상대의 기술을 끌어모으는 특성이나 기술의 영향을 받지 않는다.",
+  "en": "Ignores the effects of opposing Pokémon's Abilities and moves that draw in moves."
+ },
+ "protean": {
+  "ko": "자신이 사용한 기술과 같은 타입으로 변화한다.",
+  "en": "Changes the Pokémon's type to the type of the move it's about to use. This works only once each time the Pokémon enters battle."
+ },
+ "protosynthesis": {
+  "en": "Boosts the Pokémon's most proficient stat in harsh sunlight or if the Pokémon is holding Booster Energy."
+ },
+ "psychic-surge": {
+  "ko": "등장했을 때 사이코필드를 사용한다.",
+  "en": "Turns the ground into Psychic Terrain when the Pokémon enters a battle."
+ },
+ "punk-rock": {
+  "ko": "소리 기술의 위력이 올라간다. 상대로부터 받는 소리 기술의 데미지는 절반이 된다.",
+  "en": "Boosts the power of sound-based moves. The Pokémon also takes half the damage from these kinds of moves."
+ },
+ "pure-power": {
+  "ko": "요가의 힘으로 물리공격의 위력이 2배가 된다.",
+  "en": "Using its pure power, the Pokémon doubles its Attack stat."
+ },
+ "purifying-salt": {
+  "en": "The Pokémon's pure salt protects it from status conditions and halves the damage taken from Ghost-type moves."
+ },
+ "quark-drive": {
+  "en": "Boosts the Pokémon's most proficient stat on Electric Terrain or if the Pokémon is holding Booster Energy."
+ },
+ "queenly-majesty": {
+  "ko": "상대에게 위압감을 줘서 이쪽을 향한 선제 기술을 사용할 수 없게 한다.",
+  "en": "When the Pokémon uses Surf or Dive, it will come back with prey. When it takes damage, it will spit out the prey to attack."
+ },
+ "rain-dish": {
+  "ko": "비가 오는 날씨일 때 조금씩 HP를 회복한다.",
+  "en": "The Pokémon gradually regains HP in rain."
+ },
+ "rattled": {
+  "ko": "악타입과 고스트타입과 벌레타입의 기술을 받으면 주눅이 들어 스피드가 올라간다.",
+  "en": "The Pokémon gets scared when hit by a Dark-, Ghost-, or Bug-type attack or if intimidated, which boosts its Speed stat."
+ },
+ "reckless": {
+  "ko": "반동 데미지를 받는 기술의 위력이 올라간다.",
+  "en": "Powers up moves that have recoil damage."
+ },
+ "refrigerate": {
+  "ko": "노말타입의 기술이 얼음타입이 된다. 위력이 조금 올라간다.",
+  "en": "Normal-type moves become Ice-type moves. The power of those moves is boosted a little."
+ },
+ "regenerator": {
+  "ko": "지닌 포켓몬으로 돌아오면 HP를 조금 회복한다.",
+  "en": "The Pokémon has a little of its HP restored when withdrawn from battle."
+ },
+ "ripen": {
+  "ko": "나무열매를 숙성시켜서 효과가 2배가 된다.",
+  "en": "Ripens Berries and doubles their effect."
+ },
+ "rivalry": {
+  "ko": "성별이 같으면 투쟁심을 불태워 강해진다. 성별이 다르면 약해진다.",
+  "en": "The Pokémon's competitive spirit makes it deal more damage to Pokémon of the same gender, but less damage to Pokémon of the opposite gender."
+ },
+ "rock-head": {
+  "ko": "반동을 받는 기술을 사용해도 HP가 줄지 않는다.",
+  "en": "Protects the Pokémon from recoil damage."
+ },
+ "rough-skin": {
+  "ko": "공격을 받았을 때 자신에게 접촉한 상대를 까칠까칠한 피부로 상처를 입힌다.",
+  "en": "The Pokémon's rough skin damages attackers that make direct contact with it."
+ },
+ "run-away": {
+  "ko": "야생 포켓몬으로부터 반드시 도망칠 수 있다.",
+  "en": "Enables a sure getaway from wild Pokémon."
+ },
+ "sand-force": {
+  "ko": "날씨가 모래바람일 때 바위타입과 땅타입과 강철타입의 위력이 올라간다.",
+  "en": "Boosts the power of Rock-, Ground-, and Steel-type moves in a sandstorm."
+ },
+ "sand-rush": {
+  "ko": "날씨가 모래바람일 때 스피드가 올라간다.",
+  "en": "Boosts the Pokémon's Speed stat in a sandstorm."
+ },
+ "sand-stream": {
+  "ko": "등장했을 때 날씨를 모래바람으로 만든다.",
+  "en": "The Pokémon summons a sandstorm when it enters a battle."
+ },
+ "sand-veil": {
+  "ko": "모래바람일 때 회피율이 올라간다.",
+  "en": "Boosts the Pokémon's evasiveness in a sandstorm."
+ },
+ "sap-sipper": {
+  "ko": "풀타입 기술을 받으면 데미지를 입지 않고 공격이 올라간다.",
+  "en": "The Pokémon takes no damage when hit by Grass-type moves. Instead, its Attack stat is boosted."
+ },
+ "schooling": {
+  "ko": "HP가 많을 때 무리지어 강해진다. HP가 얼마 남지 않으면 무리는 뿔뿔이 흩어진다.",
+  "en": "When it has a lot of HP, the Pokémon forms a powerful school. It stops schooling when its HP is low."
+ },
+ "scrappy": {
+  "ko": "고스트타입 포켓몬에게 노말타입과 격투타입의 기술을 맞게 한다.",
+  "en": "The Pokémon can hit Ghost-type Pokémon with Normal- and Fighting-type moves. It is also unaffected by Intimidate."
+ },
+ "screen-cleaner": {
+  "ko": "등장했을 때 상대와 같은 편의 빛의장막, 리플렉터, 오로라베일의 효과가 사라진다.",
+  "en": "When the Pokémon enters a battle, the effects of Light Screen, Reflect, and Aurora Veil are nullified for both opposing and ally Pokémon."
+ },
+ "seed-sower": {
+  "en": "Turns the ground into Grassy Terrain when the Pokémon is hit by an attack."
+ },
+ "serene-grace": {
+  "ko": "하늘의 은총 덕분에 기술의 추가 효과가 나오기 쉽다.",
+  "en": "Raises the likelihood of additional effects occurring when the Pokémon uses its moves."
+ },
+ "shadow-tag": {
+  "ko": "상대의 그림자를 밟아 도망치거나 교체할 수 없게 한다.",
+  "en": "The Pokémon steps on the opposing Pokémon's shadows to prevent them from fleeing or switching out."
+ },
+ "sharpness": {
+  "en": "Powers up slicing moves."
+ },
+ "shed-skin": {
+  "ko": "몸의 껍질을 벗어 던져 상태 이상을 회복할 때가 있다.",
+  "en": "The Pokémon may cure its own status conditions by shedding its skin."
+ },
+ "sheer-force": {
+  "ko": "기술의 추가 효과가 없어지지만 그만큼 높은 위력으로 기술을 사용할 수 있다.",
+  "en": "Removes any additional effects from the Pokémon's moves, but increases the moves' power."
+ },
+ "shell-armor": {
+  "ko": "단단한 껍질의 보호를 받아 상대의 공격이 급소에 맞지 않는다.",
+  "en": "A hard shell protects the Pokémon from critical hits."
+ },
+ "shield-dust": {
+  "ko": "인분에 보호받아 기술의 추가 효과를 받지 않게 된다.",
+  "en": "Protective dust shields the Pokémon from the additional effects of moves."
+ },
+ "shields-down": {
+  "ko": "HP가 절반이 되면 껍질이 깨져 공격적으로 된다.",
+  "en": "When its HP drops to half or less, the Pokémon's shell breaks and it becomes aggressive."
+ },
+ "simple": {
+  "ko": "능력 변화가 평소의 2배가 된다.",
+  "en": "Doubles the effects of the Pokémon's stat changes."
+ },
+ "skill-link": {
+  "ko": "연속 기술을 사용하면 항상 최고 횟수를 사용할 수 있다.",
+  "en": "Maximizes the number of times multistrike moves hit."
+ },
+ "slush-rush": {
+  "ko": "날씨가 싸라기눈일 때 스피드가 올라간다.",
+  "en": "Boosts the Pokémon's Speed stat in snow."
+ },
+ "sniper": {
+  "ko": "공격을 급소에 맞혔을 때 위력이 더욱 올라간다.",
+  "en": "If the Pokémon's attack lands a critical hit, the attack is powered up even further."
+ },
+ "snow-cloak": {
+  "ko": "날씨가 싸라기눈일 때 회피율이 올라간다.",
+  "en": "Boosts the Pokémon's evasiveness in snow."
+ },
+ "snow-warning": {
+  "ko": "등장했을 때 날씨를 싸라기눈으로 만든다.",
+  "en": "The Pokémon makes it snow when it enters a battle."
+ },
+ "solar-power": {
+  "ko": "날씨가 맑으면 특수공격이 올라가지만 매 턴 HP가 줄어든다.",
+  "en": "In harsh sunlight, the Pokémon's Sp. Atk stat is boosted, but its HP decreases every turn."
+ },
+ "solid-rock": {
+  "ko": "효과가 굉장한 공격의 위력을 약하게 만든다.",
+  "en": "Reduces the power of supereffective attacks that hit the Pokémon."
+ },
+ "soul-heart": {
+  "ko": "포켓몬이 기절할 때마다 특수공격이 올라간다.",
+  "en": "Boosts the Pokémon's Sp. Atk stat every time another Pokémon faints."
+ },
+ "soundproof": {
+  "ko": "소리를 차단하는 것으로 소리 공격을 받지 않는다.",
+  "en": "Soundproofing gives the Pokémon full immunity to all sound-based moves."
+ },
+ "speed-boost": {
+  "ko": "매 턴 스피드가 올라간다.",
+  "en": "The Pokémon's Speed stat is boosted every turn."
+ },
+ "stakeout": {
+  "ko": "교체로 나온 상대에게 2배 데미지로 공격할 수 있다.",
+  "en": "Doubles the damage dealt to a target that has just switched into battle."
+ },
+ "stalwart": {
+  "ko": "상대의 기술을 끌어모으는 특성이나 기술의 영향을 받지 않는다.",
+  "en": "Ignores the effects of opposing Pokémon's Abilities and moves that draw in moves."
+ },
+ "stamina": {
+  "ko": "공격을 받으면 방어가 올라간다.",
+  "en": "Boosts the Defense stat when the Pokémon is hit by an attack."
+ },
+ "stance-change": {
+  "ko": "공격 기술을 쓰면 블레이드폼으로 기술 킹실드를 쓰면 실드폼으로 변한다.",
+  "en": "The Pokémon changes its form to Blade Forme when it uses an attack move and changes to Shield Forme when it uses King’s Shield."
+ },
+ "static": {
+  "ko": "정전기를 몸에 둘러 접촉한 상대를 마비시킬 때가 있다.",
+  "en": "The Pokémon is charged with static electricity and may paralyze attackers that make direct contact with it."
+ },
+ "steadfast": {
+  "ko": "풀죽을 때마다 불굴의 마음을 불태워 스피드가 올라간다.",
+  "en": "The Pokémon's determination boosts its Speed stat every time it flinches."
+ },
+ "steelworker": {
+  "ko": "강철타입 기술의 위력이 올라간다.",
+  "en": "Powers up Steel-type moves."
+ },
+ "steely-spirit": {
+  "ko": "같은 편의 강철타입 공격의 위력이 올라간다.",
+  "en": "Powers up the Steel-type moves of the Pokémon and its allies."
+ },
+ "sticky-hold": {
+  "ko": "점착질의 몸에 도구가 달라붙어 있어 상대에게 도구를 뺏기지 않는다.",
+  "en": "The Pokémon's held items cling to its sticky body and cannot be removed by other Pokémon."
+ },
+ "storm-drain": {
+  "ko": "물타입의 기술을 자신에게 끌어모아 데미지는 받지 않고 특수공격이 올라간다.",
+  "en": "The Pokémon draws in all Water-type moves. Instead of taking damage from them, its Sp. Atk stat is boosted."
+ },
+ "strong-jaw": {
+  "ko": "턱이 튼튼하여 무는 기술의 위력이 올라간다.",
+  "en": "The Pokémon's strong jaw boosts the power of its biting moves."
+ },
+ "sturdy": {
+  "ko": "상대 기술을 받아도 일격으로 쓰러지지 않는다. 일격필살 기술도 효과 없다.",
+  "en": "The Pokémon cannot be knocked out by a single hit as long as its HP is full. One-hit KO moves will also fail to knock it out."
+ },
+ "suction-cups": {
+  "ko": "흡반으로 지면에 달라붙어 포켓몬을 교체시키는 기술이나 도구의 효과를 발휘하지 못하게 한다.",
+  "en": "The Pokémon uses suction cups to stay in one spot. This protects it from moves and items that would force it to switch out."
+ },
+ "super-luck": {
+  "ko": "대운을 가지고 있어 상대의 급소에 공격이 맞기 쉽다.",
+  "en": "The Pokémon is so lucky that the critical-hit ratios of its moves are boosted."
+ },
+ "supreme-overlord": {
+  "en": "When the Pokémon enters a battle, its Attack and Sp. Atk stats are slightly boosted for each of the allies in its party that have already been defeated."
+ },
+ "swarm": {
+  "ko": "HP가 줄었을 때 벌레타입 기술의 위력이 올라간다.",
+  "en": "Powers up Bug-type moves when the Pokémon's HP is low."
+ },
+ "sweet-veil": {
+  "ko": "같은 편의 포켓몬이 잠들지 않게 된다.",
+  "en": "Prevents the Pokémon and its allies from falling asleep."
+ },
+ "swift-swim": {
+  "ko": "비가 오는 날씨일 때 스피드가 올라간다.",
+  "en": "Boosts the Pokémon's Speed stat in rain."
+ },
+ "sword-of-ruin": {
+  "en": "The power of the Pokémon's ruinous sword lowers the Defense stats of all Pokémon except itself."
+ },
+ "symbiosis": {
+  "ko": "같은 편이 도구를 쓰면 자신이 지니고 있는 도구를 같은 편에게 건넨다.",
+  "en": "The Pokémon passes its held item to an ally that has used up an item."
+ },
+ "synchronize": {
+  "ko": "자신이 걸린 독이나 마비, 화상을 상대에게 옮긴다.",
+  "en": "If the Pokémon is burned, paralyzed, or poisoned by another Pokémon, that Pokémon will be inflicted with the same status condition."
+ },
+ "tablets-of-ruin": {
+  "en": "The power of the Pokémon's ruinous wooden tablets lowers the Attack stats of all Pokémon except itself."
+ },
+ "tangled-feet": {
+  "ko": "혼란 상태일 때는 회피율이 올라간다.",
+  "en": "Boosts the Pokémon's evasiveness if it is confused."
+ },
+ "technician": {
+  "ko": "위력이 약한 기술의 위력을 올려서 공격할 수 있다.",
+  "en": "Powers up weak moves so the Pokémon can deal more damage with them."
+ },
+ "telepathy": {
+  "ko": "같은 편의 공격의 낌새를 읽고 기술을 회피한다.",
+  "en": "The Pokémon anticipates and dodges the attacks of its allies."
+ },
+ "tera-shift": {
+  "en": "When the Pokémon enters a battle, it absorbs the energy around itself and transforms into its Terastal Form."
+ },
+ "thermal-exchange": {
+  "en": "Boosts the Attack stat when the Pokémon is hit by a Fire-type move. The Pokémon also cannot be burned."
+ },
+ "thick-fat": {
+  "ko": "두꺼운 지방으로 보호되고 있어 불꽃타입과 얼음타입의 기술의 데미지를 반감시킨다.",
+  "en": "The Pokémon is protected by a layer of thick fat, which halves the damage taken from Fire- and Ice-type moves."
+ },
+ "tinted-lens": {
+  "ko": "효과가 별로인 기술을 통상의 위력으로 쓸 수 있다.",
+  "en": "The Pokémon can use “not very effective” moves to deal regular damage."
+ },
+ "torrent": {
+  "ko": "HP가 줄었을 때 물타입 기술의 위력이 올라간다.",
+  "en": "Powers up Water-type moves when the Pokémon's HP is low."
+ },
+ "tough-claws": {
+  "ko": "상대에게 접촉하는 기술의 위력이 올라간다.",
+  "en": "Powers up moves that make direct contact."
+ },
+ "toxic-boost": {
+  "ko": "독 상태가 되었을 때 물리 기술의 위력이 올라간다.",
+  "en": "Powers up physical moves when the Pokémon is poisoned."
+ },
+ "toxic-chain": {
+  "en": "The power of the Pokémon's toxic chain may badly poison any target the Pokémon hits with a move"
+ },
+ "toxic-debris": {
+  "en": "Scatters poison spikes at the feet of the opposing team when the Pokémon takes damage from physical moves."
+ },
+ "trace": {
+  "ko": "등장했을 때 상대의 특성을 트레이스해서 같은 특성이 된다.",
+  "en": "When it enters a battle, the Pokémon copies an opposing Pokémon's Ability."
+ },
+ "transistor": {
+  "ko": "전기타입 기술의 위력이 올라간다.",
+  "en": "Powers up Electric-type moves."
+ },
+ "triage": {
+  "ko": "회복 기술을 먼저 사용할 수 있다.",
+  "en": "Gives priority to the Pokémon's healing moves."
+ },
+ "unaware": {
+  "ko": "상대의 능력 변화를 무시하고 공격할 수 있다.",
+  "en": "When attacking, the Pokémon ignores the target's stat changes."
+ },
+ "unburden": {
+  "ko": "지니던 도구가 없어지면 스피드가 올라간다.",
+  "en": "Boosts the Speed stat if the Pokémon's held item is used or lost."
+ },
+ "unnerve": {
+  "ko": "상대를 긴장시켜 나무열매를 먹지 못하게 한다.",
+  "en": "Unnerves opposing Pokémon and makes them unable to eat Berries."
+ },
+ "unseen-fist": {
+  "ko": "상대에게 접촉하는 기술을 사용하면 방어의 효과를 무시하고 공격할 수 있다.",
+  "en": "If the Pokémon uses moves that make direct contact, it can attack the target even if the target protects itself."
+ },
+ "vessel-of-ruin": {
+  "en": "The power of the Pokémon's ruinous vessel lowers the Sp. Atk stats of all Pokémon except itself."
+ },
+ "victory-star": {
+  "ko": "자신과 같은 편의 명중률이 올라간다.",
+  "en": "Boosts the accuracy of its allies and itself."
+ },
+ "vital-spirit": {
+  "ko": "의기양양해져서 잠듦 상태가 되지 않는다.",
+  "en": "The Pokémon is full of vitality, and that prevents it from falling asleep."
+ },
+ "volt-absorb": {
+  "ko": "전기타입의 기술을 받으면 데미지를 받지 않고 회복한다.",
+  "en": "If hit by an Electric-type move, the Pokémon has its HP restored instead of taking damage."
+ },
+ "wandering-spirit": {
+  "ko": "접촉하는 기술로 공격해온 포켓몬과 특성을 바꾼다.",
+  "en": "The Pokémon exchanges Abilities with a Pokémon that hits it with a move that makes direct contact."
+ },
+ "water-absorb": {
+  "ko": "물타입의 기술을 받으면 데미지를 받지 않고 회복한다.",
+  "en": "If hit by a Water-type move, the Pokémon has its HP restored instead of taking damage."
+ },
+ "water-bubble": {
+  "ko": "자신을 향하는 불꽃타입 기술의 위력을 떨어뜨린다. 화상을 입지 않는다.",
+  "en": "Lowers the power of Fire-type moves that hit the Pokémon and prevents it from being burned."
+ },
+ "water-compaction": {
+  "ko": "물타입의 기술을 받으면 방어가 크게 올라간다.",
+  "en": "Boosts the Defense stat sharply when the Pokémon is hit by a Water-type move."
+ },
+ "water-veil": {
+  "ko": "물의 베일을 몸에 둘러서 화상 상태가 되지 않는다.",
+  "en": "The Pokémon's water veil prevents it from being burned."
+ },
+ "weak-armor": {
+  "ko": "물리 기술로 데미지를 받으면 방어가 떨어지고 스피드가 크게 올라간다.",
+  "en": "The Pokémon's Defense stat is lowered when it takes damage from physical moves, but its Speed stat is sharply boosted."
+ },
+ "well-baked-body": {
+  "en": "The Pokémon takes no damage when hit by Fire-type moves. Instead, its Defense stat is sharply boosted."
+ },
+ "white-smoke": {
+  "ko": "하얀 연기의 보호를 받아 상대가 능력을 떨어뜨릴 수 없다.",
+  "en": "The Pokémon is protected by its white smoke, which prevents other Pokémon from lowering its stats."
+ },
+ "wind-rider": {
+  "en": "Boosts the Pokémon's Attack stat if Tailwind takes effect or if the Pokémon is hit by a wind move. The Pokémon also takes no damage from wind moves."
+ },
+ "wonder-guard": {
+  "ko": "효과가 굉장한 기술만 맞는 불가사의한 힘.",
+  "en": "Its mysterious power only lets supereffective moves hit the Pokémon."
+ },
+ "wonder-skin": {
+  "ko": "변화 기술을 받기 어려운 몸으로 되어 있다.",
+  "en": "Makes status moves more likely to miss the Pokémon."
+ },
+ "zen-mode": {
+  "ko": "HP가 절반 이하가 되면 모습이 변화한다.",
+  "en": "Changes the Pokémon’s shape when HP is half or less."
+ },
+ "zero-to-hero": {
+  "en": "The Pokémon transforms into its Hero Form when it switches out."
+ }
+}

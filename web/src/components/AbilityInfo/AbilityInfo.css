@@ -1,0 +1,18 @@
+.ability-info {
+    max-width: 22em;
+}
+
+.ability-info p {
+    margin-left: 0.5em;
+}
+
+.ability-info-name {
+    font-weight: 600;
+}
+
+.ability-info-description {
+    font-size: 12px;
+    line-height: 1.35;
+    opacity: 0.85;
+    white-space: normal;
+}

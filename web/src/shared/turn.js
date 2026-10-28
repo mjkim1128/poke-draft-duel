@@ -1,6 +1,7 @@
 import { localName } from "./lang";
 import { localizeTurnText, localizeLine } from "./logTranslate";
 import { makeMove, switchPokemon } from "./computermove";
+import { readPlayerMove } from "./cpuread";
 import { recordCpuMove } from "./cpustatus";
 import { damageCalc, statCalc, typeEffectiveness, isFixedDamageMove, rollDamage } from "./damagecalc";
 import {
@@ -467,7 +468,11 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     // speeds below are worked out with the new stats
     const megaText = [];
     if (options.mega && chosenMove.priority !== 6 && canMegaEvolve(playerPokemon)) megaEvolve(playerPokemon, opponentPokemon, megaText);
-    const cpuMove = forcedMove(opponentPokemon[0], makeMove(playerPokemon, opponentPokemon, !isTrapped(opponentPokemon, playerPokemon)));
+    const canCpuSwitch = !isTrapped(opponentPokemon, playerPokemon);
+    let plannedCpuMove = makeMove(playerPokemon, opponentPokemon, canCpuSwitch);
+    // 최종 보스는 플레이어가 이번 턴에 무엇을 하는지 알고 나서 행동을 고른다 (cpuread.js)
+    if (opponentPokemon.readsPlayer) plannedCpuMove = readPlayerMove(playerPokemon, opponentPokemon, move, plannedCpuMove, canCpuSwitch);
+    const cpuMove = forcedMove(opponentPokemon[0], plannedCpuMove);
     if (cpuMove.priority !== 6 && canMegaEvolve(opponentPokemon) && !opponentPokemon[0].megaHold) megaEvolve(opponentPokemon, playerPokemon, megaText);
     entryText.push(...megaText);
     // Focus Punch: it tightens its focus before anyone moves; getting hit by a damaging move before it acts breaks the focus
@@ -859,6 +864,7 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
     const field = ensureField(playerPokemon, opponentPokemon);
     const attacker = playerPokemon[0];
     attacker.piercingNow = false; // set again below if Piercing Drill gets this move through a protection
+    attacker.glaiveRush = false; // Glaive Rush's drawback (double damage taken, never missed) lasts until the user's next move
     // An Encore that landed earlier this turn (before this pokemon moved) already locks the move it uses now
     if (!opts.copied && !opts.bounced) chosenMove = forcedMove(attacker, chosenMove);
     // Weather Ball, Terrain Pulse and Grassy Glide change with the field; Pixilate, Normalize
@@ -1111,6 +1117,8 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
                 shieldDust: blocksSecondaryEffects(foe, attacker) || hitSubstitute,
             }));
         if (RECHARGE_MOVES.has(move.name) && attacker.hp[0] > 0) attacker.mustRecharge = true;
+        // Glaive Rush: until its next move the user takes double damage and every attack on it hits
+        if (move.name === "glaive-rush" && attacker.hp[0] > 0) attacker.glaiveRush = true;
         // Rapid Spin & Mortal Spin free the user's side (and the user from being bound);
         // Defog & Tidy Up clear both sides, Defog also blowing away the foe's screens
         if (CLEAR_OWN_SIDE_MOVES.has(move.name) && attacker.hp[0] > 0) {

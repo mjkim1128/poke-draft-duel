@@ -8,6 +8,11 @@
     padding: 2px 6px;
 }
 
+.move-description {
+    max-width: 260px; /* 긴 설명이 한 줄로 늘어나지 않고 줄바꿈되게 */
+    white-space: normal;
+}
+
 .move-info-div p {
     margin: 0;
     padding: 0.25vh;
@@ -20,6 +25,34 @@
 .damage-info-div p {
     margin: 0;
     padding: 0;
+}
+
+/* 터치 화면: 길게 눌렀을 때 글자가 선택되거나 기본 메뉴가 뜨지 않게 하고, 두 번 탭 확대를 막는다 */
+.move-button,
+.party-move {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+/* 쓸 수 없는 기술의 버튼은 이벤트를 받지 못하므로, 감싼 칸이 받아서 정보창을 띄운다 */
+.move-button:disabled {
+    pointer-events: none;
+}
+
+/* 터치 화면에서만 보이는 안내 */
+.move-hint {
+    display: none;
+    margin: 4px 0 0;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+@media (pointer: coarse) {
+    .move-hint {
+        display: block;
+    }
 }
 
 .move-button p {

@@ -1,11 +1,11 @@
 import { localName } from "shared/lang";
 import { HealthBar } from "components/HealthBar";
-import { StatsDisplay } from "components/StatsDisplay";
+import { BaseStats } from "components/BaseStats";
+import { AbilityInfo } from "components/AbilityInfo";
 import {
     pokemonNameToString,
     pokemonTypeToString,
     statNameToString,
-    abilityLabel,
 } from "shared";
 import React from "react";
 import "./HoverPokemonData.css";
@@ -61,10 +61,8 @@ export function HoverPokemonData(props) {
                     {localName(props.pokemon.item)}
                 </p>
             )}
-            {props.pokemon.ability && !props.pokemon.illusion && (
-                <p className="hover-pokemon-ability">특성: {abilityLabel(props.pokemon)}</p>
-            )}
-            <StatsDisplay pokemon={props.pokemon} />
+            <BaseStats pokemon={props.pokemon} />
+            {props.pokemon.ability && !props.pokemon.illusion && <AbilityInfo pokemon={props.pokemon} />}
             {props.pokemon.hp[0] > 0 && stat_levels.length > 0 && (
                 <div>
                     <p>{stat_levels}</p>

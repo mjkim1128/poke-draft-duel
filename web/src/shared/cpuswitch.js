@@ -181,6 +181,14 @@ function stayEvaluation(me, foe, field, drowsy = false) {
     return { ...e, wins: wins(e), score: scoreOf(e), wear };
 }
 
+// 자고 있는 포켓몬은 가만히 있으면 아무것도 못 하고 상대에게 공짜 턴(랭업, 설치)을 준다: 상대가 때리지 못해도 마찬가지다.
+// 그래서 들어오고도 체력이 절반 넘게 남는 후보가 있으면 이기는 후보가 아니어도 가장 나은 후보로 바꾼다. 잠꼬대가 있으면 그냥 둔다.
+function leaveSleeping(playerTeam, opponentTeam, me) {
+    if (getUsableMoves(me).some((m) => m.name === "sleep-talk")) return -1;
+    const safe = candidates(playerTeam, opponentTeam, true).filter((e) => e.hp * 2 > opponentTeam[e.index].hp[1]);
+    return safe.length === 0 ? -1 : safe.reduce((a, b) => better(b, a, "score")).index;
+}
+
 // 스스로 교체할 포켓몬의 번호. 교체할 이유가 없거나 나을 포켓몬이 없으면 -1.
 export function chooseSwitch(playerTeam, opponentTeam) {
     const me = opponentTeam[0];
@@ -198,7 +206,12 @@ export function chooseSwitch(playerTeam, opponentTeam) {
     // 랭크업이 지워진 직후 한 번만 따진다: 50%는 교체를 고민하고, 50%는 하던 대로 한다
     const wiped = !!me.boostsWiped && Math.random() < 0.5;
     me.boostsWiped = false;
-    if (!switchReason(me, foe, field, stay, wiped, drowsy)) return -1;
+    const reason = switchReason(me, foe, field, stay, wiped, drowsy);
+    if (!reason) return -1;
+    if (reason === 6 && me.status && me.status.name === "sleep") {
+        const out = leaveSleeping(playerTeam, opponentTeam, me);
+        if (out !== -1) return out;
+    }
     const list = candidates(playerTeam, opponentTeam, true);
     const winners = list.filter((e) => e.wins);
     if (winners.length > 0) {

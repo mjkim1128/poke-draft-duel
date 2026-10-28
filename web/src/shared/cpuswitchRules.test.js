@@ -72,6 +72,22 @@ describe("스스로 교체하는 이유", () => {
         team[0].status = { name: "sleep", counter: 2 };
         expect(chooseSwitch(foeTeam({ atk: 30 }), team)).toBe(1);
     });
+    test("6. 잠들었으면 상대가 때리지 못해도(공격기가 없어도) 안전하게 들어올 수 있는 후보로 교체한다", () => {
+        const team = cpuTeam({ atk: 200 }, { atk: 100 });
+        team[0].status = { name: "sleep", counter: 2 };
+        expect(chooseSwitch(foeTeam({ moves: [] }), team)).toBe(1);
+    });
+    test("6. 잠들었어도 잠꼬대가 있으면 그냥 둔다", () => {
+        const sleepTalk = { ...HIT, name: "sleep-talk", power: null, damage_class: { name: "status" } };
+        const team = cpuTeam({ atk: 200, moves: [HIT, sleepTalk] }, { atk: 100 });
+        team[0].status = { name: "sleep", counter: 2 };
+        expect(chooseSwitch(foeTeam({ moves: [] }), team)).toBe(-1);
+    });
+    test("6. 잠들었어도 들어오자마자 쓰러지는 후보뿐이면 바꾸지 않는다", () => {
+        const team = cpuTeam({ atk: 200 }, { hp: 50 });
+        team[0].status = { name: "sleep", counter: 2 };
+        expect(chooseSwitch(foeTeam({ atk: 400 }), team)).toBe(-1);
+    });
     test("6. 맹독에 걸려 있으면 더 나은 후보로 교체한다", () => {
         const team = cpuTeam({ atk: 200 }, { atk: 400 });
         team[0].status = { name: "toxic", counter: 3 };

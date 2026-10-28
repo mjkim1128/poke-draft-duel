@@ -156,6 +156,31 @@ export function movesFirst(a, b, field) {
     return field && field.trickRoom ? mine < theirs : mine > theirs;
 }
 
+// 트릭룸이 이번 턴을 포함해서 앞으로 몇 턴 더 이어지는가 (없으면 0). 처음 걸린 턴에 5였고 매 턴이 끝날 때 1씩 줄어서 0이 되면 사라진다.
+export const trickRoomTurnsLeft = (field) => (field && field.trickRoom ? Math.max(1, field.trickRoom.turns || 1) : 0);
+
+// 트릭룸은 끝나면 속도 순서가 도로 뒤집힌다. 한 번 맞고 한 번 치는 식으로 턴마다 순서를 따라가며 1대1 승부가 어떻게 끝나는지 본다.
+//   attacks: a가 b를 쓰러뜨리는 데 필요한 공격 횟수 / hits: b가 a를 쓰러뜨리는 데 필요한 공격 횟수
+//   trLeft: 첫 턴부터 트릭룸이 이어지는 턴 수 (그 뒤로는 빠른 쪽이 먼저)
+// a가 이기면 true, 지면 false, 오래 가도 결판이 나지 않으면 null (그때는 기존 판정을 쓴다).
+export function duelWins(a, b, field, attacks, hits, trLeft) {
+    const mine = effectiveSpeed(a, field);
+    const theirs = effectiveSpeed(b, field);
+    let dealt = 0;
+    let taken = 0;
+    for (let turn = 1; turn <= 60; turn++) {
+        const first = turn <= trLeft ? mine < theirs : mine > theirs;
+        if (first) {
+            if (++dealt >= attacks) return true;
+            if (++taken >= hits) return false;
+        } else {
+            if (++taken >= hits) return false;
+            if (++dealt >= attacks) return true;
+        }
+    }
+    return null;
+}
+
 // 상대(foe)가 지금 나와 있는 내 포켓몬(me)의 랭크업을 없앨 수 있는가: 상대의 기술에 랭업 무효기가 있을 때 (PP가 남아 있고, 구애 도구로 다른 기술에 묶여 있지 않을 때).
 //  - 흑안개: 언제나 통한다
 //  - 클리어스모그: 피해를 줄 수 있을 때 (타입 상성으로 무효가 아니고, 내가 대타로 막고 있지 않을 때)

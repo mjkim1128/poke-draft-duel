@@ -150,3 +150,36 @@ describe("상대 파티 6마리 전체를 보고 고르기 (일반 트레이너)
     });
 });
 
+
+describe("메가진화할 수 있는 포켓몬을 반드시 포함하기 (mustInclude)", () => {
+    // 상대는 보로라가 약한 특수 공격수들뿐이라, 조건이 없으면 보로라는 뽑히지 않는다
+    const bossRoster = () => {
+        const aggron = mon("aggron", ["iron-head", "earthquake"]);
+        const others = [mon("regice", ["ice-beam"]), mon("florges", ["moonblast"]), mon("toxapex", ["scald"]), mon("umbreon", ["foul-play"]), mon("blissey", ["soft-boiled"])];
+        return { aggron, roster: [aggron, ...others] };
+    };
+    const foes = () => [mon("charizard", ["flamethrower"]), mon("gengar", ["shadow-ball"]), mon("alakazam", ["psychic"]), mon("hydreigon", ["dark-pulse"]), mon("volcarona", ["bug-buzz"]), mon("magnezone", ["flash-cannon"])];
+    test("조건이 없으면 마음대로 고르고, 조건이 있으면 그 포켓몬이 반드시 들어간다", () => {
+        const { aggron, roster } = bossRoster();
+        const plain = pickCounterTeam(roster, foes());
+        const forced = pickCounterTeam(roster, foes(), Math.random, (p) => p === aggron);
+        expect(forced).toContain(aggron);
+        expect(forced).toHaveLength(3);
+        expect(new Set(forced).size).toBe(3);
+        // 조건 없이 뽑은 팀에 보로라가 없다면 이 시험이 의미가 있다 (있어도 조건이 깨지지는 않는다)
+        expect(plain).toHaveLength(3);
+    });
+    test("조건에 맞는 포켓몬이 로스터에 없으면 조건을 무시한다", () => {
+        const { roster } = bossRoster();
+        const team = pickCounterTeam(roster, foes(), Math.random, () => false);
+        expect(team).toHaveLength(3);
+    });
+    test("조건에 맞는 포켓몬이 여럿이면 그중 상성이 더 좋은 쪽이 들어간다", () => {
+        const a = mon("aggron", ["iron-head"]);
+        const b = mon("shuckle", ["splash"]);
+        const roster = [a, b, mon("regice", ["ice-beam"]), mon("florges", ["moonblast"]), mon("toxapex", ["scald"]), mon("umbreon", ["foul-play"])];
+        const team = pickCounterTeam(roster, foes(), Math.random, (p) => p === a || p === b);
+        expect(team.some((p) => p === a || p === b)).toBe(true);
+        expect(team).not.toContain(b); // 공격기가 없는 단단지보다 보로라가 낫다
+    });
+});

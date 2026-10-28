@@ -94,13 +94,17 @@ export function leadScore(boss, foe) {
 // 선두는 내 선두와의 선두 점수(leadScore)가 가장 높은 포켓몬이고, 나머지 순서는 그대로 둔다.
 // foes가 3마리보다 많으면(일반 트레이너: 상대 파티 6마리 전체를 보고 고른다) 상대마다 가장 잘 잡는 포켓몬의 점수를 더하고,
 // 어느 상대가 선두로 나올지 모르니 선두는 상대 전체에 대한 선두 점수의 평균이 가장 높은 포켓몬이다.
-export function pickCounterTeam(roster, foes, random = Math.random) {
+// mustInclude(포켓몬 -> 참/거짓)를 주면, 그 조건에 맞는 포켓몬이 한 마리라도 들어간 3마리 중에서만 고른다 (바스티온: 메가진화할 수 있는 포켓몬이 반드시 나온다).
+// 조건에 맞는 포켓몬이 로스터에 없으면 조건을 무시한다.
+export function pickCounterTeam(roster, foes, random = Math.random, mustInclude = null) {
     const size = Math.min(3, roster.length);
     if (!foes.length) return roster.slice(0, size);
     const scores = new Map(roster.map((b) => [b, foes.map((f) => matchupScore(b, f))]));
     let best = null;
     let bestScore = -Infinity;
+    const required = mustInclude && roster.some(mustInclude);
     for (const combo of combinations(roster, size)) {
+        if (required && !combo.some(mustInclude)) continue;
         // 상대가 3마리 이하일 때만 일대일 배정이 된다 (그보다 많으면 상대마다 가장 잘 잡는 포켓몬의 점수를 더한다)
         const cover =
             foes.length <= size

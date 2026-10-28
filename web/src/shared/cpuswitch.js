@@ -12,7 +12,7 @@ import { activeItem } from "./helditem";
 import { indirectDamageBlocked, abilityBlocksStatus } from "./abilities";
 import { STATUS_IMMUNE_TYPES, TOXIC_MOVES } from "./movemechanics";
 import { turnsUntilResidualKO, residualDamage, healAmountOf } from "./cpuresidual";
-import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, positiveStages } from "./cpusetup";
+import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, positiveStages, duelWins, trickRoomTurnsLeft } from "./cpusetup";
 
 const ROCK_MOVE = { type: { name: "rock" }, damage_class: { name: "physical" } };
 
@@ -28,7 +28,8 @@ export function entryDamage(pokemon, team) {
     return damage;
 }
 
-const wins = (e) => e.attacks < e.hits || (e.attacks === e.hits && e.first && e.hits !== Infinity);
+// 트릭룸이 걸려 있으면 턴마다 순서를 따라간 결과(e.duel: true / false)를 쓰고, 아니면 "더 적게 맞거나, 같으면 먼저 움직이는 쪽"이다
+const wins = (e) => (typeof e.duel === "boolean" ? e.duel : e.attacks < e.hits || (e.attacks === e.hits && e.first && e.hits !== Infinity));
 // (둘 다 못 잡는 경우처럼 Infinity가 섞여도 비교할 수 있게 99로 자른다)
 const scoreOf = (e) => Math.min(e.hits, 99) - Math.min(e.attacks, 99) + (e.first ? 0.5 : 0);
 
@@ -43,11 +44,15 @@ function evaluate(candidate, foe, myTeam, field, freeHit) {
         if (hp <= 0) return null; // 들어오자마자 쓰러진다
         entered = { ...candidate, hp: [hp, candidate.hp[1]] };
     }
+    // 교체해 들어온 포켓몬이 싸우기 시작하는 건 다음 턴부터라서, 트릭룸은 그때 한 턴 줄어든 상태다 (그 사이 끝나면 속도 순서가 도로 뒤집힌다)
+    const trNext = Math.max(0, trickRoomTurnsLeft(field) - 1);
+    const nextField = field && field.trickRoom && trNext === 0 ? { ...field, trickRoom: null } : field;
     const e = {
         hits: hitsToDie(entered, foeDamage, foe),
         attacks: hitsToDown(foe, bestDamage(entered, foe, field, MIN_ROLL), entered),
-        first: movesFirst(entered, foe, field),
+        first: movesFirst(entered, foe, nextField),
     };
+    if (trNext > 0) e.duel = duelWins(entered, foe, field, e.attacks, e.hits, trNext);
     return { ...e, wins: wins(e), score: scoreOf(e), hp };
 }
 
@@ -178,6 +183,9 @@ function stayEvaluation(me, foe, field, drowsy = false) {
     if (wear < attacks) attacks = first ? wear + 0.5 : wear;
     // 회복기로 버틸 수 있으면 상대에게 쓰러지지 않는다 (hits를 무한으로)
     const e = { hits: canOutheal(me, foe, field, attacks) ? Infinity : hits, attacks, first };
+    // 트릭룸이 곧 끝나면 순서가 뒤집히므로 턴마다 따라가며 승부를 본다
+    const trLeft = trickRoomTurnsLeft(field);
+    if (trLeft > 0) e.duel = duelWins(me, foe, field, e.attacks, e.hits, trLeft);
     return { ...e, wins: wins(e), score: scoreOf(e), wear };
 }
 

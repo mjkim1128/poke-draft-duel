@@ -29,6 +29,7 @@ import {
 } from "shared";
 import "./StartScreen.css";
 import { isKorean } from "shared/lang";
+import { megaFormOf } from "shared/mega";
 import { playSong } from "audio/bgm";
 import { keepsRawPower } from "shared/movemechanics";
 import { isNormalizedStats, setNormalizedStats } from "shared/statMode";
@@ -260,6 +261,8 @@ export function Home() {
         const opponentTeam = boss
             ? boss.counter
                 ? pickCounterTeam(opponentPokemon, picked)
+                : boss.guaranteeMega
+                ? pickCounterTeam(opponentPokemon, playerPokemon, Math.random, (p) => !!megaFormOf(p))
                 : boss.lineup
                 ? pickBossTeam(opponentPokemon, boss.lineup)
                 : shuffle([...opponentPokemon]).slice(0, 3)

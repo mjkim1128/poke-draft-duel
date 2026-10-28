@@ -118,7 +118,7 @@ describe("선출 규칙(lineup): 날씨를 거는 포켓몬과 반응하는 포�
     };
 
     test("다섯 명(마리나, 듄, 프로스트, 솔, 바스티온)에게 있다", () => {
-        expect(lineupBosses.map((b) => b.name)).toEqual(["Marina", "Dune", "Frost", "Sol", "Bastion"]);
+        expect(lineupBosses.map((b) => b.name)).toEqual(["Marina", "Dune", "Frost", "Sol"]);
     });
 
     test.each(lineupBosses.map((b) => [b.name, b]))("%s", (name, boss) => {
@@ -428,41 +428,23 @@ describe("솔의 선출: A형(가뭄 + 엽록소 + 메가 1마리) 또는 B형(�
     });
 });
 
-describe("바스티온의 선출: A형(메가 픽시 + 함정 담당 + 무작위) 또는 B형(메가 야도란 + 함정 담당 + 무작위)", () => {
+describe("바스티온: 일반 트레이너처럼 상성으로 고르되 메가진화할 수 있는 포켓몬이 반드시 나온다", () => {
     const bastion = BOSSES.find((b) => b.name === "Bastion");
     const MEGAS = JSON.parse(fs.readFileSync(path.join(__dirname, "megas.json"), "utf8"));
     const stoneOf = (base) => MEGAS.find((m) => m.base === base).stone;
-    const mon = (name, ability, item = null) => ({ name, ability: { name: ability }, item: item ? { name: item } : null });
-    const roster = () => [
-        mon("blissey", "natural-cure", "leftovers"),
-        mon("skarmory", "sturdy", "leftovers"),
-        mon("toxapex", "regenerator", "black-sludge"),
-        mon("clefable", "unaware", stoneOf("clefable")),
-        mon("slowbro", "regenerator", stoneOf("slowbro")),
-        mon("ferrothorn", "iron-barbs", "leftovers"),
-    ];
-    test("팀과 지정이 위와 같다 (아머까오 대신 야도란)", () => {
+    test("팀과 지정이 위와 같다", () => {
         const slots = bastion.pokemon.map(slotOf);
-        expect(slots.map((s) => s.name)).toEqual(["blissey", "skarmory", "toxapex", "clefable", "slowbro", "ferrothorn"]);
-        expect(slots.filter((s) => s.stone).map((s) => s.name)).toEqual(["clefable", "slowbro"]);
-        expect(slots.find((s) => s.name === "skarmory").stone).toBe(false);
+        expect(slots.map((s) => s.name)).toEqual(["aggron", "golisopod", "regice", "florges", "toxapex", "umbreon"]);
+        expect(slots.filter((s) => s.stone).map((s) => s.name)).toEqual(["aggron", "golisopod"]);
     });
-    test("선두는 메가 픽시 또는 메가 야도란이고, 함정/독 담당이 반드시 함께 나온다 (50:50)", () => {
-        const leads = { clefable: 0, slowbro: 0 };
-        for (let i = 0; i < 2000; i++) {
-            const team = pickBossTeam(roster(), bastion.lineup);
-            const names = team.map((p) => p.name);
-            expect(new Set(names).size).toBe(3);
-            expect(["clefable", "slowbro"]).toContain(names[0]);
-            expect(names.some((n) => ["skarmory", "ferrothorn", "toxapex"].includes(n))).toBe(true);
-            leads[names[0]]++;
-        }
-        expect(leads.clefable / 2000).toBeGreaterThan(0.45);
-        expect(leads.clefable / 2000).toBeLessThan(0.55);
+    test("선출 규칙(lineup)도 상성 선출(counter)도 쓰지 않고, 메가 보장만 켠다", () => {
+        expect(bastion.guaranteeMega).toBe(true);
+        expect(bastion.lineup).toBeUndefined();
+        expect(bastion.counter).toBeUndefined();
+        expect(BOSSES.filter((b) => b.guaranteeMega).map((b) => b.name)).toEqual(["Bastion"]);
     });
-    test("무장조의 메가 세트(칼춤 어태커)는 쓰이지 않는다", () => {
-        const megaSets = setRows.filter((r) => r.species === "skarmory" && itemsOf(r.set).some((i) => i === stoneOf("skarmory")));
-        expect(megaSets.length).toBeGreaterThan(0); // 데이터에는 있지만
-        expect(bastion.pokemon.map(slotOf).find((s) => s.name === "skarmory").stone).toBe(false); // 보스는 쓰지 않는다
+    test("여섯 마리 모두 세트가 있고, 메가 둘은 메가스톤을 든 세트가 있다", () => {
+        for (const slot of bastion.pokemon.map(slotOf)) expect(setRows.some((r) => r.species === slot.name)).toBe(true);
+        for (const name of ["aggron", "golisopod"]) expect(setRows.some((r) => r.species === name && itemsOf(r.set).includes(stoneOf(name)))).toBe(true);
     });
 });

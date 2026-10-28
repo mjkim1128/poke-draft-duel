@@ -14,6 +14,7 @@
 // item은 도구 하나이거나 [도구, 도구] 목록(그 중 하나를 든 세트)이다. stone: false는 메가스톤을 들지 않는 세트로 고정한다(메가진화 가능한 종이어도).
 // stone: true를 적으면 그 포켓몬은 반드시 메가스톤을 든 세트로 나온다 (그 보스의 대표 메가진화). 한 보스에 최대 2마리까지.
 // stone을 적지 않은 메가진화 가능 종은 일반 파티와 같은 규칙(1/2 확률, 한 파티에 메가스톤 최대 2마리 - 적어 둔 stone도 센다)을 따른다.
+// guaranteeMega: true인 보스(바스티온)는 lineup 없이 일반 트레이너처럼 내 6마리 전체를 보고 상성으로 3마리를 고르되, 메가진화할 수 있는 포켓몬이 한 마리는 반드시 들어간다 (bosscounter.js).
 // counter: true인 보스(캡틴 포)는 6마리 중 3마리를 무작위로 내지 않고, 내가 고른 3마리를 보고 가장 상성이 좋은 3마리를 내며,
 // 전투 중에는 내가 이번 턴에 무엇을 하는지(기술, 교체) 알고 나서 행동한다 (bosscounter.js, cpuread.js).
 // 포켓몬 세트(도구, 특성, 기술)는 일반 포켓몬처럼 세트 목록에서 무작위로 뽑힌다.
@@ -101,24 +102,19 @@ export const TRAINER_SOL = {
 export const TRAINER_BASTION = {
     floor: 25,
     pokemon: [
-        "blissey",
-        { name: "skarmory", stone: false }, // 무장조의 메가 세트는 칼춤 어태커라서 방어 팀에는 쓰지 않는다
+        { name: "aggron", stone: true },
+        { name: "golisopod", stone: true },
+        "regice",
+        "florges",
         "toxapex",
-        { name: "clefable", stone: true },
-        { name: "slowbro", stone: true },
-        "ferrothorn",
+        "umbreon",
     ],
     name: "Bastion",
     nameKo: "바스티온",
     text: ["You'll break before I do.", "Patience is the strongest attack."],
     textKo: ["먼저 무너지는 건 네가 될 거야.", "인내가 가장 강한 공격이지."],
-    // A형: 메가 픽시(선두, 매직바운스) + 함정/독 담당(무장조, 너트령, 더시마사리 중 1마리) + 무작위 1마리 / B형: 메가 야도란(선두) + 같은 담당 + 무작위 1마리
-    lineup: {
-        options: [
-            [{ name: "clefable", mega: true }, { names: ["skarmory", "ferrothorn", "toxapex"] }],
-            [{ name: "slowbro", mega: true }, { names: ["skarmory", "ferrothorn", "toxapex"] }],
-        ],
-    },
+    // 일반 트레이너처럼 내 6마리를 보고 상성으로 3마리를 고르되, 메가진화할 수 있는 포켓몬(보스로라, 갑주무사)이 적어도 한 마리는 나온다
+    guaranteeMega: true,
     img: "assets/trainer_pinkcat.png",
 };
 

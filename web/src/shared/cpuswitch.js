@@ -6,7 +6,7 @@
 // 로 이기는 대결인지 본다. 이기는 대결 = attacks < hits, 같으면 먼저 움직이는 쪽.
 import { typeEffectiveness, MIN_ROLL } from "./damagecalc";
 import { getUsableMoves, ppLeft } from "./pp";
-import { isGrounded, terrainBlocksStatus } from "./field";
+import { isGrounded, terrainBlocksStatus, adaptMoveToField } from "./field";
 import { HEAVY_DUTY_BOOTS } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { indirectDamageBlocked, abilityBlocksStatus } from "./abilities";
@@ -98,7 +98,7 @@ function bestCategory(me, foe, field) {
     for (const m of getUsableMoves(me)) {
         if (m.damage_class.name === "status") continue;
         const d = bestDamage({ ...me, moveset: [m] }, foe, field);
-        if (d > top) [top, category] = [d, m.damage_class.name];
+        if (d > top) [top, category] = [d, adaptMoveToField(m, me, field).damage_class.name]; // (포톤게이저는 높은 쪽의 종류)
     }
     return category;
 }

@@ -77,6 +77,11 @@ export function ensureField(teamA, teamB) {
 export function weatherOf(field) {
     return field && field.weather && !field.suppressed ? field.weather.name : null;
 }
+// 날씨 때문에 충전 턴 없이 바로 나가는 기술인가: 쾌청의 솔라빔, 솔라블레이드, 비의 일렉트로샷 (turn.js의 tryStartCharge와 같은 조건)
+export function skipsChargeInWeather(move, field) {
+    const weather = weatherOf(field);
+    return (weather === "sun" && (move.name === "solar-beam" || move.name === "solar-blade")) || (weather === "rain" && move.name === "electro-shot");
+}
 export function terrainOf(field) {
     return field && field.terrain ? field.terrain.name : null;
 }
@@ -148,6 +153,12 @@ export function adaptMoveToField(move, attacker, field) {
     }
     // Morpeko's Aura Wheel is Dark while it is hangry, Electric while it is full
     if (move.name === "aura-wheel") return { ...move, type: { name: attacker.hangry ? "dark" : "electric" }, fieldAdapted: true };
+    // 포톤게이저: 공격과 특공 중 (능력 단계를 반영해서) 더 높은 쪽으로 때리는 기술이 된다. 벽, 특성 같은 물리 / 특수 판정이 모두 이 종류를 따른다.
+    if (move.name === "photon-geyser") {
+        const staged = (base, level) => Math.floor((2 * base + 31 + 5) * (level >= 0 ? (level + 2) / 2 : 2 / (2 - level))); // statCalc와 같다
+        const physical = staged(attacker.base_stats[1], attacker.stat_levels[0]) > staged(attacker.base_stats[3], attacker.stat_levels[2]);
+        return { ...move, damage_class: { name: physical ? "physical" : "special" }, fieldAdapted: true };
+    }
     if (move.name === "grassy-glide" && terrain === "grassy" && isGrounded(attacker)) {
         return { ...move, priority: move.priority + 1, fieldAdapted: true };
     }

@@ -137,6 +137,7 @@ import {
     FAIL_COPYCAT,
     FAIL_ME_FIRST,
     HEAL_MOVES,
+    ABILITY_IGNORING_MOVES,
 } from "./movemechanics";
 import {
     RESIST_BERRIES,
@@ -819,7 +820,7 @@ export function playerTurn(playerPokemon, opponentPokemon, chosenMove) {
     if (activeItem(attacker) && CHOICE_ITEMS[attacker.item.name] !== undefined && chosenMove.name !== "struggle") {
         attacker.lockedMove = chosenMove.name;
     }
-    attacker.ignoresAbilityNow = chosenMove.damage_class.name === "status" && hasSlowStatusMoves(attacker);
+    attacker.ignoresAbilityNow = (chosenMove.damage_class.name === "status" && hasSlowStatusMoves(attacker)) || ABILITY_IGNORING_MOVES.has(chosenMove.name);
     const linesBefore = text.length;
     executeMove(playerPokemon, opponentPokemon, chosenMove, text, {});
     trackRampage(playerPokemon, opponentPokemon, chosenMove, text.slice(linesBefore), text);

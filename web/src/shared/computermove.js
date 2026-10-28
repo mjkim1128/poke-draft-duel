@@ -1,4 +1,5 @@
 import { damageCalc, MIN_ROLL } from "./damagecalc";
+import { skipsChargeInWeather } from "./field";
 import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES, PROTECT_MOVES } from "./movemechanics";
 import { healAmountOf } from "./cpuresidual";
 import { hitChance } from "./accuracy";
@@ -27,7 +28,9 @@ function moveValue(damage, move, attacker, defender, field) {
     // Focus Punch fails when it is hit first, so it is only worth using against a foe that can't attack this turn
     if (move.name === "focus-punch" && !(defender.status && defender.status.name === "sleep") &&
         getUsableMoves(defender).some((m) => m.damage_class.name !== "status")) value = damage * 0.1;
-    if (CHARGE_MOVES.has(move.name) || RECHARGE_MOVES.has(move.name)) value = damage / 2;
+    // 날씨 덕에 충전 없이 나가는 기술(쾌청의 솔라빔 등)과 충전을 마친 두 번째 턴은 반으로 깎지 않는다
+    const charges = CHARGE_MOVES.has(move.name) && !skipsChargeInWeather(move, field) && attacker.charging !== move.name;
+    if (charges || RECHARGE_MOVES.has(move.name)) value = damage / 2;
     const range = MULTIHIT_MOVES[move.name];
     if (range) value = damage * (range[0] === range[1] ? range[0] : 3.1);
     // 체력을 회복하는 공격(기가드레인, 흡혈, 드레인키스...)은 체력이 적을수록 회복하는 만큼을 더 쳐 준다

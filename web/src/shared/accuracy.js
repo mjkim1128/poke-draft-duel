@@ -2,7 +2,7 @@ import { OHKO_MOVES, IGNORE_EVASION_MOVES } from "./movemechanics";
 import { WIDE_LENS } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { weatherAccuracy } from "./field";
-import { abilityAccuracyMod, abilityEvasionMod, ignoresBoosts, ignoresEvasion, hasNoGuard } from "./abilities";
+import { abilityAccuracyMod, abilityEvasionMod, ignoresBoosts, ignoresEvasion, hasNoGuard, withIgnoredAbilities } from "./abilities";
 
 // Accuracy, following Pokemon Showdown's hitStepAccuracy (sim/battle-actions.ts): the
 // move's base accuracy, Wide Lens, then the accuracy/evasion stat stages, rolled against
@@ -39,6 +39,10 @@ function clamp(n, lo, hi) {
 // The percent chance for `move` to hit, or null if it can't miss (Swift, Aerial Ace, moves
 // that only affect the user, Toxic from a Poison type...). Can be above 100.
 export function hitChance(attacker, defender, move, field = null) {
+    return withIgnoredAbilities(attacker, move, () => calculateHitChance(attacker, defender, move, field));
+}
+
+function calculateHitChance(attacker, defender, move, field) {
     let base = move.accuracy;
     // Thunder/Hurricane/Blizzard & co. change with the weather (never miss / only 50%)
     const weatherOverride = weatherAccuracy(move, field);

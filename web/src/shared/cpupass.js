@@ -17,7 +17,7 @@ import { getUsableMoves } from "./pp";
 import { damageCalc, MIN_ROLL } from "./damagecalc";
 import { SUPPORTED_PIVOT_MOVES } from "./movemechanics";
 import { certainlyFails } from "./cpufail";
-import { weatherOf } from "./field";
+import { weatherOf, adaptMoveToField } from "./field";
 import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, setupEffect } from "./cpusetup";
 import { entryDamage } from "./cpuswitch";
 
@@ -35,7 +35,7 @@ const attackMoves = (pokemon) => pokemon.moveset.filter((m) => m.damage_class.na
 // 공격기 중 과반수가 물리면 "physical", 특수면 "special", 어느 쪽도 과반수가 아니면 null
 export function attackCategory(pokemon) {
     const moves = attackMoves(pokemon);
-    const physical = moves.filter((m) => m.damage_class.name === "physical").length;
+    const physical = moves.filter((m) => adaptMoveToField(m, pokemon, null).damage_class.name === "physical").length;
     const special = moves.length - physical;
     if (physical * 2 > moves.length) return "physical";
     if (special * 2 > moves.length) return "special";

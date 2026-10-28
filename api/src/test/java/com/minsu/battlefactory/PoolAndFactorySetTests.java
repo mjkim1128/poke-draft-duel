@@ -44,12 +44,14 @@ class PoolAndFactorySetTests {
     ObjectMapper objectMapper;
 
     @Test
-    void poolHas429PokemonAndNoneAtOrAbove660() {
+    void poolHas433PokemonAndNoneAtOrAbove660ExceptNecrozmaForms() {
         List<Long> poolIds = pokemonRepository.findPoolIds();
-        assertEquals(429, poolIds.size());
+        assertEquals(433, poolIds.size());
 
+        // 네크로즈마의 두 모습(종족값 680)은 일부러 풀에 넣는다
+        Set<String> allowedAbove660 = Set.of("necrozma-dusk", "necrozma-dawn");
         for (Pokemon p : pokemonRepository.findAll()) {
-            if (p.isInPool()) {
+            if (p.isInPool() && !allowedAbove660.contains(p.getName())) {
                 assertTrue(p.getBst() < 660, "종족값 660 이상이 풀에 있음: " + p.getName() + " " + p.getBst());
             }
         }

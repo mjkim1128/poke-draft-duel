@@ -1,6 +1,7 @@
 import { localName } from "./lang";
 import ABILITY_NAMES from "./ability_names.json";
 import { CONTACT_MOVES } from "./legalmoves";
+import { ABILITY_IGNORING_MOVES } from "./movemechanics";
 import { pokemonNameToString, statNameToString } from "./helpers";
 import { weatherOf, terrainOf, setWeather, setTerrain, isGrounded } from "./field";
 import {
@@ -200,6 +201,18 @@ const recoilMove = (move) => (move.meta && move.meta.drain < 0 && move.name !== 
 // only for its status moves, which turn.js flags for the length of the move.)
 export function ignoresAbilities(attacker) {
     return MOLD_BREAKER_LIKE.has(abilityName(attacker)) || !!attacker.ignoresAbilityNow;
+}
+
+// 특성을 무시하는 전용 기술(선샤인스트라이크 등)을 계산하는 동안만 attacker가 상대의 특성을 무시하게 한다.
+// 실제 사용(turn.js)에서는 기술을 쓰는 동안 계속 켜 두지만, 컴퓨터가 피해와 명중률을 어림할 때도 같은 결과가 나와야 한다.
+export function withIgnoredAbilities(attacker, move, calculate) {
+    if (!move || !ABILITY_IGNORING_MOVES.has(move.name) || attacker.ignoresAbilityNow) return calculate();
+    attacker.ignoresAbilityNow = true;
+    try {
+        return calculate();
+    } finally {
+        attacker.ignoresAbilityNow = false;
+    }
 }
 
 // ---- form changes ----

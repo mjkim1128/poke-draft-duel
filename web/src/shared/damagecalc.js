@@ -30,6 +30,7 @@ import {
     ignoresBurnDrop,
     isGroundImmune,
     ignoresGhostImmunity,
+    withIgnoredAbilities,
 } from "./abilities";
 
 // Moves that deal a fixed amount of damage: no crit, no screens, no stats, no type
@@ -189,6 +190,10 @@ export const rollDamage = () => rollSource();
 // ctx.crit: this hit is a critical hit. ctx.field: the battle's weather/terrain, if any.
 // ctx.roll: damage roll in percent (85-100, default 100). Fixed-damage moves ignore it.
 export function damageCalc(attacker, defender, move, ctx = {}) {
+    return withIgnoredAbilities(attacker, move, () => calculateDamage(attacker, defender, move, ctx));
+}
+
+function calculateDamage(attacker, defender, move, ctx) {
     if (move.damage_class.name === "status") return 0; // status moves never deal damage
     const { crit = false, field = null, roll = 100 } = ctx;
     // 날씨에 따라 타입과 위력이 바뀌는 기술(웨더볼, 테라장판...)은 바뀐 모습으로 계산한다. 컴퓨터가 예상 피해를 어림할 때도 같은 값이어야 한다.

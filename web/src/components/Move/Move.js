@@ -12,6 +12,8 @@ import {
     maxPP,
 } from "shared";
 import { moveConditionBlock } from "shared/movecondition";
+import { adaptMoveToField } from "shared/field";
+import { abilityAdaptMove } from "shared/abilities";
 import { moveDescription } from "shared/movedescription";
 import "./Move.css";
 
@@ -62,11 +64,14 @@ export function Move(props) {
     let move_text = "";
     let percent_text = "";
 
+    /// 정보창에는 실전에서 실제로 쓰이는 모습을 보여 준다: 날씨로 타입과 위력이 바뀌는 웨더볼, 높은 쪽으로 때리는 포톤게이저, 피부스킨 같은 특성이 바꾼 타입
+    let shown = props.move;
     if (props.attackerDefender) {
         [attack, defend] = props.attackerDefender;
+        shown = abilityAdaptMove(attack, adaptMoveToField(props.move, attack, props.field || null));
 
         [atkStat, defStat] =
-            props.move.damage_class.name === "physical"
+            shown.damage_class.name === "physical"
                 ? [
                       // eslint-disable-next-line
                       "(" + `${attack.base_stats[1].toString()}` + " " + "Atk)",
@@ -89,13 +94,13 @@ export function Move(props) {
             " " +
             defStat;
         // 데미지 난수가 있으므로 가장 약한 값부터 가장 센 값까지 보여 준다 (고정 데미지 기술은 하나)
-        const highest = damageCalc(attack, defend, props.move);
-        const lowest = damageCalc(attack, defend, props.move, { roll: MIN_ROLL });
+        const highest = damageCalc(attack, defend, props.move, { field: props.field || null });
+        const lowest = damageCalc(attack, defend, props.move, { roll: MIN_ROLL, field: props.field || null });
         const percentOf = (n) => Math.ceil((n / defend.hp[1]) * 100);
         move_text =
             moveNameToString(props.move) +
             " (" +
-            props.move.power +
+            shown.power +
             "bp): " +
             (lowest === highest ? highest : lowest + "-" + highest) +
             "/" +
@@ -144,7 +149,7 @@ export function Move(props) {
                 <button
                     ref={buttonRef}
                     className={moveClassName}
-                    id={props.move.type.name}
+                    id={shown.type.name}
                     title={unusableReason || undefined}
                     disabled={
                         props.moveOwner !== "party" &&
@@ -175,7 +180,7 @@ export function Move(props) {
                     }}
                 >
                     <p>{moveNameToString(props.move)}</p>
-                    <p>{typeNameToString(props.move.type.name)}</p>
+                    <p>{typeNameToString(shown.type.name)}</p>
                     {props.move.name !== "struggle" && (
                         <p>
                             PP {ppLeft(props.move)}/{maxPP(props.move)}
@@ -186,13 +191,13 @@ export function Move(props) {
             <FloatingPopup anchorRef={buttonRef} visible={hover}>
                 <div className="move-info-div">
                     <p>
-                        Power: {isFixedDamageMove(props.move) ? "-" : props.move.power}
+                        Power: {isFixedDamageMove(props.move) ? "-" : shown.power}
                         {typeof props.move.accuracy === "number" &&
                             " / Accuracy: " + props.move.accuracy}
                     </p>
                     <p>
                         Damage Class:{" "}
-                        {damageClassToString(props.move.damage_class.name)}
+                        {damageClassToString(shown.damage_class.name)}
                     </p>
                     <p>Priority: {props.move.priority}</p>
 

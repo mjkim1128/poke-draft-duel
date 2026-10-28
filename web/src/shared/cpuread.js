@@ -4,6 +4,7 @@
 //   - 플레이어가 교체하면: 나오는 포켓몬에게 가장 잘 먹히는 기술로 때리거나, 그 포켓몬에 맞는 포켓몬으로 바꾼다.
 // 후보(평소 행동, 공격기 각각, 벤치로 교체 각각)마다 이번 턴이 끝난 뒤의 모습을 계산해서 가장 좋은 쪽을 고른다.
 import { damageCalc } from "./damagecalc";
+import { skipsChargeInWeather } from "./field";
 import { hitChance } from "./accuracy";
 import { getUsableMoves } from "./pp";
 import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES, PROTECT_MOVES, EXPLOSIVE_MOVES } from "./movemechanics";
@@ -22,8 +23,7 @@ function expectedDamage(attacker, defender, move, field) {
     if (!move || move.damage_class.name === "status") return 0;
     // 충전이 필요한 기술(솔라빔은 쾌청이면 바로 나간다)은 첫 턴에는 피해가 없다
     if (CHARGE_MOVES.has(move.name) && !attacker.charging) {
-        const instant = move.name === "solar-beam" && field && field.weather && field.weather.name === "sun";
-        if (!instant) return 0;
+        if (!skipsChargeInWeather(move, field)) return 0;
     }
     let damage = damageCalc(attacker, defender, move, { field, roll: EXPECTED_ROLL });
     if (RECHARGE_MOVES.has(move.name)) damage /= 2;

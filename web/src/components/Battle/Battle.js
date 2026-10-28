@@ -448,6 +448,7 @@ export function Battle(props) {
                 <Move
                     move={move}
                     onClick={nextTurn}
+                    field={isCurrent ? field : null}
                     attackerDefender={
                         isCurrent
                             ? [liveState.playerPokemon[0], liveState.opponentPokemon[0]]
@@ -469,6 +470,7 @@ export function Battle(props) {
                     <Move
                         move={move}
                         onClick={() => {}}
+                        field={isCurrent ? field : null}
                         attackerDefender={
                             isCurrent
                                 ? [

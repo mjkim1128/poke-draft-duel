@@ -9791,16 +9791,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   },
   {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "thick-fat" /* 두꺼운지방 */,
-    "moves": [
-      [ { "slug": "curse" /* 저주 */ } ],
-      [ { "slug": "frustration" /* 화풀이 */ } ],
-      [ { "slug": "rest" /* 잠자기 */ } ],
-      [ { "slug": "earthquake" /* 지진 */ } ]
-    ]
-  },
-  {
     "item": "figy-berry" /* 무화열매 */,
     "ability": "gluttony" /* 먹보 */,
     "moves": [
@@ -20630,16 +20620,6 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "power-gem" /* 파워젬 */ } ]
     ]
   },
-  {
-    "item": "booster-energy" /* 부스트에너지 */,
-    "ability": "protosynthesis" /* 고대활성 */,
-    "moves": [
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "shadow-ball" /* 섀도볼 */ } ],
-      [ { "slug": "charm" /* 애교부리기 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ } ]
-    ]
-  },
   ],
   "skeledirge": /* 라우드본 */ [
   {
@@ -22511,48 +22491,6 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
-  "enamorus-incarnate": /* 러브로스 */ [
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "contrary" /* 심술꾸러기 */,
-    "moves": [
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "earth-power" /* 대지의힘 */ } ],
-      [ { "slug": "tera-blast" /* 테라버스트 */ } ],
-      [ { "slug": "healing-wish" /* 치유소원 */ } ]
-    ]
-  },
-  {
-    "item": "choice-scarf" /* 구애스카프 */,
-    "ability": "contrary" /* 심술꾸러기 */,
-    "moves": [
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "earth-power" /* 대지의힘 */ } ],
-      [ { "slug": "mystical-fire" /* 매지컬플레임 */ } ],
-      [ { "slug": "healing-wish" /* 치유소원 */ } ]
-    ]
-  },
-  {
-    "item": "heavy-duty-boots" /* 통굽부츠 */,
-    "ability": "cute-charm",
-    "moves": [
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "earth-power" /* 대지의힘 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ } ],
-      [ { "slug": "taunt" /* 도발 */ } ]
-    ]
-  },
-  {
-    "item": "leftovers" /* 먹다남은음식 */,
-    "ability": "cute-charm",
-    "moves": [
-      [ { "slug": "moonblast" /* 문포스 */ } ],
-      [ { "slug": "earth-power" /* 대지의힘 */ } ],
-      [ { "slug": "calm-mind" /* 명상 */ } ],
-      [ { "slug": "substitute" /* 대타출동 */ } ]
-    ]
-  }
-  ],
   "maushold-family-of-four": /* 파밀리쥐 */ [
   {
     "item": "wide-lens" /* 광각렌즈 */,
@@ -23087,6 +23025,66 @@ const SPECIES_FACTORY_SETS = {
       [ { "slug": "calm-mind" /* 명상 */ }, { "slug": "moonlight" /* 달빛 */ }, { "slug": "earth-power" /* 대지의힘 */ }, { "slug": "hyper-voice" /* 하이퍼보이스 */ } ]
     ]
   },
+  ],
+    "landorus-therian": /* 랜드로스(영물폼) */ [
+  {
+    "item": "rocky-helmet" /* 울퉁불퉁멧 */,
+    "ability": "intimidate" /* 위협 */,
+    "moves": [
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+    ]
+  }
+  ],
+  "thundurus-therian": /* 볼트로스(영물폼) */ [
+  {
+    "item": "life-orb" /* 생명의구슬 */,
+    "ability": "volt-absorb" /* 축전 */,
+    "moves": [
+      [ { "slug": "nasty-plot" /* 나쁜음모 */ } ],
+      [ { "slug": "thunderbolt" /* 10만볼트 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ],
+      [ { "slug": "grass-knot" /* 풀묶기 */ } ]
+    ]
+  }
+  ],
+  "tornadus-therian": /* 토네로스(영물폼) */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "regenerator" /* 재생력 */,
+    "moves": [
+      [ { "slug": "hurricane" /* 폭풍 */ } ],
+      [ { "slug": "heat-wave" /* 열풍 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ],
+      [ { "slug": "u-turn" /* 유턴 */ } ]
+    ]
+  }
+  ],
+  "necrozma-dusk": /* 네크로즈마(황혼의 갈기) */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "prism-armor" /* 프리즘아머 */,
+    "moves": [
+      [ { "slug": "swords-dance" /* 칼춤 */ } ],
+      [ { "slug": "sunsteel-strike" /* 메테오드라이브 */ } ],
+      [ { "slug": "earthquake" /* 지진 */ } ],
+      [ { "slug": "knock-off" /* 탁쳐서떨구기 */ } ]
+    ]
+  }
+  ],
+  "necrozma-dawn": /* 네크로즈마(새벽의 날개) */ [
+  {
+    "item": "leftovers" /* 먹다남은음식 */,
+    "ability": "prism-armor" /* 프리즘아머 */,
+    "moves": [
+      [ { "slug": "calm-mind" /* 명상 */ } ],
+      [ { "slug": "moongeist-beam" /* 섀도레이 */ } ],
+      [ { "slug": "photon-geyser" /* 포톤가이저 */ } ],
+      [ { "slug": "morning-sun" /* 아침햇살 */ } ]
+    ]
+  }
   ],
 };
 

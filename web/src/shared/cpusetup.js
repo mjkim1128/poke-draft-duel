@@ -4,9 +4,10 @@
 //   공격 횟수   내가 상대를 잡는 데 필요한 공격 횟수 (랭업하는 턴은 세지 않는다)
 //   역전        랭업 전에는 상대보다 느렸는데 랭업 후에는 내가 먼저 움직임 (트릭룸이 깔려 있으면 반대로 계산)
 import { damageCalc, MIN_ROLL, typeEffectiveness } from "./damagecalc";
+import { skipsChargeInWeather } from "./field";
 import { effectiveSpeed } from "./speed";
 import { getUsableMoves } from "./pp";
-import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES, BOOST_NULLIFYING_MOVES, FORCE_SWITCH_MOVES } from "./movemechanics";
+import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES, BOOST_NULLIFYING_MOVES, FORCE_SWITCH_MOVES, ABILITY_IGNORING_MOVES } from "./movemechanics";
 import { blocksOhko, preventsDrag } from "./abilities";
 import { activeItem } from "./helditem";
 import { FOCUS_SASH } from "./iteminfo";
@@ -104,7 +105,9 @@ export function bestDamage(attacker, defender, field, roll = 100) {
     for (const move of getUsableMoves(attacker, { foe: defender })) {
         if (move.damage_class.name === "status") continue;
         let damage = damageCalc(attacker, defender, move, { field, roll });
-        if (CHARGE_MOVES.has(move.name) || RECHARGE_MOVES.has(move.name)) damage /= 2;
+        // 충전 기술은 날씨 덕에 충전 없이 나가거나, 이미 충전을 마친 두 번째 턴이면 반으로 깎지 않는다
+        const charges = CHARGE_MOVES.has(move.name) && !skipsChargeInWeather(move, field) && attacker.charging !== move.name;
+        if (charges || RECHARGE_MOVES.has(move.name)) damage /= 2;
         const range = MULTIHIT_MOVES[move.name];
         if (range) damage *= range[0] === range[1] ? range[0] : 3.1;
         best = Math.max(best, damage);
@@ -119,7 +122,21 @@ export const hitsToKO = (hp, damage) => (damage > 0 ? Math.ceil(hp / damage) : I
 export function survivesOneHit(pokemon, attacker = null) {
     if (pokemon.hp[0] !== pokemon.hp[1]) return false;
     if (activeItem(pokemon) && pokemon.item.name === FOCUS_SASH) return true;
-    return blocksOhko(pokemon, attacker);
+    // 옹골참은 상대가 가장 센 기술로 특성을 무시하는 기술(선샤인스트라이크 등)을 쓰면 뚫린다
+    return blocksOhko(pokemon, attacker) && !(attacker && strongestMoveIgnoresAbilities(attacker, pokemon));
+}
+
+// attacker가 defender를 가장 센 기술로 때릴 때 그 기술이 상대의 특성을 무시하는 기술인가
+function strongestMoveIgnoresAbilities(attacker, defender) {
+    if (!getUsableMoves(attacker, { foe: defender }).some((m) => ABILITY_IGNORING_MOVES.has(m.name))) return false;
+    let best = null;
+    let top = -1;
+    for (const move of getUsableMoves(attacker, { foe: defender })) {
+        if (move.damage_class.name === "status") continue;
+        const damage = damageCalc(attacker, defender, move);
+        if (damage > top) [top, best] = [damage, move];
+    }
+    return !!best && ABILITY_IGNORING_MOVES.has(best.name);
 }
 
 // target을 쓰러뜨리는 데 필요한 공격 횟수. 한 방 방지가 있으면 한 번은 버티므로 최소 두 번.

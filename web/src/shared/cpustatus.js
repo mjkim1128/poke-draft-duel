@@ -4,7 +4,7 @@
 // 그 밖의 변화기 안의 순서: 소원, 트릭룸, 순풍, 트릭, 울부짖기/흑안개, 도발, 앙코르, 상태이상, 벽, 대타출동, 방어 (cpuboardmoves.js)
 import { damageCalc, typeEffectiveness, MIN_ROLL } from "./damagecalc";
 import { getUsableMoves } from "./pp";
-import { isGrounded, weatherHealPercent, weatherBlocksStatus, terrainBlocksStatus, weatherOf } from "./field";
+import { isGrounded, weatherHealPercent, weatherBlocksStatus, terrainBlocksStatus, weatherOf, adaptMoveToField } from "./field";
 import { HAZARD_MOVES, hasHazards } from "./hazards";
 import { LIGHT_CLAY } from "./iteminfo";
 import { activeItem } from "./helditem";
@@ -103,7 +103,7 @@ function screenMove(s) {
     const best = (category) => {
         let top = 0;
         for (const m of getUsableMoves(foe)) {
-            if (m.damage_class.name === category) top = Math.max(top, damageCalc(foe, me, m, { field }));
+            if (adaptMoveToField(m, foe, field).damage_class.name === category) top = Math.max(top, damageCalc(foe, me, m, { field }));
         }
         return top;
     };

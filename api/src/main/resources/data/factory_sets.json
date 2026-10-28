@@ -952,7 +952,6 @@
 {"species":"snorlax","set":{"item":"leftovers","ability":"thick-fat","moves":[[{"slug":"rest"}],[{"slug":"sleep-talk"}],[{"slug":"curse"}],[{"slug":"body-slam"}]]}},
 {"species":"snorlax","set":{"item":"iapapa-berry","ability":"gluttony","moves":[[{"slug":"recycle"}],[{"slug":"facade"}],[{"slug":"fire-punch"},{"slug":"earthquake"}],[{"slug":"curse"}]]}},
 {"species":"snorlax","set":{"item":"leftovers","ability":"thick-fat","moves":[[{"slug":"rest"}],[{"slug":"return"}],[{"slug":"sleep-talk"}],[{"slug":"curse"}]]}},
-{"species":"snorlax","set":{"item":"leftovers","ability":"thick-fat","moves":[[{"slug":"curse"}],[{"slug":"frustration"}],[{"slug":"rest"}],[{"slug":"earthquake"}]]}},
 {"species":"snorlax","set":{"item":"figy-berry","ability":"gluttony","moves":[[{"slug":"curse"}],[{"slug":"recycle"}],[{"slug":"facade"},{"slug":"body-slam"}],[{"slug":"earthquake"}]]}},
 {"species":"snorlax","set":{"item":"figy-berry","ability":"gluttony","moves":[[{"slug":"curse"}],[{"slug":"recycle"}],[{"slug":"return"}],[{"slug":"earthquake"}]]}},
 {"species":"snorlax","set":{"item":"choice-band","ability":"thick-fat","moves":[[{"slug":"double-edge"}],[{"slug":"earthquake"}],[{"slug":"fire-punch"}],[{"slug":"pursuit"}]]}},
@@ -1986,7 +1985,6 @@
 {"species":"kingambit","set":{"item":"focus-sash","ability":"supreme-overlord","moves":[[{"slug":"kowtow-cleave"}],[{"slug":"swords-dance"}],[{"slug":"iron-head"}],[{"slug":"sucker-punch"}]]}},
 {"species":"flutter-mane","set":{"item":"choice-specs","ability":"protosynthesis","moves":[[{"slug":"moonblast"}],[{"slug":"shadow-ball"}],[{"slug":"psyshock"},{"slug":"mystical-fire"}],[{"slug":"power-gem"}]]}},
 {"species":"flutter-mane","set":{"item":"life-orb","ability":"protosynthesis","moves":[[{"slug":"moonblast"}],[{"slug":"shadow-ball"}],[{"slug":"psyshock"},{"slug":"mystical-fire"},{"slug":"calm-mind"}],[{"slug":"power-gem"}]]}},
-{"species":"flutter-mane","set":{"item":"booster-energy","ability":"protosynthesis","moves":[[{"slug":"moonblast"}],[{"slug":"shadow-ball"}],[{"slug":"charm"}],[{"slug":"calm-mind"}]]}},
 {"species":"skeledirge","set":{"item":"sitrus-berry","ability":"unaware","moves":[[{"slug":"torch-song"}],[{"slug":"hex"}],[{"slug":"will-o-wisp"}],[{"slug":"slack-off"}]]}},
 {"species":"gholdengo","set":{"item":"air-balloon","ability":"good-as-gold","moves":[[{"slug":"nasty-plot"}],[{"slug":"shadow-ball"}],[{"slug":"dazzling-gleam"}],[{"slug":"recover"}]]}},
 {"species":"gholdengo","set":{"item":"air-balloon","ability":"good-as-gold","moves":[[{"slug":"nasty-plot"}],[{"slug":"shadow-ball"}],[{"slug":"make-it-rain"}],[{"slug":"recover"}]]}},
@@ -2159,10 +2157,6 @@
 {"species":"sneasler","set":{"item":"focus-sash","ability":"unburden","moves":[[{"slug":"dire-claw"}],[{"slug":"close-combat"}],[{"slug":"fake-out"}],[{"slug":"toxic-spikes"}]]}},
 {"species":"sneasler","set":{"item":"air-balloon","ability":"poison-touch","moves":[[{"slug":"dire-claw"}],[{"slug":"close-combat"}],[{"slug":"fake-out"}],[{"slug":"toxic-spikes"}]]}},
 {"species":"sneasler","set":{"item":"air-balloon","ability":"unburden","moves":[[{"slug":"dire-claw"}],[{"slug":"close-combat"}],[{"slug":"shadow-claw"}],[{"slug":"toxic-spikes"}]]}},
-{"species":"enamorus-incarnate","set":{"item":"choice-scarf","ability":"contrary","moves":[[{"slug":"moonblast"}],[{"slug":"earth-power"}],[{"slug":"tera-blast"}],[{"slug":"healing-wish"}]]}},
-{"species":"enamorus-incarnate","set":{"item":"choice-scarf","ability":"contrary","moves":[[{"slug":"moonblast"}],[{"slug":"earth-power"}],[{"slug":"mystical-fire"}],[{"slug":"healing-wish"}]]}},
-{"species":"enamorus-incarnate","set":{"item":"heavy-duty-boots","ability":"cute-charm","moves":[[{"slug":"moonblast"}],[{"slug":"earth-power"}],[{"slug":"calm-mind"}],[{"slug":"taunt"}]]}},
-{"species":"enamorus-incarnate","set":{"item":"leftovers","ability":"cute-charm","moves":[[{"slug":"moonblast"}],[{"slug":"earth-power"}],[{"slug":"calm-mind"}],[{"slug":"substitute"}]]}},
 {"species":"maushold-family-of-four","set":{"item":"wide-lens","ability":"technician","moves":[[{"slug":"population-bomb"}],[{"slug":"bite"},{"slug":"mud-shot"}],[{"slug":"encore"}],[{"slug":"thunder-wave"},{"slug":"tidy-up"}]]}},
 {"species":"maushold-family-of-four","set":{"item":"wide-lens","ability":"technician","moves":[[{"slug":"tidy-up"}],[{"slug":"population-bomb"}],[{"slug":"bite"},{"slug":"bullet-seed"}],[{"slug":"encore"}]]}},
 {"species":"ceruledge","set":{"item":"leftovers","ability":"flash-fire","moves":[[{"slug":"bitter-blade"}],[{"slug":"bulk-up"}],[{"slug":"taunt"}],[{"slug":"flame-charge"},{"slug":"shadow-sneak"},{"slug":"tera-blast"},{"slug":"will-o-wisp"}]]}},
@@ -2212,5 +2206,10 @@
 {"species":"grimer","set":{"item":"eviolite","ability":"sticky-hold","moves":[[{"slug":"poison-jab"}],[{"slug":"drain-punch"}],[{"slug":"toxic"}],[{"slug":"knock-off"}]]}},
 {"species":"ursaluna-bloodmoon","set":{"item":["assault-vest","focus-sash"],"ability":"minds-eye","moves":[[{"slug":"blood-moon"}],[{"slug":"earth-power"}],[{"slug":"hyper-voice"}],[{"slug":"vacuum-wave"}]]}},
 {"species":"ursaluna-bloodmoon","set":{"item":"covert-cloak","ability":"minds-eye","moves":[[{"slug":"blood-moon"}],[{"slug":"hyper-voice"}],[{"slug":"taunt"}],[{"slug":"vacuum-wave"}]]}},
-{"species":"ursaluna-bloodmoon","set":{"item":["leftovers","sitrus-berry"],"ability":"minds-eye","moves":[[{"slug":"blood-moon"}],[{"slug":"vacuum-wave"}],[{"slug":"yawn"}],[{"slug":"calm-mind"},{"slug":"moonlight"},{"slug":"earth-power"},{"slug":"hyper-voice"}]]}}
+{"species":"ursaluna-bloodmoon","set":{"item":["leftovers","sitrus-berry"],"ability":"minds-eye","moves":[[{"slug":"blood-moon"}],[{"slug":"vacuum-wave"}],[{"slug":"yawn"}],[{"slug":"calm-mind"},{"slug":"moonlight"},{"slug":"earth-power"},{"slug":"hyper-voice"}]]}},
+{"species":"landorus-therian","set":{"item":"rocky-helmet","ability":"intimidate","moves":[[{"slug":"stealth-rock"}],[{"slug":"earthquake"}],[{"slug":"u-turn"}],[{"slug":"knock-off"}]]}},
+{"species":"thundurus-therian","set":{"item":"life-orb","ability":"volt-absorb","moves":[[{"slug":"nasty-plot"}],[{"slug":"thunderbolt"}],[{"slug":"focus-blast"}],[{"slug":"grass-knot"}]]}},
+{"species":"tornadus-therian","set":{"item":"leftovers","ability":"regenerator","moves":[[{"slug":"hurricane"}],[{"slug":"heat-wave"}],[{"slug":"knock-off"}],[{"slug":"u-turn"}]]}},
+{"species":"necrozma-dusk","set":{"item":"leftovers","ability":"prism-armor","moves":[[{"slug":"swords-dance"}],[{"slug":"sunsteel-strike"}],[{"slug":"earthquake"}],[{"slug":"knock-off"}]]}},
+{"species":"necrozma-dawn","set":{"item":"leftovers","ability":"prism-armor","moves":[[{"slug":"calm-mind"}],[{"slug":"moongeist-beam"}],[{"slug":"photon-geyser"}],[{"slug":"morning-sun"}]]}}
 ]

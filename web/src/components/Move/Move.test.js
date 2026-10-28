@@ -176,3 +176,52 @@ describe("기술 설명", () => {
     });
 });
 
+
+// 정보창에는 실전에서 실제로 쓰이는 모습을 보여 준다 (포톤게이저의 종류, 웨더볼의 타입과 위력)
+describe("정보창에 보이는 기술은 실전의 모습이다", () => {
+    const mon = (stats, extra = {}) => ({
+        name: "mon",
+        base_stats: stats,
+        stat_levels: [0, 0, 0, 0, 0, 0, 0],
+        hp: [300, 300],
+        types: [{ slot: 1, type: { name: "psychic" } }],
+        ability: null,
+        item: null,
+        moveset: [],
+        ...extra,
+    });
+    const GEYSER = { ...MOVE, name: "photon-geyser", power: 100, damage_class: { name: "special" }, type: { name: "psychic" } };
+    const WEATHER_BALL = { ...MOVE, name: "weather-ball", power: 50, damage_class: { name: "special" }, type: { name: "normal" } };
+    const renderWith = (move, attacker, field = null) => {
+        root = createRoot(container);
+        act(() => root.render(<Move move={move} onClick={jest.fn()} attackerDefender={[attacker, mon([100, 100, 100, 100, 100, 100])]} field={field} />));
+        pointer(wrapper(), "pointerdown");
+        act(() => jest.advanceTimersByTime(LONG_PRESS_MS + 50));
+    };
+    test("공격이 더 높은 포켓몬의 포톤게이저는 물리로 보인다", () => {
+        renderWith(GEYSER, mon([100, 157, 100, 113, 100, 100]));
+        expect(popupText().textContent).toContain("Damage Class: Physical");
+    });
+    test("특공이 더 높은 포켓몬의 포톤게이저는 특수로 보인다", () => {
+        renderWith(GEYSER, mon([100, 113, 100, 157, 100, 100]));
+        expect(popupText().textContent).toContain("Damage Class: Special");
+    });
+    test("웨더볼은 날씨가 없으면 노말 타입 위력 50으로 보인다", () => {
+        renderWith(WEATHER_BALL, mon([100, 100, 100, 100, 100, 100]));
+        expect(popupText().textContent).toContain("Power: 50");
+        expect(button().id).toBe("normal");
+    });
+    test("웨더볼은 쾌청이면 불꽃 타입 위력 100으로 보인다", () => {
+        renderWith(WEATHER_BALL, mon([100, 100, 100, 100, 100, 100]), { weather: { name: "sun", turns: 5 }, terrain: null });
+        expect(popupText().textContent).toContain("Power: 100");
+        expect(button().id).toBe("fire");
+        expect(button().textContent).toContain("Fire");
+    });
+    test("기술을 쓸 때 넘기는 값은 원래의 기술이다", () => {
+        const onClick = jest.fn();
+        root = createRoot(container);
+        act(() => root.render(<Move move={WEATHER_BALL} onClick={onClick} attackerDefender={[mon([100, 100, 100, 100, 100, 100]), mon([100, 100, 100, 100, 100, 100])]} field={{ weather: { name: "sun", turns: 5 }, terrain: null }} />));
+        click(button());
+        expect(onClick).toHaveBeenCalledWith(WEATHER_BALL);
+    });
+});

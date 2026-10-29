@@ -415,4 +415,5 @@ export const TRANSLATIONS = [
     ["Game is over.", "게임이 끝났습니다."],
     ["Pick a pokemon to switch into!", "교체할 포켓몬을 선택하세요!"],
     ["Trapped! You can't switch out right now.", "붙잡혀서 지금은 교체할 수 없습니다!"],
+    ["It is locked into its move and can't switch out right now.", "기술에 묶여 있어서 지금은 교체할 수 없습니다!"],
 ];

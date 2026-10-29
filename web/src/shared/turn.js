@@ -329,8 +329,9 @@ function getEffectiveSpeed(pokemon, field = null) {
 // A pokemon in the middle of a two-turn move has no say in what it does next.
 function forcedMove(pokemon, chosenMove) {
     if (pokemon.charging) return pokemon.moveset.find((m) => m.name === pokemon.charging) || chosenMove;
-    // Outrage & co.: keeps using the same move until the rampage is over (switching out is still allowed)
-    if (pokemon.rampage && chosenMove.priority !== 6) return pokemon.moveset.find((m) => m.name === pokemon.rampage.move) || chosenMove;
+    // Outrage & co.: the game uses the move by itself until the rampage is over, so the user can't switch out either
+    // (a Choice item or Encore, on the other hand, still lets it switch)
+    if (pokemon.rampage) return pokemon.moveset.find((m) => m.name === pokemon.rampage.move) || chosenMove;
     // Encore: it can only repeat the move it used last, while that move can still be used (PP left, not Disabled
     // or Taunted). Switching out is still allowed.
     if (pokemon.encore && chosenMove.priority !== 6) {
@@ -469,7 +470,7 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     // speeds below are worked out with the new stats
     const megaText = [];
     if (options.mega && chosenMove.priority !== 6 && canMegaEvolve(playerPokemon)) megaEvolve(playerPokemon, opponentPokemon, megaText);
-    const canCpuSwitch = !isTrapped(opponentPokemon, playerPokemon);
+    const canCpuSwitch = !isTrapped(opponentPokemon, playerPokemon) && !opponentPokemon[0].rampage;
     let plannedCpuMove = makeMove(playerPokemon, opponentPokemon, canCpuSwitch);
     // 최종 보스는 플레이어가 이번 턴에 무엇을 하는지 알고 나서 행동을 고른다 (cpuread.js)
     if (opponentPokemon.readsPlayer) plannedCpuMove = readPlayerMove(playerPokemon, opponentPokemon, move, plannedCpuMove, canCpuSwitch);

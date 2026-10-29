@@ -4,11 +4,11 @@
 //   공격 횟수   내가 상대를 잡는 데 필요한 공격 횟수 (랭업하는 턴은 세지 않는다)
 //   역전        랭업 전에는 상대보다 느렸는데 랭업 후에는 내가 먼저 움직임 (트릭룸이 깔려 있으면 반대로 계산)
 import { damageCalc, MIN_ROLL, typeEffectiveness } from "./damagecalc";
-import { skipsChargeInWeather } from "./field";
+import { skipsChargeInWeather, terrainBlocksStatus } from "./field";
 import { effectiveSpeed } from "./speed";
 import { getUsableMoves } from "./pp";
 import { CHARGE_MOVES, RECHARGE_MOVES, MULTIHIT_MOVES, BOOST_NULLIFYING_MOVES, FORCE_SWITCH_MOVES, ABILITY_IGNORING_MOVES } from "./movemechanics";
-import { blocksOhko, preventsDrag } from "./abilities";
+import { blocksOhko, preventsDrag, abilityBlocksStatus } from "./abilities";
 import { activeItem } from "./helditem";
 import { FOCUS_SASH } from "./iteminfo";
 
@@ -185,6 +185,7 @@ export function duelWins(a, b, field, attacks, hits, trLeft) {
 //  - 흑안개: 언제나 통한다
 //  - 클리어스모그: 피해를 줄 수 있을 때 (타입 상성으로 무효가 아니고, 내가 대타로 막고 있지 않을 때)
 //  - 울부짖기, 날려버리기, 드래곤테일, 용오름: 내 뒤에 낼 포켓몬이 있고 흡반, 가드독 같은 특성으로 버티지 않을 때
+//  - 하품: 맞으면 다음 턴 끝에 잠들거나 그 전에 교체해야 해서 랭업이 헛수고가 된다. 이미 졸리거나 상태이상이거나, 대타, 세이프가드, 필드, 특성으로 잠들 수 없으면 해당하지 않는다
 export function foeNullifiesBoosts(foe, me, myTeam) {
     const hasBench = myTeam.slice(1).some((p) => p.hp[0] > 0);
     return getUsableMoves(foe, { foe: me }).some((move) => {
@@ -192,7 +193,14 @@ export function foeNullifiesBoosts(foe, me, myTeam) {
         if (FORCE_SWITCH_MOVES.has(move.name)) return hasBench && !preventsDrag(me, foe);
         if (move.name === "clear-smog") return !me.substitute && typeEffectiveness(move, me, foe) !== 0;
         return true;
-    });
+    }) || yawnPutsMeToSleep(foe, me, myTeam);
+}
+
+function yawnPutsMeToSleep(foe, me, myTeam) {
+    if (!getUsableMoves(foe, { foe: me }).some((move) => move.name === "yawn")) return false;
+    if (me.yawn || me.status || me.substitute || myTeam.safeguardTurns > 0) return false;
+    const field = myTeam.field || null;
+    return !terrainBlocksStatus(me, "sleep", field) && !abilityBlocksStatus(me, "sleep", foe, field);
 }
 
 // 컴퓨터(opponentTeam[0])가 지금 쓸 랭업기. 쓸 만한 게 없으면 null.

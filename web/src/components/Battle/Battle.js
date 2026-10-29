@@ -335,6 +335,11 @@ export function Battle(props) {
                 alert(localizeLine("Trapped! You can't switch out right now."));
                 return;
             }
+            /// Outrage & co. are used by themselves until the rampage is over: no switching meanwhile
+            if (props.playerPokemon[0].rampage) {
+                alert(localizeLine("It is locked into its move and can't switch out right now."));
+                return;
+            }
             let move = { priority: 6, index: index };
             setPanelTab("moves");
             nextTurn(move);
@@ -429,7 +434,7 @@ export function Battle(props) {
     });
     const encoredMove = currentpoke.encore && usableMoves.find((move) => move.name === currentpoke.encore.move);
     const forcedMoveName =
-        currentpoke.charging || choiceLockedMove(currentpoke) || (encoredMove && usableMoves.length === 1 ? encoredMove.name : null);
+        currentpoke.charging || (currentpoke.rampage && currentpoke.rampage.move) || choiceLockedMove(currentpoke) || (encoredMove && usableMoves.length === 1 ? encoredMove.name : null);
     let playableMoves = forcedMoveName
         ? currentpoke.moveset.filter((move) => move.name === forcedMoveName)
         : currentpoke.moveset;

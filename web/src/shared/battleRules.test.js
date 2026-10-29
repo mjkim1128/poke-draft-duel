@@ -541,13 +541,38 @@ describe("역린 계열: 2~3턴 같은 기술로 고정되고 끝나면 혼란",
         expect(user.confusion).toBeFalsy();
     });
 
-    test("교체하면 고정이 풀린다", () => {
+    test("고정된 동안은 교체할 수 없다: 교체를 고르면 그 기술이 대신 나간다", () => {
         jest.spyOn(Math, "random").mockReturnValue(0.99);
         const { user, me, foe } = setup();
         doTurn(me, foe, user.moveset[0]);
         expect(user.rampage).toBeTruthy();
-        doTurn(me, foe, { priority: 6, index: 1 });
+        const text = doTurn(me, foe, { priority: 6, index: 1 }).join(" ");
+        expect(text).toContain("Garchomp used Outrage");
+        expect(me[0]).toBe(user); // 그대로 앞에 남아 있다
+        expect(user.rampage).toBeTruthy(); // 3턴째라 아직 이어진다
+    });
+
+    test("고정이 끝나면 다시 교체할 수 있다", () => {
+        jest.spyOn(Math, "random").mockReturnValue(0);
+        const { user, me, foe } = setup();
+        doTurn(me, foe, user.moveset[0]);
+        doTurn(me, foe, user.moveset[1]); // 2턴짜리가 끝난다
         expect(user.rampage).toBeNull();
+        doTurn(me, foe, { priority: 6, index: 1 });
+        expect(me[0]).not.toBe(user);
+    });
+
+    test("컴퓨터도 고정된 동안은 교체하지 않는다 (불리한 대면이어도)", () => {
+        jest.spyOn(Math, "random").mockReturnValue(0.99);
+        // 컴퓨터의 역린 사용자가 상대(고스트가 아닌 노말에게 효과가 있다)와 붙는다. 벤치는 훨씬 나은 포켓몬이다
+        const cpuUser = mon("garchomp", ["outrage", "splash"]);
+        cpuUser.moveset[0].accuracy = null;
+        cpuUser.hp = [60, cpuUser.hp[1]]; // 맞으면 쓰러질 만큼 약하다
+        const cpu = [cpuUser, mon("blissey", ["splash"])];
+        const human = [mon("snorlax", ["body-slam"]), mon("blissey", ["splash"])];
+        cpuUser.rampage = { move: "outrage", remaining: 2, moved: false };
+        doTurn(human, cpu, human[0].moveset[0]);
+        expect(cpu[0]).toBe(cpuUser);
     });
 
     test("이미 혼란이면 지쳐서 혼란이라는 글이 또 나오지 않는다", () => {

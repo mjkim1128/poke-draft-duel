@@ -15,7 +15,7 @@ import {
     WIND_MOVES,
     CRASH_MOVES,
 } from "./movemechanics";
-import { UNREMOVABLE_ITEMS, BOOSTER_ENERGY } from "./iteminfo";
+import { UNREMOVABLE_ITEMS, BOOSTER_ENERGY, PUNCHING_GLOVE } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { PogeyData } from "./pogey";
 
@@ -86,7 +86,9 @@ const contactDamage = {
 };
 
 // Does this move make contact? (Long Reach's owner never does.)
+// 펀치글러브를 든 쪽의 펀치류 기술은 접촉하지 않는 것으로 본다 (울퉁불퉁멧, 가시 특성, 철가시 등이 발동하지 않는다)
 export function makesContact(attacker, move) {
+    if (activeItem(attacker) && attacker.item.name === PUNCHING_GLOVE && PUNCH_MOVES.has(move.name)) return false;
     return CONTACT_MOVES.has(move.name) && abilityName(attacker) !== "long-reach";
 }
 const itemLabelOf = (p) => (p.item ? localName(p.item) : "");

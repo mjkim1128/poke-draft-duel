@@ -151,5 +151,6 @@
 {"id":2272,"name":"golisopite","korean_name":"갑주무사나이트","category":{"name":"mega-stones"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/golisopite.png"}},
 {"id":2259,"name":"drampanite","korean_name":"할비롱나이트","category":{"name":"mega-stones"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/drampanite.png"}},
 {"id":2277,"name":"glimmoranite","korean_name":"킬라플로르나이트","category":{"name":"mega-stones"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/glimmoranite.png"}},
-{"id":2275,"name":"baxcalibrite","korean_name":"드닐레이브나이트","category":{"name":"mega-stones"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/baxcalibrite.png"}}
+{"id":2275,"name":"baxcalibrite","korean_name":"드닐레이브나이트","category":{"name":"mega-stones"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/baxcalibrite.png"}},
+{"id":1700,"name":"punching-glove","korean_name":"펀치글러브","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/punching-glove.png"}}
 ]

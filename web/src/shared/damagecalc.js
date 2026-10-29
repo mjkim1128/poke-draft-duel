@@ -7,13 +7,14 @@ import {
     EVIOLITE,
     EXPERT_BELT,
     MUSCLE_BAND,
+    PUNCHING_GLOVE,
     LIFE_ORB,
     AIR_BALLOON,
     METRONOME_ITEM,
     UNREMOVABLE_ITEMS,
     getFlingPower,
 } from "./iteminfo";
-import { STATUS_TYPE_BLOCKED_MOVES } from "./movemechanics";
+import { STATUS_TYPE_BLOCKED_MOVES, PUNCH_MOVES } from "./movemechanics";
 import { weatherOf, weatherDamageMod, powerFieldMod, adaptMoveToField } from "./field";
 import {
     abilityAdaptMove,
@@ -271,6 +272,7 @@ function calculateDamage(attacker, defender, move, ctx) {
         if (boostedType && move.type.name === boostedType) power *= 1.2;
         if (attacker.item.name === EXPERT_BELT && type > 1) power *= 1.2;
         if (attacker.item.name === MUSCLE_BAND && category === "physical") power *= 1.1;
+        if (attacker.item.name === PUNCHING_GLOVE && PUNCH_MOVES.has(move.name)) power *= 1.1; // 펀치류 기술의 위력이 10% 오른다
         if (attacker.item.name === LIFE_ORB) power *= 1.3;
         if (attacker.item.name === METRONOME_ITEM)
             power *= 1 + 0.2 * Math.min((attacker.moveRepeatCount || 1) - 1, 5);

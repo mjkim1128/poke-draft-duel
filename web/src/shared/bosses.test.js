@@ -247,7 +247,7 @@ describe("마리나의 쓱쓱 칸: 킹드라와, 메가진화하면 쓱쓱이 �
     test("첫 칸(비를 거는 포켓몬)은 메가진화 후 특성을 치지 않는다", () => {
         // 메가진화하면 가뭄이 되는 리자몽 Y를 들고 있어도, 솔의 첫 칸은 처음부터 가뭄인 포켓몬이다
         const sol = BOSSES.find((b) => b.name === "Sol");
-        const r = [mon("torkoal", "drought"), mon("charizard", "blaze", "charizardite-y"), mon("venusaur", "chlorophyll"), mon("leafeon", "chlorophyll"), mon("houndoom", "flash-fire"), mon("ninetales", "drought")];
+        const r = [mon("torkoal", "drought"), mon("charizard", "blaze", "charizardite-y"), mon("victreebel", "chlorophyll"), mon("leafeon", "chlorophyll"), mon("houndoom", "flash-fire"), mon("ninetales", "drought")];
         for (let i = 0; i < 300; i++) {
             const team = pickBossTeam(r, sol.lineup.options[0]); // A형: 가뭄 담당이 선두
             expect(["torkoal", "ninetales"]).toContain(team[0].name);
@@ -385,16 +385,16 @@ describe("솔의 선출: A형(가뭄 + 엽록소 + 메가 1마리) 또는 B형(�
     const roster = (houndoomStone = true) => [
         mon("torkoal", "drought", "heat-rock"),
         mon("ninetales", "drought", "heat-rock"),
-        mon("venusaur", "chlorophyll", "life-orb"),
+        mon("victreebel", "chlorophyll", "life-orb"),
         mon("leafeon", "chlorophyll", "choice-band"),
         mon("houndoom", "flash-fire", houndoomStone ? stoneOf("houndoom-mega") : "life-orb"),
         mon("charizard", "blaze", stoneOf("charizard-mega-y")),
     ];
     test("팀과 지정이 위와 같다", () => {
         const slots = sol.pokemon.map(slotOf);
-        expect(slots.map((s) => s.name)).toEqual(["torkoal", "ninetales", "venusaur", "leafeon", "houndoom", "charizard"]);
+        expect(slots.map((s) => s.name)).toEqual(["torkoal", "ninetales", "victreebel", "leafeon", "houndoom", "charizard"]);
         expect(slots.find((s) => s.name === "charizard")).toMatchObject({ stone: true, item: "charizardite-y" });
-        expect(slots.find((s) => s.name === "venusaur").stone).toBe(false);
+        expect(slots.find((s) => s.name === "victreebel").stone).toBe(false);
         expect(slots.filter((s) => s.stone).length).toBe(1);
     });
     test("리자몽 Y 세트는 메가스톤 Y를 든 세트이고, 메가진화하면 가뭄이다", () => {

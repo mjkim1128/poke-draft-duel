@@ -44,9 +44,9 @@ class PoolAndFactorySetTests {
     ObjectMapper objectMapper;
 
     @Test
-    void poolHas433PokemonAndNoneAtOrAbove660ExceptNecrozmaForms() {
+    void poolHas438PokemonAndNoneAtOrAbove660ExceptNecrozmaForms() {
         List<Long> poolIds = pokemonRepository.findPoolIds();
-        assertEquals(433, poolIds.size());
+        assertEquals(438, poolIds.size());
 
         // 네크로즈마의 두 모습(종족값 680)은 일부러 풀에 넣는다
         Set<String> allowedAbove660 = Set.of("necrozma-dusk", "necrozma-dawn");

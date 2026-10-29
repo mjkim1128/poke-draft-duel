@@ -80,7 +80,7 @@ export const TRAINER_SOL = {
     pokemon: [
         { name: "torkoal", ability: "drought" },
         { name: "ninetales", ability: "drought" },
-        { name: "venusaur", ability: "chlorophyll", stone: false }, // 엽록소 세트에는 메가스톤이 없다
+        { name: "victreebel", ability: "chlorophyll", stone: false }, // 엽록소 세트 중 메가스톤이 없는 세트만 (메가는 리자몽 Y 하나)
         { name: "leafeon", ability: "chlorophyll" },
         "houndoom",
         { name: "charizard", stone: true, item: "charizardite-y" }, // 메가진화하면 가뭄이 되는 Y로 고정

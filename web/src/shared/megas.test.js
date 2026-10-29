@@ -61,10 +61,19 @@ describe("메가스톤 세트", () => {
         }
     });
 
-    test("기존 세트는 그대로 남아 있다 (메가 가능 포켓몬도 스톤 없이 나올 수 있다)", () => {
+    // 메가스톤을 든 세트만 있어서 늘 메가진화하는 포켓몬 (일부러 허용한다)
+    const STONE_ONLY = new Set(["beedrill", "kangaskhan", "ampharos", "sceptile"]);
+    test("기존 세트는 그대로 남아 있다 (메가 가능 포켓몬도 스톤 없이 나올 수 있다. 위 목록의 포켓몬은 스톤 세트만 있어도 된다)", () => {
         for (const mega of megas) {
+            if (STONE_ONLY.has(mega.base)) continue;
             const plain = SETS.filter((row) => row.species === mega.base && !stoneNames.has(row.set.item));
             expect(plain.length).toBeGreaterThan(0);
+        }
+    });
+    test("스톤 세트만 있다고 허용한 포켓몬에는 실제로 스톤 세트가 있다", () => {
+        for (const name of STONE_ONLY) {
+            const mega = megas.find((m) => m.base === name);
+            expect(SETS.filter((row) => row.species === name && row.set.item === mega.stone).length).toBeGreaterThan(0);
         }
     });
 });

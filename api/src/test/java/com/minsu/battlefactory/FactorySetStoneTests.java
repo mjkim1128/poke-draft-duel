@@ -134,19 +134,19 @@ class FactorySetStoneTests {
 
     @Test
     void abilityIsStrongerThanStone() {
-        // 이상해꽃의 메가스톤 세트에는 엽록소가 없다. stone=true여도 엽록소 조건을 먼저 지킨다.
+        // 라이츄의 메가스톤 세트에는 정전기가 없다. stone=true여도 정전기 조건을 먼저 지킨다.
         for (int i = 0; i < 40; i++) {
-            JsonNode set = objectMapper.readTree(factorySetService.findRandomPayload("venusaur", "chlorophyll", null, true).get());
-            boolean hasChlorophyll = false;
+            JsonNode set = objectMapper.readTree(factorySetService.findRandomPayload("raichu", "static", null, true).get());
+            boolean hasStatic = false;
             JsonNode ability = set.get("ability");
             if (ability.isArray()) {
                 for (JsonNode n : ability) {
-                    hasChlorophyll |= "chlorophyll".equals(n.asString());
+                    hasStatic |= "static".equals(n.asString());
                 }
             } else {
-                hasChlorophyll = "chlorophyll".equals(ability.asString());
+                hasStatic = "static".equals(ability.asString());
             }
-            assertTrue(hasChlorophyll, "엽록소가 아님: " + ability);
+            assertTrue(hasStatic, "정전기가 아님: " + ability);
         }
     }
 }

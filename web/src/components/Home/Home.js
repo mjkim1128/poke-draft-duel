@@ -1,4 +1,4 @@
-import { Battle, TeamSelect, PokemonSwap, BossDisplay, ClearDisplay } from "components";
+import { Battle, TeamSelect, PokemonSwap, BossDisplay, ClearDisplay, Rules } from "components";
 import React, { useEffect, useState } from "react";
 import {
     getBaseStats,
@@ -13,6 +13,7 @@ import {
     getRandomType,
     shuffle,
     bossForFloor,
+    beatNamedTrainer,
     pickBossTeam,
     pickCounterTeam,
     FINAL_FLOOR,
@@ -35,6 +36,8 @@ import { keepsRawPower } from "shared/movemechanics";
 import { isNormalizedStats, setNormalizedStats } from "shared/statMode";
 import { clearEasy, loadEasy, saveEasy, toSavedSet } from "shared/easymode";
 import { setSurrenderHandler } from "shared/surrender";
+import { beginJourneyRun, consumeInterruptedRun, finishJourney, recordJourneyReset, seedJourney, startJourneyClock } from "shared/journey";
+import { readDevJump } from "shared/devjump";
 
 /// Beating the final boss unlocks Endless Mode (no named trainers) on this browser
 const ENDLESS_KEY = "battlefactory-endless";
@@ -72,6 +75,8 @@ export function Home() {
     const [easy, setEasy] = useState(false);
     const [easySave, setEasySave] = useState(loadEasy());
     const [resumeEasyRun, setResumeEasyRun] = useState(false);
+    /// The "How to play" window on the title screen
+    const [rulesOpen, setRulesOpen] = useState(false);
     /// True while the options on screen were just loaded and nobody has started a game with them
     /// yet, so "Start!" doesn't have to load them a second time.
     const optionsFresh = React.useRef(false);
@@ -81,6 +86,31 @@ export function Home() {
     useEffect(() => {
         loadNewPokemon(true).then(() => setApiLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    /// Playtest shortcut (dev server only, off in the production build): /?boss=30 opens that boss's screen as soon as the pokemon are loaded
+    const devJump = React.useRef(process.env.NODE_ENV !== "production" ? readDevJump(window.location.search) : null);
+    useEffect(() => {
+        const jump = devJump.current;
+        if (!jump || isApiLoading) return;
+        devJump.current = null;
+        setEndless(false);
+        setEasy(jump.easy);
+        if (jump.screen === "clear") {
+            setWinStreak(FINAL_FLOOR + 1);
+            setBattleFactoryState("clear");
+            return;
+        }
+        if (jump.resets !== null || jump.ms !== null) seedJourney(jump.resets, jump.ms);
+        setWinStreak(jump.floor);
+        setBattleFactoryState("boss");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isApiLoading]);
+
+    /// The journey record (resets and time until the final boss): a run that was cut off by a refresh counts as a reset, and the clock runs while the game is on screen
+    useEffect(() => {
+        consumeInterruptedRun();
+        return startJourneyClock();
     }, []);
 
     useEffect(() => {
@@ -148,6 +178,7 @@ export function Home() {
         setOpponentPokemon(dumb);
         /// (Lose) reset playerPokemon and reset winStreak
         if (battleFactoryState === "home" && playerPokemon.length > 0) {
+            recordJourneyReset(); /// a loss or a surrender sends the run back to the start
             setPlayerPokemon([]);
             setWinStreak(0);
             setEndless(false);
@@ -163,12 +194,21 @@ export function Home() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [easy, battleFactoryState, isApiLoading, playerPokemon, winStreak]);
 
-    /// Easy Mode: Surrender in the settings window works on every screen of the run and resets the floor (back to the title)
+    /// Surrender in the settings window works on every screen of the run and sends it back to the title (the streak resets).
+    /// In a normal-mode battle the Battle screen handles it itself (it counts as a loss and shows the result card).
     useEffect(() => {
-        if (!easy || battleFactoryState === "home" || battleFactoryState === "clear") return;
+        if (battleFactoryState === "home" || battleFactoryState === "clear") return;
+        if (!easy && battleFactoryState === "battle") return;
         setSurrenderHandler(() => {
-            if (!window.confirm(isKorean() ? "항복하시겠습니까? 층 수가 초기화되고 처음 화면으로 돌아갑니다." : "Surrender? Your floor resets and you go back to the title.")) return;
-            clearEasy();
+            const message = easy
+                ? isKorean()
+                    ? "항복하시겠습니까? 층 수가 초기화되고 처음 화면으로 돌아갑니다."
+                    : "Surrender? Your floor resets and you go back to the title."
+                : isKorean()
+                ? "항복하시겠습니까? 패배로 처리되고 연승이 초기화되어 처음 화면으로 돌아갑니다."
+                : "Surrender? This counts as a loss, your win streak resets and you go back to the title.";
+            if (!window.confirm(message)) return;
+            if (easy) clearEasy();
             setBattleFactoryState("home");
         });
         return () => setSurrenderHandler(null);
@@ -440,6 +480,7 @@ export function Home() {
     async function startGame(isEndless, easyMode = false) {
         setEndless(isEndless);
         setEasy(easyMode);
+        if (!isEndless) beginJourneyRun(!easyMode); /// (a refresh in the middle of a normal run sends it back to the start; Easy Mode keeps its floor)
         if (easyMode) clearEasy(); /// a new Easy Mode run replaces the old save
         if (!optionsFresh.current) {
             setApiLoading(true);
@@ -473,6 +514,7 @@ export function Home() {
             );
             for (const poke of party) delete poke.savedSet;
             optionsFresh.current = false;
+            beginJourneyRun(false);
             setEndless(false);
             setEasy(true);
             setWinStreak(saved.winStreak);
@@ -490,6 +532,7 @@ export function Home() {
     /// with the clear screen; everything else goes where the card said.
     function afterBattle(next) {
         if (next === "swap" && !endless && winStreak > FINAL_FLOOR) {
+            finishJourney(); /// the final boss is beaten: the next journey is counted from scratch
             if (easy) {
                 clearEasy(); /// Easy Mode doesn't unlock Endless Mode, and the finished run is no longer saved
             } else {
@@ -499,13 +542,19 @@ export function Home() {
             setBattleFactoryState("clear");
             return;
         }
+        /// A named trainer's pokemon can't be taken: no swapping after beating one, straight on to the next battle
+        if (next === "swap" && beatNamedTrainer(winStreak, endless)) {
+            nextBattle(playerPokemon, true);
+            return;
+        }
         /// Easy Mode: a loss goes back to the picking screen of the same floor
         setBattleFactoryState(easy && next === "home" ? "select" : next);
     }
 
     /// `roster`: my party after a swap (the state hasn't updated yet when the swap screen calls this)
-    async function nextBattle(roster) {
-        if (!endless && bossForFloor(winStreak) && battleFactoryState === "swap") {
+    /// `afterWin`: a battle was just won (the swap screen, or a named trainer's battle that skips it): a boss waiting on the next floor comes first
+    async function nextBattle(roster, afterWin = battleFactoryState === "swap") {
+        if (!endless && bossForFloor(winStreak) && afterWin) {
             setBattleFactoryState("boss");
             return;
         }
@@ -554,11 +603,9 @@ export function Home() {
                                 {isKorean() ? "엔드리스 모드" : "Endless Mode"}
                             </button>
                         )}
-                        <p className="start-credit">
-                            {isKorean() ? "기술·날씨·필드 연출: The Gen 9 Move Animation Project (KRLW890)" : "Move, weather and terrain animations: The Gen 9 Move Animation Project (KRLW890)"}
-                            <br />
-                            Thanks to the Reborn team for letting people use their resources.
-                        </p>
+                        <button className="start-button start-button-rules" onClick={() => setRulesOpen(true)}>
+                            {isKorean() ? "규칙 설명" : "How to play"}
+                        </button>
                         <p className="start-mode-label">{isKorean() ? "능력치 (시작 화면에서만 바꿀 수 있어요)" : "Stats (can only be changed here)"}</p>
                         <div className="start-mode">
                             {[
@@ -581,6 +628,7 @@ export function Home() {
                     </div>
                 </div>
             )}
+            {battleFactoryState === "home" && rulesOpen && <Rules onClose={() => setRulesOpen(false)} />}
             {battleFactoryState === "select" && (
                 <TeamSelect
                     playerRoster={playerPokemon}
@@ -596,6 +644,7 @@ export function Home() {
                         opponentPokemon={battleTeams.opponent}
                         setBattleFactoryState={afterBattle}
                         easy={easy}
+                        endless={endless}
                         winStreak={winStreak}
                         setWinStreak={setWinStreak}
                     />

@@ -1,15 +1,25 @@
 import "./ClearDisplay.css";
 import React from "react";
 import { isKorean } from "shared/lang";
+import { TRAINER_ORION } from "shared/bosspokemon";
 
-// 최종 보스를 이겼을 때의 화면: 엔드리스 모드가 열렸다고 알리고, 이어서 할지 처음으로 갈지 묻는다.
+// 최종 보스(P.D.D Developer)를 이겼을 때의 화면: 보스가 그림과 함께 마지막 말을 하고, 엔드리스 모드가 열렸다고 알리고, 이어서 할지 처음으로 갈지 묻는다.
 export function ClearDisplay(props) {
     const ko = isKorean();
     const title = props.easy ? (ko ? "이지 모드 클리어!" : "Easy Mode Clear!") : ko ? "클리어!" : "Clear!";
+    const boss = TRAINER_ORION;
+    const bossName = ko ? boss.nameKo : boss.name;
+    const lines = props.easy ? (ko ? boss.clearTextEasyKo : boss.clearTextEasy) : ko ? boss.clearTextKo : boss.clearText;
     return (
         <div className="game-over-overlay" role="dialog" aria-modal="true" aria-label={title}>
-            <div className="game-over-card win">
-                <img className="game-over-ball" src={process.env.PUBLIC_URL + "/logo192.png"} alt="" />
+            <div className="game-over-card win clear-card">
+                <img className="clear-boss-img" src={process.env.PUBLIC_URL + "/" + boss.img} alt={bossName} />
+                <p className="clear-boss-name">{bossName}</p>
+                {lines.map((line, i) => (
+                    <p className="clear-boss-line" key={i}>
+                        {line}
+                    </p>
+                ))}
                 <h2 className="game-over-title">{title}</h2>
                 <p className="game-over-streak">
                     <strong>{props.winStreak}</strong>

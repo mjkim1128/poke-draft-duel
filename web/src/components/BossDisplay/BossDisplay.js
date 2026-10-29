@@ -1,5 +1,6 @@
 import React from "react";
 import { isKorean, withParticle } from "shared/lang";
+import { journeyLines, loadJourney } from "shared/journey";
 import "./BossDisplay.css";
 
 export function BossDisplay(props) {
@@ -13,7 +14,11 @@ export function BossDisplay(props) {
         : "You won " + props.winStreak + " battles in a row! Now you must battle Trainer " + name + "!";
     let img = trainer.img;
 
-    let trainer_text = (ko ? trainer.textKo : trainer.text).map((t, i) => {
+    /// The final boss tells me how many times I went back to the start and how long it took to reach it (read once when the screen opens)
+    const [journey] = React.useState(() => (trainer.journey ? loadJourney() : null));
+    const lines = journey ? journeyLines(ko, journey) : ko ? trainer.textKo : trainer.text;
+
+    let trainer_text = lines.map((t, i) => {
         return <h2 key={i}>{t}</h2>;
     });
 

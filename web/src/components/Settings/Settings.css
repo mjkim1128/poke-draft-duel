@@ -116,8 +116,10 @@
     text-align: center;
 }
 
-/* 항복 버튼은 실수로 누르지 않도록 붉은 글씨로 구분한다 */
+/* 항복 버튼은 실수로 누르지 않도록 붉은 글씨로 구분한다 (크레딧 바로 아래, 닫기 위) */
 .settings-surrender {
+    margin: 12px 0 12px;
+    padding: 0 28px;
     color: #b33;
     border-color: #b33;
 }

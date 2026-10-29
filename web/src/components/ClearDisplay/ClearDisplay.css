@@ -17,3 +17,35 @@
     background: #fff;
     cursor: pointer;
 }
+
+/* 최종 보스의 그림과 마지막 말: 카드가 화면보다 길어지면 카드 안에서 스크롤한다 */
+.clear-card {
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+}
+
+.clear-boss-img {
+    display: block;
+    margin: 0 auto 4px;
+    max-height: 170px;
+    width: auto;
+}
+
+.clear-boss-name {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: #6b7280;
+}
+
+.clear-boss-line {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-style: italic;
+    color: #374151;
+}
+
+.clear-boss-line:last-of-type {
+    margin-bottom: 14px;
+}

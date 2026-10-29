@@ -6,3 +6,14 @@
     height: 100vh;
     text-align: center;
 }
+
+/* 키가 큰 그림(최종 보스)이 화면 밖으로 나가지 않게 한다 */
+.boss-display-div img {
+    max-height: 42vh;
+    width: auto;
+}
+
+/* 한국어 대사가 낱말 중간에서 줄이 바뀌지 않게 한다 */
+.boss-display-div h2 {
+    word-break: keep-all;
+}

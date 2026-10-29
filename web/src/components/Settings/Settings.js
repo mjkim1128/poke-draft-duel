@@ -108,18 +108,15 @@ export function Settings() {
                             <p>연출 데이터 형식 / Format: Pokémon Essentials</p>
                         </div>
                         {canSurr && (
-                            <>
-                                <p className="settings-label settings-label-gap">전투 / Battle</p>
-                                <button
-                                    className="settings-option settings-surrender"
-                                    onClick={() => {
-                                        setOpen(false);
-                                        surrenderNow();
-                                    }}
-                                >
-                                    항복 / Surrender
-                                </button>
-                            </>
+                            <button
+                                className="settings-option settings-surrender"
+                                onClick={() => {
+                                    setOpen(false);
+                                    surrenderNow();
+                                }}
+                            >
+                                항복 / Surrender
+                            </button>
                         )}
                         <button className="settings-close" onClick={() => setOpen(false)}>
                             닫기 / Close

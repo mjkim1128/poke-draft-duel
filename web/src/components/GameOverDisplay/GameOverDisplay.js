@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { playJingle } from 'audio/bgm';
 
 // 전투가 끝났을 때 화면 전체를 덮는 결과 창.
-// 이기면 "swap"(상대 포켓몬과 교체하는 화면)으로, 지면 "home"(처음 화면)으로 보낸다. 이지 모드는 져도 같은 층의 선출 화면("select")으로 보낸다.
+// 이기면 "swap"(상대 포켓몬과 교체하는 화면)으로 (네임드 트레이너를 이겼을 때는 교체 없이 바로 다음 전투로: noSwap), 지면 "home"(처음 화면)으로 보낸다. 이지 모드는 져도 같은 층의 선출 화면("select")으로 보낸다.
 export function GameOverDisplay(props) {
     const win = !!props.win;
 
@@ -11,7 +11,7 @@ export function GameOverDisplay(props) {
         playJingle(win ? "win" : "lose");
     }, [win]);
     const [title, buttonLabel, nextState] = win
-        ? ["승리!", "다음 전투로 (포켓몬 교체)", "swap"]
+        ? ["승리!", props.noSwap ? "다음 전투로" : "다음 전투로 (포켓몬 교체)", "swap"]
         : props.easy
         ? ["패배...", "같은 층 선출 화면으로", "select"]
         : ["패배...", "처음부터 다시", "home"];

@@ -1,0 +1,88 @@
+/* 규칙 설명 창: 화면 전체를 어둡게 덮고 가운데에 카드를 띄운다. 한 쪽 내용은 카드 안에 들어가게 짧게 쓰고, 넘칠 때만 카드 안에서 스크롤한다 */
+.rules-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    background: rgba(12, 20, 28, 0.6);
+}
+
+.rules-card {
+    width: min(100%, 420px);
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 20px 20px 16px;
+    border-radius: 14px;
+    background: #fff;
+    text-align: center;
+}
+
+.rules-step {
+    margin: 0 0 4px;
+    font-size: 13px;
+    color: #888;
+}
+
+.rules-title {
+    margin: 0 0 14px;
+    font-size: 22px;
+}
+
+.rules-body {
+    min-height: 190px;
+    text-align: left;
+}
+
+.rules-paragraph {
+    margin: 0 0 12px;
+    font-size: 15px;
+    line-height: 1.6;
+    word-break: keep-all;
+    color: #2b2f36;
+}
+
+.rules-nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.rules-button {
+    flex: 1;
+    min-height: 44px;
+    border: 2px solid #c9ced6;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.rules-button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.rules-primary {
+    border-color: #2e8b57;
+    color: #fff;
+    background: #2e8b57;
+    font-weight: bold;
+}
+
+.rules-close {
+    margin-top: 10px;
+    border: 0;
+    background: none;
+    font-size: 13px;
+    color: #777;
+    text-decoration: underline;
+    cursor: pointer;
+}

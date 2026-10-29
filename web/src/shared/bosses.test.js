@@ -1,7 +1,7 @@
 // 네임드 트레이너 목록이 올바른지 확인한다.
 import fs from "fs";
 import path from "path";
-import { BOSSES, FINAL_FLOOR, bossForFloor, pickBossTeam } from "shared/bosspokemon";
+import { BOSSES, FINAL_FLOOR, bossForFloor, pickBossTeam, beatNamedTrainer } from "shared/bosspokemon";
 import { megaFormOf } from "shared/mega";
 import { assignMegaStones } from "shared/randompokemon";
 
@@ -26,7 +26,7 @@ const hasMove = (set, move) => set.moves.some((m) => m.some((o) => o.slug === mo
 test("보스는 5연승째마다 한 명씩 5명이고, 30연승째에 최종 보스가 있다 (총 6명)", () => {
     expect(BOSSES.map((b) => b.floor)).toEqual([5, 10, 15, 20, 25, 30]);
     expect(FINAL_FLOOR).toBe(30);
-    expect(bossForFloor(30).name).toBe("Captain.P");
+    expect(bossForFloor(30).name).toBe("P.D.D Developer");
     expect(bossForFloor(8)).toBeNull();
 });
 
@@ -446,5 +446,22 @@ describe("바스티온: 일반 트레이너처럼 상성으로 고르되 메가�
     test("여섯 마리 모두 세트가 있고, 메가 둘은 메가스톤을 든 세트가 있다", () => {
         for (const slot of bastion.pokemon.map(slotOf)) expect(setRows.some((r) => r.species === slot.name)).toBe(true);
         for (const name of ["aggron", "golisopod"]) expect(setRows.some((r) => r.species === name && itemsOf(r.set).includes(stoneOf(name)))).toBe(true);
+    });
+});
+
+describe("네임드 트레이너를 이긴 뒤에는 상대 포켓몬과 교환하지 않는다 (beatNamedTrainer)", () => {
+    test("보스의 층(5, 10, 15, 20, 25, 30)에서 이기면 연승이 하나 늘어난 6, 11, 16, 21, 26, 31에서 참이다", () => {
+        for (const floor of [5, 10, 15, 20, 25, 30]) expect(beatNamedTrainer(floor + 1)).toBe(true);
+    });
+    test("일반 트레이너를 이긴 뒤에는 거짓이다", () => {
+        for (const streak of [1, 2, 5, 7, 10, 12, 30]) expect(beatNamedTrainer(streak)).toBe(false);
+    });
+    test("보스를 만나기 직전의 승리(연승 5, 10 ...)는 교환이 남아 있다", () => {
+        expect(beatNamedTrainer(5)).toBe(false);
+        expect(beatNamedTrainer(25)).toBe(false);
+    });
+    test("엔드리스 모드에는 네임드 트레이너가 없어서 늘 거짓이다", () => {
+        expect(beatNamedTrainer(6, true)).toBe(false);
+        expect(beatNamedTrainer(31, true)).toBe(false);
     });
 });

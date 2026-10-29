@@ -141,6 +141,7 @@ describe("한 방 방지(옹골참)도 전용 기술이면 뚫린다고 본다",
 });
 
 describe("포톤게이저의 종류는 실전과 같이 높은 쪽을 따른다 (벽, 컴퓨터의 판단 모두)", () => {
+    afterEach(() => jest.restoreAllMocks());
     test("황혼의 갈기는 물리, 새벽의 날개는 특수 기술로 취급된다", () => {
         const dusk = mon("necrozma-dusk", ["photon-geyser"]);
         const dawn = mon("necrozma-dawn", ["photon-geyser"]);
@@ -153,6 +154,7 @@ describe("포톤게이저의 종류는 실전과 같이 높은 쪽을 따른다 
         expect(adaptMoveToField(dusk.moveset[0], dusk, null).damage_class.name).toBe("special");
     });
     test("리플렉터는 물리인 포톤게이저를 줄이고 빛의장막은 줄이지 못한다", () => {
+        jest.spyOn(Math, "random").mockReturnValue(0.99); // 급소(벽을 무시한다)가 나오지 않게 한다
         const dusk = mon("necrozma-dusk", ["photon-geyser"]);
         const make = (screen) => {
             const foe = mon("blissey", ["splash"]);

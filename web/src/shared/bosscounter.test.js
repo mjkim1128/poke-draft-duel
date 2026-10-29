@@ -1,4 +1,4 @@
-// 캡틴 포: 메가진화 없이 가장 강한 파티, 내가 고른 3마리를 보고 상성이 좋은 3마리를 낸다
+// 최종 보스(P.D.D Developer): 메가진화 없이 가장 강한 파티, 내가 고른 3마리를 보고 상성이 좋은 3마리를 낸다
 import fs from "fs";
 import path from "path";
 import { getBaseStats, hpCalc } from "shared";
@@ -23,15 +23,15 @@ function mon(species, moves) {
     return p;
 }
 
-describe("캡틴 포 파티", () => {
-    const orion = BOSSES.find((b) => b.name === "Captain.P");
+describe("최종 보스(P.D.D Developer) 파티", () => {
+    const orion = BOSSES.find((b) => b.name === "P.D.D Developer");
     test("메가진화 없이 정해 둔 여섯 마리이고, 선출은 상성을 본다", () => {
         expect(orion.pokemon).toEqual(["flutter-mane", "chien-pao", "ursaluna-bloodmoon", "urshifu-rapid-strike", "gholdengo", "ting-lu"]);
         expect(orion.counter).toBe(true);
         expect(orion.megaAll).toBeUndefined();
     });
     test("다른 보스는 상성 선출을 쓰지 않는다", () => {
-        expect(BOSSES.filter((b) => b.counter).map((b) => b.name)).toEqual(["Captain.P"]);
+        expect(BOSSES.filter((b) => b.counter).map((b) => b.name)).toEqual(["P.D.D Developer"]);
     });
 });
 

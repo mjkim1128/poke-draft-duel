@@ -1,5 +1,6 @@
 import { localName, isKorean } from "shared/lang";
 import { localizeLine } from "shared/logTranslate";
+import { appendToLastTurn } from "shared/turnlog";
 import { setSurrenderHandler } from "shared/surrender";
 import { playMoveAnim, playFieldAnim, prefetchMoveAnims, prefetchFieldAnims } from "animations/pbEngine";
 import { isFxEnabled } from "animations/fxSetting";
@@ -32,6 +33,7 @@ import {
     switchPokemon,
     enterBattle,
     fieldAnimOfLine,
+    beatNamedTrainer,
     lodash,
 } from "shared";
 import "./Battle.css";
@@ -347,9 +349,9 @@ export function Battle(props) {
     }
 
     function updateTurnText(text) {
-        let t = [...turns];
-        t[t.length - 1].push(localizeLine(text));
-        setTurns(t);
+        /// (a function update: several lines can be added in a row from the same render)
+        const line = localizeLine(text);
+        setTurns((prev) => appendToLastTurn(prev, line));
     }
 
     function updateHistory() {
@@ -610,6 +612,7 @@ export function Battle(props) {
                         win={isVictory}
                         onClick={props.setBattleFactoryState}
                         easy={props.easy}
+                        noSwap={!!isVictory && beatNamedTrainer(props.winStreak, props.endless)}
                         winStreak={props.winStreak}
                     />
                 )}
@@ -627,6 +630,7 @@ export function Battle(props) {
                                 win={isVictory}
                                 onClick={props.setBattleFactoryState}
                                 easy={props.easy}
+                                noSwap={!!isVictory && beatNamedTrainer(props.winStreak, props.endless)}
                                 winStreak={props.winStreak}
                             />
                         </div>

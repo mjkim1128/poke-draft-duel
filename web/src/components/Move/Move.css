@@ -60,6 +60,7 @@
 }
 
 .move-button {
+    position: relative; /* 우측 하단의 상성 표시를 놓을 기준 */
     min-width: 6rem;
     width: 5.5vw;
     height: 6em;
@@ -71,6 +72,38 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+.effect-mark {
+    /* 글자 크기와 색은 기술칸의 글자(버튼)를 그대로 따른다. 글꼴만 도형 기호(○ ◎ △ ★ ▼ ✕)의 크기가 고르게 나오는 것으로 정한다 */
+    position: absolute;
+    right: 6px; /* 박스의 오른쪽 벽과 아래쪽 벽에서 같은 거리 */
+    bottom: 6px;
+    font: inherit;
+    font-size: 17px; /* 기술칸 글자(12px)보다 크게 */
+    font-weight: 900;
+    -webkit-text-stroke: 0.6px currentColor; /* 더 두껍게 */
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Segoe UI Symbol", sans-serif;
+    color: inherit;
+    text-shadow: inherit;
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* 기호마다 글자 안쪽 여백이 달라서, 눈에 보이는 도형이 박스의 오른쪽 벽과 아래쪽 벽에서 같은 거리(약 8px)가 되도록 미세하게 맞춘다 */
+.effect-mark[data-mark="★"] { right: 6px; bottom: 7px; }
+.effect-mark[data-mark="◎"] { right: 6px; bottom: 7px; }
+.effect-mark[data-mark="○"] { right: 5px; bottom: 7px; }
+.effect-mark[data-mark="△"] { right: 6px; bottom: 5px; }
+.effect-mark[data-mark="▼"] { right: 5px; bottom: 6px; }
+.effect-mark[data-mark="✕"] { right: 7.1px; bottom: 6px; }
+
+.effect-legend {
+    margin: 6px 0 0;
+    font-size: 12px;
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Segoe UI Symbol", sans-serif;
+    opacity: 0.75;
     text-align: center;
 }
 

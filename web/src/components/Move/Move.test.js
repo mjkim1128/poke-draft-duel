@@ -225,3 +225,42 @@ describe("정보창에 보이는 기술은 실전의 모습이다", () => {
         expect(onClick).toHaveBeenCalledWith(WEATHER_BALL);
     });
 });
+
+describe("기술 칸 우측 하단의 상성 표시", () => {
+    beforeEach(() => {
+        root = null;
+    });
+    const mon = (name, types) => ({
+        name,
+        types: types.map((t) => ({ type: { name: t } })),
+        base_stats: [50, 50, 50, 50, 50, 50],
+        hp: [100, 100],
+        stat_levels: Array(7).fill(0),
+        item: null,
+        ability: null,
+        moveset: [],
+    });
+    const mark = (move, defender) => {
+        root = root || createRoot(container); // 한 테스트에서 여러 번 그려도 뿌리는 하나만 쓴다
+        act(() => root.render(<Move move={move} onClick={jest.fn()} attackerDefender={[mon("a", ["normal"]), defender]} />));
+        const el = container.querySelector(".effect-mark");
+        return el ? el.textContent : null;
+    };
+    const water = { ...MOVE, name: "surf", type: { name: "water" }, damage_class: { name: "special" }, power: 90 };
+    test("효과가 굉장하면 ◎, 별로면 △, 4배면 ★", () => {
+        expect(mark(water, mon("d", ["fire"]))).toBe("◎");
+        expect(mark(water, mon("d", ["grass"]))).toBe("△");
+        expect(mark(water, mon("d", ["fire", "rock"]))).toBe("★");
+        expect(mark(water, mon("d", ["grass", "dragon"]))).toBe("▼");
+        expect(mark(MOVE, mon("d", ["normal"]))).toBe("○");
+    });
+    test("변화기는 표시하지 않는다", () => {
+        const growl = { ...MOVE, name: "growl", power: null, damage_class: { name: "status" } };
+        expect(mark(growl, mon("d", ["fire"]))).toBeNull();
+    });
+    test("상대 정보가 없으면 표시하지 않는다", () => {
+        root = root || createRoot(container);
+        act(() => root.render(<Move move={MOVE} onClick={jest.fn()} />));
+        expect(container.querySelector(".effect-mark")).toBeNull();
+    });
+});

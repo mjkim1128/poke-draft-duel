@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
     damageClassToString,
     damageCalc,
+    typeEffectiveness,
     MIN_ROLL,
     isFixedDamageMove,
     moveNameToString,
@@ -15,6 +16,7 @@ import { moveConditionBlock } from "shared/movecondition";
 import { adaptMoveToField } from "shared/field";
 import { abilityAdaptMove } from "shared/abilities";
 import { moveDescription } from "shared/movedescription";
+import { effectMark } from "shared/effectmark";
 import "./Move.css";
 
 /// 터치 화면에서 이만큼(밀리초) 누르고 있으면 "길게 누름"이다: 기술 정보를 보여 주고, 손을 떼도 기술은 나가지 않는다.
@@ -113,6 +115,11 @@ export function Move(props) {
         props.moveOwner === "party" ? "party-move" : "move-button";
 
     const effect_text = moveDescription(props.move);
+    /// 상대에게 얼마나 잘 듣는지 (실전에서 쓰이는 모습의 기술 기준). 변화기와 내 파티 칸의 작은 버튼은 표시하지 않는다
+    const mark =
+        props.attackerDefender && props.moveOwner !== "party" && shown.type
+            ? effectMark(shown, typeEffectiveness(shown, props.attackerDefender[1], props.attackerDefender[0]))
+            : null;
 
     if (props.move.meta === undefined) {
         /// temporary error fix
@@ -185,6 +192,11 @@ export function Move(props) {
                         <p>
                             PP {ppLeft(props.move)}/{maxPP(props.move)}
                         </p>
+                    )}
+                    {mark && (
+                        <span className="effect-mark" data-mark={mark}>
+                            {mark}
+                        </span>
                     )}
                 </button>
             </div>

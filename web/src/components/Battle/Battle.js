@@ -1,4 +1,5 @@
 import { localName, isKorean } from "shared/lang";
+import { effectLegend } from "shared/effectmark";
 import { localizeLine } from "shared/logTranslate";
 import { appendToLastTurn } from "shared/turnlog";
 import { setSurrenderHandler } from "shared/surrender";
@@ -595,6 +596,7 @@ export function Battle(props) {
                             <>
                                 {megaButton}
                                 <div className="pokemon-moves bp-moves">{moves}</div>
+                                <p className="effect-legend">{effectLegend(isKorean())}</p>
                                 <p className="move-hint">{isKorean() ? "기술을 꾹 누르면 정보를 볼 수 있어요" : "Press and hold a move to see its info"}</p>
                             </>
                         )}
@@ -687,6 +689,7 @@ export function Battle(props) {
                     />
                     {megaButton}
                     <div className="pokemon-moves">{moves}</div>
+                    <p className="effect-legend">{effectLegend(isKorean())}</p>
                     <p className="move-hint">{isKorean() ? "기술을 꾹 누르면 정보를 볼 수 있어요" : "Press and hold a move to see its info"}</p>
                     <PokemonParty
                         pokemon={

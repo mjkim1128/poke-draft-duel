@@ -26,6 +26,7 @@ import {
     pickAbility,
     resetAbilityState,
     resetBattleForms,
+    previewEntryForm,
     revertMega,
 } from "shared";
 import "./StartScreen.css";
@@ -138,7 +139,11 @@ export function Home() {
                 poke.activeTurns = 0;
                 revertMega(poke); /// a Mega Evolved pokemon is back to its normal form
                 resetAbilityState(poke); /// ability, Transform, Illusion... back to how it started
-                resetBattleForms(poke); /// Hero Palafin, Noice Eiscue... are back to their normal form
+                /// Hero Palafin, Noice Eiscue... are back to their normal form (kept as the fight begins: they were reset when the last one ended)
+                if (battleFactoryState !== "battle") resetBattleForms(poke);
+                /// resetAbilityState above put every non-persistent form back (Wishiwashi, Aegislash...), so a school of Wishiwashi is formed again:
+                /// the pick screen and the first moment of the fight show it as a school, with no flip to the lone form while it moves
+                previewEntryForm(poke);
                 poke.disguiseBusted = false;
                 poke.timesHit = 0;
                 poke.hangry = false;
@@ -173,6 +178,15 @@ export function Home() {
             arr.wideGuardTurn = false;
             arr.craftyShieldTurn = false;
             arr.matBlockTurn = false;
+        }
+        /// 개발 서버에서만: ?leadhp=0.9 로 내 선두 포켓몬의 체력 비율을, &leadburn=1 로 화상을 정해서 시험한다 (위에서 모두 회복시킨 뒤, 전투가 시작될 때)
+        if (process.env.NODE_ENV !== "production" && battleFactoryState === "battle" && battleTeams.player[0]) {
+            const lead = battleTeams.player[0];
+            const params = new URLSearchParams(window.location.search);
+            const ratio = parseFloat(params.get("leadhp"));
+            const max = lead.hp[1] * (parseFloat(params.get("leadscale")) || 1); /// &leadscale=20 으로 최대 체력을 키워 한 방에 쓰러지지 않게 한다
+            if (ratio > 0 && ratio <= 1) lead.hp = [Math.max(1, Math.round(max * ratio)), max];
+            if (params.get("leadburn") === "1") lead.status = { name: "burn" };
         }
         setPlayerPokemon(temp);
         setOpponentPokemon(dumb);
@@ -246,10 +260,21 @@ export function Home() {
         for (let i = 0; i < 6; i++) {
             fresh[i] = await generateRandomPokemon(fresh);
         }
+        /// 개발 서버에서만: ?lead=minior-red-meteor 로 내 첫 포켓몬을 정해서 시험한다
+        if (process.env.NODE_ENV !== "production") {
+            const params = new URLSearchParams(window.location.search);
+            const lead = params.get("lead");
+            if (lead) fresh[0] = await getPokemonByName(lead);
+        }
         assignMegaStones(fresh); /// 메가진화할 수 있는 종은 1/2 확률로 메가스톤 세트 (파티에 최대 2마리)
         await Promise.all(
             fresh.map(async (_, i) => {
                 await getPokemonData(fresh, i, () => {});
+                /// 개발 서버에서만: &leadmoves=shadow-ball,kings-shield 로 내 첫 포켓몬의 기술을 정해서 시험한다
+                if (process.env.NODE_ENV !== "production" && i === 0 && fresh[0].factorySet) {
+                    const slugs = (new URLSearchParams(window.location.search).get("leadmoves") || "").split(",").filter(Boolean);
+                    if (slugs.length > 0) fresh[0].factorySet = { ...fresh[0].factorySet, moves: slugs.map((slug) => [{ slug }]) };
+                }
                 await createRandomMoveset(fresh, i, () => {});
             })
         );
@@ -296,7 +321,10 @@ export function Home() {
         /// a named trainer with a lineup always brings a weather setter and a weather-reactive pokemon
         const boss = endless ? null : bossForFloor(winStreak);
         /// The stat mode (settings) is applied as the fight starts, so a change made on the title screen counts
-        for (const poke of [...playerPokemon, ...picked, ...opponentPokemon]) refreshStats(poke);
+        const everyone = [...playerPokemon, ...picked, ...opponentPokemon];
+        for (const poke of everyone) resetBattleForms(poke); /// stats are recomputed from the species' own base stats, so start from its normal form
+        for (const poke of everyone) refreshStats(poke);
+        for (const poke of everyone) previewEntryForm(poke);
         /// The final boss picks its 3 against the 3 I picked; an ordinary trainer picks its 3 against my whole party of 6
         const opponentTeam = boss
             ? boss.counter
@@ -353,6 +381,7 @@ export function Home() {
             pokemonData[i].item = null;
             pokemonData[i].originalItem = null;
         }
+        previewEntryForm(pokemonData[i]); /// a school of Wishiwashi shows as the school on the pick screen
         pokemonData[i].consumedItem = null;
         pokemonData[i].lockedMove = null;
         pokemonData[i].charging = null; // move it is mid-way through (Fly, Solar Beam, ...)

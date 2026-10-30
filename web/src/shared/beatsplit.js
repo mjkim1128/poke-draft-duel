@@ -7,6 +7,8 @@ import lodash from "lodash";
 
 // 데미지 부분에 들어가는 줄: "OO lost 12% HP!", "A critical hit!", "Hit 3 times!"
 const DAMAGE_LINES = [/^.+ lost \d+% HP!$/, /^A critical hit!$/, /^Hit \d+ times!$/];
+// 기술을 쓰기 전에 나오는 모습 변화 안내 (스탠스 체인지)
+const FORM_LINE = /^.+ changed to (Blade|Shield) Forme!$/;
 const isDamageLine = (line) => DAMAGE_LINES.some((re) => re.test(line));
 
 // 데미지 부분에서 보여 줄 모습: 맞은 쪽은 체력이 줄어든 모습, 쓴 쪽은 아직 쓰기 전 모습 그대로.
@@ -31,22 +33,40 @@ function damageSnapshot(pre, post, moverIsPlayer) {
     return mid;
 }
 
+// 기술을 쓰려고 모습이 바뀌는 포켓몬(킬가르도: 공격하면 블레이드폼, 킹실드면 실드폼)은 기술 연출이 나오는 장면부터 바뀐 모습이어야 한다.
+// 쓰기 전 스냅샷(pre)에서 쓴 쪽의 모습(그림, 능력치, 타입)만 쓴 뒤의 것으로 바꾼다. 중간에 교체되어 다른 포켓몬이 나왔으면 손대지 않는다.
+function withMoversForm(pre, post, moverIsPlayer) {
+    const key = moverIsPlayer ? "playerPokemon" : "opponentPokemon";
+    const before = pre[key][0];
+    const now = post[key][0];
+    if (!before || !now || before.name !== now.name || (before.forme || null) === (now.forme || null)) return pre;
+    const team = Object.assign([], pre[key]); // 배열에 붙은 필드, 함정 같은 정보도 그대로 가져간다
+    team[0] = { ...before, forme: now.forme, sprites: now.sprites, base_stats: now.base_stats, types: now.types };
+    return { ...pre, [key]: team };
+}
+
 // lines: 한 박자에 나온 줄들, pre / post: { playerPokemon, opponentPokemon } 스냅샷, moverIsPlayer: 기술을 쓴 쪽
 // 반환: [{ text, playerPokemon, opponentPokemon, short? }, ...] (첫 부분이 연출 부분이다)
 export function splitMoveBeat(lines, pre, post, moverIsPlayer) {
     const used = lines.findIndex((line) => line.includes(" used "));
-    if (used < 0 || used === lines.length - 1) return [{ text: lines, ...post }];
-    const first = lines.slice(0, used + 1);
+    if (used < 0) return [{ text: lines, ...post }];
+    // 기술을 쓰려고 모습이 바뀌었다면 (킬가르도) 순서는: 모습이 바뀜 -> "블레이드폼으로 바뀌었다!" 글 -> 기술 연출
+    const formLines = lines.slice(0, used).filter((line) => FORM_LINE.test(line));
+    if (used === lines.length - 1 && formLines.length === 0) return [{ text: lines, ...post }];
+    const first = lines.slice(0, used + 1).filter((line) => !FORM_LINE.test(line));
     const rest = lines.slice(used + 1);
     let n = 0;
     while (n < rest.length && isDamageLine(rest[n])) n++;
     const damage = rest.slice(0, n);
     const after = rest.slice(n);
-    const parts = [{ text: first, ...pre }];
+    const moverBoard = withMoversForm(pre, post, moverIsPlayer);
+    const parts = [];
+    if (formLines.length > 0) parts.push({ text: formLines, ...moverBoard });
+    parts.push({ text: first, ...moverBoard, isMove: true });
     if (damage.length > 0) {
         parts.push({ text: damage, ...damageSnapshot(pre, post, moverIsPlayer), short: true });
         if (after.length > 0) parts.push({ text: after, ...post, short: true });
-    } else {
+    } else if (after.length > 0) {
         parts.push({ text: after, ...post, short: true });
     }
     return parts;

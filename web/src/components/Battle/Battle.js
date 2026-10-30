@@ -99,7 +99,8 @@ export function Battle(props) {
     const fieldRef = useRef(null);
     /// A beat needs to stay up long enough for the typewriter (10ms/char, see useTypedMessage)
     /// to finish typing it out, plus a short pause so it can actually be read.
-    const beatDelay = (frame) => Math.max(frame.short ? 700 : 900, frame.text.join(" ").length * 10 + 500);
+    /// (글자가 다 나온 뒤 다음 장면까지 읽을 시간을 넉넉하게 둔다)
+    const beatDelay = (frame) => Math.max(frame.short ? 1000 : 1300, frame.text.join(" ").length * 10 + 800);
 
     /// Starts playing `frames` out one at a time; `onDone` runs once the last one has shown
     /// (or immediately if there's nothing to play). Move/switch input stays locked until then.

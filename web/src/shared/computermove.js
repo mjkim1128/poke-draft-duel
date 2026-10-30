@@ -12,6 +12,7 @@ import { movesFirst, bestDamage, hitsToDie, survivesOneHit } from "./cpusetup";
 import { megaDelay } from "./cpumega";
 import { shedTailInsteadOfSwitch, pivotInsteadOfSwitch } from "./cpupass";
 import { hasLiquidOoze } from "./abilities";
+import { cpuTrace } from "./cputrace";
 
 // How the CPU sees my pokemon: one under Illusion looks like the pokemon it copies (its types and
 // stats), until the disguise breaks. The real battle math still uses the real pokemon.
@@ -80,13 +81,13 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     if (delay) {
         holder.megaHold = true;
         if (delay.once) holder.megaDelayed = true; // 다음 턴에는 진화한다
-        if (delay.move) return delay.move;
+        if (delay.move) return cpuTrace("메가진화를 미루며 쓸 기술", delay.move, playerTeam, opponentTeam);
     }
     // 자고 있으면 다른 기술은 나가지 않으니 잠꼬대로 아무 기술이나 쓴다
     const sleepTalk = sleepTalkMove(opponentTeam[0]);
-    if (sleepTalk) return sleepTalk;
+    if (sleepTalk) return cpuTrace("자는 중이라 잠꼬대", sleepTalk, playerTeam, opponentTeam);
     const opening = openingMove(opponentTeam[0]);
-    if (opening) return opening;
+    if (opening) return cpuTrace("나온 뒤 첫 행동(세트의 opening)", opening, playerTeam, opponentTeam);
     // 선공기: (1) 선공기로 상대를 쓰러뜨릴 수 있으면 마무리, (2) 상대가 나보다 빠르고 가장 센 공격으로 나를 쓰러뜨릴 것이면 죽기 전 마지막 한 방.
     // 반드시 실패하는 기술(사이코필드의 선공기 등)은 고르지 않고, (2)는 실제로 피해를 주는 기술만 쓴다 (방어 같은 선공 변화기는 안 됨).
     const me = opponentTeam[0];
@@ -96,29 +97,33 @@ export function makeMove(playerTeam, opponentTeam, canSwitch = false) {
     for (const move of usableMoveset(me, foe)) {
         if (effectivePriority(move, me) <= 0 || certainlyFails(move, me, foe, field, playerTeam, opponentTeam)) continue;
         const damage = damageCalc(me, foe, move, { field, roll: MIN_ROLL }); // 가장 약한 난수로도 쓰러뜨릴 때만 마무리로 친다
-        if (foe.hp[0] - damage <= 0 && !survivesOneHit(foe, me)) return move;
+        if (foe.hp[0] - damage <= 0 && !survivesOneHit(foe, me)) return cpuTrace("선공기로 마무리", move, playerTeam, opponentTeam);
         if (damage <= 0) continue;
         if (dyingToFoe === null) {
             const foeBest = strongestMove(opponentTeam, playerTeam, { estimate: true });
             dyingToFoe = me.hp[0] - damageCalc(foe, me, foeBest, { field }) <= 0 && !survivesOneHit(me, foe);
         }
-        if (dyingToFoe && !movesFirst(me, foe, field)) return move;
+        if (dyingToFoe && !movesFirst(me, foe, field)) return cpuTrace("느리고 곧 쓰러져서 죽기 전 선공기", move, playerTeam, opponentTeam);
     }
     // 선공기로 마무리할 수 없으면, 함정 / 회복 / 상태이상 / 랭업기를 써도 되는 상황인지 본다 (한 방에 잡을 수 있으면 건너뛴다)
     const support = chooseSupportMove(playerTeam, opponentTeam);
-    if (support) return support;
+    if (support) return cpuTrace("변화기(함정/회복/상태이상/랭업 등)", support, playerTeam, opponentTeam);
     // 그럴 상황이 아니면, 지금 포켓몬으로 계속 싸워도 되는지 본다 (cpuswitch.js의 교체 이유와 후보 평가)
     if (canSwitch) {
         const index = chooseSwitch(playerTeam, opponentTeam);
         // 내가 상대보다 빠르고 꼬리자르기가 있으면, 교체 대신 꼬리자르기 (나오는 포켓몬이 이번 턴 공격을 대타로 막는다)
         // 유턴 계열 기술이 있으면 그것도 교체 대신 쓴다 (빠르거나, 느려도 한 방에 쓰러지지 않을 때)
-        if (index !== -1) return shedTailInsteadOfSwitch(playerTeam, opponentTeam, index) || pivotInsteadOfSwitch(playerTeam, opponentTeam) || { priority: 6, index };
+        if (index !== -1) {
+            const shed = shedTailInsteadOfSwitch(playerTeam, opponentTeam, index);
+            const pivot = shed ? null : pivotInsteadOfSwitch(playerTeam, opponentTeam);
+            return cpuTrace(shed ? "꼬리자르기로 교체" : pivot ? "유턴 계열로 교체" : "교체 (" + opponentTeam[index].name + ")", shed || pivot || { priority: 6, index }, playerTeam, opponentTeam);
+        }
     } else if (chooseSwitch(playerTeam, opponentTeam) !== -1) {
         // 속박되어 교체할 수 없어도 유턴 계열 기술로는 빠져나갈 수 있다 (교체해야 할 상황일 때)
         const pivot = pivotInsteadOfSwitch(playerTeam, opponentTeam);
-        if (pivot) return pivot;
+        if (pivot) return cpuTrace("교체 상황이지만 속박되어 유턴 계열로 빠짐", pivot, playerTeam, opponentTeam);
     }
-    return strongestMove(playerTeam, opponentTeam);
+    return cpuTrace("교체/변화기 상황 아님 → 가장 센 기술", strongestMove(playerTeam, opponentTeam), playerTeam, opponentTeam);
 }
 
 // 쓸 만한 공격이 없어서 변화기 중에서 골라야 할 때, 시간을 버는 기술을 먼저 고른다: 회복기(잃은 체력이 있을 때) > 방어(직전에 쓰지 않았을 때) > 대타출동.

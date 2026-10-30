@@ -2,6 +2,7 @@ package com.minsu.battlefactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -137,20 +138,18 @@ class PoolAndFactorySetTests {
 
     @Test
     void setsKeepTheOptionalFields() throws Exception {
-        // 잠재력(hidden-power)은 hpType을 가진다. 도구가 없는 세트는 item이 null이지만, 지금은 그런 세트가 없을 수 있다
-        boolean sawHpType = false;
+        // 도구가 없는 세트는 item이 null이어도 항목은 있다. 잠재파워와 테라버스트는 세트에서 모두 뺐으므로 hpType을 가진 선택지는 없다
         for (var s : factorySetRepository.findAll()) {
             JsonNode set = objectMapper.readTree(s.getPayload());
-            assertTrue(set.has("item")); // 도구가 없으면 값이 null이어도 항목은 있다
+            assertTrue(set.has("item"));
             for (JsonNode slot : set.get("moves")) {
                 for (JsonNode option : slot) {
-                    if (option.has("hpType")) {
-                        sawHpType = true;
-                    }
+                    assertFalse(option.has("hpType"), "잠재파워 선택지가 남아 있음: " + s.getSpecies());
+                    assertNotEquals("hidden-power", option.get("slug").asString());
+                    assertNotEquals("tera-blast", option.get("slug").asString());
                 }
             }
         }
-        assertTrue(sawHpType);
     }
 
     @Test

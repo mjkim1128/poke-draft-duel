@@ -1,7 +1,7 @@
 // Weather and terrain, following Pokemon Showdown's data/conditions.ts (weather) and the
 // terrain conditions inside data/moves.ts. The field lives on both team arrays as the
 // same shared object: { weather: {name, turns} | null, terrain: {name, turns} | null }.
-import { WEATHER_ROCKS } from "./iteminfo";
+import { WEATHER_ROCKS, SAFETY_GOGGLES } from "./iteminfo";
 import { activeItem } from "./helditem";
 
 export const WEATHER_MOVES = {
@@ -260,6 +260,7 @@ export function weatherEndOfTurnDamage(pokemon, field) {
     const weather = weatherOf(field);
     const ability = pokemon.ability && pokemon.ability.name;
     if (ability === "overcoat" || ability === "magic-guard") return 0; // (abilities.js can't be imported here)
+    if (activeItem(pokemon) && pokemon.item.name === SAFETY_GOGGLES) return 0; // 방진고글
     if (weather && (WEATHER_DAMAGE_IMMUNE[weather] || []).includes(ability)) return 0;
     const types = pokemon.types.map((t) => t.type.name);
     if (weather === "sand" && !types.some((t) => ["rock", "ground", "steel"].includes(t))) return Math.floor(pokemon.hp[1] / 16);

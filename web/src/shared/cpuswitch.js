@@ -10,6 +10,7 @@ import { isGrounded, terrainBlocksStatus, adaptMoveToField } from "./field";
 import { HEAVY_DUTY_BOOTS } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { indirectDamageBlocked, abilityBlocksStatus } from "./abilities";
+import { cpuNote } from "./cputrace";
 import { STATUS_IMMUNE_TYPES, TOXIC_MOVES } from "./movemechanics";
 import { turnsUntilResidualKO, residualDamage, healAmountOf } from "./cpuresidual";
 import { bestDamage, hitsToDown, hitsToDie, survivesOneHit, movesFirst, positiveStages, duelWins, trickRoomTurnsLeft } from "./cpusetup";
@@ -91,6 +92,7 @@ export function pickReplacement(playerTeam, opponentTeam, { freeHit = false, pas
     if (list.length === 0) return opponentTeam.findIndex((p, i) => i > 0 && p.hp[0] > 0);
     const revenge = list.filter((e) => e.attacks === 1 && e.first);
     const winners = list.filter((e) => e.wins);
+    cpuNote("[쓰러진 뒤 교체] 후보 " + list.length + "마리, 이기는 후보 " + winners.length + "마리" + list.map((e) => " [#" + e.index + " 타수" + e.hits + (e.wins ? " 승" : "") + "]").join(""));
     const pool = revenge.length > 0 ? revenge : winners.length > 0 ? winners : list;
     const key = revenge.length > 0 || winners.length > 0 ? "score" : "hits";
     return pool.reduce((a, b) => better(b, a, key)).index;
@@ -199,6 +201,12 @@ function leaveSleeping(playerTeam, opponentTeam, me) {
 
 // 스스로 교체할 포켓몬의 번호. 교체할 이유가 없거나 나을 포켓몬이 없으면 -1.
 export function chooseSwitch(playerTeam, opponentTeam) {
+    const index = decideSwitch(playerTeam, opponentTeam);
+    cpuNote("교체 판단 결과: " + (index === -1 ? "교체 안 함" : "교체#" + index));
+    return index;
+}
+
+function decideSwitch(playerTeam, opponentTeam) {
     const me = opponentTeam[0];
     const foe = playerTeam[0];
     if (me.hp[0] <= 0 || foe.hp[0] <= 0 || me.charging || me.rampage || me.mustRecharge) return -1;
@@ -215,6 +223,7 @@ export function chooseSwitch(playerTeam, opponentTeam) {
     const wiped = !!me.boostsWiped && Math.random() < 0.5;
     me.boostsWiped = false;
     const reason = switchReason(me, foe, field, stay, wiped, drowsy);
+    cpuNote("교체 이유 번호: " + (reason || "없음") + " / 지금 포켓몬이 버틸 수 있는 타수: " + stay.hits);
     if (!reason) return -1;
     if (reason === 6 && me.status && me.status.name === "sleep") {
         const out = leaveSleeping(playerTeam, opponentTeam, me);
@@ -222,6 +231,7 @@ export function chooseSwitch(playerTeam, opponentTeam) {
     }
     const list = candidates(playerTeam, opponentTeam, true);
     const winners = list.filter((e) => e.wins);
+    cpuNote("후보 " + list.length + "마리, 이기는 후보 " + winners.length + "마리" + list.map((e) => " [#" + e.index + " 타수" + e.hits + (e.wins ? " 승" : "") + "]").join(""));
     if (winners.length > 0) {
         // 이기는 후보 중 가장 여유가 큰 쪽. 지금 남아 있는 것보다 확실히 나아야 한다.
         const best = winners.reduce((a, b) => better(b, a, "score"));

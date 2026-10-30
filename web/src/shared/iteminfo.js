@@ -41,6 +41,7 @@ export const ITEM_POOL = [
     "poison-barb",
     "muscle-band",
     "punching-glove",
+    "safety-goggles",
     "life-orb",
     "rocky-helmet",
     "sticky-barb",
@@ -91,7 +92,7 @@ export const ITEM_POOL = [
 // them useful come with them). A random pokemon with no Fly/Solar Beam/Fury Attack in its
 // kit would just hold a dud, so generateRandomItem never rolls these.
 export const REAL_SET_ONLY_ITEMS = new Set([
-    "power-herb", "loaded-dice", "heat-rock", "damp-rock", "smooth-rock", "icy-rock", "shed-shell", "punching-glove",
+    "power-herb", "loaded-dice", "heat-rock", "damp-rock", "smooth-rock", "icy-rock", "shed-shell", "punching-glove", "safety-goggles",
 ]);
 
 // item name -> move type it boosts 20% (or 30% for Muscle Band/physical, handled separately)
@@ -157,6 +158,7 @@ export const BLACK_SLUDGE = "black-sludge";
 export const LEFTOVERS = "leftovers";
 export const EXPERT_BELT = "expert-belt";
 export const MUSCLE_BAND = "muscle-band";
+export const SAFETY_GOGGLES = "safety-goggles"; // 가루 기술이 통하지 않고, 모래바람과 싸라기눈의 피해를 받지 않는다 (특성 방진과 같다)
 export const PUNCHING_GLOVE = "punching-glove"; // 펀치류 기술의 위력 x1.1, 접촉하지 않는 것으로 본다
 export const EVIOLITE = "eviolite";
 export const ASSAULT_VEST = "assault-vest";
@@ -242,6 +244,7 @@ export const FLING_POWER = {
     "poison-barb": 70,
     "muscle-band": 10,
     "punching-glove": 30,
+    "safety-goggles": 80,
     "life-orb": 30,
     "rocky-helmet": 60,
     "sticky-barb": 80,

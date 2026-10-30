@@ -53,8 +53,9 @@ describe("실제 기술 데이터", () => {
         expect(text).toMatch(/[가-힣]/);
         expect(text).not.toContain("\n");
     });
-    test("기가톤해머는 한국어 설명이 없어서 영어로 나온다", () => {
-        expect(moveDescription(MOVES.get("gigaton-hammer"), "ko")).toContain("hammer");
+    test("기가톤해머는 PokeAPI에 한국어 설명이 없지만 한국어로 나온다 (ko_descriptions.json이 채운다), 영어 설정에서는 영어", () => {
+        expect(moveDescription(MOVES.get("gigaton-hammer"), "ko")).toContain("거대한 망치");
+        expect(moveDescription(MOVES.get("gigaton-hammer"), "en")).toContain("hammer");
     });
     test("거의 모든 기술에 설명이 있다", () => {
         const empty = [...MOVES.values()].filter((m) => !moveDescription(m, "ko") && !moveDescription(m, "en"));

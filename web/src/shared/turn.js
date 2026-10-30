@@ -1,6 +1,7 @@
 import { localName } from "./lang";
 import { localizeTurnText, localizeLine } from "./logTranslate";
 import { makeMove, switchPokemon } from "./computermove";
+import { cpuTrace, moveLabel } from "./cputrace";
 import { readPlayerMove } from "./cpuread";
 import { recordCpuMove } from "./cpustatus";
 import { damageCalc, statCalc, typeEffectiveness, isFixedDamageMove, rollDamage } from "./damagecalc";
@@ -473,8 +474,13 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     const canCpuSwitch = !isTrapped(opponentPokemon, playerPokemon) && !opponentPokemon[0].rampage;
     let plannedCpuMove = makeMove(playerPokemon, opponentPokemon, canCpuSwitch);
     // 최종 보스는 플레이어가 이번 턴에 무엇을 하는지 알고 나서 행동을 고른다 (cpuread.js)
-    if (opponentPokemon.readsPlayer) plannedCpuMove = readPlayerMove(playerPokemon, opponentPokemon, move, plannedCpuMove, canCpuSwitch);
+    if (opponentPokemon.readsPlayer) {
+        const baseline = plannedCpuMove;
+        plannedCpuMove = readPlayerMove(playerPokemon, opponentPokemon, move, plannedCpuMove, canCpuSwitch);
+        if (plannedCpuMove !== baseline) cpuTrace("읽기: 내 행동(" + moveLabel(move) + ")을 보고 바꿈 (기본 판단: " + moveLabel(baseline) + ")", plannedCpuMove, playerPokemon, opponentPokemon);
+    }
     const cpuMove = forcedMove(opponentPokemon[0], plannedCpuMove);
+    if (cpuMove !== plannedCpuMove) cpuTrace("강제: 잠김/충전/반동 등으로 기술이 정해짐", cpuMove, playerPokemon, opponentPokemon);
     if (cpuMove.priority !== 6 && canMegaEvolve(opponentPokemon) && !opponentPokemon[0].megaHold) megaEvolve(opponentPokemon, playerPokemon, megaText);
     entryText.push(...megaText);
     // Focus Punch: it tightens its focus before anyone moves; getting hit by a damaging move before it acts breaks the focus
@@ -564,7 +570,8 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
                 const anim = fieldAnimOfLine(line);
                 if (anim) frame.fieldAnim = anim;
             }
-            if (i === 0 && stepAnim) frame.anim = stepAnim;
+            // 기술 연출은 "OO의 XX!" 장면에 붙인다 (앞에 모습 변화 안내 장면이 있으면 그다음)
+            if (stepAnim && i === Math.max(0, parts.findIndex((p) => p.isMove))) frame.anim = stepAnim;
             frames.push(frame);
         });
         stepAnim = null;
@@ -686,6 +693,8 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
     const endStages = snapshotStages(playerPokemon, opponentPokemon);
     text = addArrayToArray(text, doEndOfTurn(playerPokemon[0], field, opponentPokemon[0]));
     text = addArrayToArray(text, doEndOfTurn(opponentPokemon[0], field, playerPokemon[0]));
+    // 체력에 따라 모습이 바뀌는 특성(리밋실드, 떼지어 행동, 달마모드)은 턴의 모든 일이 끝난 뒤에야 모습이 바뀐다. 체력이 줄어든 즉시가 아니다.
+    for (const t of [playerPokemon, opponentPokemon]) if (t[0].hp[0] > 0) runHook(t[0], "onAfterResidual", { field, text, ...abilityApi(field) });
     copyBoostsForOpportunist(endStages, playerPokemon, opponentPokemon, text);
     tickTerrain(field, text);
     // The field may have changed at the end of the turn (weather ran out, a Cloud Nine holder
@@ -948,6 +957,8 @@ function executeMove(playerPokemon, opponentPokemon, chosenMove, text, opts) {
         return;
     }
     if (STALL_MOVES.has(move.name)) {
+        // 킹실드를 쓰기 직전 킬가르도는 실드폼으로 돌아간다 (스탠스 체인지)
+        if (!opts.bounced) runHook(attacker, "onPrepareMove", { move, text });
         tryStallMove(playerPokemon, move, text);
         return;
     }

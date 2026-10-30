@@ -24,9 +24,10 @@ describe("abilityDescription", () => {
     test("English 설정이면 영어 설명", () => {
         expect(abilityDescription({ name: "intimidate" }, "en")).toMatch(/Attack/);
     });
-    test("한국어 설명이 없는 새 특성은 영어로 나온다", () => {
+    test("PokeAPI에 한국어 설명이 없는 새 특성도 한국어로 나온다 (ko_descriptions.json이 채운다), 영어 설정에서는 영어", () => {
         expect(DESCRIPTIONS["minds-eye"].ko).toBeUndefined();
-        expect(abilityDescription({ name: "minds-eye" }, "ko")).toMatch(/Ghost/);
+        expect(abilityDescription({ name: "minds-eye" }, "ko")).toMatch(/고스트/);
+        expect(abilityDescription({ name: "minds-eye" }, "en")).toMatch(/Ghost/);
     });
     test("특성이 없거나 모르는 특성이면 빈 글", () => {
         expect(abilityDescription(null, "ko")).toBe("");

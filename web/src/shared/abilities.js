@@ -15,7 +15,7 @@ import {
     WIND_MOVES,
     CRASH_MOVES,
 } from "./movemechanics";
-import { UNREMOVABLE_ITEMS, BOOSTER_ENERGY, PUNCHING_GLOVE } from "./iteminfo";
+import { UNREMOVABLE_ITEMS, BOOSTER_ENERGY, PUNCHING_GLOVE, SAFETY_GOGGLES } from "./iteminfo";
 import { activeItem } from "./helditem";
 import { PogeyData } from "./pogey";
 
@@ -33,6 +33,7 @@ import { PogeyData } from "./pogey";
 //   onSetStatus(ctx)        return true to refuse a status     ctx: self, status
 //   onResidual(ctx)         end of every turn                  ctx: self, field, text, applyBerry
 //   onUpdate(ctx)           the field changed / it switched in ctx: self, field, text
+//   onAfterResidual(ctx)    once both sides' end-of-turn effects are done (form changes that follow HP) ctx: self, field, text
 //   onAfterMove(ctx)        it used a move                     ctx: self, foe, move, text
 // `breakable: true` marks an ability Mold Breaker & co. ignore.
 
@@ -219,21 +220,23 @@ export function withIgnoredAbilities(attacker, move, calculate) {
 
 // ---- form changes ----
 // The pokemon these abilities work on and the base stats of the form they change into
-// (Showdown's data/pokedex.ts). The pool only holds each species' default form.
+// (Showdown's data/pokedex.ts) and its PokeAPI id for the picture. The pool only holds each species' default form.
 const FORMS = {
-    "darmanitan-standard": { zen: { stats: [105, 30, 105, 140, 105, 55], types: ["fire", "psychic"] } },
-    "aegislash-shield": { blade: { stats: [60, 140, 50, 140, 50, 60] } },
-    "wishiwashi-solo": { school: { stats: [45, 140, 130, 140, 135, 30] } },
-    "minior-red-meteor": { core: { stats: [60, 100, 60, 100, 60, 120] } },
-    "palafin-zero": { hero: { stats: [100, 160, 97, 106, 87, 100] } },
-    "eiscue-ice": { noice: { stats: [75, 80, 70, 65, 50, 130] } },
+    "darmanitan-standard": { zen: { stats: [105, 30, 105, 140, 105, 55], types: ["fire", "psychic"], sprite: 10017 } },
+    "aegislash-shield": { blade: { stats: [60, 140, 50, 140, 50, 60], sprite: 10026 } },
+    "wishiwashi-solo": { school: { stats: [45, 140, 130, 140, 135, 30], sprite: 10127 } },
+    "minior-red-meteor": { core: { stats: [60, 100, 60, 100, 60, 120], sprite: 10136 } },
+    "palafin-zero": { hero: { stats: [100, 160, 97, 106, 87, 100], sprite: 10256 } },
+    "eiscue-ice": { noice: { stats: [75, 80, 70, 65, 50, 130], sprite: 10185 } },
 };
+const formSpriteUrl = (id, back = false) => "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (back ? "back/" : "") + id + ".png";
 // Puts `pokemon` into a form; a persistent one (Hero, Noice Face) survives switching out.
 function changeForme(pokemon, forme, persistent = false) {
     const def = FORMS[pokemon.name] && FORMS[pokemon.name][forme];
     if (!def) return false;
-    if (!pokemon.formBackup) pokemon.formBackup = { base_stats: pokemon.base_stats, types: pokemon.types };
+    if (!pokemon.formBackup) pokemon.formBackup = { base_stats: pokemon.base_stats, types: pokemon.types, sprites: pokemon.sprites };
     pokemon.base_stats = def.stats.slice();
+    if (def.sprite) pokemon.sprites = { ...pokemon.sprites, front_default: formSpriteUrl(def.sprite), back_default: formSpriteUrl(def.sprite, true) };
     if (def.types) pokemon.types = def.types.map((t, i) => ({ slot: i + 1, type: { name: t } }));
     pokemon.forme = forme;
     pokemon.formPersistent = persistent;
@@ -243,6 +246,7 @@ function revertForme(pokemon) {
     if (pokemon.formBackup) {
         pokemon.base_stats = pokemon.formBackup.base_stats;
         pokemon.types = pokemon.formBackup.types;
+        if (pokemon.formBackup.sprites) pokemon.sprites = pokemon.formBackup.sprites;
         pokemon.formBackup = null;
     }
     pokemon.forme = null;
@@ -251,6 +255,10 @@ function revertForme(pokemon) {
 // Everything a form change did, gone (a new battle starts from the default form)
 export function resetBattleForms(pokemon) {
     revertForme(pokemon);
+}
+// 선출 화면과 전투가 시작되는 순간에 보이는 모습: 약어리는 체력이 충분하면 처음부터 군집의 모습이다 (나오자마자 군집이 된다)
+export function previewEntryForm(pokemon) {
+    if (abilityName(pokemon) === "schooling" && !pokemon.forme && pokemon.hp && pokemon.hp[0] > pokemon.hp[1] * 0.25) changeForme(pokemon, "school");
 }
 // Forms that follow the pokemon's HP: `low` when it is at or under `fraction` of its max HP
 const hpForm = (formName, fraction, lowIsForm, messages) => ({ self, text }) => {
@@ -1261,15 +1269,15 @@ export const ABILITIES = {
 
     // ---- form changes ----
     "zen-mode": {
-        onResidual: hpForm("zen", 0.5, true, [" triggered Zen Mode!", " returned to its standard form!"]),
+        onAfterResidual: hpForm("zen", 0.5, true, [" triggered Zen Mode!", " returned to its standard form!"]),
     },
     schooling: {
         onSwitchIn: hpForm("school", 0.25, false, [" formed a school!", " stopped schooling!"]),
-        onResidual: hpForm("school", 0.25, false, [" formed a school!", " stopped schooling!"]),
+        onAfterResidual: hpForm("school", 0.25, false, [" formed a school!", " stopped schooling!"]),
     },
     "shields-down": {
         onSwitchIn: hpForm("core", 0.5, true, ["'s Shields Down broke its shell!", " covered its core again!"]),
-        onResidual: hpForm("core", 0.5, true, ["'s Shields Down broke its shell!", " covered its core again!"]),
+        onAfterResidual: hpForm("core", 0.5, true, ["'s Shields Down broke its shell!", " covered its core again!"]),
         // in its Meteor form nothing gets through
         onSetStatus({ self }) {
             return self.forme !== "core" ? true : undefined;
@@ -1279,6 +1287,10 @@ export const ABILITIES = {
         onPrepareMove({ self, move, text }) {
             if (move.damage_class.name !== "status" && self.forme !== "blade" && changeForme(self, "blade")) {
                 text.push(pokemonNameToString(self) + " changed to Blade Forme!");
+            } else if (move.name === "kings-shield" && self.forme === "blade") {
+                // 킹실드를 쓰면 쓰기 전에 실드폼으로 돌아간다
+                revertForme(self);
+                text.push(pokemonNameToString(self) + " changed to Shield Forme!");
             }
         },
     },
@@ -1506,7 +1518,9 @@ const flag = (pokemon, key, foe = null) => {
 };
 export const bypassesScreens = (pokemon) => flag(pokemon, "bypassesScreens");
 export const hasNoRecoil = (pokemon) => flag(pokemon, "noRecoil");
-export const isPowderImmune = (pokemon, attacker) => flag(pokemon, "powderImmune", attacker);
+// 방진고글을 든 포켓몬은 틀깨기 같은 특성 무시에도 영향을 받지 않는다 (도구의 효과다)
+const holdsGoggles = (pokemon) => !!activeItem(pokemon) && pokemon.item.name === SAFETY_GOGGLES;
+export const isPowderImmune = (pokemon, attacker) => holdsGoggles(pokemon) || flag(pokemon, "powderImmune", attacker);
 export const isWeatherImmune = (pokemon) => flag(pokemon, "weatherImmune");
 export const hasUnburden = (pokemon) => flag(pokemon, "unburden");
 export const hasPoisonHeal = (pokemon) => flag(pokemon, "poisonHeal");

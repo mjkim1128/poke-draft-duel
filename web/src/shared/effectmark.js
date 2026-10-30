@@ -3,8 +3,8 @@
 // 표시의 뜻 (기술 칸 아래에 보여 주는 안내)
 export function effectLegend(korean) {
     return korean
-        ? "★ 4배 · ◎ 2배 · ○ 1배 · △ 1/2배 · ▼ 1/4배 · ✕ 효과 없음 (상대에게 주는 상성, 변화기는 표시 없음)"
-        : "★ 4x · ◎ 2x · ○ 1x · △ 1/2x · ▼ 1/4x · ✕ no effect (type matchup against the foe; status moves show nothing)";
+        ? "★ 4배 · ◎ 2배 · ○ 1배 · △ 1/2배 · ▼ 1/4배 · ✕ 효과 없음"
+        : "★ 4x · ◎ 2x · ○ 1x · △ 1/2x · ▼ 1/4x · ✕ no effect";
 }
 
 export function effectMark(move, multiplier) {

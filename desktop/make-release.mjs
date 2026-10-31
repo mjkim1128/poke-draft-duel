@@ -30,6 +30,15 @@ const built = path.join(here, "dist", "poke-draft-duel");
 fs.copyFileSync(path.join(built, exeName), path.join(stage, exeName));
 fs.copyFileSync(path.join(built, "resources.neu"), path.join(stage, "resources.neu"));
 fs.copyFileSync(path.join(here, "resources", "favicon.ico"), path.join(stage, "app.ico"));
+// 실행 파일의 아이콘과 파일 정보를 설치 마법사와 같은 게임 아이콘으로 바꾼다 (Neutralino 기본 아이콘 대신)
+run(path.join(here, "node_modules", "rcedit", "bin", "rcedit-x64.exe"), [
+    path.join(stage, exeName),
+    "--set-icon", path.join(stage, "app.ico"),
+    "--set-version-string", "ProductName", "Poke Draft Duel",
+    "--set-version-string", "FileDescription", "Poke Draft Duel",
+    "--set-file-version", version,
+    "--set-product-version", version,
+]);
 
 // 설치 마법사
 const setup = path.join(release, `Poke-Draft-Duel-Setup-${version}.exe`);

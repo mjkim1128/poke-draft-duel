@@ -14,6 +14,7 @@ const webBuild = path.join(here, ".webbuild");
 const resources = path.join(here, "resources");
 
 fs.rmSync(webBuild, { recursive: true, force: true });
+fs.rmSync(path.join(web, "node_modules", ".cache"), { recursive: true, force: true }); // 파일을 바꾼 직후에 오래된 검사 결과가 남아 빌드가 실패하는 일을 막는다
 execSync("npm run build", {
     cwd: web,
     stdio: "inherit",

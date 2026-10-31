@@ -4,7 +4,8 @@
   "private": true,
   "description": "Poke Draft Duel 다운로드 버전 (Neutralino)",
   "devDependencies": {
-    "@neutralinojs/neu": "^11.3.1"
+    "@neutralinojs/neu": "^11.3.1",
+    "rcedit": "^4.0.1"
   },
   "overrides": {
     "uuid": "^9.0.1"

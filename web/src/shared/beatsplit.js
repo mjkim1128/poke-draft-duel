@@ -45,9 +45,49 @@ function withMoversForm(pre, post, moverIsPlayer) {
     return { ...pre, [key]: team };
 }
 
+const HIT_COUNT_LINE = /^Hit \d+ times!$/;
+
+// 맞은 쪽의 체력만 hp로 바꾼 스냅샷 (여러 번 때리는 기술의 몇 번째 타 직후 모습). 중간에 교체되어 다른 포켓몬이 앞에 나왔으면 그대로 둔다.
+function withDefenderHp(pre, post, moverIsPlayer, hp) {
+    const key = moverIsPlayer ? "opponentPokemon" : "playerPokemon";
+    const before = pre[key][0];
+    const now = post[key][0];
+    if (!before || !now || before.name !== now.name) return post;
+    const team = Object.assign([], post[key]);
+    team[0] = { ...now, hp: [hp, now.hp[1]] };
+    return { ...post, [key]: team };
+}
+
+// 여러 번 때리는 기술(록블래스트, 고드름침...)은 타마다 "연출 -> 데미지"를 되풀이하고, 다 끝난 뒤에 "Hit N times!"를 알려 준다.
+// hits: 타마다 { len: 그 타에서 나온 줄 수, hp: 맞은 쪽의 남은 체력 } (turn.js의 hitTrail). 줄이 맞지 않으면 null을 돌려준다.
+function splitMultiHit(first, rest, pre, post, moverIsPlayer, moverBoard, hits) {
+    const countAt = rest.findIndex((line) => HIT_COUNT_LINE.test(line));
+    const total = hits.reduce((n, h) => n + h.len, 0);
+    if (countAt < total) return null;
+    const lead = rest.slice(0, countAt - total); // 첫 타 전에 나온 줄은 기술 이름과 함께
+    const late = []; // 타 도중에 생긴 데미지 말고 다른 일(능력치 변화, 도구 사용)은 모든 타가 끝난 뒤에
+    const parts = [{ text: [...first, ...lead], ...moverBoard, isMove: true }];
+    let pos = countAt - total;
+    const boardAfter = (i) => damageSnapshot(pre, withDefenderHp(pre, post, moverIsPlayer, hits[i].hp), moverIsPlayer);
+    hits.forEach((hit, i) => {
+        const segment = rest.slice(pos, pos + hit.len);
+        pos += hit.len;
+        late.push(...segment.filter((line) => !isDamageLine(line)));
+        const damage = segment.filter(isDamageLine);
+        // 두 번째 타부터는 같은 연출을 다시 보여 준다 (앞 타까지 줄어든 체력 그대로)
+        if (i > 0) parts.push({ text: [...first], ...boardAfter(i - 1), repeatMove: true });
+        if (damage.length > 0) parts.push({ text: damage, ...boardAfter(i), short: true, quick: i < hits.length - 1 });
+    });
+    parts.push({ text: [rest[countAt]], ...boardAfter(hits.length - 1), short: true });
+    const after = [...late, ...rest.slice(countAt + 1)];
+    if (after.length > 0) parts.push({ text: after, ...post, short: true });
+    return parts;
+}
+
 // lines: 한 박자에 나온 줄들, pre / post: { playerPokemon, opponentPokemon } 스냅샷, moverIsPlayer: 기술을 쓴 쪽
+// hits: 여러 번 때리는 기술이면 타마다의 정보 (없으면 null)
 // 반환: [{ text, playerPokemon, opponentPokemon, short? }, ...] (첫 부분이 연출 부분이다)
-export function splitMoveBeat(lines, pre, post, moverIsPlayer) {
+export function splitMoveBeat(lines, pre, post, moverIsPlayer, hits = null) {
     const used = lines.findIndex((line) => line.includes(" used "));
     if (used < 0) return [{ text: lines, ...post }];
     // 기술을 쓰려고 모습이 바뀌었다면 (킬가르도) 순서는: 모습이 바뀜 -> "블레이드폼으로 바뀌었다!" 글 -> 기술 연출
@@ -60,6 +100,13 @@ export function splitMoveBeat(lines, pre, post, moverIsPlayer) {
     const damage = rest.slice(0, n);
     const after = rest.slice(n);
     const moverBoard = withMoversForm(pre, post, moverIsPlayer);
+    if (hits && hits.length > 1) {
+        const multi = splitMultiHit(first, rest, pre, post, moverIsPlayer, moverBoard, hits);
+        if (multi) {
+            if (formLines.length > 0) multi.unshift({ text: formLines, ...moverBoard });
+            return multi;
+        }
+    }
     const parts = [];
     if (formLines.length > 0) parts.push({ text: formLines, ...moverBoard });
     parts.push({ text: first, ...moverBoard, isMove: true });

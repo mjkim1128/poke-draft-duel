@@ -129,6 +129,15 @@ export function Home() {
                 poke.confusion = null;
                 poke.lockedMove = null;
                 poke.charging = null;
+                poke.rampage = null; /// a fight that ended mid-Outrage must not leave the move locked for the next one
+                poke.encore = null;
+                poke.taunt = null;
+                poke.substitute = null;
+                poke.leechSeed = false;
+                poke.yawn = null;
+                poke.perish = null;
+                poke.protection = null;
+                poke.destinyBond = false;
                 poke.mustRecharge = false;
                 poke.flinched = false;
                 poke.trap = null;

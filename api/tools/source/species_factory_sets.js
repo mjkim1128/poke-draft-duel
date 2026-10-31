@@ -17673,6 +17673,52 @@ const SPECIES_FACTORY_SETS = {
     ]
   }
   ],
+  "deoxys-attack": /* 테오키스(어택) */ [
+  {
+    "item": "focus-sash" /* 기합의띠 */,
+    "ability": "pressure" /* 프레셔 */,
+    "moves": [
+      [ { "slug": "psycho-boost" /* 사이코부스트 */ } ],
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "extreme-speed" /* 신속 */ } ]
+    ]
+  },
+  {
+    "item": "choice-specs" /* 구애안경 */,
+    "ability": "pressure" /* 프레셔 */,
+    "moves": [
+      [ { "slug": "psycho-boost" /* 사이코부스트 */ } ],
+      [ { "slug": "ice-beam" /* 냉동빔 */ } ],
+      [ { "slug": "dark-pulse" /* 악의파동 */ } ],
+      [ { "slug": "focus-blast" /* 기합구슬 */ } ]
+    ]
+  }
+  ],
+  "deoxys-defense": /* 테오키스(디펜스) */ [
+  {
+    "item": "figy-berry" /* 위키열매 */,
+    "ability": "pressure" /* 프레셔 */,
+    "moves": [
+      [ { "slug": "spikes" /* 압정뿌리기 */ } ],
+      [ { "slug": "recover" /* HP회복 */ } ],
+      [ { "slug": "iron-defense" /* 철벽 */ } ],
+      [ { "slug": "toxic" /* 맹독 */ } ]
+    ]
+  }
+  ],
+  "deoxys-speed": /* 테오키스(스피드) */ [
+  {
+    "item": "light-clay" /* 빛의점토 */,
+    "ability": "pressure" /* 프레셔 */,
+    "moves": [
+      [ { "slug": "light-screen" /* 빛의장막 */ } ],
+      [ { "slug": "reflect" /* 리플렉터 */ } ],
+      [ { "slug": "stealth-rock" /* 스텔스록 */ } ],
+      [ { "slug": "taunt" /* 도발 */ } ]
+    ]
+  }
+  ],
   "shaymin-land": /* 쉐이미 */ [
   {
     "item": null,

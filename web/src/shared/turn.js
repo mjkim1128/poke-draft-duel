@@ -556,7 +556,8 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
         // A move that was carried out is shown in order: its animation first (HP unchanged), then the damage
         // (the HP bar drops, a knocked-out pokemon is still standing), then everything that follows
         // (fainting, recoil / Life Orb HP loss, stat changes, status conditions...)
-        const parts = stepAnim && stepPre ? splitMoveBeat(lines, stepPre, post, stepIsPlayer) : [{ text: lines, ...post }];
+        const parts = stepAnim && stepPre ? splitMoveBeat(lines, stepPre, post, stepIsPlayer, hitTrail) : [{ text: lines, ...post }];
+        hitTrail = null;
         const names = {
             player: pokemonNameToString(playerPokemon[0]),
             opponent: pokemonNameToString(opponentPokemon[0]),
@@ -571,7 +572,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
                 if (anim) frame.fieldAnim = anim;
             }
             // 기술 연출은 "OO의 XX!" 장면에 붙인다 (앞에 모습 변화 안내 장면이 있으면 그다음)
-            if (stepAnim && i === Math.max(0, parts.findIndex((p) => p.isMove))) frame.anim = stepAnim;
+            if (stepAnim && (i === Math.max(0, parts.findIndex((p) => p.isMove)) || frame.repeatMove)) frame.anim = stepAnim;
             frames.push(frame);
         });
         stepAnim = null;
@@ -3019,8 +3020,12 @@ function rollHitCount(move, attacker) {
     return roll < 0.35 ? 2 : roll < 0.7 ? 3 : roll < 0.85 ? 4 : 5;
 }
 
+// 여러 번 때리는 기술의 타마다 줄 수와 맞은 쪽의 남은 체력: 화면이 타마다 연출을 보여 주려고 쓴다 (beatsplit.js). 한 번 읽으면 지운다.
+let hitTrail = null;
+
 export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = null) {
     let text = [];
+    hitTrail = null;
     if (defender.hp[0] <= 0 && aimsAtFoe(move)) return text; // attempt to stop turn when mon dies to recoil
     const field = defenderTeam ? ensureField(defenderTeam, null) : null;
     // Sheer Force drops a move's secondary effect (and its Life Orb recoil) for extra power
@@ -3077,9 +3082,18 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
     let hitsLanded = 0;
     let totalDamage = 0;
     let damage_number = 0;
+    const hitSegs = [];
+    let segStart = text.length;
+    let hitsStarted = 0;
+    const markHit = () => {
+        hitSegs.push({ len: text.length - segStart, hp: defender.hp[0] });
+        segStart = text.length;
+    };
     for (let hit = 0; hit < totalHits; hit++) {
+        if (hit > 0) markHit(); // 앞 타가 끝났다
         if (hit > 0 && (defender.hp[0] <= 0 || attacker.hp[0] <= 0)) break;
         if (hit > 0 && ROLLS_ACCURACY_EACH_HIT.has(move.name) && !rollAccuracy(attacker, defender, move, field)) break;
+        hitsStarted = hit + 1;
         const hitMove = beatUpAllies
             ? { ...move, power: 5 + Math.floor(beatUpAllies[hit].base_stats[1] / 10) } // each hit uses that member's Attack
             : ESCALATING_MULTIHIT.has(move.name)
@@ -3422,6 +3436,8 @@ export function doAttack(attacker, defender, move, defenderTeam, attackerTeam = 
         hitsLanded += 1;
     }
     damage_number = totalDamage;
+    if (hitSegs.length < hitsStarted) markHit();
+    if (hitsLanded > 1 && hitSegs.length === hitsLanded) hitTrail = hitSegs;
     if (hitsLanded > 1) text.push("Hit " + hitsLanded + " times!");
     // Knocking something out (Moxie, Beast Boost...)
     if (defender.hp[0] === 0 && attacker.hp[0] > 0 && totalDamage > 0) {

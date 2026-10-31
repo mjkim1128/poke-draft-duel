@@ -13,8 +13,11 @@ function clean(text) {
         .trim();
 }
 
+// 본가 게임에서 쓸 수 없게 된 기술(사이코부스트 등)의 최신 도감 설명은 "쓸 수 없는 기술"이라는 안내문이라서 기술 설명으로 쓰지 않는다
+const UNUSABLE_NOTICE = /can't be used\. It's recommended|사용할 수 없는 기술입니다/;
+
 const lastOf = (entries, lang) => {
-    const found = entries.filter((e) => e.language && e.language.name === lang && e.flavor_text);
+    const found = entries.filter((e) => e.language && e.language.name === lang && e.flavor_text && !UNUSABLE_NOTICE.test(e.flavor_text));
     return found.length > 0 ? found[found.length - 1].flavor_text : null;
 };
 

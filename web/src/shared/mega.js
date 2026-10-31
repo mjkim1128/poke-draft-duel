@@ -1,8 +1,10 @@
 // 메가진화: 메가스톤을 든 포켓몬이 한 배틀에 한 번(팀마다) 진화한다. 진화한 모습은 배틀이 끝나면 원래대로 돌아온다.
 // 진화 처리 자체(능력치, 특성, 등장 효과)는 turn.js의 megaEvolve가 한다. 여기는 데이터를 찾고 되돌리는 쪽.
-import megas from "./megas.json";
+import megasData from "./megas.json";
+import { localizeSprites } from "./spritebase";
 import { prettify } from "./lang";
 
+const megas = localizeSprites(megasData);
 const BY_STONE = new Map(megas.map((m) => [m.stone, m]));
 const MEGA_BASES = new Set(megas.map((m) => m.base));
 export const MEGA_STONES = new Set(BY_STONE.keys());

@@ -1,9 +1,10 @@
 import React from "react";
 import "./StatusBadges.css";
+import { SPRITE_BASE } from "shared/spritebase";
 
 // The Substitute doll (PokeAPI's sprite collection, the same place every pokemon sprite comes
 // from): it takes the place of the pokemon while its Substitute is up.
-const DOLL_BASE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+const DOLL_BASE = SPRITE_BASE;
 export const SUBSTITUTE_FRONT = DOLL_BASE + "substitute.png";
 export const SUBSTITUTE_BACK = DOLL_BASE + "back/substitute.png";
 

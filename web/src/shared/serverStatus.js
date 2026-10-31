@@ -85,6 +85,7 @@ export async function fetchWithRetry(url) {
 // 탭이 숨겨져 있으면 보내지 않고, 다시 보이게 되는 순간 한 번 보내서 (잠들었다면) 서버를 미리 깨운다.
 // 이 요청은 재시도하지 않는다. 실패해도 게임에는 영향이 없다.
 export function startKeepAlive() {
+    if (process.env.REACT_APP_LOCAL_DATA === "1") return () => {}; // 다운로드 버전은 깨울 서버가 없다
     const ping = () => {
         fetch("/api/ping").catch(() => {});
     };

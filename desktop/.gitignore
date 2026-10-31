@@ -1,0 +1,11 @@
+# 받아서 만드는 것들: node_modules/는 npm install, bin/과 resources/js는 npx neu update, resources/는 node build.mjs, dist/는 npx neu build
+node_modules/
+bin/
+dist/
+.tmp/
+resources/
+neutralinojs.log
+.webbuild/
+sprites/
+tools/
+release/

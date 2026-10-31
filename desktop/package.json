@@ -1,0 +1,12 @@
+{
+  "name": "poke-draft-duel-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Poke Draft Duel 다운로드 버전 (Neutralino)",
+  "devDependencies": {
+    "@neutralinojs/neu": "^11.3.1"
+  },
+  "overrides": {
+    "uuid": "^9.0.1"
+  }
+}

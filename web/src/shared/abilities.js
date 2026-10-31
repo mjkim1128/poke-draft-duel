@@ -1,3 +1,4 @@
+import { SPRITE_BASE } from "./spritebase";
 import { localName } from "./lang";
 import ABILITY_NAMES from "./ability_names.json";
 import { CONTACT_MOVES } from "./legalmoves";
@@ -229,7 +230,7 @@ const FORMS = {
     "palafin-zero": { hero: { stats: [100, 160, 97, 106, 87, 100], sprite: 10256 } },
     "eiscue-ice": { noice: { stats: [75, 80, 70, 65, 50, 130], sprite: 10185 } },
 };
-const formSpriteUrl = (id, back = false) => "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (back ? "back/" : "") + id + ".png";
+const formSpriteUrl = (id, back = false) => SPRITE_BASE + (back ? "back/" : "") + id + ".png";
 // Puts `pokemon` into a form; a persistent one (Hero, Noice Face) survives switching out.
 function changeForme(pokemon, forme, persistent = false) {
     const def = FORMS[pokemon.name] && FORMS[pokemon.name][forme];

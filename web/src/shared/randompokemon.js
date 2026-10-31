@@ -1,3 +1,4 @@
+import { SPRITE_BASE } from "./spritebase";
 import { PogeyData } from "./pogey";
 import { getRandomPokemon, getRandomFactorySet, getMoveByName, getItemByName } from "./processjson";
 import { shuffle } from "shared";
@@ -91,7 +92,7 @@ export function getPokemonMoves(data) {
 
 export function getPokemonImg(pokemonId) {
     return (
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+        SPRITE_BASE +
         pokemonId.toString() +
         ".png"
     );

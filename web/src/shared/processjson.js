@@ -1,4 +1,5 @@
 import { fetchWithRetry } from "./serverStatus";
+import { localMove, localItem, localPokemonById, localPokemonByName, localRandomPokemon, localMovesOfPokemon, localRandomFactorySet } from "./localdata";
 
 export const lodash = require("lodash");
 
@@ -7,6 +8,9 @@ export const lodash = require("lodash");
 // 서버가 돌려주는 JSON은 예전에 PokeAPI 응답을 getCustom*Data로 추려 만들던 모양과 같다
 // (korean_name, target, meta 등 포함), 그래서 받은 값을 그대로 쓴다.
 const API_BASE = "/api";
+
+// 다운로드 버전(Neutralino)은 서버 없이 앱에 들어 있는 JSON을 읽는다 (REACT_APP_LOCAL_DATA=1로 빌드, localdata.js)
+export const LOCAL_DATA = process.env.REACT_APP_LOCAL_DATA === "1";
 
 // In-memory caches so a pokemon/move already fetched this session never triggers
 // a second network request (only newly-seen ids/names pay the request cost).
@@ -29,7 +33,7 @@ export async function getMoveByName(name) {
     if (moveByNameCache.has(name)) {
         return lodash.cloneDeep(moveByNameCache.get(name));
     }
-    const move = await fetchFromApi(`/moves/${encodeURIComponent(name)}`);
+    const move = LOCAL_DATA ? await localMove(name) : await fetchFromApi(`/moves/${encodeURIComponent(name)}`);
     moveByNameCache.set(move.name, move);
     return lodash.cloneDeep(move);
 }
@@ -38,7 +42,7 @@ export async function getItemByName(name) {
     if (itemByNameCache.has(name)) {
         return lodash.cloneDeep(itemByNameCache.get(name));
     }
-    const item = await fetchFromApi(`/items/${encodeURIComponent(name)}`);
+    const item = LOCAL_DATA ? await localItem(name) : await fetchFromApi(`/items/${encodeURIComponent(name)}`);
     itemByNameCache.set(item.name, item);
     return lodash.cloneDeep(item);
 }
@@ -52,7 +56,7 @@ export async function getPokemonById(id) {
     if (pokemonByIdCache.has(id)) {
         return lodash.cloneDeep(pokemonByIdCache.get(id));
     }
-    const pokemon = await fetchFromApi(`/pokemon/${encodeURIComponent(id)}`);
+    const pokemon = LOCAL_DATA ? await localPokemonById(id) : await fetchFromApi(`/pokemon/${encodeURIComponent(id)}`);
     cachePokemon(pokemon);
     return lodash.cloneDeep(pokemon);
 }
@@ -61,7 +65,7 @@ export async function getPokemonByName(name) {
     if (pokemonByNameCache.has(name)) {
         return lodash.cloneDeep(pokemonByNameCache.get(name));
     }
-    const pokemon = await fetchFromApi(`/pokemon/name/${encodeURIComponent(name)}`);
+    const pokemon = LOCAL_DATA ? await localPokemonByName(name) : await fetchFromApi(`/pokemon/name/${encodeURIComponent(name)}`);
     cachePokemon(pokemon);
     return lodash.cloneDeep(pokemon);
 }
@@ -69,7 +73,7 @@ export async function getPokemonByName(name) {
 // 게임에 등장하는 포켓몬(풀) 중 하나를 서버가 무작위로 골라 준다.
 // excludeIds는 이미 팀에 있는 포켓몬 번호로, 서버가 이 번호들을 빼고 고른다.
 export async function getRandomPokemon(excludeIds = []) {
-    const pokemon = await fetchFromApi(`/pokemon/random?exclude=${excludeIds.join(",")}`);
+    const pokemon = LOCAL_DATA ? await localRandomPokemon(excludeIds) : await fetchFromApi(`/pokemon/random?exclude=${excludeIds.join(",")}`);
     cachePokemon(pokemon);
     return lodash.cloneDeep(pokemon);
 }
@@ -80,6 +84,7 @@ export async function getRandomPokemon(excludeIds = []) {
 // want.stone: true면 메가스톤을 든 세트 중에서, false면 메가스톤이 아닌 세트 중에서 고른다 (메가진화 가능한 포켓몬)
 // want.item: 그 도구(또는 도구 목록 중 하나)를 들 수 있는 세트 중에서 고른다 (네임드 트레이너가 세트를 고정할 때)
 export async function getRandomFactorySet(species, want = {}) {
+    if (LOCAL_DATA) return lodash.cloneDeep(await localRandomFactorySet(species, want));
     let url = `${API_BASE}/factory-sets/random?species=${encodeURIComponent(species)}`;
     if (want.ability) url += `&ability=${encodeURIComponent(want.ability)}`;
     if (want.move) url += `&move=${encodeURIComponent(want.move)}`;
@@ -103,7 +108,7 @@ export async function getMovesOfPokemon(pokemon) {
     if (learnset.every((name) => moveByNameCache.has(name))) {
         return learnset.map((name) => lodash.cloneDeep(moveByNameCache.get(name)));
     }
-    const moves = await fetchFromApi(`/pokemon/${encodeURIComponent(pokemon.id)}/moves`);
+    const moves = LOCAL_DATA ? await localMovesOfPokemon(pokemon.id) : await fetchFromApi(`/pokemon/${encodeURIComponent(pokemon.id)}/moves`);
     for (const move of moves) {
         moveByNameCache.set(move.name, move);
     }

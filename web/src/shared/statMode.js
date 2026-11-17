@@ -12,6 +12,12 @@ export function isNormalizedStats() {
     }
 }
 
+// 여섯 능력치(HP, 공격, 방어, 특공, 특방, 스피드)를 비율은 그대로 두고 합이 600이 되게 맞춘다
+export function normalizeStatsTo600(raw) {
+    const total = raw.reduce((sum, v) => sum + v, 0);
+    return raw.map((v) => Math.floor((v * 600) / total));
+}
+
 export function setNormalizedStats(on) {
     try {
         window.localStorage.setItem(KEY, on ? "600" : "original");

@@ -1,4 +1,5 @@
 import { SPRITE_BASE } from "./spritebase";
+import { isNormalizedStats, normalizeStatsTo600 } from "./statMode";
 import { localName } from "./lang";
 import ABILITY_NAMES from "./ability_names.json";
 import { CONTACT_MOVES } from "./legalmoves";
@@ -236,7 +237,10 @@ function changeForme(pokemon, forme, persistent = false) {
     const def = FORMS[pokemon.name] && FORMS[pokemon.name][forme];
     if (!def) return false;
     if (!pokemon.formBackup) pokemon.formBackup = { base_stats: pokemon.base_stats, types: pokemon.types, sprites: pokemon.sprites };
-    pokemon.base_stats = def.stats.slice();
+    // 합계 600 보정 모드면 바뀐 모습의 능력치도 같은 방식으로 600에 맞춘다 (메가진화와 같다). 최대 HP는 모습이 바뀌어도 그대로다.
+    const stats = isNormalizedStats() ? normalizeStatsTo600(def.stats) : def.stats.slice();
+    stats[0] = pokemon.base_stats[0];
+    pokemon.base_stats = stats;
     if (def.sprite) pokemon.sprites = { ...pokemon.sprites, front_default: formSpriteUrl(def.sprite), back_default: formSpriteUrl(def.sprite, true) };
     if (def.types) pokemon.types = def.types.map((t, i) => ({ slot: i + 1, type: { name: t } }));
     pokemon.forme = forme;

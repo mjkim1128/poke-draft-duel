@@ -3,7 +3,7 @@ import { PogeyData } from "./pogey";
 import { getRandomPokemon, getRandomFactorySet, getMoveByName, getItemByName } from "./processjson";
 import { shuffle } from "shared";
 import { DEFAULT_MOVES } from "./legalmoves";
-import { isNormalizedStats } from "./statMode";
+import { isNormalizedStats, normalizeStatsTo600 } from "./statMode";
 import { ITEM_POOL, SPECIES_EXCLUSIVE_ITEMS, REAL_SET_ONLY_ITEMS } from "./iteminfo";
 import { hasMegaForm } from "./mega";
 
@@ -106,9 +106,7 @@ export function getBaseStats(pokemon) {
 
 // Scales the six base stats proportionally so their total is 600 (the "600" stat mode)
 export function baseStatTotalTo600(pokemon) {
-    const raw = pokemon.stats.map((s) => parseInt(s.base_stat));
-    const total = raw.reduce((sum, v) => sum + v, 0);
-    return raw.map((v) => Math.floor((v * 600) / total));
+    return normalizeStatsTo600(pokemon.stats.map((s) => parseInt(s.base_stat)));
 }
 
 // returns random key from Set or Map

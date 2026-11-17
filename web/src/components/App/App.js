@@ -4,6 +4,8 @@ import { onLangChange } from 'shared/lang';
 import styles from './styles.module.css';
 import React, { useEffect, useState } from 'react';
 import { subscribeServerStatus, startKeepAlive } from 'shared/serverStatus';
+// 테라스탈 연출 미리보기: 개발 서버, 또는 REACT_APP_TERA_DEMO=1로 따로 빌드했을 때만 (운영 빌드에서는 이 줄이 통째로 사라진다)
+const TeraDemo = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_TERA_DEMO === '1' ? require('components/TeraDemo').TeraDemo : null;
 
 // 서버 상태별 안내 문구. "ok"일 때는 아무것도 보여 주지 않는다.
 const BANNERS = {
@@ -17,7 +19,7 @@ const BANNERS = {
   },
 };
 
-export function App() {
+function Game() {
   const [serverState, setServerState] = useState('ok');
   const [, setLangVersion] = useState(0);
 
@@ -54,4 +56,9 @@ export function App() {
       <Home />
     </div>
   );
+}
+
+export function App() {
+  if (TeraDemo && new URLSearchParams(window.location.search).get('teraDemo')) return <TeraDemo />;
+  return <Game />;
 }

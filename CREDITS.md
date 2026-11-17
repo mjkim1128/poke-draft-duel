@@ -10,6 +10,11 @@
     (data from `PkmnAnimations.rxdata`, pictures from `Graphics/Animations`). Their sound effects are not used.
   - Move animations play at twice their original speed.
 
+- **Terastallization effect and appearance**: the activation sequence, crystal and texture pictures, type icons and button in `web/public/tera`
+  follow the Terastallization plugin of the **Deluxe Battle Kit** (Pokémon Essentials plugin by Luka S.J. and contributors),
+  taken from **Pokémon Wishing Star** (v1.0.8). The still pictures of Terastallized Ogerpon in `web/public/sprites/ogerpon-tera`
+  are the first frames of that game's animated Ogerpon sprites. The effect plays at twice its original speed.
+
 ## Other
 - Pokémon, move, item data and sprites: PokéAPI (https://pokeapi.co/)
 - Battle Factory sets: Pokémon Showdown (https://github.com/smogon/pokemon-showdown)

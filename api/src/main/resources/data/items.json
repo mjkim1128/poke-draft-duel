@@ -1,4 +1,8 @@
 [
+{"id":2282,"name":"teal-mask","korean_name":"벽록의가면","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/teal-mask.png"}},
+{"id":2279,"name":"hearthflame-mask","korean_name":"화덕의가면","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/hearthflame-mask.png"}},
+{"id":2280,"name":"wellspring-mask","korean_name":"우물의가면","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/wellspring-mask.png"}},
+{"id":2281,"name":"cornerstone-mask","korean_name":"주춧돌의가면","category":{"name":"held-items"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/cornerstone-mask.png"}},
 {"id":43,"name":"berry-juice","korean_name":"나무열매쥬스","category":{"name":"healing"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/berry-juice.png"}},
 {"id":126,"name":"cheri-berry","korean_name":"버치열매","category":{"name":"medicine"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/cheri-berry.png"}},
 {"id":127,"name":"chesto-berry","korean_name":"유루열매","category":{"name":"medicine"},"sprites":{"default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/chesto-berry.png"}},

@@ -5,6 +5,8 @@ import { appendToLastTurn } from "shared/turnlog";
 import { setSurrenderHandler } from "shared/surrender";
 import { playMoveAnim, playFieldAnim, prefetchMoveAnims, prefetchFieldAnims } from "animations/pbEngine";
 import { isFxEnabled } from "animations/fxSetting";
+import { playTeraAnim, prefetchTeraAssets, teraIconStyle, TERA_COLORS } from "animations/teraEffect";
+import { canTerastallize, teraTypeOf } from "shared/tera";
 import {
     CurrentPokemon,
     GameOverDisplay,
@@ -88,6 +90,8 @@ export function Battle(props) {
     const [panelTab, setPanelTab] = useState("moves");
     /// "메가진화" switched on for the move about to be picked
     const [megaOn, setMegaOn] = useState(false);
+    /// "테라스탈" switched on for the move about to be picked
+    const [teraOn, setTeraOn] = useState(false);
     const [announcerMessage, setAnnouncerMessage] = useState([]);
     const [isAnimating, setAnimating] = useState(false);
     /// A turn plays out one beat at a time instead of jumping straight to the end result:
@@ -131,14 +135,17 @@ export function Battle(props) {
         /// The move's animation plays over the field while its lines are typed out
         const fx = frame.anim && isFxEnabled() ? playMoveAnim(fieldRef.current, frame.anim.side, frame.anim.move, frame.anim.self) : null;
         /// A weather or terrain that starts in this beat gets its own animation over the field
+        /// A Terastallization in this beat plays the crystal animation over that pokemon
+        const teraFx = frame.teraAnim && isFxEnabled() ? playTeraAnim(fieldRef.current, frame.teraAnim.side, frame.teraAnim.type) : null;
         const fieldFx = frame.fieldAnim && isFxEnabled() ? playFieldAnim(fieldRef.current, frame.fieldAnim) : null;
         /// A status condition or a stat change in this beat plays its animation over that pokemon
         const statusFx = isFxEnabled() && frame.statusAnims ? frame.statusAnims.map((a) => playFieldAnim(fieldRef.current, a.name, { on: a.side })).filter(Boolean) : [];
         const statusEnd = Math.max(0, ...statusFx.map((f) => f.duration + 200));
-        const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0, fieldFx ? fieldFx.duration + 200 : 0, statusEnd));
+        const timer = setTimeout(() => setAnimIndex((i) => i + 1), Math.max(beatDelay(frame), fx ? fx.duration + 300 : 0, teraFx ? teraFx.duration + 300 : 0, fieldFx ? fieldFx.duration + 200 : 0, statusEnd));
         return () => {
             clearTimeout(timer);
             if (fx) fx.cancel();
+            if (teraFx) teraFx.cancel();
             if (fieldFx) fieldFx.cancel();
             statusFx.forEach((f) => f.cancel());
         };
@@ -239,8 +246,10 @@ export function Battle(props) {
             return;
         }
         const useMega = megaOn && canMegaEvolve(props.playerPokemon);
+        const useTera = teraOn && canTerastallize(props.playerPokemon);
         setMegaOn(false);
-        let text = doTurn(props.playerPokemon, props.opponentPokemon, move, { mega: useMega });
+        setTeraOn(false);
+        let text = doTurn(props.playerPokemon, props.opponentPokemon, move, { mega: useMega, tera: useTera });
         let t = [...turns];
         t.push(text);
         setTurns(t);
@@ -451,6 +460,14 @@ export function Battle(props) {
                 {megaOn ? "메가진화 켜짐" : "메가진화"}
             </button>
         ) : null;
+    const teraButton =
+        awaitingInput && canTerastallize(props.playerPokemon) ? (
+            <button type="button" className={"tera-toggle" + (teraOn ? " on" : "")} aria-pressed={teraOn} onClick={() => { prefetchTeraAssets([teraTypeOf(currentpoke)]); setTeraOn(!teraOn); }} style={{ "--tera-color": TERA_COLORS[teraTypeOf(currentpoke)] }}>
+                <span className="tera-icon" style={teraIconStyle(teraTypeOf(currentpoke), 18)} />
+                {teraOn ? "테라스탈 켜짐" : "테라스탈"}
+            </button>
+        ) : null;
+    const formButtons = megaButton || teraButton ? <div className="form-toggles">{megaButton}{teraButton}</div> : null;
     let moves = playableMoves.map((move, index) => {
         return (
             <div key={index}>
@@ -594,7 +611,7 @@ export function Battle(props) {
                     <div className="bp-body">
                         {panelTab === "moves" && (
                             <>
-                                {megaButton}
+                                {formButtons}
                                 <div className="pokemon-moves bp-moves">{moves}</div>
                                 <p className="effect-legend">{effectLegend(isKorean())}</p>
                                 <p className="move-hint">{isKorean() ? "기술을 꾹 누르면 정보를 볼 수 있어요" : "Press and hold a move to see its info"}</p>
@@ -687,7 +704,7 @@ export function Battle(props) {
                                       .back_default
                         }
                     />
-                    {megaButton}
+                    {formButtons}
                     <div className="pokemon-moves">{moves}</div>
                     <p className="effect-legend">{effectLegend(isKorean())}</p>
                     <p className="move-hint">{isKorean() ? "기술을 꾹 누르면 정보를 볼 수 있어요" : "Press and hold a move to see its info"}</p>

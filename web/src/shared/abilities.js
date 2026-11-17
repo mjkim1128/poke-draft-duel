@@ -187,7 +187,7 @@ const boosterAbility = (label, isActive) => ({
 });
 // Normal moves take another type and get 20% more power (Pixilate, Refrigerate); Normalize
 // does the opposite; Liquid Voice turns sound moves into Water.
-const NO_TYPE_CHANGE = new Set(["weather-ball", "terrain-pulse", "judgment", "multi-attack", "natural-gift", "hidden-power", "techno-blast", "struggle", "revelation-dance"]);
+const NO_TYPE_CHANGE = new Set(["weather-ball", "terrain-pulse", "judgment", "multi-attack", "natural-gift", "hidden-power", "techno-blast", "tera-blast", "ivy-cudgel", "struggle", "revelation-dance"]);
 const skinAbility = (type) => ({
     onModifyType({ move }) {
         if (move.type.name === "normal" && move.damage_class.name !== "status") return { type, power: 4915 / 4096 };
@@ -689,6 +689,7 @@ export const ABILITIES = {
     // ---- Mold Breaker & co. are markers (see ignoresAbilities) ----
     "mold-breaker": {},
     teravolt: {},
+    "embody-aspect": {}, // 오거폰이 테라스탈하면 얻는다 (turn.js terastallize가 능력치를 올린다)
     turboblaze: {},
 
     // ---- setting the weather / terrain on entering ----

@@ -206,7 +206,9 @@ export const CHOICE_ITEMS = {
 // are in ITEM_POOL, so Soul Dew is the only one that matters here. Booster Energy joins it: the
 // real games only protect it on Paradox pokemon, and those are the only ones the sets give it to.
 // Mega Stones are protected the same way (they only ever sit on the pokemon they belong to).
-export const UNREMOVABLE_ITEMS = new Set([SOUL_DEW, BOOSTER_ENERGY, ...MEGA_STONES]);
+// 오거폰의 가면: 오거폰이 쓰는 모든 기술의 위력이 1.2배가 되고, 빼앗기거나 떨어지지 않는다
+export const MASK_ITEMS = new Set(["teal-mask", "wellspring-mask", "hearthflame-mask", "cornerstone-mask"]);
+export const UNREMOVABLE_ITEMS = new Set([SOUL_DEW, BOOSTER_ENERGY, ...MEGA_STONES, ...MASK_ITEMS]);
 
 // Real Fling base power per item (Bulbapedia's Fling power list); best-effort for the
 // items in ITEM_POOL specifically. Falls back to 30 for an unlisted general item, since

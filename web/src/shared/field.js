@@ -159,6 +159,17 @@ export function adaptMoveToField(move, attacker, field) {
         const physical = staged(attacker.base_stats[1], attacker.stat_levels[0]) > staged(attacker.base_stats[3], attacker.stat_levels[2]);
         return { ...move, damage_class: { name: physical ? "physical" : "special" }, fieldAdapted: true };
     }
+    // 테라버스트: 테라스탈하면 그 타입이 되고, 공격과 특공 중 (능력 단계를 반영해서) 더 높은 쪽으로 때린다. 테라스탈하기 전에는 노말타입 특수기.
+    if (move.name === "tera-blast" && attacker.terastallized) {
+        const staged = (base, level) => Math.floor((2 * base + 31 + 5) * (level >= 0 ? (level + 2) / 2 : 2 / (2 - level)));
+        const physical = staged(attacker.base_stats[1], attacker.stat_levels[0]) > staged(attacker.base_stats[3], attacker.stat_levels[2]);
+        return { ...move, type: { name: attacker.teraType }, damage_class: { name: physical ? "physical" : "special" }, fieldAdapted: true };
+    }
+    // 덩굴방망이: 쓰는 오거폰의 가면에 따라 풀, 물, 불꽃, 바위타입이 된다
+    if (move.name === "ivy-cudgel") {
+        const type = { "ogerpon-wellspring-mask": "water", "ogerpon-hearthflame-mask": "fire", "ogerpon-cornerstone-mask": "rock" }[attacker.name];
+        if (type) return { ...move, type: { name: type }, fieldAdapted: true };
+    }
     if (move.name === "grassy-glide" && terrain === "grassy" && isGrounded(attacker)) {
         return { ...move, priority: move.priority + 1, fieldAdapted: true };
     }

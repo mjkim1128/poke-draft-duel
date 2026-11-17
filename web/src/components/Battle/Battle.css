@@ -466,3 +466,39 @@
     background: #8a4fd6;
     color: #fff;
 }
+
+/* 메가진화, 테라스탈 켜기 / 끄기를 나란히 */
+.form-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-self: flex-start;
+    margin: 0 0 6px;
+}
+
+.form-toggles .mega-toggle {
+    margin: 0;
+}
+
+.tera-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    border: 2px solid var(--tera-color, #6890f0);
+    border-radius: 14px;
+    background: #fff;
+    color: #333;
+}
+
+.tera-toggle .tera-icon {
+    display: inline-block;
+}
+
+.tera-toggle.on {
+    background: var(--tera-color, #6890f0);
+    color: #fff;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}

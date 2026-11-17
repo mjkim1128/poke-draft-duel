@@ -28,6 +28,7 @@ import {
     resetBattleForms,
     previewEntryForm,
     revertMega,
+    revertTera,
 } from "shared";
 import "./StartScreen.css";
 import { isKorean } from "shared/lang";
@@ -146,6 +147,7 @@ export function Home() {
                 poke.torment = false;
                 poke.actionsSinceSwitch = 0;
                 poke.activeTurns = 0;
+                revertTera(poke); /// 테라스탈이 풀린다 (메가진화보다 먼저: 메가진화한 모습의 타입으로 먼저 돌아온다)
                 revertMega(poke); /// a Mega Evolved pokemon is back to its normal form
                 resetAbilityState(poke); /// ability, Transform, Illusion... back to how it started
                 /// Hero Palafin, Noice Eiscue... are back to their normal form (kept as the fight begins: they were reset when the last one ended)
@@ -166,6 +168,7 @@ export function Home() {
             }
             /// Reflect/Light Screen live on the team array itself, not on a pokemon
             arr.megaUsed = false; /// the team can Mega Evolve again next battle
+            arr.teraUsed = false; /// the team can Terastallize again next battle
             arr.reflectTurns = 0;
             arr.lightScreenTurns = 0;
             arr.auroraTurns = 0;

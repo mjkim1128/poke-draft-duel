@@ -193,6 +193,10 @@
   "ko": "등장했을 때 일렉트릭필드를 사용한다.",
   "en": "Turns the ground into Electric Terrain when the Pokémon enters a battle."
  },
+ "embody-aspect": {
+  "ko": "가면에 깃든 마음이 깨어난다. 테라스탈하면 쓰고 있는 가면에 따라 능력이 한 단계 오른다.",
+  "en": "The Pokémon's mask awakens when it Terastallizes, raising a stat depending on the mask worn."
+ },
  "emergency-exit": {
   "ko": "HP가 절반이 되면 위험을 회피하기 위해 지닌 포켓몬으로 돌아간다.",
   "en": "The Pokémon, sensing danger, switches out when its HP becomes half or less."

@@ -6,12 +6,15 @@ import { readPlayerMove } from "./cpuread";
 import { recordCpuMove } from "./cpustatus";
 import { damageCalc, statCalc, typeEffectiveness, isFixedDamageMove, rollDamage } from "./damagecalc";
 import {
+    capitalizeFirstLetter,
     moveNameToString,
     pokemonNameToString,
     statNameToString,
 } from "./helpers";
 import { FOE_TARGETS, isOhkoMove, ohkoImmune, rollAccuracy } from "./accuracy";
 import { megaFormOf, canMegaEvolve, megaEnglishName } from "./mega";
+import { canTerastallize, teraTypeOf, isOgerpon, teraSpritesOf } from "./tera";
+import { cpuWantsTera } from "./cputera";
 import { getBaseStats } from "./randompokemon";
 import { spendPP, restorePP, ppLeft, maxPP, hasPP, getUsableMoves } from "./pp";
 import { effectiveSpeed } from "./speed";
@@ -455,6 +458,34 @@ export function megaEvolve(team, foeTeam, text) {
     if (foeTeam[0].hp[0] > 0) addArrayToArray(text, runEntryAbilities(team, foeTeam, field));
 }
 
+// Terastallization: the front pokemon of `team` turns into its Tera type for the rest of the battle (until
+// revertTera puts it back). Its type becomes that one type; the old types are kept for STAB (tera.js).
+export function terastallize(team, foeTeam, text) {
+    const mon = team[0];
+    const type = teraTypeOf(mon);
+    team.teraUsed = true;
+    mon.teraOriginal = { types: mon.types };
+    mon.types = [{ slot: 1, type: { name: type } }];
+    mon.terastallized = true;
+    // 오거폰은 테라스탈하면 모습이 바뀐다 (가면마다 다른 테라스탈한 모습)
+    const teraSprites = teraSpritesOf(mon);
+    if (teraSprites) {
+        mon.teraOriginal.sprites = mon.sprites;
+        mon.sprites = { ...mon.sprites, ...teraSprites };
+    }
+    text.push(pokemonNameToString(mon) + " Terastallized into the " + capitalizeFirstLetter(type) + " type!");
+    // 오거폰: 테라스탈하면 초상투영을 얻어서 가면에 따라 능력치가 한 단계 오른다 (벽록 스피드, 우물 특방, 화덕 공격, 주춧돌 방어)
+    if (isOgerpon(mon)) {
+        const stat = { ogerpon: "speed", "ogerpon-wellspring-mask": "special-defense", "ogerpon-hearthflame-mask": "attack", "ogerpon-cornerstone-mask": "defense" }[mon.name];
+        mon.teraOriginal.ability = mon.ability; // 배틀이 끝나면 원래 특성으로 (revertTera)
+        mon.teraOriginal.baseAbility = mon.baseAbility;
+        mon.ability = getAbility("embody-aspect");
+        mon.baseAbility = mon.ability;
+        text.push(pokemonNameToString(mon) + "'s Embody Aspect!");
+        abilityApi(ensureField(team, foeTeam)).boost(mon, [{ stat: { name: stat }, change: 1 }], text);
+    }
+}
+
 function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     playerPokemon.firstFainted = null; // who reached 0 HP first this turn
     playerPokemon[0].faintStamp = opponentPokemon[0].faintStamp = 0;
@@ -471,6 +502,8 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     // speeds below are worked out with the new stats
     const megaText = [];
     if (options.mega && chosenMove.priority !== 6 && canMegaEvolve(playerPokemon)) megaEvolve(playerPokemon, opponentPokemon, megaText);
+    // Terastallization comes right after Mega Evolution (a pokemon can do both in the same turn)
+    if (options.tera && chosenMove.priority !== 6 && canTerastallize(playerPokemon)) terastallize(playerPokemon, opponentPokemon, megaText);
     const canCpuSwitch = !isTrapped(opponentPokemon, playerPokemon) && !opponentPokemon[0].rampage;
     let plannedCpuMove = makeMove(playerPokemon, opponentPokemon, canCpuSwitch);
     // 최종 보스는 플레이어가 이번 턴에 무엇을 하는지 알고 나서 행동을 고른다 (cpuread.js)
@@ -482,6 +515,7 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     const cpuMove = forcedMove(opponentPokemon[0], plannedCpuMove);
     if (cpuMove !== plannedCpuMove) cpuTrace("강제: 잠김/충전/반동 등으로 기술이 정해짐", cpuMove, playerPokemon, opponentPokemon);
     if (cpuMove.priority !== 6 && canMegaEvolve(opponentPokemon) && !opponentPokemon[0].megaHold) megaEvolve(opponentPokemon, playerPokemon, megaText);
+    if (cpuMove.priority !== 6 && canTerastallize(opponentPokemon) && cpuWantsTera(opponentPokemon, playerPokemon, cpuMove, field)) terastallize(opponentPokemon, playerPokemon, megaText);
     entryText.push(...megaText);
     // Focus Punch: it tightens its focus before anyone moves; getting hit by a damaging move before it acts breaks the focus
     for (const [team, mv] of [[playerPokemon, move], [opponentPokemon, cpuMove]]) {
@@ -566,6 +600,11 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             // a status condition or a stat change in this part gets its animation over that pokemon
             const statusAnims = statusAnimsOf(frame.text, names);
             if (statusAnims.length > 0) frame.statusAnims = statusAnims;
+            // a Terastallization in this part gets its crystal animation over that pokemon
+            for (const line of frame.text) {
+                const tera = /^(.*) Terastallized into the (\w+) type!$/.exec(line);
+                if (tera) frame.teraAnim = { side: tera[1] === names.player ? "player" : "opponent", type: tera[2].toLowerCase() };
+            }
             // a weather or terrain that starts in this part gets its field animation
             for (const line of frame.text) {
                 const anim = fieldAnimOfLine(line);

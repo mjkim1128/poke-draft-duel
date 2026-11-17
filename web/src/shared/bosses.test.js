@@ -198,12 +198,14 @@ describe("마리나의 브리두라스는 자뭉열매, 지구력, 일렉트로�
     test("보스 칸에 도구, 특성, 기술이 모두 적혀 있다", () => {
         expect(slot).toMatchObject({ name: "archaludon", ability: "stamina", move: "electro-shot", item: "sitrus-berry" });
     });
-    test("조건에 맞는 세트가 정확히 하나 있다", () => {
+    test("조건에 맞는 세트가 있고, 원래 세트(악의파동)가 그 안에 있다", () => {
         const sets = setRows
             .filter((r) => r.species === "archaludon")
             .map((r) => r.set)
             .filter((set) => wantsItem(set, slot) && abilitiesOf(set).includes(slot.ability) && hasMove(set, slot.move));
-        expect(sets).toHaveLength(1);
+        expect(sets.length).toBeGreaterThanOrEqual(1);
+        expect(sets.some((set) => hasMove(set, "dark-pulse"))).toBe(true);
+        for (const set of sets) expect(abilitiesOf(set)).toEqual(["stamina"]); // 어느 세트가 걸려도 자뭉열매, 지구력, 일렉트로빔이다
     });
 });
 

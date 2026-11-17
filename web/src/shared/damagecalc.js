@@ -1,6 +1,7 @@
 import { PogeyData } from "./pogey";
 import { effectiveSpeed } from "./speed";
 import { activeItem } from "./helditem";
+import { teraStab } from "./tera";
 import {
     TYPE_BOOST_ITEMS,
     CHOICE_ITEMS,
@@ -12,6 +13,7 @@ import {
     AIR_BALLOON,
     METRONOME_ITEM,
     UNREMOVABLE_ITEMS,
+    MASK_ITEMS,
     getFlingPower,
 } from "./iteminfo";
 import { STATUS_TYPE_BLOCKED_MOVES, PUNCH_MOVES } from "./movemechanics";
@@ -260,6 +262,8 @@ function calculateDamage(attacker, defender, move, ctx) {
     if (weighted !== null) power = weighted;
     const dynamic = dynamicPower(move, attacker, defender, field);
     if (dynamic !== null) power = dynamic;
+    // 테라스탈한 포켓몬이 자기 테라스탈 타입의 약한 기술(위력 60 미만)을 쓰면 위력 60으로 친다 (연속기, 선제기, 위력이 정해지는 기술은 제외)
+    if (attacker.terastallized && move.type.name === attacker.teraType && move.power > 0 && power < 60 && move.priority <= 0 && weighted === null && dynamic === null && !(move.meta && move.meta.max_hits > 1)) power = 60;
 
     // Fling: power comes from whatever the attacker is holding, not the move's own base power
     if (move.name === "fling" && attacker.item) power = getFlingPower(attacker.item.name);
@@ -274,6 +278,7 @@ function calculateDamage(attacker, defender, move, ctx) {
         if (attacker.item.name === MUSCLE_BAND && category === "physical") power *= 1.1;
         if (attacker.item.name === PUNCHING_GLOVE && PUNCH_MOVES.has(move.name)) power *= 1.1; // 펀치류 기술의 위력이 10% 오른다
         if (attacker.item.name === LIFE_ORB) power *= 1.3;
+        if (MASK_ITEMS.has(attacker.item.name)) power *= 1.2; // 오거폰의 가면
         if (attacker.item.name === METRONOME_ITEM)
             power *= 1 + 0.2 * Math.min((attacker.moveRepeatCount || 1) - 1, 5);
     }
@@ -284,7 +289,9 @@ function calculateDamage(attacker, defender, move, ctx) {
     power *= abilityBasePowerMod(attacker, defender, move, field);
     power *= move.abilityPowerMod || 1; // Pixilate & co. already changed the move's type
 
-    let STAB = calculateSTAB(attacker, move) ? abilityStabMultiplier(attacker) : 1;
+    const baseStab = abilityStabMultiplier(attacker);
+    const teraStabMod = teraStab(attacker, move, baseStab); // 테라스탈한 포켓몬은 자속 보정이 따로 정해진다
+    let STAB = teraStabMod !== null ? teraStabMod : calculateSTAB(attacker, move) ? baseStab : 1;
     let damage = (42 * power * (attack / defense)) / 50 + 2;
     damage = Math.floor(damage * weatherDamageMod(move, field));
     damage = Math.floor(damage * abilityDamageMod(attacker, defender, move, type, field));

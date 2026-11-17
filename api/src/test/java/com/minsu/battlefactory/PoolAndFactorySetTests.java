@@ -45,9 +45,9 @@ class PoolAndFactorySetTests {
     ObjectMapper objectMapper;
 
     @Test
-    void poolHas441PokemonAndNoneAtOrAbove660ExceptNecrozmaForms() {
+    void poolHas458PokemonAndNoneAtOrAbove660ExceptNecrozmaForms() {
         List<Long> poolIds = pokemonRepository.findPoolIds();
-        assertEquals(441, poolIds.size());
+        assertEquals(458, poolIds.size());
 
         // 네크로즈마의 두 모습(종족값 680)은 일부러 풀에 넣는다
         Set<String> allowedAbove660 = Set.of("necrozma-dusk", "necrozma-dawn");
@@ -138,7 +138,7 @@ class PoolAndFactorySetTests {
 
     @Test
     void setsKeepTheOptionalFields() throws Exception {
-        // 도구가 없는 세트는 item이 null이어도 항목은 있다. 잠재파워와 테라버스트는 세트에서 모두 뺐으므로 hpType을 가진 선택지는 없다
+        // 도구가 없는 세트는 item이 null이어도 항목은 있다. 잠재파워는 세트에서 뺐으므로 hpType을 가진 선택지는 없다. 테라스탈 타입(tera)은 있으면 18타입 중 하나다
         for (var s : factorySetRepository.findAll()) {
             JsonNode set = objectMapper.readTree(s.getPayload());
             assertTrue(set.has("item"));
@@ -146,8 +146,15 @@ class PoolAndFactorySetTests {
                 for (JsonNode option : slot) {
                     assertFalse(option.has("hpType"), "잠재파워 선택지가 남아 있음: " + s.getSpecies());
                     assertNotEquals("hidden-power", option.get("slug").asString());
-                    assertNotEquals("tera-blast", option.get("slug").asString());
                 }
+            }
+            if (set.has("tera")) {
+                java.util.List<String> teras = new java.util.ArrayList<>();
+                if (set.get("tera").isArray()) set.get("tera").forEach(t -> teras.add(t.asString()));
+                else teras.add(set.get("tera").asString());
+                assertFalse(teras.isEmpty());
+                assertTrue(teras.stream().allMatch(t -> java.util.List.of("normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy").contains(t)),
+                        "테라스탈 타입이 올바르지 않음: " + s.getSpecies() + " " + set.get("tera"));
             }
         }
     }

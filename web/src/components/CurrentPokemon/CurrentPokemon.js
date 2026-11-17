@@ -4,6 +4,9 @@ import { StatusBadges } from "components/StatusBadges";
 import { FloatingPopup } from "components/FloatingPopup";
 import React, { useEffect, useRef, useState } from "react";
 import { pokemonNameToString, pokemonTypeToString } from "shared";
+import { applyTeraLook } from "animations/teraEffect";
+import { isKorean } from "shared/lang";
+import { isOgerpon } from "shared/tera";
 import "./CurrentPokemon.css";
 
 export function CurrentPokemon(props) {
@@ -21,6 +24,30 @@ export function CurrentPokemon(props) {
         const timer = setTimeout(() => setFlashing(false), 1100);
         return () => clearTimeout(timer);
     }, [props.pokemon.name, isMega]);
+    /// 테라스탈한 포켓몬은 타입 색 윤곽선과 질감을 입은 모습이다 (발동 연출이 끝난 뒤부터)
+    const isTera = !!props.pokemon.terastallized;
+    const teraType = props.pokemon.teraType;
+    const ogerpon = isOgerpon(props.pokemon);
+    const wasTera = useRef(isTera);
+    useEffect(() => {
+        if (!isTera || !teraType || !imgRef.current) {
+            wasTera.current = isTera;
+            return undefined;
+        }
+        const field = imgRef.current.closest(".bp-field");
+        if (!field) return undefined;
+        const side = imgRef.current.closest(".bp-player") ? "player" : "opponent";
+        const delay = wasTera.current ? 0 : 1100;
+        wasTera.current = true;
+        let remove = null;
+        const timer = setTimeout(() => {
+            remove = applyTeraLook(field, side, teraType, { texture: !ogerpon });
+        }, delay);
+        return () => {
+            clearTimeout(timer);
+            if (remove) remove();
+        };
+    }, [isTera, teraType, ogerpon, props.img, props.pokemon.name]);
     /// While a Substitute is up the doll takes the pokemon's place
     const showsDoll = !!props.pokemon.substitute && props.pokemon.hp[0] > 0 && !!props.substituteImg;
 
@@ -28,7 +55,7 @@ export function CurrentPokemon(props) {
         <div className="current-pokemon-div">
             <div>
                 <p>{pokemonNameToString(props.pokemon)}</p>
-                <p>{pokemonTypeToString(props.pokemon.illusion || props.pokemon)}</p>
+                <p>{pokemonTypeToString(props.pokemon.illusion || props.pokemon)}{isTera ? (isKorean() ? " (테라스탈)" : " (Tera)") : ""}</p>
                 <StatusBadges pokemon={props.pokemon} />
             </div>
             <div>

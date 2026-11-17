@@ -600,7 +600,7 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
         const team = isPlayer ? playerPokemon : opponentPokemon;
         const foeTeam = isPlayer ? opponentPokemon : playerPokemon;
         const move = isPlayer ? plan.move : plan.cpuMove;
-        if (step === 1 && team[0].hp[0] <= 0) return Object.assign(text, { frames });
+        if (step === 1 && team[0].hp[0] <= 0) break; // 먼저 움직인 쪽이 쓰러뜨렸다: 이 쪽은 움직이지 못하지만, 턴 끝의 일(상태이상, 날씨 피해 등)은 남은 쪽에 그대로 들어간다
         // A side that was switched out (Emergency Exit) before it got to move loses its action
         if (plan.skipSide === (isPlayer ? "player" : "cpu")) continue;
         if (hasCustapBoost(team[0])) consumeItem(team[0]);

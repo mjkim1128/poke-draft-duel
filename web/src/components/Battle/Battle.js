@@ -137,7 +137,7 @@ export function Battle(props) {
         const fx = frame.anim && isFxEnabled() ? playMoveAnim(fieldRef.current, frame.anim.side, frame.anim.move, frame.anim.self) : null;
         /// A weather or terrain that starts in this beat gets its own animation over the field
         /// A Terastallization in this beat plays the crystal animation over that pokemon
-        const teraFx = frame.teraAnim && isFxEnabled() ? playTeraAnim(fieldRef.current, frame.teraAnim.side, frame.teraAnim.type) : null;
+        const teraFx = frame.teraAnim && isFxEnabled() ? playTeraAnim(fieldRef.current, frame.teraAnim.side, frame.teraAnim.type, { keepLook: false }) : null;
         const fieldFx = frame.fieldAnim && isFxEnabled() ? playFieldAnim(fieldRef.current, frame.fieldAnim) : null;
         /// A status condition or a stat change in this beat plays its animation over that pokemon
         const statusFx = isFxEnabled() && frame.statusAnims ? frame.statusAnims.map((a) => playFieldAnim(fieldRef.current, a.name, { on: a.side })).filter(Boolean) : [];

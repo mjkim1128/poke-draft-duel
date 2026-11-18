@@ -100,7 +100,7 @@ export function TeraDemo() {
             setOgLog(log);
             stopOgFx();
             // 게임과 같다: 연출은 그 장면이 끝나면 걷히고, 이후에는 CurrentPokemon이 입히는 테라스탈 모습만 남는다
-            const fx = [playTeraAnim(ogFieldRef.current, "opponent", og.foe.teraType), playTeraAnim(ogFieldRef.current, "player", og.me.teraType)].filter(Boolean);
+            const fx = [playTeraAnim(ogFieldRef.current, "opponent", og.foe.teraType, { keepLook: false }), playTeraAnim(ogFieldRef.current, "player", og.me.teraType, { keepLook: false })].filter(Boolean);
             ogFx.current = fx;
             const wait = Math.max(0, ...fx.map((f) => f.duration)) + 300;
             ogFxTimer.current = setTimeout(stopOgFx, wait);

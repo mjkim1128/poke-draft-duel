@@ -101,7 +101,56 @@ function makeTexture(field, img, type, opts = {}) {
     };
 }
 
-// 테라스탈한 모습을 유지한다: 타입 색 윤곽선과 질감. 반환: 되돌리는 함수 (테라스탈이 풀릴 때)
+// 테라스탈한 모습의 그림: 포켓몬 그림에 타입 질감을 직접 입힌 그림 주소(data URL)를 만든다.
+// 겹쳐 놓는 요소가 아니라 그림 자체라서, 포켓몬이 움직이거나(공격하러 나갈 때) 교체되어도 그림과 함께 움직이고 사라진다.
+// 그림을 불러오지 못하면 null (질감 없이 윤곽선만 보인다).
+const texturedCache = new Map();
+function loadImage(src) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+    });
+}
+export function texturedSprite(src, type) {
+    const key = src + "|" + type;
+    if (!texturedCache.has(key)) {
+        texturedCache.set(
+            key,
+            Promise.all([loadImage(src), loadImage(patternUrl(type))])
+                .then(([sprite, pattern]) => {
+                    const w = sprite.naturalWidth;
+                    const h = sprite.naturalHeight;
+                    const tex = document.createElement("canvas");
+                    tex.width = w;
+                    tex.height = h;
+                    const t = tex.getContext("2d");
+                    const tile = Math.max(24, Math.round(w * 1.6)); // 무늬 한 장의 크기 (그림 크기에 맞춘다)
+                    for (let x = 0; x < w; x += tile) for (let y = 0; y < h; y += tile) t.drawImage(pattern, x, y, tile, tile);
+                    t.globalCompositeOperation = "destination-in"; // 포켓몬 모양으로만 남긴다
+                    t.drawImage(sprite, 0, 0);
+                    const out = document.createElement("canvas");
+                    out.width = w;
+                    out.height = h;
+                    const o = out.getContext("2d");
+                    o.drawImage(sprite, 0, 0);
+                    o.globalCompositeOperation = "hard-light";
+                    o.globalAlpha = 0.8;
+                    o.drawImage(tex, 0, 0);
+                    return out.toDataURL("image/png");
+                })
+                .catch(() => null)
+        );
+    }
+    return texturedCache.get(key);
+}
+
+// 테라스탈한 포켓몬 그림에 거는 윤곽선 (CSS filter)
+export const teraOutline = (type) => `drop-shadow(0 0 1.5px ${colorOf(type)}) drop-shadow(0 0 3px ${colorOf(type)})`;
+
+// (연출 데모용) 테라스탈한 모습을 겹쳐 놓는 방식: 타입 색 윤곽선과 질감. 반환: 되돌리는 함수 (테라스탈이 풀릴 때)
 // opts.texture가 false이면 윤곽선만 (이미 테라스탈한 모습이 따로 있는 오거폰)
 export function applyTeraLook(field, side, type, opts = {}) {
     const img = imgOf(field, side);

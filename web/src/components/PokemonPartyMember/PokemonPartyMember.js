@@ -33,7 +33,7 @@ export function PokemonPartyMember(props) {
                 ></img>
             </button>
             <FloatingPopup anchorRef={anchorRef} visible={hover}>
-                <HoverPokemonData pokemon={props.pokemon} />
+                <HoverPokemonData pokemon={props.pokemon} showTera={!!props.own} />
             </FloatingPopup>
         </div>
     );

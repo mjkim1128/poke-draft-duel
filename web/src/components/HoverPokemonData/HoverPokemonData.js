@@ -51,7 +51,7 @@ export function HoverPokemonData(props) {
             </div>
             <p>
                 Type: {pokemonTypeToString(props.pokemon)}
-                <TeraBadge pokemon={props.pokemon} />
+                <TeraBadge pokemon={props.pokemon} reveal={!!props.showTera} />
             </p>
             {props.pokemon.item && (
                 <p className="hover-pokemon-item">

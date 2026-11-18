@@ -279,3 +279,34 @@ describe("테라스탈한 포켓몬의 타입은 다른 효과로 바뀌지 않�
         }
     });
 });
+
+describe("테라스탈 연출 정보", () => {
+    test("테라스탈한 장면에 연출 정보(어느 쪽, 무슨 타입)가 붙는다", () => {
+        for (const side of ["player", "opponent"]) {
+            const a = mon("machamp", ["tackle"], { tera: "fire" });
+            const b = mon("snorlax", ["splash"], { tera: "ghost" });
+            let out;
+            if (side === "player") out = doTurn([a, mon("snorlax", ["splash"])], [b], a.moveset[0], { tera: true });
+            else {
+                // 컴퓨터가 테라스탈하는 판: 마지막 한 마리인 컴퓨터는 바로 한다
+                const fainted = mon("snorlax", ["splash"]);
+                fainted.hp[0] = 0;
+                out = doTurn([a], [b, fainted], a.moveset[0]);
+            }
+            const cues = out.frames.filter((f) => f.teraAnim).map((f) => f.teraAnim);
+            if (side === "player") expect(cues).toEqual([{ side: "player", type: "fire" }]);
+            else expect(cues).toEqual([{ side: "opponent", type: "ghost" }]);
+        }
+    });
+
+    test("한국어로 번역된 뒤에도 연출 정보는 남는다 (연출 정보는 영어 원문에서 뽑는다)", () => {
+        setLang("ko");
+        try {
+            const a = mon("machamp", ["tackle"], { tera: "fire" });
+            const out = doTurn([a], [mon("snorlax", ["splash"])], a.moveset[0], { tera: true });
+            expect(out.frames.some((f) => f.teraAnim && f.teraAnim.type === "fire")).toBe(true);
+        } finally {
+            setLang("en");
+        }
+    });
+});

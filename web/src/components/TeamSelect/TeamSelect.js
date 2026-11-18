@@ -43,7 +43,7 @@ export function TeamSelect(props) {
         <div className={"team-select" + (compact ? " compact" : "")}>
             <h2 className="team-select-title">선출 - 현재 {winStreak}연승</h2>
             <div className="team-select-info">
-                <SelectedPokemon pokemon={focus} compact={compact} />
+                <SelectedPokemon pokemon={focus} compact={compact} showTera={playerRoster.includes(focus)} />
             </div>
             <div className="team-select-row">
                 <div className="team-select-label">상대 파티 (이 중 3마리가 나옵니다)</div>

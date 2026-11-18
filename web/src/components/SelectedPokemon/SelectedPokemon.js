@@ -3,6 +3,7 @@ import { Move } from "components";
 import { BaseStats } from "components/BaseStats";
 import { AbilityInfo } from "components/AbilityInfo";
 import { pokemonNameToString, pokemonTypeToString } from "shared";
+import { TeraBadge } from "components/TeraBadge";
 import React from "react";
 import "./SelectedPokemon.css";
 
@@ -38,6 +39,7 @@ export function SelectedPokemon(props) {
                 <div>
                     <p>
                         {pokemonNameToString(props.pokemon)} - {pokemonTypeToString(props.pokemon)}
+                        <TeraBadge pokemon={props.pokemon} reveal={!!props.showTera} />
                     </p>
                     {props.pokemon.item && (
                         <p className="selected-pokemon-item">

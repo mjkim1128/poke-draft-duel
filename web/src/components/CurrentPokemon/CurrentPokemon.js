@@ -72,7 +72,7 @@ export function CurrentPokemon(props) {
                     onMouseOut={() => setHover(false)}
                 ></img>
                 <FloatingPopup anchorRef={imgRef} visible={hover}>
-                    <HoverPokemonData pokemon={props.pokemon} />
+                    <HoverPokemonData pokemon={props.pokemon} showTera={!!props.own} />
                 </FloatingPopup>
             </div>
         </div>

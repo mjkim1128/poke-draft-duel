@@ -486,6 +486,15 @@ export function terastallize(team, foeTeam, text) {
     }
 }
 
+// 장면(frame)의 문장 중 "OO Terastallized into the XX type!"이 있으면 그 포켓몬 위에서 재생할 테라스탈 연출 정보 ({ side, type })를 돌려준다
+function teraAnimOfLines(lines, names) {
+    for (const line of lines) {
+        const tera = /^(.*) Terastallized into the (\w+) type!$/.exec(line);
+        if (tera) return { side: tera[1] === names.player ? "player" : "opponent", type: tera[2].toLowerCase() };
+    }
+    return null;
+}
+
 function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
     playerPokemon.firstFainted = null; // who reached 0 HP first this turn
     playerPokemon[0].faintStamp = opponentPokemon[0].faintStamp = 0;
@@ -540,7 +549,13 @@ function doTurnRaw(playerPokemon, opponentPokemon, chosenMove, options = {}) {
         }
     }
     const frames = [];
-    if (entryText.length > 0) frames.push({ text: entryText, ...snapshotTeams(playerPokemon, opponentPokemon) });
+    if (entryText.length > 0) {
+        const entryFrame = { text: entryText, ...snapshotTeams(playerPokemon, opponentPokemon) };
+        // 메가진화, 테라스탈은 이 첫 장면에서 일어나므로 테라스탈 연출도 여기에 붙인다
+        const teraAnim = teraAnimOfLines(entryText, { player: pokemonNameToString(playerPokemon[0]), opponent: pokemonNameToString(opponentPokemon[0]) });
+        if (teraAnim) entryFrame.teraAnim = teraAnim;
+        frames.push(entryFrame);
+    }
     const rest = runTurn(playerPokemon, opponentPokemon, { playerFirst: movefirst, move, cpuMove }, 0);
     frames.push(...rest.frames);
     return Object.assign(addArrayToArray([...entryText], rest), { frames });
@@ -601,10 +616,8 @@ function runTurn(playerPokemon, opponentPokemon, plan, step) {
             const statusAnims = statusAnimsOf(frame.text, names);
             if (statusAnims.length > 0) frame.statusAnims = statusAnims;
             // a Terastallization in this part gets its crystal animation over that pokemon
-            for (const line of frame.text) {
-                const tera = /^(.*) Terastallized into the (\w+) type!$/.exec(line);
-                if (tera) frame.teraAnim = { side: tera[1] === names.player ? "player" : "opponent", type: tera[2].toLowerCase() };
-            }
+            const teraAnim = teraAnimOfLines(frame.text, names);
+            if (teraAnim) frame.teraAnim = teraAnim;
             // a weather or terrain that starts in this part gets its field animation
             for (const line of frame.text) {
                 const anim = fieldAnimOfLine(line);

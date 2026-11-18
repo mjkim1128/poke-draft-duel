@@ -6,7 +6,7 @@ import { setSurrenderHandler } from "shared/surrender";
 import { playMoveAnim, playFieldAnim, prefetchMoveAnims, prefetchFieldAnims } from "animations/pbEngine";
 import { isFxEnabled } from "animations/fxSetting";
 import { playTeraAnim, prefetchTeraAssets } from "animations/teraEffect";
-import { TeraButton } from "components/TeraBadge";
+import { TeraBadge, TeraButton } from "components/TeraBadge";
 import { canTerastallize, teraTypeOf } from "shared/tera";
 import {
     CurrentPokemon,
@@ -536,6 +536,7 @@ export function Battle(props) {
                 <span className="bp-party-info">
                     <span>
                         {pokemonNameToString(poke)} · HP {percent(poke)}%
+                        <TeraBadge pokemon={poke} reveal />
                     </span>
                     <span className="bp-party-sub">
                         {abilityLabel(poke)}
@@ -578,6 +579,7 @@ export function Battle(props) {
                     </div>
                     <div className="bp-player">
                         <CurrentPokemon
+                            own
                             pokemon={mine[0]}
                             substituteImg={SUBSTITUTE_BACK}
                             img={mine[0].sprites.back_default}
@@ -696,6 +698,7 @@ export function Battle(props) {
                 </div>
                 <div className="player">
                     <CurrentPokemon
+                        own
                         pokemon={
                             isCurrent
                                 ? liveState.playerPokemon[0]
@@ -714,6 +717,7 @@ export function Battle(props) {
                     <p className="effect-legend">{effectLegend(isKorean())}</p>
                     <p className="move-hint">{isKorean() ? "기술을 꾹 누르면 정보를 볼 수 있어요" : "Press and hold a move to see its info"}</p>
                     <PokemonParty
+                        own
                         pokemon={
                             isCurrent
                                 ? liveState.playerPokemon

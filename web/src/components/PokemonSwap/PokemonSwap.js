@@ -35,7 +35,7 @@ export function PokemonSwap(props) {
         <div className="team-select">
             <h2 className="team-select-title">교체 - 현재 {winStreak}연승</h2>
             <div className="team-select-info">
-                <SelectedPokemon pokemon={focus} />
+                <SelectedPokemon pokemon={focus} showTera={playerRoster.includes(focus)} />
             </div>
             <div className="team-select-row">
                 <div className="team-select-label">상대 포켓몬 (배틀에서 본 포켓몬만 데려올 수 있습니다)</div>

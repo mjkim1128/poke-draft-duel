@@ -5,7 +5,7 @@ import { FloatingPopup } from "components/FloatingPopup";
 import React, { useEffect, useRef, useState } from "react";
 import { pokemonNameToString, pokemonTypeToString } from "shared";
 import { applyTeraLook } from "animations/teraEffect";
-import { isKorean } from "shared/lang";
+import { TeraBadge } from "components/TeraBadge";
 import { isOgerpon } from "shared/tera";
 import "./CurrentPokemon.css";
 
@@ -55,7 +55,7 @@ export function CurrentPokemon(props) {
         <div className="current-pokemon-div">
             <div>
                 <p>{pokemonNameToString(props.pokemon)}</p>
-                <p>{pokemonTypeToString(props.pokemon.illusion || props.pokemon)}{isTera ? (isKorean() ? " (테라스탈)" : " (Tera)") : ""}</p>
+                <p>{pokemonTypeToString(props.pokemon.illusion || props.pokemon)}<TeraBadge pokemon={props.pokemon} /></p>
                 <StatusBadges pokemon={props.pokemon} />
             </div>
             <div>

@@ -29,6 +29,7 @@ import {
     previewEntryForm,
     revertMega,
     revertTera,
+    teraTypeOf,
 } from "shared";
 import "./StartScreen.css";
 import { isKorean } from "shared/lang";
@@ -388,6 +389,7 @@ export function Home() {
         /// Ability: the real set's own ability when there is one, else one of the species' abilities
         pokemonData[i].ability = pickAbility(factorySet, pokemonData[i].abilities);
         pokemonData[i].baseAbility = pokemonData[i].ability; /// what it goes back to after Trace/Mummy/Transform
+        teraTypeOf(pokemonData[i]); /// 테라스탈 타입은 세트가 정해질 때 함께 고정된다 (여러 개 중 하나이면 이때 한 번만 뽑는다)
         /// Klutz makes a held item useless, so those pokemon simply don't get one
         if (pokemonData[i].ability && pokemonData[i].ability.name === "klutz") {
             pokemonData[i].item = null;

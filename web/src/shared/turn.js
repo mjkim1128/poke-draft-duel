@@ -2293,18 +2293,21 @@ function trySpecialStatusMove(attacker, defender, move, text, field, defenderTea
             text.push(foe + " grew drowsy!");
             return true;
         case "soak":
+            if (defender.terastallized) return fail(); // 테라스탈한 포켓몬의 타입은 바뀌지 않는다
             if (defender.types.length === 1 && defender.types[0].type.name === "water") return fail();
             if (!defender.baseTypes) defender.baseTypes = defender.types;
             defender.types = [{ slot: 1, type: { name: "water" } }];
             text.push(foe + " transformed into the Water type!");
             return true;
         case "reflect-type":
+            if (attacker.terastallized) return fail();
             if (!defender.types.length) return fail();
             if (!attacker.baseTypes) attacker.baseTypes = attacker.types;
             attacker.types = defender.types.map((t) => ({ ...t, type: { ...t.type } }));
             text.push(me + "'s type changed to match " + foe + "'s!");
             return true;
         case "conversion": {
+            if (attacker.terastallized) return fail();
             const type = attacker.moveset && attacker.moveset[0] && attacker.moveset[0].type.name;
             if (!type || attacker.types.some((t) => t.type.name === type)) return fail();
             if (!attacker.baseTypes) attacker.baseTypes = attacker.types;
@@ -2503,6 +2506,7 @@ function trySpecialStatusMove(attacker, defender, move, text, field, defenderTea
         }
         // ---- type changes ----
         case "conversion-2": {
+            if (attacker.terastallized) return fail();
             const lastSlot = (defender.moveset || []).find((m) => m.name === defender.lastMove);
             const lastType = lastSlot && lastSlot.type && lastSlot.type.name;
             if (!lastType || lastType === "typeless") return fail();
@@ -2518,6 +2522,7 @@ function trySpecialStatusMove(attacker, defender, move, text, field, defenderTea
             return true;
         }
         case "camouflage": {
+            if (attacker.terastallized) return fail();
             const terrain = terrainOf(field);
             const type =
                 terrain === "electric" ? "electric" : terrain === "grassy" ? "grass" : terrain === "misty" ? "fairy" : terrain === "psychic" ? "psychic" : "normal";
@@ -2528,6 +2533,7 @@ function trySpecialStatusMove(attacker, defender, move, text, field, defenderTea
             return true;
         }
         case "magic-powder": {
+            if (defender.terastallized) return fail();
             if (defender.types.some((t) => t.type.name === "grass") || isPowderImmune(defender, attacker)) {
                 return fail(foe + " is unaffected!");
             }
@@ -2538,12 +2544,14 @@ function trySpecialStatusMove(attacker, defender, move, text, field, defenderTea
             return true;
         }
         case "forests-curse":
+            if (defender.terastallized) return fail();
             if (defender.types.some((t) => t.type.name === "grass")) return fail();
             if (!defender.baseTypes) defender.baseTypes = defender.types;
             defender.types = [...defender.baseTypes, { slot: defender.baseTypes.length + 1, type: { name: "grass" } }];
             text.push(foe + " was cursed by the forest!");
             return true;
         case "trick-or-treat":
+            if (defender.terastallized) return fail();
             if (defender.types.some((t) => t.type.name === "ghost")) return fail();
             if (!defender.baseTypes) defender.baseTypes = defender.types;
             defender.types = [...defender.baseTypes, { slot: defender.baseTypes.length + 1, type: { name: "ghost" } }];

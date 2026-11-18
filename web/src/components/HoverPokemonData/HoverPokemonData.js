@@ -2,6 +2,7 @@ import { localName } from "shared/lang";
 import { HealthBar } from "components/HealthBar";
 import { BaseStats } from "components/BaseStats";
 import { AbilityInfo } from "components/AbilityInfo";
+import { TeraBadge } from "components/TeraBadge";
 import {
     pokemonNameToString,
     pokemonTypeToString,
@@ -48,7 +49,10 @@ export function HoverPokemonData(props) {
                     maxValue={props.pokemon.hp[1]}
                 />
             </div>
-            <p>Type: {pokemonTypeToString(props.pokemon)}</p>
+            <p>
+                Type: {pokemonTypeToString(props.pokemon)}
+                <TeraBadge pokemon={props.pokemon} />
+            </p>
             {props.pokemon.item && (
                 <p className="hover-pokemon-item">
                     {props.pokemon.item.sprites && props.pokemon.item.sprites.default && (

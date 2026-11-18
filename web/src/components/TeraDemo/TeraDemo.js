@@ -8,6 +8,7 @@ import { revertTera, teraTypeOf } from "shared/tera";
 import { getAbility } from "shared/abilities";
 import { getBaseStats } from "shared/randompokemon";
 import { SPRITE_BASE } from "shared/spritebase";
+import { TeraBadge, TeraButton } from "components/TeraBadge";
 import "components/Battle/Battle.css";
 
 // ---- 오거폰 4종 확인용: 게임과 같은 terastallize()를 그대로 불러서 모습, 타입, 능력치 변화를 본다 ----
@@ -60,6 +61,7 @@ export function TeraDemo() {
 
     /// ---- 오거폰 패널 ----
     const ogFieldRef = useRef(null);
+    const uiOnly = !!params.get("uionly"); // 화면 캡처용: 버튼과 이름 옆 표시만 (?uionly=1)
     const ogOnly = !!params.get("ogonly"); // 화면 캡처용: 오거폰 필드만 보여 준다 (?ogonly=1&og=0~3&ogtera=1)
     const [maskIndex, setMaskIndex] = useState(Number(params.get("og") || 0));
     const [og, setOg] = useState(null); // { foe, me } 같은 가면의 오거폰 두 마리 (상대, 내 쪽)
@@ -135,8 +137,8 @@ export function TeraDemo() {
     if (!mons) return <p style={{ padding: 20 }}>불러오는 중...</p>;
     return (
         <div style={{ maxWidth: 560, margin: "0 auto", padding: 12 }}>
-            {ogOnly && <style>{".og-hide{display:none !important}"}</style>}
-            <div className={ogOnly ? "og-hide" : ""}>
+            {(ogOnly || uiOnly) && <style>{".og-hide{display:none !important}"}</style>}
+            <div className={ogOnly || uiOnly ? "og-hide" : ""}>
             <h3 style={{ margin: "4px 0" }}>테라스탈 연출 미리보기</h3>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
                 {TERA_TYPES.map((t) => (
@@ -170,7 +172,7 @@ export function TeraDemo() {
             </div>
 
             </div>
-            <div className={ogOnly ? "og-hide" : ""}>
+            <div className={ogOnly || uiOnly ? "og-hide" : ""}>
             <h3 style={{ margin: "16px 0 4px" }}>오거폰 4종 확인</h3>
             <p style={{ margin: "0 0 6px", fontSize: 13 }}>가면(지닌 도구)에 따라 모습, 타입, 특성, 능력치가 다릅니다. 아래 필드에서 가면을 고르고 테라스탈을 눌러 보세요. 게임과 같은 처리(terastallize)를 그대로 부릅니다.</p>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
@@ -197,7 +199,7 @@ export function TeraDemo() {
             {ogLog.length > 0 && <pre style={{ fontSize: 12, margin: "0 0 6px", whiteSpace: "pre-wrap" }}>{ogLog.join(String.fromCharCode(10))}</pre>}
             </div>
             {og && (
-                <div className="battle-portrait">
+                <div className={"battle-portrait" + (uiOnly ? " og-hide" : "")}>
                     <div className="bp-field" ref={ogFieldRef} style={{ position: "relative" }}>
                         <div className="bp-head">
                             <span>오거폰 확인 · {MASKS[maskIndex].label}</span>
@@ -211,6 +213,28 @@ export function TeraDemo() {
                     </div>
                 </div>
             )}
+            <div className={ogOnly ? "og-hide" : ""}>
+                <h3 style={{ margin: "16px 0 4px" }}>테라스탈 버튼, 이름 옆 표시</h3>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 8 }} id="tera-ui">
+                    {TERA_TYPES.map((t) => (
+                        <TeraButton key={t} type={t} on={false} onClick={() => {}} />
+                    ))}
+                </div>
+                <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+                    <TeraButton type={type} on={true} onClick={() => {}} />
+                    <span style={{ fontSize: 13, alignSelf: "center" }}>눌러서 켠 모습</span>
+                </div>
+                <div style={{ fontSize: 13 }}>
+                    {TERA_TYPES.map((t) => (
+                        <div key={t} style={{ marginBottom: 2 }}>
+                            <span>테라스탈 전(표시 없음)</span>
+                            <TeraBadge pokemon={{ types: [{ slot: 1, type: { name: "fire" } }], teraType: t, terastallized: false }} />
+                            <span style={{ marginLeft: 8 }}>테라스탈 후</span>
+                            <TeraBadge pokemon={{ types: [{ slot: 1, type: { name: t } }], teraType: t, terastallized: true }} />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }

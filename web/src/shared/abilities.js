@@ -655,7 +655,7 @@ export const ABILITIES = {
     // ---- changing its own type to match the move it is about to use (once per switch-in) ----
     protean: {
         onPrepareMove({ self, move, text }) {
-            if (self.proteanUsed || move.type.name === "typeless") return;
+            if (self.proteanUsed || self.terastallized || move.type.name === "typeless") return; // 테라스탈한 포켓몬은 타입이 바뀌지 않는다
             if (self.types.length === 1 && self.types[0].type.name === move.type.name) return;
             self.proteanUsed = true;
             if (!self.baseTypes) self.baseTypes = self.types;
@@ -665,7 +665,7 @@ export const ABILITIES = {
     },
     libero: {
         onPrepareMove({ self, move, text }) {
-            if (self.proteanUsed || move.type.name === "typeless") return;
+            if (self.proteanUsed || self.terastallized || move.type.name === "typeless") return; // 테라스탈한 포켓몬은 타입이 바뀌지 않는다
             if (self.types.length === 1 && self.types[0].type.name === move.type.name) return;
             self.proteanUsed = true;
             if (!self.baseTypes) self.baseTypes = self.types;
@@ -677,6 +677,7 @@ export const ABILITIES = {
     // ---- Castform: its type follows the weather ----
     forecast: {
         onUpdate({ self, field }) {
+            if (self.terastallized) return;
             const weather = weatherOf(field);
             const wanted = weather === "sun" ? "fire" : weather === "rain" ? "water" : weather === "hail" || weather === "snow" ? "ice" : "normal";
             if (!self.baseTypes) self.baseTypes = self.types;

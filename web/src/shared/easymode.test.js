@@ -23,7 +23,12 @@ beforeEach(() => window.localStorage.clear());
 describe("저장 형식", () => {
     test("이름, 처음 도구, 처음 특성, 기술만 저장한다", () => {
         const p = poke("gengar", { item: null, ability: { name: "cursed-body" }, originalItem: { name: "life-orb" }, baseAbility: { name: "levitate" } });
-        expect(packPokemon(p)).toEqual({ name: "gengar", item: "life-orb", ability: "levitate", moves: [{ slug: "tackle" }, { slug: "protect" }] });
+        expect(packPokemon(p)).toEqual({ name: "gengar", item: "life-orb", ability: "levitate", tera: null, moves: [{ slug: "tackle" }, { slug: "protect" }] });
+    });
+    test("정해진 테라스탈 타입도 저장하고, 불러올 때 세트에 그대로 돌려준다", () => {
+        const p = poke("gengar", { teraType: "ghost" });
+        expect(packPokemon(p).tera).toBe("ghost");
+        expect(toSavedSet(packPokemon(p)).tera).toBe("ghost");
     });
     test("도구와 특성이 없으면 null이다", () => {
         const p = poke("x", { item: null, originalItem: null, ability: null, baseAbility: null });

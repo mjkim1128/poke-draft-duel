@@ -66,6 +66,5 @@ export function revertTera(pokemon) {
         pokemon.baseAbility = pokemon.teraOriginal.baseAbility;
     }
     pokemon.teraOriginal = null;
-    pokemon.terastallized = false;
-    pokemon.teraType = null;
+    pokemon.terastallized = false; // (테라스탈 타입은 세트가 정해질 때 고정되어 그대로 남는다)
 }

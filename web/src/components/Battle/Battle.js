@@ -5,7 +5,8 @@ import { appendToLastTurn } from "shared/turnlog";
 import { setSurrenderHandler } from "shared/surrender";
 import { playMoveAnim, playFieldAnim, prefetchMoveAnims, prefetchFieldAnims } from "animations/pbEngine";
 import { isFxEnabled } from "animations/fxSetting";
-import { playTeraAnim, prefetchTeraAssets, teraIconStyle, TERA_COLORS } from "animations/teraEffect";
+import { playTeraAnim, prefetchTeraAssets } from "animations/teraEffect";
+import { TeraButton } from "components/TeraBadge";
 import { canTerastallize, teraTypeOf } from "shared/tera";
 import {
     CurrentPokemon,
@@ -462,10 +463,14 @@ export function Battle(props) {
         ) : null;
     const teraButton =
         awaitingInput && canTerastallize(props.playerPokemon) ? (
-            <button type="button" className={"tera-toggle" + (teraOn ? " on" : "")} aria-pressed={teraOn} onClick={() => { prefetchTeraAssets([teraTypeOf(currentpoke)]); setTeraOn(!teraOn); }} style={{ "--tera-color": TERA_COLORS[teraTypeOf(currentpoke)] }}>
-                <span className="tera-icon" style={teraIconStyle(teraTypeOf(currentpoke), 18)} />
-                {teraOn ? "테라스탈 켜짐" : "테라스탈"}
-            </button>
+            <TeraButton
+                type={teraTypeOf(props.playerPokemon[0])}
+                on={teraOn}
+                onClick={() => {
+                    prefetchTeraAssets([teraTypeOf(props.playerPokemon[0])]);
+                    setTeraOn(!teraOn);
+                }}
+            />
         ) : null;
     const formButtons = megaButton || teraButton ? <div className="form-toggles">{megaButton}{teraButton}</div> : null;
     let moves = playableMoves.map((move, index) => {

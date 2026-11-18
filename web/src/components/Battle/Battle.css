@@ -480,25 +480,24 @@
     margin: 0;
 }
 
-.tera-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 5px 12px;
-    font-size: 13px;
-    font-weight: bold;
-    border: 2px solid var(--tera-color, #6890f0);
-    border-radius: 14px;
-    background: #fff;
-    color: #333;
-}
-
-.tera-toggle .tera-icon {
-    display: inline-block;
-}
-
-.tera-toggle.on {
-    background: var(--tera-color, #6890f0);
+/* 테라스탈 버튼: Deluxe Battle Kit의 타입별 버튼 그림 위에 글자를 얹는다 (150x46) */
+.tera-button {
+    width: 150px;
+    height: 46px;
+    padding: 0 0 0 58px;
+    border: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 150px 46px;
+    image-rendering: pixelated;
     color: #fff;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    cursor: pointer;
+}
+
+.tera-button.on {
+    filter: brightness(1.25) drop-shadow(0 0 4px #fff);
 }

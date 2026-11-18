@@ -61,7 +61,7 @@ describe("테라스탈 발동", () => {
         revertTera(me[0]);
         expect(typesOf(me[0])).toEqual(["normal"]);
         expect(me[0].terastallized).toBe(false);
-        expect(me[0].teraType).toBeNull();
+        expect(me[0].teraType).toBe("ghost"); // 테라스탈 타입은 고정되어 남는다
     });
 
     test("발동 문장은 한국어로 번역된다", () => {
@@ -231,6 +231,51 @@ describe("오거폰", () => {
             resetAbilityState(o);
             expect(o.ability.name).toBe(ability);
             expect(o.baseAbility.name).toBe(ability);
+        }
+    });
+});
+
+describe("테라스탈 타입 고정", () => {
+    test("여러 개 중 하나인 세트는 한 번 정해지면 배틀을 거듭해도 바뀌지 않는다", () => {
+        const p = mon("gyarados", ["splash"]);
+        p.factorySet = { tera: ["water", "flying", "dark"] };
+        const first = teraTypeOf(p);
+        for (let i = 0; i < 30; i++) {
+            const me = [p, mon("snorlax", ["splash"])];
+            doTurn(me, [mon("snorlax", ["splash"])], p.moveset[0], { tera: true });
+            revertTera(p);
+            expect(teraTypeOf(p)).toBe(first);
+        }
+    });
+});
+
+describe("테라스탈한 포켓몬의 타입은 다른 효과로 바뀌지 않는다", () => {
+    test("프로틴/리베로는 테라스탈한 뒤에는 발동하지 않는다", () => {
+        for (const ability of ["protean", "libero"]) {
+            const p = mon("snorlax", ["body-slam", "shadow-ball"], { ability, tera: "ghost" });
+            const me = [p];
+            doTurn(me, [mon("machamp", ["splash"])], p.moveset[0], { tera: true });
+            expect(typesOf(p)).toEqual(["ghost"]);
+            doTurn(me, [mon("machamp", ["splash"])], p.moveset[1]);
+            doTurn(me, [mon("machamp", ["splash"])], p.moveset[0]);
+            expect(typesOf(p)).toEqual(["ghost"]); // 몇 턴이 지나도 테라스탈 타입 그대로
+        }
+    });
+
+    test("프로틴은 테라스탈하기 전에는 그대로 발동한다 (테라스탈의 영향이 아니다)", () => {
+        const p = mon("snorlax", ["shadow-ball"], { ability: "protean", tera: "fire" });
+        doTurn([p], [mon("machamp", ["splash"])], p.moveset[0]);
+        expect(typesOf(p)).toEqual(["ghost"]);
+    });
+
+    test("물붓기, 타입복사, 변환은 테라스탈한 포켓몬에게 통하지 않는다", () => {
+        const target = mon("snorlax", ["splash"], { tera: "ghost" });
+        const foe = [mon("machamp", ["splash"])];
+        doTurn([target], foe, target.moveset[0], { tera: true });
+        for (const move of ["soak", "magic-powder", "trick-or-treat", "forests-curse"]) {
+            const user = mon("machamp", [move]);
+            doTurn([user], [target], user.moveset[0]);
+            expect(typesOf(target)).toEqual(["ghost"]);
         }
     });
 });

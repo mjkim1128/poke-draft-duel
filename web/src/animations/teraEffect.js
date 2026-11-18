@@ -39,6 +39,9 @@ const ICON_ROWS = { normal: 0, fighting: 1, flying: 2, poison: 3, ground: 4, roc
 // 버튼(cursor_tera.png)은 46px 높이 칸이 세로로 이어져 있고 맨 윗칸이 기본, 그 아래가 타입 순서다
 const BUTTON_ROWS = { ...Object.fromEntries(Object.entries(ICON_ROWS).map(([t, r]) => [t, r + 1])) };
 
+// 타입별 테라스탈 버튼 그림 (글자 자리를 비운 것, tools/tera/make-tera-buttons.py)
+export const teraButtonUrl = (type) => BASE + "buttons/" + type + ".png";
+
 export const patternUrl = (type) => BASE + "patterns/" + (type === "normal" ? "default" : type) + ".png";
 
 // 타입 아이콘 한 칸을 보여 주는 스타일 (배경 그림 방식)

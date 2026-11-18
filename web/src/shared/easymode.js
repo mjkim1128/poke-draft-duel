@@ -12,6 +12,7 @@ export function packPokemon(poke) {
         name: poke.name,
         item: item ? item.name : null,
         ability: ability ? ability.name : null,
+        tera: poke.teraType || null, // 테라스탈 타입도 고정해서 저장한다
         moves: poke.moveset.map((m) => (m.name === "hidden-power" ? { slug: m.name, hpType: m.type.name } : { slug: m.name })),
     };
 }
@@ -21,6 +22,7 @@ export function toSavedSet(entry) {
     return {
         item: entry.item || undefined,
         ability: entry.ability || undefined,
+        tera: entry.tera || undefined,
         moves: entry.moves.map((m) => [m.hpType ? { slug: m.slug, hpType: m.hpType } : { slug: m.slug }]),
     };
 }
